@@ -1,0 +1,14 @@
+// @flow
+
+declare export var CONFIG_KEY: string;
+declare export var KEY: {LOGGER_SESSION_ID: string, PAYPAL_FUNDING_DISALLOW: string};
+declare export var PAYPAL_FUNDING: {CARD: string, CREDIT: string, ELV: string, IDEAL: string, PAYPAL: string, VENMO: string};
+declare export var STORE: {GLOBAL: string, LOCALSTORAGE: string};
+declare export function get<T>(key: string, def: ?T): ?T;
+
+declare export function get_or_set<T>(key: string, value: T): ?T;
+
+declare export function on<T>(key: string, handler: (_: T) => void): {cancel: () => void};
+
+declare export function set<T>(key: string, value: T): T;
+
