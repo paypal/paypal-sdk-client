@@ -1,7 +1,7 @@
 export var CONFIG_KEY = '__braintree_paypal_config__';
 
 export var STORE = {
-    LOCALSTORAGE: 'localstorage',
+    SESSIONSTORAGE: 'sessionstorage',
     GLOBAL: 'global'
 };
 

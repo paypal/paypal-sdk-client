@@ -1,10 +1,10 @@
-export function isLocalStorageEnabled() {
+export function isSessionStorageEnabled() {
     try {
-        if (window.localStorage) {
+        if (window.sessionStorage) {
             var value = Math.random().toString();
-            window.localStorage.setItem('__test__localStorage__', value);
-            var result = window.localStorage.getItem('__test__localStorage__');
-            window.localStorage.removeItem('__test__localStorage__');
+            window.sessionStorage.setItem('__test__sessionStorage__', value);
+            var result = window.sessionStorage.getItem('__test__sessionStorage__');
+            window.sessionStorage.removeItem('__test__sessionStorage__');
             if (value === result) {
                 return true;
             }

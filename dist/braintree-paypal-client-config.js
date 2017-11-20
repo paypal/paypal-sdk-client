@@ -93,7 +93,7 @@
                 return PAYPAL_FUNDING;
             });
             var CONFIG_KEY = "__braintree_paypal_config__", STORE = {
-                LOCALSTORAGE: "localstorage",
+                SESSIONSTORAGE: "sessionstorage",
                 GLOBAL: "global"
             }, KEY = {
                 LOGGER_SESSION_ID: "logger_session_id",
@@ -167,41 +167,41 @@
                 has: function(key) {
                     return (window[__WEBPACK_IMPORTED_MODULE_0__constants__.a] || {}).hasOwnProperty(key);
                 }
-            }), _defineProperty(_stores, __WEBPACK_IMPORTED_MODULE_0__constants__.d.LOCALSTORAGE, {
+            }), _defineProperty(_stores, __WEBPACK_IMPORTED_MODULE_0__constants__.d.SESSIONSTORAGE, {
                 get: function(key) {
-                    var storage = localStorage.getItem(__WEBPACK_IMPORTED_MODULE_0__constants__.a);
+                    var storage = window.sessionStorage.getItem(__WEBPACK_IMPORTED_MODULE_0__constants__.a);
                     storage = storage ? JSON.parse(storage) : {};
                     return storage[key];
                 },
                 set: function(key, value) {
-                    var storage = localStorage.getItem(__WEBPACK_IMPORTED_MODULE_0__constants__.a);
+                    var storage = window.sessionStorage.getItem(__WEBPACK_IMPORTED_MODULE_0__constants__.a);
                     storage = storage ? JSON.parse(storage) : {};
                     storage[key] = value;
-                    localStorage.setItem(__WEBPACK_IMPORTED_MODULE_0__constants__.a, JSON.stringify(storage));
+                    window.sessionStorage.setItem(__WEBPACK_IMPORTED_MODULE_0__constants__.a, JSON.stringify(storage));
                     return value;
                 },
                 has: function(key) {
-                    var storage = localStorage.getItem(__WEBPACK_IMPORTED_MODULE_0__constants__.a);
+                    var storage = window.sessionStorage.getItem(__WEBPACK_IMPORTED_MODULE_0__constants__.a);
                     storage = storage ? JSON.parse(storage) : {};
                     return storage.hasOwnProperty(key);
                 }
-            }), _stores), store = Object(__WEBPACK_IMPORTED_MODULE_1__util__.a)() ? stores[__WEBPACK_IMPORTED_MODULE_0__constants__.d.LOCALSTORAGE] : stores[__WEBPACK_IMPORTED_MODULE_0__constants__.d.GLOBAL];
+            }), _stores), store = Object(__WEBPACK_IMPORTED_MODULE_1__util__.a)() ? stores[__WEBPACK_IMPORTED_MODULE_0__constants__.d.SESSIONSTORAGE] : stores[__WEBPACK_IMPORTED_MODULE_0__constants__.d.GLOBAL];
         },
         "./src/util.js": function(module, __webpack_exports__, __webpack_require__) {
             "use strict";
-            function isLocalStorageEnabled() {
+            function isSessionStorageEnabled() {
                 try {
-                    if (window.localStorage) {
+                    if (window.sessionStorage) {
                         var value = Math.random().toString();
-                        window.localStorage.setItem("__test__localStorage__", value);
-                        var result = window.localStorage.getItem("__test__localStorage__");
-                        window.localStorage.removeItem("__test__localStorage__");
+                        window.sessionStorage.setItem("__test__sessionStorage__", value);
+                        var result = window.sessionStorage.getItem("__test__sessionStorage__");
+                        window.sessionStorage.removeItem("__test__sessionStorage__");
                         if (value === result) return !0;
                     }
                 } catch (err) {}
                 return !1;
             }
-            __webpack_exports__.a = isLocalStorageEnabled;
+            __webpack_exports__.a = isSessionStorageEnabled;
         }
     });
 });
