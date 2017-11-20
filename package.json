@@ -1,6 +1,6 @@
 {
   "name": "braintree-paypal-client-config",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Shared config between PayPal/Braintree.",
   "main": "index.js",
   "scripts": {
