@@ -8,8 +8,8 @@ import webpack from 'webpack';
 import UglifyJSPlugin from 'uglifyjs-webpack-plugin';
 import CircularDependencyPlugin from 'circular-dependency-plugin';
 
-const FILE_NAME = 'mylibrary';
-const MODULE_NAME = 'mylibrary';
+const FILE_NAME = 'braintree-paypal-client-config';
+const MODULE_NAME = 'btppClientConfig';
 
 const DEFAULT_VARS = {
     __TEST__: false,
