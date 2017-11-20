@@ -1,7 +1,7 @@
 /* @flow */
 
 import { CONFIG_KEY, STORE } from './constants';
-import { isLocalStorageEnabled } from './util';
+import { isSessionStorageEnabled } from './util';
 
 let stores = {
 
@@ -22,29 +22,29 @@ let stores = {
         }
     },
 
-    [ STORE.LOCALSTORAGE ]: {
+    [ STORE.SESSIONSTORAGE ]: {
         get<T>(key : string) : T {
-            let storage = localStorage.getItem(CONFIG_KEY);
+            let storage = window.sessionStorage.getItem(CONFIG_KEY);
             storage = storage ? JSON.parse(storage) : {};
             return storage[key];
         },
         set<T>(key : string, value : T) : T {
-            let storage = localStorage.getItem(CONFIG_KEY);
+            let storage = window.sessionStorage.getItem(CONFIG_KEY);
             storage = storage ? JSON.parse(storage) : {};
             storage[key] = value;
-            localStorage.setItem(CONFIG_KEY, JSON.stringify(storage));
+            window.sessionStorage.setItem(CONFIG_KEY, JSON.stringify(storage));
             return value;
         },
         has(key : string) : boolean {
-            let storage = localStorage.getItem(CONFIG_KEY);
+            let storage = window.sessionStorage.getItem(CONFIG_KEY);
             storage = storage ? JSON.parse(storage) : {};
             return storage.hasOwnProperty(key);
         }
     }
 };
 
-export let store = isLocalStorageEnabled()
-    ? stores[STORE.LOCALSTORAGE]
+export let store = isSessionStorageEnabled()
+    ? stores[STORE.SESSIONSTORAGE]
     : stores[STORE.GLOBAL];
 
 export function use(storeType : string) {

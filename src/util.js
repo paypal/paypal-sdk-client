@@ -1,12 +1,12 @@
 /* @flow */
 
-export function isLocalStorageEnabled() : boolean {
+export function isSessionStorageEnabled() : boolean {
     try {
-        if (window.localStorage) {
+        if (window.sessionStorage) {
             let value = Math.random().toString();
-            window.localStorage.setItem('__test__localStorage__', value);
-            let result = window.localStorage.getItem('__test__localStorage__');
-            window.localStorage.removeItem('__test__localStorage__');
+            window.sessionStorage.setItem('__test__sessionStorage__', value);
+            let result = window.sessionStorage.getItem('__test__sessionStorage__');
+            window.sessionStorage.removeItem('__test__sessionStorage__');
             if (value === result) {
                 return true;
             }

@@ -3,8 +3,8 @@
 export const CONFIG_KEY = '__braintree_paypal_config__';
 
 export const STORE = {
-    LOCALSTORAGE: 'localstorage',
-    GLOBAL:       'global'
+    SESSIONSTORAGE: 'sessionstorage',
+    GLOBAL:          'global'
 };
 
 export const KEY = {

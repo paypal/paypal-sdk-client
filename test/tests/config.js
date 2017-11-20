@@ -3,7 +3,7 @@
 import { get, set, get_or_set, on, STORE } from '../../src';
 import { use } from '../../src/store';
 
-for (let store of [ STORE.GLOBAL, STORE.LOCALSTORAGE ]) {
+for (let store of [ STORE.GLOBAL, STORE.SESSIONSTORAGE ]) {
     describe(`config cases with ${ store } store`, () => {
 
         before(() => {
