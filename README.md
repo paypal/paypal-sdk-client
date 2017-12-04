@@ -19,36 +19,36 @@ npm install --save braintree-paypal-client-config
 As the config setter:
 
 ```
-import { config, KEYS } from 'braintree-paypal-client-config';
+import { set, KEYS } from 'braintree-paypal-client-config';
 
-config.set(KEYS.ALLOW_FOO, true);
+set(KEYS.ALLOW_FOO, true);
 ```
 
 As the config getter:
 
 ```
-import { config, KEYS } from 'braintree-paypal-client-config';
+import { get, KEYS } from 'braintree-paypal-client-config';
 
-if (config.get(KEYS.ALLOW_FOO)) {
+if (get(KEYS.ALLOW_FOO)) {
     doFoo();
 }
 ```
 
 ### Methods
 
-#### `config.get(<key>, [default])`
+#### `get(<key>, [default])`
 
 Get the current value for the given key, returns `undefined` if unset or `default` if specified
 
-#### `config.set(<key>, <value>)`
+#### `set(<key>, <value>)`
 
 Set the value under the given key.
 
-#### `config.get_or_set(<key>, <value>)`
+#### `get_or_set(<key>, <value>)`
 
 Gets the value if it is available, otherwise sets a new value.
 
-#### `config.on(<key>, <handler>)`
+#### `on(<key>, <handler>)`
 
 Calls the `handler` every time the key is set. Good for reading configuration values which may change over time.
 
@@ -60,7 +60,7 @@ Specify a shared id to send with logs, to correlate between different modules.
 
 ```javascript
 // Set a shared session id or get an existing session id
-let sessionID = config.get_or_set(KEY.LOGGER_SESSION_ID, 'abcdef12345');
+let sessionID = get_or_set(KEY.LOGGER_SESSION_ID, 'abcdef12345');
 ```
 
 #### `PAYPAL_FUNDING_DISALLOW`
@@ -69,7 +69,7 @@ Specify an array of funding sources to inhibit.
 
 ```javascript
 // Disallow paypal from rendering card (credit/debit) butttons
-config.set(KEY.PAYPAL_FUNDING_DISALLOW, [ PAYPAL_FUNDING.CARD ]);
+set(KEY.PAYPAL_FUNDING_DISALLOW, [ PAYPAL_FUNDING.CARD ]);
 ```
 
 Quick Start
