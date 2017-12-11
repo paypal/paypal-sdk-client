@@ -1,6 +1,6 @@
 !function(root, factory) {
     "object" == typeof exports && "object" == typeof module ? module.exports = factory() : "function" == typeof define && define.amd ? define("btppClientConfig", [], factory) : "object" == typeof exports ? exports.btppClientConfig = factory() : root.btppClientConfig = factory();
-}(this, function() {
+}("undefined" != typeof self ? self : this, function() {
     return function(modules) {
         function __webpack_require__(moduleId) {
             if (installedModules[moduleId]) return installedModules[moduleId].exports;
