@@ -11,7 +11,7 @@ This allows the different modules to:
 ### Installing
 
 ```bash
-npm install --save braintree-paypal-client-config
+npm install --save paypal-braintree-sdk-client
 ```
 
 ### Example
@@ -19,7 +19,7 @@ npm install --save braintree-paypal-client-config
 As the config setter:
 
 ```
-import { set, KEYS } from 'braintree-paypal-client-config';
+import { set, KEYS } from 'paypal-braintree-sdk-client';
 
 set(KEYS.ALLOW_FOO, true);
 ```
@@ -27,7 +27,7 @@ set(KEYS.ALLOW_FOO, true);
 As the config getter:
 
 ```
-import { get, KEYS } from 'braintree-paypal-client-config';
+import { get, KEYS } from 'paypal-braintree-sdk-client';
 
 if (get(KEYS.ALLOW_FOO)) {
     doFoo();

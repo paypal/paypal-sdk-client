@@ -8,7 +8,7 @@ import webpack from 'webpack';
 import UglifyJSPlugin from 'uglifyjs-webpack-plugin';
 import CircularDependencyPlugin from 'circular-dependency-plugin';
 
-const FILE_NAME = 'braintree-paypal-client-config';
+const FILE_NAME = 'paypal-braintree-sdk-client';
 const MODULE_NAME = 'btppClientConfig';
 
 const DEFAULT_VARS = {

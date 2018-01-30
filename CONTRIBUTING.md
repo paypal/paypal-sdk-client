@@ -1,4 +1,4 @@
-# Contributing to braintree-paypal-client-config
+# Contributing to paypal-braintree-sdk-client
 
 We are always looking for ways to make our modules better. Adding features and fixing bugs allows everyone who depends
 on this code to create better, more stable applications.
@@ -9,13 +9,13 @@ your changes into our code. Ideas and other comments are also welcome.
 1. Create your own [fork](https://help.github.com/articles/fork-a-repo) of this [repository](../../fork).
 ```bash
 # Clone it
-$ git clone git@github.com:paypal/braintree-paypal-client-config.git
+$ git clone git@github.com:paypal/paypal-braintree-sdk-client.git
 
 # Change directory
-$ cd braintree-paypal-client-config
+$ cd paypal-braintree-sdk-client
 
 # Add the upstream repo
-$ git remote add upstream git://github.com/paypal/braintree-paypal-client-config.git
+$ git remote add upstream git://github.com/paypal/paypal-braintree-sdk-client.git
 
 # Get the latest upstream changes
 $ git pull upstream
