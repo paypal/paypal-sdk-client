@@ -1,2 +1,1 @@
-export * from './config';
-export * from './constants';
+export { attach } from './interface';

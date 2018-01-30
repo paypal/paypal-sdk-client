@@ -1,20 +1,27 @@
-export var CONFIG_KEY = '__braintree_paypal_config__';
-
-export var STORE = {
-    SESSIONSTORAGE: 'sessionstorage',
-    GLOBAL: 'global'
-};
+export var GLOBAL_KEY = '__paypal_braintree_global__';
 
 export var KEY = {
     LOGGER_SESSION_ID: 'logger_session_id',
-    PAYPAL_FUNDING_DISALLOW: 'paypal_funding_disallow'
+    DEDICATED_FUNDING_MODULES: 'dedicated_funding_modules'
 };
 
-export var PAYPAL_FUNDING = {
+export var FUNDING = {
     PAYPAL: 'paypal',
     VENMO: 'venmo',
     CREDIT: 'credit',
     CARD: 'card',
     IDEAL: 'ideal',
     ELV: 'elv'
+};
+
+export var ENV = {
+    PRODUCTION: 'production',
+    SANDBOX: 'sandbox',
+    STAGE: 'stage',
+    LOCAL: 'local'
+};
+
+export var HTTP_HEADERS = {
+    CONTENT_TYPE: 'content-type',
+    ACCEPT: 'accept'
 };
