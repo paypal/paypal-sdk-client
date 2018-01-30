@@ -1,35 +1,24 @@
 /* @flow */
 
-import { store } from './store';
-
-let listeners = {};
+import { getGlobal } from './global';
 
 export function get<T>(key : string, def : ?T) : ?T {
-    return store.has(key) ? store.get(key) : def;
+    let config = getGlobal('config');
+    return config.hasOwnProperty(key) ? config[key] : def;
 }
 
 export function set<T>(key : string, value : T) : T {
-    store.set(key, value);
-
-    if (listeners[key]) {
-        for (let listener of listeners[key]) {
-            listener(value);
-        }
-    }
-
+    let config = getGlobal('config');
+    config[key] = value;
     return value;
 }
 
 export function get_or_set<T>(key : string, value : T) : ?T {
-    return store.has(key) ? get(key) : set(key, value);
-}
-
-export function on<T>(key : string, handler : (T) => void) : { cancel : () => void } {
-    listeners[key] = listeners[key] || [];
-    listeners[key].push(handler);
-    return {
-        cancel() {
-            listeners[key].splice(listeners[key].indexOf(handler), 1);
-        }
-    };
+    let config = getGlobal('config');
+    if (config.hasOwnProperty(key)) {
+        return config[key];
+    } else {
+        config[key] = value;
+        return value;
+    }
 }

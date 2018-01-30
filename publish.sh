@@ -15,6 +15,7 @@ fi;
 rm -rf node_modules
 npm install
 
+rm dist/*;
 npm run build;
 
 git add dist;
