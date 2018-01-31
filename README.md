@@ -28,11 +28,13 @@ Example of what merchants integrating with different modules in the SDK might ca
 
 ```javascript
 // Add required modules
+// Shared config can be modified at script load time
 
 <script src=".../checkout.button.js" />
 <script src=".../hosted.fields.js" />
 
-// Initialize an instance of the cleint
+// Initialize an instance of the client
+// Shared config is immutable at client instance creation
 
 var client = paypal.client({
   env: 'sandbox',
