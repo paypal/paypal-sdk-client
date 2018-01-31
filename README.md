@@ -48,9 +48,15 @@ client.Button.render({
 });
 
 // Render Hosted Fields
-
 client.HostedFields.render({
   ...
+}).then(function (hostedFieldsInstance) {
+  // Merchant can do stuff with the component instances here
+
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+    hostedFieldsInstance.tokenize(...)
+  });
 });
 ```
 
