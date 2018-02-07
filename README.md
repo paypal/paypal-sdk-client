@@ -41,12 +41,17 @@ var client = paypal.client({
   auth: {
     sandbox: '__SANDBOX_AUTH_KEY__'
   }
+}).catch(function (err) {
+  // TODO: An erroneous client would cause errors in all render calls. Better way to do this?
+  console.log('There was a problem creating the client', err);
 });
 
 // Render PayPal Button
 
 client.Button.render({
   ...
+}).catch(function (err) {
+  console.log('There was a problem creating rendering the paypal button', err);
 });
 
 // Render Hosted Fields
@@ -59,6 +64,8 @@ client.HostedFields.render({
     event.preventDefault();
     hostedFieldsInstance.tokenize(...)
   });
+}).catch(function (err) {
+  console.log('There was a problem creating rendering hosted fields', err);
 });
 ```
 
@@ -95,6 +102,8 @@ sdk.attach(options => {
   return {
     HostedFields: {
       render: (hostedFieldsOptions) => {
+			  var options = JSON.parse(JSON.stringify(userOptions || {}));
+				options.client = sdk.request;
 
         // Wait for server-side merchant config call to complete
         return getMerchantConfig.then(merchantConfig => {
@@ -105,7 +114,7 @@ sdk.attach(options => {
           }
 
           // Render hosted fields with passed in options and retrieved merchant config
-          return renderHostedFields(hostedFieldsOptions, merchantConfig);
+          return renderHostedFields(options, merchantConfig);
         });
       }
     }
