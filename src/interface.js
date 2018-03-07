@@ -3,12 +3,13 @@
 import { extend } from './util';
 import { getGlobal } from './global';
 import { validateClientOptions } from './validation';
-import { clientConfig, serverConfig } from './config';
+import { clientConfig, serverConfig, queryOptions } from './config';
 
 type AttachOptions = {
     clientOptions : ClientOptionsType,
     clientConfig : ClientConfigType,
-    serverConfig : ServerConfigType
+    serverConfig : ServerConfigType,
+    queryOptions : QueryOptionsType
 };
 
 let exportBuilders: Array<(AttachOptions) => ExportsType> = getGlobal('exportBuilders', []);
@@ -24,7 +25,7 @@ export function client(clientOptions : ClientOptionsType) : Object {
     let xports = {};
 
     for (let i = 0; i < exportBuilders.length; i++) {
-        extend(xports, exportBuilders[i]({ clientOptions, clientConfig, serverConfig }));
+        extend(xports, exportBuilders[i]({ clientOptions, clientConfig, serverConfig, queryOptions }));
     }
 
     return xports;

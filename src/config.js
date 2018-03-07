@@ -25,4 +25,6 @@ function getOrSet<T>(key : string, value : T) : ?T {
 
 export let clientConfig = { get, set, getOrSet };
 
-export let serverConfig = __SERVER_PAYPAL_BRAINTREE_CONFIG__;
+export let serverConfig = __PAYPAL_BRAINTREE_SERVER_CONFIG__;
+
+export let queryOptions = __PAYPAL_BRAINTREE_QUERY_OPTIONS__;
