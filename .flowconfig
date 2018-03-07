@@ -5,6 +5,7 @@
 .*/node_modules/cross-domain-safe-weakmap/test
 .*/node_modules/cross-domain-utils/dist
 .*/node_modules/cross-domain-utils/test
+.*/node_modules/npm
 [include]
 [libs]
 flow-typed
