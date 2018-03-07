@@ -1,6 +1,7 @@
 import { extend } from './util';
 import { getGlobal } from './global';
-import { validateConfig } from './validation';
+import { validateClientOptions } from './validation';
+import { clientConfig, serverConfig } from './config';
 
 var exportBuilders = getGlobal('exportBuilders', []);
 
@@ -8,14 +9,14 @@ export function attach(exportBuilder) {
     exportBuilders.push(exportBuilder);
 }
 
-export function client(config) {
+export function client(clientOptions) {
 
-    validateConfig(config);
+    validateClientOptions(clientOptions);
 
     var xports = {};
 
     for (var i = 0; i < exportBuilders.length; i++) {
-        extend(xports, exportBuilders[i](config));
+        extend(xports, exportBuilders[i]({ clientOptions: clientOptions, clientConfig: clientConfig, serverConfig: serverConfig }));
     }
 
     return xports;

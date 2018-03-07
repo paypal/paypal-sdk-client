@@ -421,6 +421,34 @@
             }
             __webpack_exports__.a = isPromise;
         },
+        "./src/config.js": function(module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            function get(key, def) {
+                var config = Object(__WEBPACK_IMPORTED_MODULE_0__global__.a)("config");
+                return config.hasOwnProperty(key) ? config[key] : def;
+            }
+            function set(key, value) {
+                Object(__WEBPACK_IMPORTED_MODULE_0__global__.a)("config")[key] = value;
+                return value;
+            }
+            function getOrSet(key, value) {
+                var config = Object(__WEBPACK_IMPORTED_MODULE_0__global__.a)("config");
+                if (config.hasOwnProperty(key)) return config[key];
+                config[key] = value;
+                return value;
+            }
+            __webpack_require__.d(__webpack_exports__, "a", function() {
+                return clientConfig;
+            });
+            __webpack_require__.d(__webpack_exports__, "b", function() {
+                return serverConfig;
+            });
+            var __WEBPACK_IMPORTED_MODULE_0__global__ = __webpack_require__("./src/global.js"), clientConfig = {
+                get: get,
+                set: set,
+                getOrSet: getOrSet
+            }, serverConfig = __SERVER_PAYPAL_BRAINTREE_CONFIG__;
+        },
         "./src/constants.js": function(module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.d(__webpack_exports__, "b", function() {
@@ -463,13 +491,17 @@
             function attach(exportBuilder) {
                 exportBuilders.push(exportBuilder);
             }
-            function client(config) {
-                Object(__WEBPACK_IMPORTED_MODULE_2__validation__.a)(config);
-                for (var xports = {}, i = 0; i < exportBuilders.length; i++) Object(__WEBPACK_IMPORTED_MODULE_0__util__.a)(xports, exportBuilders[i](config));
+            function client(clientOptions) {
+                Object(__WEBPACK_IMPORTED_MODULE_2__validation__.a)(clientOptions);
+                for (var xports = {}, i = 0; i < exportBuilders.length; i++) Object(__WEBPACK_IMPORTED_MODULE_0__util__.a)(xports, exportBuilders[i]({
+                    clientOptions: clientOptions,
+                    clientConfig: __WEBPACK_IMPORTED_MODULE_3__config__.a,
+                    serverConfig: __WEBPACK_IMPORTED_MODULE_3__config__.b
+                }));
                 return xports;
             }
             __webpack_exports__.a = attach;
-            var __WEBPACK_IMPORTED_MODULE_0__util__ = __webpack_require__("./src/util.js"), __WEBPACK_IMPORTED_MODULE_1__global__ = __webpack_require__("./src/global.js"), __WEBPACK_IMPORTED_MODULE_2__validation__ = __webpack_require__("./src/validation.js"), exportBuilders = Object(__WEBPACK_IMPORTED_MODULE_1__global__.a)("exportBuilders", []);
+            var __WEBPACK_IMPORTED_MODULE_0__util__ = __webpack_require__("./src/util.js"), __WEBPACK_IMPORTED_MODULE_1__global__ = __webpack_require__("./src/global.js"), __WEBPACK_IMPORTED_MODULE_2__validation__ = __webpack_require__("./src/validation.js"), __WEBPACK_IMPORTED_MODULE_3__config__ = __webpack_require__("./src/config.js"), exportBuilders = Object(__WEBPACK_IMPORTED_MODULE_1__global__.a)("exportBuilders", []);
             window.paypal = window.paypal || {};
             window.paypal.client = window.paypal.client || client;
         },
@@ -502,13 +534,13 @@
         },
         "./src/validation.js": function(module, __webpack_exports__, __webpack_require__) {
             "use strict";
-            function validateConfig(_ref) {
+            function validateClientOptions(_ref) {
                 var env = _ref.env, auth = _ref.auth;
                 if (!env || -1 === Object(__WEBPACK_IMPORTED_MODULE_1__util__.c)(__WEBPACK_IMPORTED_MODULE_0__constants__.a).indexOf(env)) throw new Error("Invalid env: " + env);
                 if (!Object(__WEBPACK_IMPORTED_MODULE_1__util__.b)(auth)) throw new Error("Expected auth to be passed");
                 if (!auth[env]) throw new Error("Expected auth to be passed for current env");
             }
-            __webpack_exports__.a = validateConfig;
+            __webpack_exports__.a = validateClientOptions;
             var __WEBPACK_IMPORTED_MODULE_0__constants__ = __webpack_require__("./src/constants.js"), __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__("./src/util.js");
         }
     });

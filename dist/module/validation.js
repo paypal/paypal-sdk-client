@@ -1,7 +1,7 @@
 import { ENV } from './constants';
 import { values, isObject } from './util';
 
-export function validateConfig(_ref) {
+export function validateClientOptions(_ref) {
     var env = _ref.env,
         auth = _ref.auth;
 

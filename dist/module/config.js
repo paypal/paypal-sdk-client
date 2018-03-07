@@ -1,17 +1,17 @@
 import { getGlobal } from './global';
 
-export function get(key, def) {
+function get(key, def) {
     var config = getGlobal('config');
     return config.hasOwnProperty(key) ? config[key] : def;
 }
 
-export function set(key, value) {
+function set(key, value) {
     var config = getGlobal('config');
     config[key] = value;
     return value;
 }
 
-export function get_or_set(key, value) {
+function getOrSet(key, value) {
     var config = getGlobal('config');
     if (config.hasOwnProperty(key)) {
         return config[key];
@@ -20,3 +20,7 @@ export function get_or_set(key, value) {
         return value;
     }
 }
+
+export var clientConfig = { get: get, set: set, getOrSet: getOrSet };
+
+export var serverConfig = __SERVER_PAYPAL_BRAINTREE_CONFIG__;
