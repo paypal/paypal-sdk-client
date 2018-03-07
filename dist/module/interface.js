@@ -1,7 +1,7 @@
 import { extend } from './util';
 import { getGlobal } from './global';
 import { validateClientOptions } from './validation';
-import { clientConfig, serverConfig } from './config';
+import { clientConfig, serverConfig, queryOptions } from './config';
 
 var exportBuilders = getGlobal('exportBuilders', []);
 
@@ -16,7 +16,7 @@ export function client(clientOptions) {
     var xports = {};
 
     for (var i = 0; i < exportBuilders.length; i++) {
-        extend(xports, exportBuilders[i]({ clientOptions: clientOptions, clientConfig: clientConfig, serverConfig: serverConfig }));
+        extend(xports, exportBuilders[i]({ clientOptions: clientOptions, clientConfig: clientConfig, serverConfig: serverConfig, queryOptions: queryOptions }));
     }
 
     return xports;
