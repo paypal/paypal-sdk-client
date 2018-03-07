@@ -2,22 +2,29 @@
 
 import { extend } from './util';
 import { getGlobal } from './global';
-import { validateConfig } from './validation';
+import { validateClientOptions } from './validation';
+import { clientConfig, serverConfig } from './config';
 
-let exportBuilders = getGlobal('exportBuilders', []);
+type AttachOptions = {
+    clientOptions : ClientOptionsType,
+    clientConfig : ClientConfigType,
+    serverConfig : ServerConfigType
+};
 
-export function attach(exportBuilder : (ConfigType) => ExportsType) {
+let exportBuilders: Array<(AttachOptions) => ExportsType> = getGlobal('exportBuilders', []);
+
+export function attach(exportBuilder : (AttachOptions) => ExportsType) {
     exportBuilders.push(exportBuilder);
 }
 
-export function client(config : ConfigType) : Object {
+export function client(clientOptions : ClientOptionsType) : Object {
 
-    validateConfig(config);
+    validateClientOptions(clientOptions);
 
     let xports = {};
 
     for (let i = 0; i < exportBuilders.length; i++) {
-        extend(xports, exportBuilders[i](config));
+        extend(xports, exportBuilders[i]({ clientOptions, clientConfig, serverConfig }));
     }
 
     return xports;

@@ -2,18 +2,18 @@
 
 import { getGlobal } from './global';
 
-export function get<T>(key : string, def : ?T) : ?T {
+function get<T>(key : string, def : ?T) : ?T {
     let config = getGlobal('config');
     return config.hasOwnProperty(key) ? config[key] : def;
 }
 
-export function set<T>(key : string, value : T) : T {
+function set<T>(key : string, value : T) : T {
     let config = getGlobal('config');
     config[key] = value;
     return value;
 }
 
-export function get_or_set<T>(key : string, value : T) : ?T {
+function getOrSet<T>(key : string, value : T) : ?T {
     let config = getGlobal('config');
     if (config.hasOwnProperty(key)) {
         return config[key];
@@ -22,3 +22,7 @@ export function get_or_set<T>(key : string, value : T) : ?T {
         return value;
     }
 }
+
+export let clientConfig = { get, set, getOrSet };
+
+export let serverConfig = __SERVER_PAYPAL_BRAINTREE_CONFIG__;
