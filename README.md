@@ -37,17 +37,25 @@ Example of what merchants integrating with different modules in the SDK might ca
 // Initialize an instance of the client
 // Shared config is immutable at client instance creation
 
-var client = paypal.client({
-  env: 'sandbox',
-  auth: {
-    sandbox: '__SANDBOX_AUTH_KEY__'
-  }
+try {
+  var client = paypal.client({
+    env: 'sandbox',
+    auth: {
+      sandbox: '__SANDBOX_AUTH_KEY__'
+    }
+  })
+} catch(err) {
+  console.log('There was a problem creating the client', err);
+  // TODO: client == undefined at thsi point, blowing up the rest of the code.
+  // TODO: maybe delaying all errors to `render` is the best option.
 });
 
 // Render PayPal Button
 
 client.Button.render({
   ...
+}).catch(function (err) {
+  console.log('There was a problem creating rendering the paypal button', err);
 });
 
 // Render Hosted Fields
@@ -60,6 +68,8 @@ client.HostedFields.render({
     event.preventDefault();
     hostedFieldsInstance.tokenize(...)
   });
+}).catch(function (err) {
+  console.log('There was a problem creating rendering hosted fields', err);
 });
 ```
 
@@ -96,6 +106,9 @@ sdk.attach(options => {
   return {
     HostedFields: {
       render: (hostedFieldsOptions) => {
+	var options = JSON.parse(JSON.stringify(hostedFieldsOptions || {}));
+	
+	options.client = sdk.request;
 
         // Wait for server-side merchant config call to complete
         return getMerchantConfig.then(merchantConfig => {
@@ -106,7 +119,7 @@ sdk.attach(options => {
           }
 
           // Render hosted fields with passed in options and retrieved merchant config
-          return renderHostedFields(hostedFieldsOptions, merchantConfig);
+          return renderHostedFields(options, merchantConfig);
         });
       }
     }
