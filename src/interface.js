@@ -18,7 +18,7 @@ export function attach(exportBuilder : (AttachOptions) => ExportsType) {
     exportBuilders.push(exportBuilder);
 }
 
-export function client(clientOptions : ClientOptionsType) : Object {
+export function client(clientOptions? : ClientOptionsType = {}) : Object {
 
     validateClientOptions(clientOptions);
 

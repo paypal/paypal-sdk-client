@@ -3,8 +3,8 @@
 declare var __TEST__ : boolean;
 
 export type ClientOptionsType = {
-    env : string,
-    auth : {
+    env? : string,
+    auth? : {
         [string] : string
     }
 };
