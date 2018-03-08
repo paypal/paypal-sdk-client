@@ -1,7 +1,7 @@
 import { extend } from './util';
 import { getGlobal } from './global';
 import { validateClientOptions } from './validation';
-import { clientConfig, serverConfig, queryOptions } from './config';
+import { clientConfig, serverConfig, queryOptions } from './clientConfig';
 
 var exportBuilders = getGlobal('exportBuilders', []);
 
@@ -9,7 +9,9 @@ export function attach(exportBuilder) {
     exportBuilders.push(exportBuilder);
 }
 
-export function client(clientOptions) {
+export function client() {
+    var clientOptions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
 
     validateClientOptions(clientOptions);
 

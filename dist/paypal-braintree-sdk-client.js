@@ -38,7 +38,7 @@
         __webpack_require__.p = "";
         return __webpack_require__(__webpack_require__.s = "./src/index.js");
     }({
-        "./src/config.js": function(module, __webpack_exports__, __webpack_require__) {
+        "./src/clientConfig.js": function(module, __webpack_exports__, __webpack_require__) {
             "use strict";
             function get(key, def) {
                 var config = Object(__WEBPACK_IMPORTED_MODULE_0__global__.a)("config");
@@ -67,7 +67,7 @@
                 get: get,
                 set: set,
                 getOrSet: getOrSet
-            }, serverConfig = __PAYPAL_BRAINTREE_SERVER_CONFIG__, queryOptions = __PAYPAL_BRAINTREE_QUERY_OPTIONS__;
+            }, serverConfig = null, queryOptions = null;
         },
         "./src/constants.js": function(module, __webpack_exports__, __webpack_require__) {
             "use strict";
@@ -149,18 +149,19 @@
             function attach(exportBuilder) {
                 exportBuilders.push(exportBuilder);
             }
-            function client(clientOptions) {
+            function client() {
+                var clientOptions = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : {};
                 Object(__WEBPACK_IMPORTED_MODULE_2__validation__.a)(clientOptions);
                 for (var xports = {}, i = 0; i < exportBuilders.length; i++) Object(__WEBPACK_IMPORTED_MODULE_0__util__.a)(xports, exportBuilders[i]({
                     clientOptions: clientOptions,
-                    clientConfig: __WEBPACK_IMPORTED_MODULE_3__config__.a,
-                    serverConfig: __WEBPACK_IMPORTED_MODULE_3__config__.c,
-                    queryOptions: __WEBPACK_IMPORTED_MODULE_3__config__.b
+                    clientConfig: __WEBPACK_IMPORTED_MODULE_3__clientConfig__.a,
+                    serverConfig: __WEBPACK_IMPORTED_MODULE_3__clientConfig__.c,
+                    queryOptions: __WEBPACK_IMPORTED_MODULE_3__clientConfig__.b
                 }));
                 return xports;
             }
             __webpack_exports__.a = attach;
-            var __WEBPACK_IMPORTED_MODULE_0__util__ = __webpack_require__("./src/util.js"), __WEBPACK_IMPORTED_MODULE_1__global__ = __webpack_require__("./src/global.js"), __WEBPACK_IMPORTED_MODULE_2__validation__ = __webpack_require__("./src/validation.js"), __WEBPACK_IMPORTED_MODULE_3__config__ = __webpack_require__("./src/config.js"), exportBuilders = Object(__WEBPACK_IMPORTED_MODULE_1__global__.a)("exportBuilders", []);
+            var __WEBPACK_IMPORTED_MODULE_0__util__ = __webpack_require__("./src/util.js"), __WEBPACK_IMPORTED_MODULE_1__global__ = __webpack_require__("./src/global.js"), __WEBPACK_IMPORTED_MODULE_2__validation__ = __webpack_require__("./src/validation.js"), __WEBPACK_IMPORTED_MODULE_3__clientConfig__ = __webpack_require__("./src/clientConfig.js"), exportBuilders = Object(__WEBPACK_IMPORTED_MODULE_1__global__.a)("exportBuilders", []);
             window.paypal = window.paypal || {};
             window.paypal.client = window.paypal.client || client;
         },
@@ -194,9 +195,9 @@
             "use strict";
             function validateClientOptions(_ref) {
                 var env = _ref.env, auth = _ref.auth;
-                if (!env || -1 === Object(__WEBPACK_IMPORTED_MODULE_1__util__.c)(__WEBPACK_IMPORTED_MODULE_0__constants__.a).indexOf(env)) throw new Error("Invalid env: " + env);
-                if (!Object(__WEBPACK_IMPORTED_MODULE_1__util__.b)(auth)) throw new Error("Expected auth to be passed");
-                if (!auth[env]) throw new Error("Expected auth to be passed for current env");
+                if (env && -1 === Object(__WEBPACK_IMPORTED_MODULE_1__util__.c)(__WEBPACK_IMPORTED_MODULE_0__constants__.a).indexOf(env)) throw new Error("Invalid env: " + env);
+                if (auth && !Object(__WEBPACK_IMPORTED_MODULE_1__util__.b)(auth)) throw new Error("Expected auth to be passed");
+                if (auth && env && !auth[env]) throw new Error("Expected auth to be passed for env: " + env);
             }
             __webpack_exports__.a = validateClientOptions;
             var __WEBPACK_IMPORTED_MODULE_0__constants__ = __webpack_require__("./src/constants.js"), __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__("./src/util.js");

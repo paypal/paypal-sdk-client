@@ -6,15 +6,15 @@ export function validateClientOptions(_ref) {
         auth = _ref.auth;
 
 
-    if (!env || values(ENV).indexOf(env) === -1) {
+    if (env && values(ENV).indexOf(env) === -1) {
         throw new Error('Invalid env: ' + env);
     }
 
-    if (!isObject(auth)) {
+    if (auth && !isObject(auth)) {
         throw new Error('Expected auth to be passed');
     }
 
-    if (!auth[env]) {
-        throw new Error('Expected auth to be passed for current env');
+    if (auth && env && !auth[env]) {
+        throw new Error('Expected auth to be passed for env: ' + env);
     }
 }
