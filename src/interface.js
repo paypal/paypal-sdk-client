@@ -3,7 +3,7 @@
 import { extend } from './util';
 import { getGlobal } from './global';
 import { validateClientOptions } from './validation';
-import { clientConfig, serverConfig, queryOptions } from './config';
+import { clientConfig, serverConfig, queryOptions } from './clientConfig';
 
 type AttachOptions = {
     clientOptions : ClientOptionsType,
