@@ -14,10 +14,16 @@ type AttachOptions = {
 
 let exportBuilders: Array<(AttachOptions) => ExportsType> = getGlobal('exportBuilders', []);
 
+/**
+ * Attach an interface builder function
+ */
 export function attach(exportBuilder : (AttachOptions) => ExportsType) {
     exportBuilders.push(exportBuilder);
 }
 
+/**
+ * Instantiate the public client
+ */
 export function client(clientOptions? : ClientOptionsType = {}) : Object {
 
     validateClientOptions(clientOptions);

@@ -53,7 +53,7 @@
   },
   "devDependencies": {
     "esdoc": "^1.0.4",
-    "esdoc-flow-plugin": "^1.0.0",
+    "esdoc-flow-type-plugin": "^1.0.1",
     "esdoc-standard-plugin": "^1.0.0",
     "grumbler-scripts": "^1.0.17"
   }

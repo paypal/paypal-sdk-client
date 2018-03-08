@@ -3,6 +3,9 @@
 import { ENV } from './constants';
 import { values, isObject } from './util';
 
+/**
+ * Validate options passed to the public client
+ */
 export function validateClientOptions({ env, auth } : ClientOptionsType) {
 
     if (env && values(ENV).indexOf(env) === -1) {
