@@ -4,6 +4,9 @@
   "plugins": [{
     "name": "esdoc-standard-plugin"
   },{
-    "name": "esdoc-flow-plugin"
+    "name": "esdoc-flow-type-plugin", 
+    "option": {
+      "enable": true
+    }
   }]
 }
