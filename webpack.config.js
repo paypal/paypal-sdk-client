@@ -12,8 +12,10 @@ const FILE_NAME = 'paypal-braintree-sdk-client';
 const MODULE_NAME = 'btppClientConfig';
 
 const DEFAULT_VARS = {
-    __TEST__: false,
-    __MIN__:  false
+    __TEST__:                           false,
+    __MIN__:                            false,
+    __PAYPAL_BRAINTREE_SERVER_CONFIG__: null,
+    __PAYPAL_BRAINTREE_QUERY_OPTIONS__: null
 };
 
 type WebpackConfigOptions = {
