@@ -149,5 +149,5 @@ npm run build
 - Run the tests:
 
   ```bash
-  npm run test
+  npm test
   ```
