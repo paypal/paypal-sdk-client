@@ -49,12 +49,14 @@
   ],
   "readmeFilename": "README.md",
   "dependencies": {
+    "flow-bin": "0.56.0",
     "zalgo-promise": "^1.0.22"
   },
   "devDependencies": {
     "esdoc": "^1.0.4",
     "esdoc-flow-type-plugin": "^1.0.1",
     "esdoc-standard-plugin": "^1.0.0",
-    "grumbler-scripts": "^1.0.17"
+    "grumbler-scripts": "^1.0.17",
+    "mocha": "^5.0.5"
   }
 }
