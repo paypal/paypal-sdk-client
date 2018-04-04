@@ -1,7 +1,7 @@
 /* @flow */
 
 module.exports = {
-    'extends': './node_modules/grumbler-scripts/config/.eslintrc.js',
+    'extends': './node_modules/grumbler-scripts/config/.eslintrc-browser.js',
 
     globals: {
         __PAYPAL_BRAINTREE_SERVER_CONFIG__: true,
