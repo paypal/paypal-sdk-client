@@ -9,8 +9,7 @@
 [include]
 [libs]
 flow-typed
-src/types.js
-test/types.js
+src/declarations.js
 node_modules/xcomponent/src/types.js
 [options]
 module.name_mapper='^src\(.*\)$' -> '<PROJECT_ROOT>/src/\1'

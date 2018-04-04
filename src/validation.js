@@ -2,6 +2,7 @@
 
 import { ENV } from './constants';
 import { values, isObject } from './util';
+import type { ClientOptionsType } from './types';
 
 /**
  * Validate options passed to the public client

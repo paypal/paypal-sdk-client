@@ -4,6 +4,7 @@ import { extend } from './util';
 import { getGlobal } from './global';
 import { validateClientOptions } from './validation';
 import { clientConfig, serverConfig, queryOptions } from './clientConfig';
+import type { ClientOptionsType, ClientConfigType, ServerConfigType, QueryOptionsType, ExportsType } from './types';
 
 type AttachOptions = {
     clientOptions : ClientOptionsType,

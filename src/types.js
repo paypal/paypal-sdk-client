@@ -1,7 +1,5 @@
 /* @flow */
 
-declare var __TEST__ : boolean;
-
 export type ClientOptionsType = {
     env? : string,
     auth? : {
@@ -22,6 +20,3 @@ export type QueryOptionsType = {
 export type ExportsType = {
     [ string ] : mixed
 };
-
-declare var __PAYPAL_BRAINTREE_SERVER_CONFIG__: ServerConfigType;
-declare var __PAYPAL_BRAINTREE_QUERY_OPTIONS__: QueryOptionsType;
