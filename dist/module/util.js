@@ -1,5 +1,8 @@
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
+/**
+ * Extend an object with another object
+ */
 export function extend(obj, source) {
     if (!source) {
         return obj;
@@ -18,6 +21,9 @@ export function extend(obj, source) {
     return obj;
 }
 
+/**
+ * Extract the values from an object
+ */
 export function values(obj) {
     if (Object.values) {
         // $FlowFixMe
@@ -35,6 +41,9 @@ export function values(obj) {
     return result;
 }
 
+/**
+ * Return true if the passed value is an object
+ */
 export function isObject(item) {
     return (typeof item === 'undefined' ? 'undefined' : _typeof(item)) === 'object' && item !== null;
 }

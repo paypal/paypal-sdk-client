@@ -3,12 +3,19 @@ import { getGlobal } from './global';
 import { validateClientOptions } from './validation';
 import { clientConfig, serverConfig, queryOptions } from './clientConfig';
 
+
 var exportBuilders = getGlobal('exportBuilders', []);
 
+/**
+ * Attach an interface builder function
+ */
 export function attach(exportBuilder) {
     exportBuilders.push(exportBuilder);
 }
 
+/**
+ * Instantiate the public client
+ */
 export function client() {
     var clientOptions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 

@@ -1,6 +1,10 @@
 import { ENV } from './constants';
 import { values, isObject } from './util';
 
+
+/**
+ * Validate options passed to the public client
+ */
 export function validateClientOptions(_ref) {
     var env = _ref.env,
         auth = _ref.auth;

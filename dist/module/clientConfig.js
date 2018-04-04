@@ -1,16 +1,25 @@
 import { getGlobal } from './global';
 
+/**
+ * Get a shared config value or return a default
+ */
 function get(key, def) {
     var config = getGlobal('config');
     return config.hasOwnProperty(key) ? config[key] : def;
 }
 
+/**
+ * Set a shared config value
+ */
 function set(key, value) {
     var config = getGlobal('config');
     config[key] = value;
     return value;
 }
 
+/**
+ * Get a shared config value, or set a default value
+ */
 function getOrSet(key, value) {
     var config = getGlobal('config');
     if (config.hasOwnProperty(key)) {
