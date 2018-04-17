@@ -38,37 +38,6 @@
         __webpack_require__.p = "";
         return __webpack_require__(__webpack_require__.s = "./src/index.js");
     }({
-        "./src/clientConfig.js": function(module, __webpack_exports__, __webpack_require__) {
-            "use strict";
-            function get(key, def) {
-                var config = Object(__WEBPACK_IMPORTED_MODULE_0__global__.a)("config");
-                return config.hasOwnProperty(key) ? config[key] : def;
-            }
-            function set(key, value) {
-                Object(__WEBPACK_IMPORTED_MODULE_0__global__.a)("config")[key] = value;
-                return value;
-            }
-            function getOrSet(key, value) {
-                var config = Object(__WEBPACK_IMPORTED_MODULE_0__global__.a)("config");
-                if (config.hasOwnProperty(key)) return config[key];
-                config[key] = value;
-                return value;
-            }
-            __webpack_require__.d(__webpack_exports__, "a", function() {
-                return clientConfig;
-            });
-            __webpack_require__.d(__webpack_exports__, "c", function() {
-                return serverConfig;
-            });
-            __webpack_require__.d(__webpack_exports__, "b", function() {
-                return queryOptions;
-            });
-            var __WEBPACK_IMPORTED_MODULE_0__global__ = __webpack_require__("./src/global.js"), clientConfig = {
-                get: get,
-                set: set,
-                getOrSet: getOrSet
-            }, serverConfig = null, queryOptions = null;
-        },
         "./src/constants.js": function(module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.d(__webpack_exports__, "c", function() {
@@ -146,24 +115,37 @@
         },
         "./src/interface.js": function(module, __webpack_exports__, __webpack_require__) {
             "use strict";
-            function attach(exportBuilder) {
-                exportBuilders.push(exportBuilder);
+            function attach(moduleName, exportBuilder) {
+                if (exportBuilders[moduleName]) throw new Error("Already attached " + moduleName);
+                exportBuilders[moduleName] = exportBuilder;
             }
             function client() {
                 var clientOptions = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : {};
                 Object(__WEBPACK_IMPORTED_MODULE_2__validation__.a)(clientOptions);
-                for (var xports = {}, i = 0; i < exportBuilders.length; i++) Object(__WEBPACK_IMPORTED_MODULE_0__util__.a)(xports, exportBuilders[i]({
-                    clientOptions: clientOptions,
-                    clientConfig: __WEBPACK_IMPORTED_MODULE_3__clientConfig__.a,
-                    serverConfig: __WEBPACK_IMPORTED_MODULE_3__clientConfig__.c,
-                    queryOptions: __WEBPACK_IMPORTED_MODULE_3__clientConfig__.b
-                }));
+                var xports = {};
+                Object.keys(exportBuilders).forEach(function(moduleName) {
+                    Object(__WEBPACK_IMPORTED_MODULE_0__util__.a)(xports, exportBuilders[moduleName]({
+                        clientOptions: clientOptions,
+                        queryOptions: __WEBPACK_IMPORTED_MODULE_3__serverData__.a,
+                        serverConfig: __WEBPACK_IMPORTED_MODULE_3__serverData__.b && __WEBPACK_IMPORTED_MODULE_3__serverData__.b[moduleName]
+                    }));
+                });
                 return xports;
             }
             __webpack_exports__.a = attach;
-            var __WEBPACK_IMPORTED_MODULE_0__util__ = __webpack_require__("./src/util.js"), __WEBPACK_IMPORTED_MODULE_1__global__ = __webpack_require__("./src/global.js"), __WEBPACK_IMPORTED_MODULE_2__validation__ = __webpack_require__("./src/validation.js"), __WEBPACK_IMPORTED_MODULE_3__clientConfig__ = __webpack_require__("./src/clientConfig.js"), exportBuilders = Object(__WEBPACK_IMPORTED_MODULE_1__global__.a)("exportBuilders", []);
+            var __WEBPACK_IMPORTED_MODULE_0__util__ = __webpack_require__("./src/util.js"), __WEBPACK_IMPORTED_MODULE_1__global__ = __webpack_require__("./src/global.js"), __WEBPACK_IMPORTED_MODULE_2__validation__ = __webpack_require__("./src/validation.js"), __WEBPACK_IMPORTED_MODULE_3__serverData__ = __webpack_require__("./src/serverData.js"), exportBuilders = Object(__WEBPACK_IMPORTED_MODULE_1__global__.a)("exportBuilders", {});
             window.paypal = window.paypal || {};
             window.paypal.client = window.paypal.client || client;
+        },
+        "./src/serverData.js": function(module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.d(__webpack_exports__, "b", function() {
+                return serverConfig;
+            });
+            __webpack_require__.d(__webpack_exports__, "a", function() {
+                return queryOptions;
+            });
+            var serverConfig = null, queryOptions = null;
         },
         "./src/util.js": function(module, __webpack_exports__, __webpack_require__) {
             "use strict";

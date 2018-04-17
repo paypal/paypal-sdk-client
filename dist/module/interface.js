@@ -1,16 +1,19 @@
 import { extend } from './util';
 import { getGlobal } from './global';
 import { validateClientOptions } from './validation';
-import { clientConfig, serverConfig, queryOptions } from './clientConfig';
+import { serverConfig, queryOptions } from './serverData';
 
 
-var exportBuilders = getGlobal('exportBuilders', []);
+var exportBuilders = getGlobal('exportBuilders', {});
 
 /**
  * Attach an interface builder function
  */
-export function attach(exportBuilder) {
-    exportBuilders.push(exportBuilder);
+export function attach(moduleName, exportBuilder) {
+    if (exportBuilders[moduleName]) {
+        throw new Error('Already attached ' + moduleName);
+    }
+    exportBuilders[moduleName] = exportBuilder;
 }
 
 /**
@@ -24,9 +27,13 @@ export function client() {
 
     var xports = {};
 
-    for (var i = 0; i < exportBuilders.length; i++) {
-        extend(xports, exportBuilders[i]({ clientOptions: clientOptions, clientConfig: clientConfig, serverConfig: serverConfig, queryOptions: queryOptions }));
-    }
+    Object.keys(exportBuilders).forEach(function (moduleName) {
+        extend(xports, exportBuilders[moduleName]({
+            clientOptions: clientOptions,
+            queryOptions: queryOptions,
+            serverConfig: serverConfig && serverConfig[moduleName]
+        }));
+    });
 
     return xports;
 }
