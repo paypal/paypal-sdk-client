@@ -7,8 +7,6 @@ export type ClientOptionsType = {
     }
 };
 
-export type ClientConfigType = Object;
-
 export type ServerConfigType = Object;
 
 export type QueryOptionsType = {

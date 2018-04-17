@@ -3,23 +3,25 @@
 import { extend } from './util';
 import { getGlobal } from './global';
 import { validateClientOptions } from './validation';
-import { clientConfig, serverConfig, queryOptions } from './clientConfig';
-import type { ClientOptionsType, ClientConfigType, ServerConfigType, QueryOptionsType, ExportsType } from './types';
+import { serverConfig, queryOptions } from './serverData';
+import type { ClientOptionsType, ServerConfigType, QueryOptionsType, ExportsType } from './types';
 
 type AttachOptions = {
     clientOptions : ClientOptionsType,
-    clientConfig : ClientConfigType,
     serverConfig : ServerConfigType,
     queryOptions : QueryOptionsType
 };
 
-let exportBuilders: Array<(AttachOptions) => ExportsType> = getGlobal('exportBuilders', []);
+let exportBuilders: { [string] : (AttachOptions) => ExportsType } = getGlobal('exportBuilders', {});
 
 /**
  * Attach an interface builder function
  */
-export function attach(exportBuilder : (AttachOptions) => ExportsType) {
-    exportBuilders.push(exportBuilder);
+export function attach(moduleName : string, exportBuilder : (AttachOptions) => ExportsType) {
+    if (exportBuilders[moduleName]) {
+        throw new Error(`Already attached ${ moduleName }`);
+    }
+    exportBuilders[moduleName] = exportBuilder;
 }
 
 /**
@@ -31,9 +33,13 @@ export function client(clientOptions? : ClientOptionsType = {}) : Object {
 
     let xports = {};
 
-    for (let i = 0; i < exportBuilders.length; i++) {
-        extend(xports, exportBuilders[i]({ clientOptions, clientConfig, serverConfig, queryOptions }));
-    }
+    Object.keys(exportBuilders).forEach(moduleName => {
+        extend(xports, exportBuilders[moduleName]({
+            clientOptions,
+            queryOptions,
+            serverConfig: serverConfig && serverConfig[moduleName]
+        }));
+    });
 
     return xports;
 }
