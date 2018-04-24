@@ -6,7 +6,8 @@ export const ENV = {
     PRODUCTION: 'production',
     SANDBOX:    'sandbox',
     STAGE:      'stage',
-    LOCAL:      'local'
+    LOCAL:      'local',
+    TEST:       'test'
 };
 
 export const GLOBAL_NAMESPACE = 'paypal';
