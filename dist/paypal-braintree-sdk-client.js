@@ -43,37 +43,21 @@
             __webpack_require__.d(__webpack_exports__, "c", function() {
                 return GLOBAL_KEY;
             });
-            __webpack_require__.d(__webpack_exports__, "e", function() {
-                return KEY;
-            });
             __webpack_require__.d(__webpack_exports__, "b", function() {
-                return FUNDING;
-            });
-            __webpack_require__.d(__webpack_exports__, "a", function() {
                 return ENV;
             });
             __webpack_require__.d(__webpack_exports__, "d", function() {
-                return HTTP_HEADERS;
+                return GLOBAL_NAMESPACE;
             });
-            var GLOBAL_KEY = "__paypal_braintree_global__", KEY = {
-                LOGGER_SESSION_ID: "logger_session_id",
-                DEDICATED_FUNDING_MODULES: "dedicated_funding_modules"
-            }, FUNDING = {
-                PAYPAL: "paypal",
-                VENMO: "venmo",
-                CREDIT: "credit",
-                CARD: "card",
-                IDEAL: "ideal",
-                ELV: "elv"
-            }, ENV = {
+            __webpack_require__.d(__webpack_exports__, "a", function() {
+                return DEFAULT_ENV;
+            });
+            var GLOBAL_KEY = "__paypal_braintree_global__", ENV = {
                 PRODUCTION: "production",
                 SANDBOX: "sandbox",
                 STAGE: "stage",
                 LOCAL: "local"
-            }, HTTP_HEADERS = {
-                CONTENT_TYPE: "content-type",
-                ACCEPT: "accept"
-            };
+            }, GLOBAL_NAMESPACE = "paypal", DEFAULT_ENV = ENV.PRODUCTION;
         },
         "./src/global.js": function(module, __webpack_exports__, __webpack_require__) {
             "use strict";
@@ -100,17 +84,14 @@
             __webpack_require__.d(__webpack_exports__, "GLOBAL_KEY", function() {
                 return __WEBPACK_IMPORTED_MODULE_1__constants__.c;
             });
-            __webpack_require__.d(__webpack_exports__, "KEY", function() {
-                return __WEBPACK_IMPORTED_MODULE_1__constants__.e;
-            });
-            __webpack_require__.d(__webpack_exports__, "FUNDING", function() {
+            __webpack_require__.d(__webpack_exports__, "ENV", function() {
                 return __WEBPACK_IMPORTED_MODULE_1__constants__.b;
             });
-            __webpack_require__.d(__webpack_exports__, "ENV", function() {
-                return __WEBPACK_IMPORTED_MODULE_1__constants__.a;
-            });
-            __webpack_require__.d(__webpack_exports__, "HTTP_HEADERS", function() {
+            __webpack_require__.d(__webpack_exports__, "GLOBAL_NAMESPACE", function() {
                 return __WEBPACK_IMPORTED_MODULE_1__constants__.d;
+            });
+            __webpack_require__.d(__webpack_exports__, "DEFAULT_ENV", function() {
+                return __WEBPACK_IMPORTED_MODULE_1__constants__.a;
             });
         },
         "./src/interface.js": function(module, __webpack_exports__, __webpack_require__) {
@@ -121,31 +102,21 @@
             }
             function client() {
                 var clientOptions = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : {};
+                clientOptions = JSON.parse(JSON.stringify(clientOptions));
+                clientOptions.env = Object({}).env || clientOptions.env || __WEBPACK_IMPORTED_MODULE_3__constants__.a;
                 Object(__WEBPACK_IMPORTED_MODULE_2__validation__.a)(clientOptions);
                 var xports = {};
                 Object.keys(exportBuilders).forEach(function(moduleName) {
                     Object(__WEBPACK_IMPORTED_MODULE_0__util__.a)(xports, exportBuilders[moduleName]({
-                        clientOptions: clientOptions,
-                        queryOptions: __WEBPACK_IMPORTED_MODULE_3__serverData__.a,
-                        serverConfig: __WEBPACK_IMPORTED_MODULE_3__serverData__.b && __WEBPACK_IMPORTED_MODULE_3__serverData__.b[moduleName]
+                        clientOptions: clientOptions
                     }));
                 });
                 return xports;
             }
             __webpack_exports__.a = attach;
-            var __WEBPACK_IMPORTED_MODULE_0__util__ = __webpack_require__("./src/util.js"), __WEBPACK_IMPORTED_MODULE_1__global__ = __webpack_require__("./src/global.js"), __WEBPACK_IMPORTED_MODULE_2__validation__ = __webpack_require__("./src/validation.js"), __WEBPACK_IMPORTED_MODULE_3__serverData__ = __webpack_require__("./src/serverData.js"), exportBuilders = Object(__WEBPACK_IMPORTED_MODULE_1__global__.a)("exportBuilders", {});
-            window.paypal = window.paypal || {};
-            window.paypal.client = window.paypal.client || client;
-        },
-        "./src/serverData.js": function(module, __webpack_exports__, __webpack_require__) {
-            "use strict";
-            __webpack_require__.d(__webpack_exports__, "b", function() {
-                return serverConfig;
-            });
-            __webpack_require__.d(__webpack_exports__, "a", function() {
-                return queryOptions;
-            });
-            var serverConfig = null, queryOptions = null;
+            var __WEBPACK_IMPORTED_MODULE_0__util__ = __webpack_require__("./src/util.js"), __WEBPACK_IMPORTED_MODULE_1__global__ = __webpack_require__("./src/global.js"), __WEBPACK_IMPORTED_MODULE_2__validation__ = __webpack_require__("./src/validation.js"), __WEBPACK_IMPORTED_MODULE_3__constants__ = __webpack_require__("./src/constants.js"), exportBuilders = Object(__WEBPACK_IMPORTED_MODULE_1__global__.a)("exportBuilders", {});
+            window[__WEBPACK_IMPORTED_MODULE_3__constants__.d] = window[__WEBPACK_IMPORTED_MODULE_3__constants__.d] || {};
+            window[__WEBPACK_IMPORTED_MODULE_3__constants__.d].client = window.client || client;
         },
         "./src/util.js": function(module, __webpack_exports__, __webpack_require__) {
             "use strict";
@@ -177,7 +148,7 @@
             "use strict";
             function validateClientOptions(_ref) {
                 var env = _ref.env, auth = _ref.auth;
-                if (env && -1 === Object(__WEBPACK_IMPORTED_MODULE_1__util__.c)(__WEBPACK_IMPORTED_MODULE_0__constants__.a).indexOf(env)) throw new Error("Invalid env: " + env);
+                if (env && -1 === Object(__WEBPACK_IMPORTED_MODULE_1__util__.c)(__WEBPACK_IMPORTED_MODULE_0__constants__.b).indexOf(env)) throw new Error("Invalid env: " + env);
                 if (auth && !Object(__WEBPACK_IMPORTED_MODULE_1__util__.b)(auth)) throw new Error("Expected auth to be passed");
                 if (auth && env && !auth[env]) throw new Error("Expected auth to be passed for env: " + env);
             }
