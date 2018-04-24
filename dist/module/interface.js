@@ -1,15 +1,25 @@
-import { extend } from './util';
-import { getGlobal } from './global';
-import { validateClientOptions } from './validation';
-import { GLOBAL_NAMESPACE, DEFAULT_ENV } from './constants';
+'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.attach = attach;
+exports.client = client;
 
-var exportBuilders = getGlobal('exportBuilders', {});
+var _util = require('./util');
+
+var _global = require('./global');
+
+var _validation = require('./validation');
+
+var _constants = require('./constants');
+
+var exportBuilders = (0, _global.getGlobal)('exportBuilders', {});
 
 /**
  * Attach an interface builder function
  */
-export function attach(moduleName, exportBuilder) {
+function attach(moduleName, exportBuilder) {
     if (exportBuilders[moduleName]) {
         throw new Error('Already attached ' + moduleName);
     }
@@ -19,22 +29,25 @@ export function attach(moduleName, exportBuilder) {
 /**
  * Instantiate the public client
  */
-export function client() {
-    var clientOptions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { env: __sdk__.queryOptions.env };
+function client() {
+    var clientOptions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { env: _constants.DEFAULT_ENV };
 
     clientOptions = JSON.parse(JSON.stringify(clientOptions));
-    clientOptions.env = __sdk__.queryOptions.env || clientOptions.env || DEFAULT_ENV;
 
-    validateClientOptions(clientOptions);
+    if (typeof __sdk__ !== 'undefined') {
+        clientOptions.env = __sdk__.queryOptions.env;
+    }
+
+    (0, _validation.validateClientOptions)(clientOptions);
 
     var xports = {};
 
     Object.keys(exportBuilders).forEach(function (moduleName) {
-        extend(xports, exportBuilders[moduleName]({ clientOptions: clientOptions }));
+        (0, _util.extend)(xports, exportBuilders[moduleName]({ clientOptions: clientOptions }));
     });
 
     return xports;
 }
 
-window[GLOBAL_NAMESPACE] = window[GLOBAL_NAMESPACE] || {};
-window[GLOBAL_NAMESPACE].client = window.client || client;
+window[_constants.GLOBAL_NAMESPACE] = window[_constants.GLOBAL_NAMESPACE] || {};
+window[_constants.GLOBAL_NAMESPACE].client = window.client || client;

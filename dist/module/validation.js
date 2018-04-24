@@ -1,20 +1,27 @@
-import { ENV } from './constants';
-import { values, isObject } from './util';
+'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.validateClientOptions = validateClientOptions;
+
+var _constants = require('./constants');
+
+var _util = require('./util');
 
 /**
  * Validate options passed to the public client
  */
-export function validateClientOptions(_ref) {
+function validateClientOptions(_ref) {
     var env = _ref.env,
         auth = _ref.auth;
 
 
-    if (env && values(ENV).indexOf(env) === -1) {
+    if (env && (0, _util.values)(_constants.ENV).indexOf(env) === -1) {
         throw new Error('Invalid env: ' + env);
     }
 
-    if (auth && !isObject(auth)) {
+    if (auth && !(0, _util.isObject)(auth)) {
         throw new Error('Expected auth to be passed');
     }
 

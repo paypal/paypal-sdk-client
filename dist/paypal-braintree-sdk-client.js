@@ -38,63 +38,57 @@
         __webpack_require__.p = "";
         return __webpack_require__(__webpack_require__.s = "./src/index.js");
     }({
-        "./src/constants.js": function(module, __webpack_exports__, __webpack_require__) {
+        "./src/constants.js": function(module, exports, __webpack_require__) {
             "use strict";
-            __webpack_require__.d(__webpack_exports__, "c", function() {
-                return GLOBAL_KEY;
+            Object.defineProperty(exports, "__esModule", {
+                value: !0
             });
-            __webpack_require__.d(__webpack_exports__, "b", function() {
-                return ENV;
-            });
-            __webpack_require__.d(__webpack_exports__, "d", function() {
-                return GLOBAL_NAMESPACE;
-            });
-            __webpack_require__.d(__webpack_exports__, "a", function() {
-                return DEFAULT_ENV;
-            });
-            var GLOBAL_KEY = "__paypal_braintree_global__", ENV = {
+            var ENV = (exports.GLOBAL_KEY = "__paypal_braintree_global__", exports.ENV = {
                 PRODUCTION: "production",
                 SANDBOX: "sandbox",
                 STAGE: "stage",
                 LOCAL: "local"
-            }, GLOBAL_NAMESPACE = "paypal", DEFAULT_ENV = ENV.PRODUCTION;
+            });
+            exports.GLOBAL_NAMESPACE = "paypal", exports.DEFAULT_ENV = ENV.PRODUCTION;
         },
-        "./src/global.js": function(module, __webpack_exports__, __webpack_require__) {
+        "./src/global.js": function(module, exports, __webpack_require__) {
             "use strict";
             function getGlobal(key, def) {
-                window[__WEBPACK_IMPORTED_MODULE_0__constants__.c] = window[__WEBPACK_IMPORTED_MODULE_0__constants__.c] || {};
-                if (window[__WEBPACK_IMPORTED_MODULE_0__constants__.c].hasOwnProperty(key)) return window[__WEBPACK_IMPORTED_MODULE_0__constants__.c][key];
+                window[_constants.GLOBAL_KEY] = window[_constants.GLOBAL_KEY] || {};
+                if (window[_constants.GLOBAL_KEY].hasOwnProperty(key)) return window[_constants.GLOBAL_KEY][key];
                 def = def || {};
-                window[__WEBPACK_IMPORTED_MODULE_0__constants__.c][key] = def;
+                window[_constants.GLOBAL_KEY][key] = def;
                 return def;
             }
-            __webpack_exports__.a = getGlobal;
-            var __WEBPACK_IMPORTED_MODULE_0__constants__ = __webpack_require__("./src/constants.js");
-        },
-        "./src/index.js": function(module, __webpack_exports__, __webpack_require__) {
-            "use strict";
-            Object.defineProperty(__webpack_exports__, "__esModule", {
+            Object.defineProperty(exports, "__esModule", {
                 value: !0
             });
-            var __WEBPACK_IMPORTED_MODULE_0__interface__ = __webpack_require__("./src/interface.js");
-            __webpack_require__.d(__webpack_exports__, "attach", function() {
-                return __WEBPACK_IMPORTED_MODULE_0__interface__.a;
+            exports.getGlobal = getGlobal;
+            var _constants = __webpack_require__("./src/constants.js");
+        },
+        "./src/index.js": function(module, exports, __webpack_require__) {
+            "use strict";
+            Object.defineProperty(exports, "__esModule", {
+                value: !0
             });
-            var __WEBPACK_IMPORTED_MODULE_1__constants__ = __webpack_require__("./src/constants.js");
-            __webpack_require__.d(__webpack_exports__, "GLOBAL_KEY", function() {
-                return __WEBPACK_IMPORTED_MODULE_1__constants__.c;
+            var _interface = __webpack_require__("./src/interface.js");
+            Object.defineProperty(exports, "attach", {
+                enumerable: !0,
+                get: function() {
+                    return _interface.attach;
+                }
             });
-            __webpack_require__.d(__webpack_exports__, "ENV", function() {
-                return __WEBPACK_IMPORTED_MODULE_1__constants__.b;
-            });
-            __webpack_require__.d(__webpack_exports__, "GLOBAL_NAMESPACE", function() {
-                return __WEBPACK_IMPORTED_MODULE_1__constants__.d;
-            });
-            __webpack_require__.d(__webpack_exports__, "DEFAULT_ENV", function() {
-                return __WEBPACK_IMPORTED_MODULE_1__constants__.a;
+            var _constants = __webpack_require__("./src/constants.js");
+            Object.keys(_constants).forEach(function(key) {
+                "default" !== key && "__esModule" !== key && Object.defineProperty(exports, key, {
+                    enumerable: !0,
+                    get: function() {
+                        return _constants[key];
+                    }
+                });
             });
         },
-        "./src/interface.js": function(module, __webpack_exports__, __webpack_require__) {
+        "./src/interface.js": function(module, exports, __webpack_require__) {
             "use strict";
             function attach(moduleName, exportBuilder) {
                 if (exportBuilders[moduleName]) throw new Error("Already attached " + moduleName);
@@ -102,25 +96,29 @@
             }
             function client() {
                 var clientOptions = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : {
-                    env: Object({}).env
+                    env: _constants.DEFAULT_ENV
                 };
                 clientOptions = JSON.parse(JSON.stringify(clientOptions));
-                clientOptions.env = Object({}).env || clientOptions.env || __WEBPACK_IMPORTED_MODULE_3__constants__.a;
-                Object(__WEBPACK_IMPORTED_MODULE_2__validation__.a)(clientOptions);
+                (0, _validation.validateClientOptions)(clientOptions);
                 var xports = {};
                 Object.keys(exportBuilders).forEach(function(moduleName) {
-                    Object(__WEBPACK_IMPORTED_MODULE_0__util__.a)(xports, exportBuilders[moduleName]({
+                    (0, _util.extend)(xports, exportBuilders[moduleName]({
                         clientOptions: clientOptions
                     }));
                 });
                 return xports;
             }
-            __webpack_exports__.a = attach;
-            var __WEBPACK_IMPORTED_MODULE_0__util__ = __webpack_require__("./src/util.js"), __WEBPACK_IMPORTED_MODULE_1__global__ = __webpack_require__("./src/global.js"), __WEBPACK_IMPORTED_MODULE_2__validation__ = __webpack_require__("./src/validation.js"), __WEBPACK_IMPORTED_MODULE_3__constants__ = __webpack_require__("./src/constants.js"), exportBuilders = Object(__WEBPACK_IMPORTED_MODULE_1__global__.a)("exportBuilders", {});
-            window[__WEBPACK_IMPORTED_MODULE_3__constants__.d] = window[__WEBPACK_IMPORTED_MODULE_3__constants__.d] || {};
-            window[__WEBPACK_IMPORTED_MODULE_3__constants__.d].client = window.client || client;
+            Object.defineProperty(exports, "__esModule", {
+                value: !0
+            });
+            exports.attach = attach;
+            exports.client = client;
+            var _util = __webpack_require__("./src/util.js"), _global = __webpack_require__("./src/global.js"), _validation = __webpack_require__("./src/validation.js"), _constants = __webpack_require__("./src/constants.js"), exportBuilders = (0, 
+            _global.getGlobal)("exportBuilders", {});
+            window[_constants.GLOBAL_NAMESPACE] = window[_constants.GLOBAL_NAMESPACE] || {};
+            window[_constants.GLOBAL_NAMESPACE].client = window.client || client;
         },
-        "./src/util.js": function(module, __webpack_exports__, __webpack_require__) {
+        "./src/util.js": function(module, exports, __webpack_require__) {
             "use strict";
             function extend(obj, source) {
                 if (!source) return obj;
@@ -137,25 +135,31 @@
             function isObject(item) {
                 return "object" === (void 0 === item ? "undefined" : _typeof(item)) && null !== item;
             }
-            __webpack_exports__.a = extend;
-            __webpack_exports__.c = values;
-            __webpack_exports__.b = isObject;
+            Object.defineProperty(exports, "__esModule", {
+                value: !0
+            });
             var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
                 return typeof obj;
             } : function(obj) {
                 return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
             };
+            exports.extend = extend;
+            exports.values = values;
+            exports.isObject = isObject;
         },
-        "./src/validation.js": function(module, __webpack_exports__, __webpack_require__) {
+        "./src/validation.js": function(module, exports, __webpack_require__) {
             "use strict";
             function validateClientOptions(_ref) {
                 var env = _ref.env, auth = _ref.auth;
-                if (env && -1 === Object(__WEBPACK_IMPORTED_MODULE_1__util__.c)(__WEBPACK_IMPORTED_MODULE_0__constants__.b).indexOf(env)) throw new Error("Invalid env: " + env);
-                if (auth && !Object(__WEBPACK_IMPORTED_MODULE_1__util__.b)(auth)) throw new Error("Expected auth to be passed");
+                if (env && -1 === (0, _util.values)(_constants.ENV).indexOf(env)) throw new Error("Invalid env: " + env);
+                if (auth && !(0, _util.isObject)(auth)) throw new Error("Expected auth to be passed");
                 if (auth && env && !auth[env]) throw new Error("Expected auth to be passed for env: " + env);
             }
-            __webpack_exports__.a = validateClientOptions;
-            var __WEBPACK_IMPORTED_MODULE_0__constants__ = __webpack_require__("./src/constants.js"), __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__("./src/util.js");
+            Object.defineProperty(exports, "__esModule", {
+                value: !0
+            });
+            exports.validateClientOptions = validateClientOptions;
+            var _constants = __webpack_require__("./src/constants.js"), _util = __webpack_require__("./src/util.js");
         }
     });
 });

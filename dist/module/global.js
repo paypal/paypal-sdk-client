@@ -1,16 +1,23 @@
-import { GLOBAL_KEY } from './constants';
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.getGlobal = getGlobal;
+
+var _constants = require('./constants');
 
 /**
  * Get a shared global object namespaced for the client
  */
-export function getGlobal(key, def) {
-    window[GLOBAL_KEY] = window[GLOBAL_KEY] || {};
-    if (window[GLOBAL_KEY].hasOwnProperty(key)) {
-        return window[GLOBAL_KEY][key];
+function getGlobal(key, def) {
+    window[_constants.GLOBAL_KEY] = window[_constants.GLOBAL_KEY] || {};
+    if (window[_constants.GLOBAL_KEY].hasOwnProperty(key)) {
+        return window[_constants.GLOBAL_KEY][key];
     }
     // $FlowFixMe
     def = def || {};
-    window[GLOBAL_KEY][key] = def;
+    window[_constants.GLOBAL_KEY][key] = def;
     // $FlowFixMe
     return def;
 }

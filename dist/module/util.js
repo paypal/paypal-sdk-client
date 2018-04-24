@@ -1,9 +1,20 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+exports.extend = extend;
+exports.values = values;
+exports.isObject = isObject;
+
 
 /**
  * Extend an object with another object
  */
-export function extend(obj, source) {
+function extend(obj, source) {
     if (!source) {
         return obj;
     }
@@ -24,7 +35,7 @@ export function extend(obj, source) {
 /**
  * Extract the values from an object
  */
-export function values(obj) {
+function values(obj) {
     if (Object.values) {
         // $FlowFixMe
         return Object.values(obj);
@@ -44,6 +55,6 @@ export function values(obj) {
 /**
  * Return true if the passed value is an object
  */
-export function isObject(item) {
+function isObject(item) {
     return (typeof item === 'undefined' ? 'undefined' : _typeof(item)) === 'object' && item !== null;
 }

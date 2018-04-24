@@ -1,12 +1,17 @@
-export var GLOBAL_KEY = '__paypal_braintree_global__';
+'use strict';
 
-export var ENV = {
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var GLOBAL_KEY = exports.GLOBAL_KEY = '__paypal_braintree_global__';
+
+var ENV = exports.ENV = {
     PRODUCTION: 'production',
     SANDBOX: 'sandbox',
     STAGE: 'stage',
     LOCAL: 'local'
 };
 
-export var GLOBAL_NAMESPACE = 'paypal';
+var GLOBAL_NAMESPACE = exports.GLOBAL_NAMESPACE = 'paypal';
 
-export var DEFAULT_ENV = ENV.PRODUCTION;
+var DEFAULT_ENV = exports.DEFAULT_ENV = ENV.PRODUCTION;
