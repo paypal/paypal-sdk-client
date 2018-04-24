@@ -3,13 +3,11 @@
 import { extend } from './util';
 import { getGlobal } from './global';
 import { validateClientOptions } from './validation';
-import { serverConfig, queryOptions } from './serverData';
-import type { ClientOptionsType, ServerConfigType, QueryOptionsType, ExportsType } from './types';
+import { GLOBAL_NAMESPACE, DEFAULT_ENV } from './constants';
+import type { ClientOptionsType, ExportsType } from './types';
 
 type AttachOptions = {
-    clientOptions : ClientOptionsType,
-    serverConfig : ServerConfigType,
-    queryOptions : QueryOptionsType
+    clientOptions : ClientOptionsType
 };
 
 let exportBuilders: { [string] : (AttachOptions) => ExportsType } = getGlobal('exportBuilders', {});
@@ -28,21 +26,19 @@ export function attach(moduleName : string, exportBuilder : (AttachOptions) => E
  * Instantiate the public client
  */
 export function client(clientOptions? : ClientOptionsType = {}) : Object {
+    clientOptions = JSON.parse(JSON.stringify(clientOptions));
+    clientOptions.env = __sdk__.queryOptions.env || clientOptions.env || DEFAULT_ENV;
 
     validateClientOptions(clientOptions);
 
     let xports = {};
 
     Object.keys(exportBuilders).forEach(moduleName => {
-        extend(xports, exportBuilders[moduleName]({
-            clientOptions,
-            queryOptions,
-            serverConfig: serverConfig && serverConfig[moduleName]
-        }));
+        extend(xports, exportBuilders[moduleName]({ clientOptions }));
     });
 
     return xports;
 }
 
-window.paypal = window.paypal || {};
-window.paypal.client = window.paypal.client || client;
+window[GLOBAL_NAMESPACE] = window[GLOBAL_NAMESPACE] || {};
+window[GLOBAL_NAMESPACE].client = window.client || client;

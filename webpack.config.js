@@ -113,10 +113,16 @@ function getWebpackConfig({ filename, modulename, minify = false, options = {}, 
         ...options
     };
 }
-
 export let WEBPACK_CONFIG = getWebpackConfig({
     filename:   `${ FILE_NAME }.js`,
-    modulename: MODULE_NAME
+    modulename: MODULE_NAME,
+    vars:       {
+        __sdk__: {
+            queryOptions: {
+                
+            }
+        }
+    }
 });
 
 export let WEBPACK_CONFIG_MIN = getWebpackConfig({
@@ -124,7 +130,12 @@ export let WEBPACK_CONFIG_MIN = getWebpackConfig({
     modulename: MODULE_NAME,
     minify:     true,
     vars:       {
-        __MIN__: true
+        __MIN__: true,
+        __sdk__: {
+            queryOptions: {
+
+            }
+        }
     }
 });
 
@@ -135,7 +146,12 @@ export let WEBPACK_CONFIG_TEST = getWebpackConfig({
         devtool: 'inline-source-map'
     },
     vars: {
-        __TEST__: true
+        __TEST__: true,
+        __sdk__:  {
+            queryOptions: {
+                env: 'test'
+            }
+        }
     }
 });
 

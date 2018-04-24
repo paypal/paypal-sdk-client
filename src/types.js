@@ -7,14 +7,20 @@ export type ClientOptionsType = {
     }
 };
 
-export type ServerConfigType = Object;
-
 export type QueryOptionsType = {
-    modules : Array<string>,
+    components : Array<string>,
     merchantID : string,
-    locale : string
+    locale : {
+        country : string,
+        lang : string
+    },
+    env : string
 };
 
 export type ExportsType = {
     [ string ] : mixed
+};
+
+export type SDKGlobalType = {
+    queryOptions : QueryOptionsType
 };
