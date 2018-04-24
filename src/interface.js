@@ -25,10 +25,13 @@ export function attach(moduleName : string, exportBuilder : (AttachOptions) => E
 /**
  * Instantiate the public client
  */
-export function client(clientOptions? : ClientOptionsType = { env: __sdk__.queryOptions.env }) : Object {
+export function client(clientOptions? : ClientOptionsType = { env: DEFAULT_ENV }) : Object {
     clientOptions = JSON.parse(JSON.stringify(clientOptions));
-    clientOptions.env = __sdk__.queryOptions.env || clientOptions.env || DEFAULT_ENV;
 
+    if (typeof __sdk__ !== 'undefined') {
+        clientOptions.env = __sdk__.queryOptions.env;
+    }
+    
     validateClientOptions(clientOptions);
 
     let xports = {};
