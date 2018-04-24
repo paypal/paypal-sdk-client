@@ -1,7 +1,7 @@
 /* @flow */
 
 export type ClientOptionsType = {
-    env? : string,
+    env : string,
     auth? : {
         [string] : string
     }

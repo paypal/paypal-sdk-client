@@ -25,7 +25,7 @@ export function attach(moduleName : string, exportBuilder : (AttachOptions) => E
 /**
  * Instantiate the public client
  */
-export function client(clientOptions? : ClientOptionsType = {}) : Object {
+export function client(clientOptions? : ClientOptionsType = { env: __sdk__.queryOptions.env }) : Object {
     clientOptions = JSON.parse(JSON.stringify(clientOptions));
     clientOptions.env = __sdk__.queryOptions.env || clientOptions.env || DEFAULT_ENV;
 
