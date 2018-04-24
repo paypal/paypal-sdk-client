@@ -101,7 +101,9 @@
                 exportBuilders[moduleName] = exportBuilder;
             }
             function client() {
-                var clientOptions = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : {};
+                var clientOptions = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : {
+                    env: Object({}).env
+                };
                 clientOptions = JSON.parse(JSON.stringify(clientOptions));
                 clientOptions.env = Object({}).env || clientOptions.env || __WEBPACK_IMPORTED_MODULE_3__constants__.a;
                 Object(__WEBPACK_IMPORTED_MODULE_2__validation__.a)(clientOptions);

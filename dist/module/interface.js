@@ -20,7 +20,7 @@ export function attach(moduleName, exportBuilder) {
  * Instantiate the public client
  */
 export function client() {
-    var clientOptions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var clientOptions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { env: __sdk__.queryOptions.env };
 
     clientOptions = JSON.parse(JSON.stringify(clientOptions));
     clientOptions.env = __sdk__.queryOptions.env || clientOptions.env || DEFAULT_ENV;
