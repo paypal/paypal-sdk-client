@@ -1,7 +1,7 @@
 // @flow
 
 declare export var DEFAULT_ENV: string;
-declare export var ENV: {LOCAL: string, PRODUCTION: string, SANDBOX: string, STAGE: string};
+declare export var ENV: {LOCAL: string, PRODUCTION: string, SANDBOX: string, STAGE: string, TEST: string};
 declare export var GLOBAL_KEY: string;
 declare export var GLOBAL_NAMESPACE: string;
 declare export function attach(moduleName: string, exportBuilder: (_: {clientOptions: {auth?: {[_: string]: string}, env: string}}) => {[_: string]: mixed}): void;

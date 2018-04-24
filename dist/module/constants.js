@@ -9,7 +9,8 @@ var ENV = exports.ENV = {
     PRODUCTION: 'production',
     SANDBOX: 'sandbox',
     STAGE: 'stage',
-    LOCAL: 'local'
+    LOCAL: 'local',
+    TEST: 'test'
 };
 
 var GLOBAL_NAMESPACE = exports.GLOBAL_NAMESPACE = 'paypal';

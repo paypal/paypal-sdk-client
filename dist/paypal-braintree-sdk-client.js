@@ -47,7 +47,8 @@
                 PRODUCTION: "production",
                 SANDBOX: "sandbox",
                 STAGE: "stage",
-                LOCAL: "local"
+                LOCAL: "local",
+                TEST: "test"
             });
             exports.GLOBAL_NAMESPACE = "paypal", exports.DEFAULT_ENV = ENV.PRODUCTION;
         },
