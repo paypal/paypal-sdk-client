@@ -5,7 +5,7 @@ A shared client for PayPal/Braintree client sdk modules. Featuring:
 
 - Shared configuration between modules:
   - Client-side merchant passed options
-  - Shared module <-> module config
+  - Shared module to module config
   - Server-side inlined configuration
 - Inlinable into multiple client modules/components
   - Modules can tree-shake anything they don't need (e.g. config fetching)
