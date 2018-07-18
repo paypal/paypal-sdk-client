@@ -10,7 +10,7 @@ type AttachOptions = {
     clientOptions : ClientOptionsType
 };
 
-let exportBuilders: { [string] : (AttachOptions) => ExportsType } = getGlobal('exportBuilders', {});
+let exportBuilders : { [string] : (AttachOptions) => ExportsType } = getGlobal('exportBuilders', {});
 
 /**
  * Attach an interface builder function
