@@ -1,8 +1,6 @@
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
+exports.__esModule = true;
 var GLOBAL_KEY = exports.GLOBAL_KEY = '__paypal_braintree_global__';
 
 var ENV = exports.ENV = {
