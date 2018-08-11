@@ -1,8 +1,8 @@
 'use strict';
 
 exports.__esModule = true;
-exports.attach = attach;
 exports.client = client;
+exports.attach = attach;
 
 var _util = require('./util');
 
@@ -13,16 +13,6 @@ var _validation = require('./validation');
 var _constants = require('./constants');
 
 var exportBuilders = (0, _global.getGlobal)('exportBuilders', {});
-
-/**
- * Attach an interface builder function
- */
-function attach(moduleName, exportBuilder) {
-    if (exportBuilders[moduleName]) {
-        throw new Error('Already attached ' + moduleName);
-    }
-    exportBuilders[moduleName] = exportBuilder;
-}
 
 /**
  * Instantiate the public client
@@ -47,5 +37,16 @@ function client() {
     return xports;
 }
 
-window[_constants.GLOBAL_NAMESPACE] = window[_constants.GLOBAL_NAMESPACE] || {};
-window[_constants.GLOBAL_NAMESPACE].client = window.client || client;
+/**
+ * Attach an interface builder function
+ */
+function attach(moduleName, exportBuilder) {
+    if (exportBuilders[moduleName]) {
+        throw new Error('Already attached ' + moduleName);
+    }
+
+    window[_constants.GLOBAL_NAMESPACE] = window[_constants.GLOBAL_NAMESPACE] || {};
+    window[_constants.GLOBAL_NAMESPACE].client = window.client || client;
+
+    exportBuilders[moduleName] = exportBuilder;
+}
