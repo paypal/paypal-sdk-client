@@ -13,16 +13,6 @@ type AttachOptions = {
 let exportBuilders : { [string] : (AttachOptions) => ExportsType } = getGlobal('exportBuilders', {});
 
 /**
- * Attach an interface builder function
- */
-export function attach(moduleName : string, exportBuilder : (AttachOptions) => ExportsType) {
-    if (exportBuilders[moduleName]) {
-        throw new Error(`Already attached ${ moduleName }`);
-    }
-    exportBuilders[moduleName] = exportBuilder;
-}
-
-/**
  * Instantiate the public client
  */
 export function client(clientOptions? : ClientOptionsType = { env: DEFAULT_ENV }) : Object {
@@ -43,5 +33,17 @@ export function client(clientOptions? : ClientOptionsType = { env: DEFAULT_ENV }
     return xports;
 }
 
-window[GLOBAL_NAMESPACE] = window[GLOBAL_NAMESPACE] || {};
-window[GLOBAL_NAMESPACE].client = window.client || client;
+
+/**
+ * Attach an interface builder function
+ */
+export function attach(moduleName : string, exportBuilder : (AttachOptions) => ExportsType) {
+    if (exportBuilders[moduleName]) {
+        throw new Error(`Already attached ${ moduleName }`);
+    }
+
+    window[GLOBAL_NAMESPACE] = window[GLOBAL_NAMESPACE] || {};
+    window[GLOBAL_NAMESPACE].client = window.client || client;
+
+    exportBuilders[moduleName] = exportBuilder;
+}
