@@ -455,7 +455,11 @@ export type CountryLangs = {
     ZW : 'en'
 };
 
-export const COUNTRY_LANGS = {
+type CountryMap = {
+    [ $Values<typeof COUNTRY> ] : Array<$Values<typeof LANG>>
+};
+
+export const COUNTRY_LANGS : CountryMap = {
     [COUNTRY.AD]: [ LANG.EN, LANG.FR, LANG.ES, LANG.ZH ],
     [COUNTRY.AE]: [ LANG.EN, LANG.FR, LANG.ES, LANG.ZH, LANG.AR ],
     [COUNTRY.AG]: [ LANG.EN, LANG.FR, LANG.ES, LANG.ZH ],
