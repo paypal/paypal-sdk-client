@@ -2128,11 +2128,12 @@
             exports.__esModule = !0;
             exports.GLOBAL_KEY = "__paypal_braintree_global__";
             var _COUNTRY_LANGS, ENV = exports.ENV = {
-                PRODUCTION: "production",
-                SANDBOX: "sandbox",
-                STAGE: "stage",
                 LOCAL: "local",
-                TEST: "test"
+                STAGE: "stage",
+                SANDBOX: "sandbox",
+                PRODUCTION: "production",
+                TEST: "test",
+                DEMO: "demo"
             }, COUNTRY = (exports.GLOBAL_NAMESPACE = "paypal", exports.DEFAULT_ENV = ENV.PRODUCTION, 
             exports.COUNTRY = {
                 AD: "AD",
