@@ -4,13 +4,13 @@
 export const GLOBAL_KEY = '__paypal_braintree_global__';
 
 export const ENV = {
-    PRODUCTION: 'production',
-    SANDBOX:    'sandbox',
-    STAGE:      'stage',
-    LOCAL:      'local',
-    TEST:       'test'
+    LOCAL:      ('local' : 'local'),
+    STAGE:      ('stage' : 'stage'),
+    SANDBOX:    ('sandbox' : 'sandbox'),
+    PRODUCTION: ('production' : 'production'),
+    TEST:       ('test' : 'test'),
+    DEMO:       ('demo' : 'demo')
 };
-
 export const GLOBAL_NAMESPACE = 'paypal';
 
 export const DEFAULT_ENV = ENV.PRODUCTION;
