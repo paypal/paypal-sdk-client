@@ -1,18 +1,9 @@
-'use strict';
-
-exports.__esModule = true;
-
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-exports.extend = extend;
-exports.values = values;
-exports.isObject = isObject;
-
 
 /**
  * Extend an object with another object
  */
-function extend(obj, source) {
+export function extend(obj, source) {
     if (!source) {
         return obj;
     }
@@ -33,7 +24,7 @@ function extend(obj, source) {
 /**
  * Extract the values from an object
  */
-function values(obj) {
+export function values(obj) {
     if (Object.values) {
         // $FlowFixMe
         return Object.values(obj);
@@ -53,6 +44,6 @@ function values(obj) {
 /**
  * Return true if the passed value is an object
  */
-function isObject(item) {
+export function isObject(item) {
     return (typeof item === 'undefined' ? 'undefined' : _typeof(item)) === 'object' && item !== null;
 }

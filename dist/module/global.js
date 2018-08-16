@@ -1,25 +1,20 @@
-'use strict';
+import { getGlobal as getGlob } from 'belter/src';
 
-exports.__esModule = true;
-exports.getGlobal = getGlobal;
-
-var _src = require('belter/src');
-
-var _constants = require('./constants');
+import { GLOBAL_KEY } from './constants';
 
 /**
  * Get a shared global object namespaced for the client
  */
-function getGlobal(key, def) {
-    var glob = (0, _src.getGlobal)();
+export function getGlobal(key, def) {
+    var glob = getGlob();
 
-    glob[_constants.GLOBAL_KEY] = glob[_constants.GLOBAL_KEY] || {};
-    if (glob[_constants.GLOBAL_KEY].hasOwnProperty(key)) {
-        return glob[_constants.GLOBAL_KEY][key];
+    glob[GLOBAL_KEY] = glob[GLOBAL_KEY] || {};
+    if (glob[GLOBAL_KEY].hasOwnProperty(key)) {
+        return glob[GLOBAL_KEY][key];
     }
     // $FlowFixMe
     def = def || {};
-    glob[_constants.GLOBAL_KEY][key] = def;
+    glob[GLOBAL_KEY][key] = def;
     // $FlowFixMe
     return def;
 }

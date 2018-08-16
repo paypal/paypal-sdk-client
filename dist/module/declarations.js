@@ -1,3 +1,2 @@
-'use strict';
 
-var _constants = require('./constants');
+import { COUNTRY, LANG, ENV } from './constants';
