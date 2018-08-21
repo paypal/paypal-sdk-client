@@ -694,16 +694,48 @@
                 return promise_ZalgoPromise;
             });
         },
-        "./src/index.js": function(module, __webpack_exports__, __webpack_require__) {
+        "./src/config.js": function(module, __webpack_exports__, __webpack_require__) {
             "use strict";
-            Object.defineProperty(__webpack_exports__, "__esModule", {
-                value: !0
+            __webpack_require__.d(__webpack_exports__, "a", function() {
+                return URLS;
             });
-            var _COUNTRY_LANGS, _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
-                return typeof obj;
-            } : function(obj) {
-                return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-            }, src = __webpack_require__("./node_modules/belter/src/index.js"), GLOBAL_KEY = "__paypal_braintree_global__", ENV = {
+            var URLS = {
+                LOGGER: "https://www.paypal.com/webapps/hermes/logger"
+            };
+        },
+        "./src/constants.js": function(module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.d(__webpack_exports__, "h", function() {
+                return GLOBAL_KEY;
+            });
+            __webpack_require__.d(__webpack_exports__, "d", function() {
+                return ENV;
+            });
+            __webpack_require__.d(__webpack_exports__, "i", function() {
+                return GLOBAL_NAMESPACE;
+            });
+            __webpack_require__.d(__webpack_exports__, "c", function() {
+                return DEFAULT_ENV;
+            });
+            __webpack_require__.d(__webpack_exports__, "a", function() {
+                return COUNTRY;
+            });
+            __webpack_require__.d(__webpack_exports__, "j", function() {
+                return LANG;
+            });
+            __webpack_require__.d(__webpack_exports__, "b", function() {
+                return COUNTRY_LANGS;
+            });
+            __webpack_require__.d(__webpack_exports__, "g", function() {
+                return FPTI_KEY;
+            });
+            __webpack_require__.d(__webpack_exports__, "e", function() {
+                return FPTI_DATA_SOURCE;
+            });
+            __webpack_require__.d(__webpack_exports__, "f", function() {
+                return FPTI_FEED;
+            });
+            var _COUNTRY_LANGS, GLOBAL_KEY = "__paypal_braintree_global__", ENV = {
                 LOCAL: "local",
                 STAGE: "stage",
                 SANDBOX: "sandbox",
@@ -1073,17 +1105,91 @@
                 PAYMENTS_SDK: "payments_sdk"
             }, FPTI_FEED = {
                 PAYMENTS_SDK: "payments_sdk"
-            }, exportBuilders = function(key, def) {
+            };
+        },
+        "./src/index.js": function(module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            Object.defineProperty(__webpack_exports__, "__esModule", {
+                value: !0
+            });
+            var __WEBPACK_IMPORTED_MODULE_0__interface__ = __webpack_require__("./src/interface.js");
+            __webpack_require__.d(__webpack_exports__, "attach", function() {
+                return __WEBPACK_IMPORTED_MODULE_0__interface__.a;
+            });
+            var __WEBPACK_IMPORTED_MODULE_1__constants__ = __webpack_require__("./src/constants.js");
+            __webpack_require__.d(__webpack_exports__, "GLOBAL_KEY", function() {
+                return __WEBPACK_IMPORTED_MODULE_1__constants__.h;
+            });
+            __webpack_require__.d(__webpack_exports__, "ENV", function() {
+                return __WEBPACK_IMPORTED_MODULE_1__constants__.d;
+            });
+            __webpack_require__.d(__webpack_exports__, "GLOBAL_NAMESPACE", function() {
+                return __WEBPACK_IMPORTED_MODULE_1__constants__.i;
+            });
+            __webpack_require__.d(__webpack_exports__, "DEFAULT_ENV", function() {
+                return __WEBPACK_IMPORTED_MODULE_1__constants__.c;
+            });
+            __webpack_require__.d(__webpack_exports__, "COUNTRY", function() {
+                return __WEBPACK_IMPORTED_MODULE_1__constants__.a;
+            });
+            __webpack_require__.d(__webpack_exports__, "LANG", function() {
+                return __WEBPACK_IMPORTED_MODULE_1__constants__.j;
+            });
+            __webpack_require__.d(__webpack_exports__, "COUNTRY_LANGS", function() {
+                return __WEBPACK_IMPORTED_MODULE_1__constants__.b;
+            });
+            __webpack_require__.d(__webpack_exports__, "FPTI_KEY", function() {
+                return __WEBPACK_IMPORTED_MODULE_1__constants__.g;
+            });
+            __webpack_require__.d(__webpack_exports__, "FPTI_DATA_SOURCE", function() {
+                return __WEBPACK_IMPORTED_MODULE_1__constants__.e;
+            });
+            __webpack_require__.d(__webpack_exports__, "FPTI_FEED", function() {
+                return __WEBPACK_IMPORTED_MODULE_1__constants__.f;
+            });
+            var __WEBPACK_IMPORTED_MODULE_2__config__ = __webpack_require__("./src/config.js");
+            __webpack_require__.d(__webpack_exports__, "URLS", function() {
+                return __WEBPACK_IMPORTED_MODULE_2__config__.a;
+            });
+            var __WEBPACK_IMPORTED_MODULE_3__logger__ = __webpack_require__("./src/logger.js");
+            __webpack_require__.d(__webpack_exports__, "logger", function() {
+                return __WEBPACK_IMPORTED_MODULE_3__logger__.b;
+            });
+            __webpack_require__.d(__webpack_exports__, "getSessionID", function() {
+                return __WEBPACK_IMPORTED_MODULE_3__logger__.a;
+            });
+            var __WEBPACK_IMPORTED_MODULE_4__types__ = __webpack_require__("./src/types.js");
+            __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__types__);
+            for (var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_4__types__) [ "attach", "GLOBAL_KEY", "ENV", "GLOBAL_NAMESPACE", "DEFAULT_ENV", "COUNTRY", "LANG", "COUNTRY_LANGS", "FPTI_KEY", "FPTI_DATA_SOURCE", "FPTI_FEED", "URLS", "logger", "getSessionID", "default" ].indexOf(__WEBPACK_IMPORT_KEY__) < 0 && function(key) {
+                __webpack_require__.d(__webpack_exports__, key, function() {
+                    return __WEBPACK_IMPORTED_MODULE_4__types__[key];
+                });
+            }(__WEBPACK_IMPORT_KEY__);
+        },
+        "./src/interface.js": function(module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+                return typeof obj;
+            } : function(obj) {
+                return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+            }, src = __webpack_require__("./node_modules/belter/src/index.js"), constants = __webpack_require__("./src/constants.js");
+            __webpack_exports__.a = function(moduleName, exportBuilder) {
+                if (exportBuilders[moduleName]) throw new Error("Already attached " + moduleName);
+                window[constants.i] = window[constants.i] || {};
+                window[constants.i].client = window.client || client;
+                exportBuilders[moduleName] = exportBuilder;
+            };
+            var exportBuilders = function(key, def) {
                 var glob = Object(src.getGlobal)();
-                glob[GLOBAL_KEY] = glob[GLOBAL_KEY] || {};
-                if (glob[GLOBAL_KEY].hasOwnProperty(key)) return glob[GLOBAL_KEY][key];
+                glob[constants.h] = glob[constants.h] || {};
+                if (glob[constants.h].hasOwnProperty(key)) return glob[constants.h][key];
                 def = def || {};
-                glob[GLOBAL_KEY][key] = def;
+                glob[constants.h][key] = def;
                 return def;
             }("exportBuilders", {});
             function client() {
                 var clientOptions = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : {
-                    env: DEFAULT_ENV
+                    env: constants.c
                 };
                 !function(_ref) {
                     var item, env = _ref.env, auth = _ref.auth;
@@ -1092,7 +1198,7 @@
                         var result = [];
                         for (var key in obj) obj.hasOwnProperty(key) && result.push(obj[key]);
                         return result;
-                    }(ENV).indexOf(env)) throw new Error("Invalid env: " + env);
+                    }(constants.d).indexOf(env)) throw new Error("Invalid env: " + env);
                     if (auth && !(item = auth, "object" === (void 0 === item ? "undefined" : _typeof(item)) && null !== item)) throw new Error("Expected auth to be passed");
                     if (auth && env && !auth[env]) throw new Error("Expected auth to be passed for env: " + env);
                 }(clientOptions = JSON.parse(JSON.stringify(clientOptions)));
@@ -1108,15 +1214,10 @@
                 });
                 return xports;
             }
-            function attach(moduleName, exportBuilder) {
-                if (exportBuilders[moduleName]) throw new Error("Already attached " + moduleName);
-                window[GLOBAL_NAMESPACE] = window[GLOBAL_NAMESPACE] || {};
-                window[GLOBAL_NAMESPACE].client = window.client || client;
-                exportBuilders[moduleName] = exportBuilder;
-            }
-            var URLS = {
-                LOGGER: "https://www.paypal.com/webapps/hermes/logger"
-            }, zalgo_promise_src = __webpack_require__("./node_modules/zalgo-promise/src/index.js"), AUTO_FLUSH_LEVEL = [ "warn", "error" ], LOG_LEVEL_PRIORITY = [ "error", "warn", "info", "debug" ], _extends = Object.assign || function(target) {
+        },
+        "./src/logger.js": function(module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            var src = __webpack_require__("./node_modules/zalgo-promise/src/index.js"), belter_src = __webpack_require__("./node_modules/belter/src/index.js"), AUTO_FLUSH_LEVEL = [ "warn", "error" ], LOG_LEVEL_PRIORITY = [ "error", "warn", "info", "debug" ], _extends = Object.assign || function(target) {
                 for (var i = 1; i < arguments.length; i++) {
                     var source = arguments[i];
                     for (var key in source) Object.prototype.hasOwnProperty.call(source, key) && (target[key] = source[key]);
@@ -1125,20 +1226,25 @@
             };
             function httpTransport(_ref) {
                 var url = _ref.url, method = _ref.method, headers = _ref.headers, json = _ref.json;
-                return Object(src.request)({
+                return Object(belter_src.request)({
                     url: url,
                     method: method,
                     headers: headers,
                     json: json
-                }).then(src.noop);
+                }).then(belter_src.noop);
             }
             function extendIfDefined(target, source) {
                 for (var key in source) source.hasOwnProperty(key) && source[key] && (target[key] = source[key]);
             }
+            var config = __webpack_require__("./src/config.js"), constants = __webpack_require__("./src/constants.js");
+            __webpack_require__.d(__webpack_exports__, "b", function() {
+                return logger;
+            });
+            __webpack_exports__.a = getSessionID;
             var logger = function(_ref2) {
                 var url = _ref2.url, prefix = _ref2.prefix, _ref2$logLevel = _ref2.logLevel, logLevel = void 0 === _ref2$logLevel ? "warn" : _ref2$logLevel, _ref2$transport = _ref2.transport, transport = void 0 === _ref2$transport ? httpTransport : _ref2$transport, _ref2$flushInterval = _ref2.flushInterval, flushInterval = void 0 === _ref2$flushInterval ? 6e4 : _ref2$flushInterval, events = [], tracking = [], payloadBuilders = [], metaBuilders = [], trackingBuilders = [], headerBuilders = [];
                 function print(level, event, payload) {
-                    if (Object(src.isBrowser)() && window.console && window.console.log) {
+                    if (Object(belter_src.isBrowser)() && window.console && window.console.log) {
                         var consoleLogLevel = logLevel;
                         window.LOG_LEVEL && -1 !== LOG_LEVEL_PRIORITY.indexOf(window.LOG_LEVEL) && (consoleLogLevel = window.LOG_LEVEL);
                         if (!(LOG_LEVEL_PRIORITY.indexOf(level) > LOG_LEVEL_PRIORITY.indexOf(consoleLogLevel))) {
@@ -1152,8 +1258,8 @@
                     }
                 }
                 function immediateFlush() {
-                    return zalgo_promise_src.a.try(function() {
-                        if (Object(src.isBrowser)() && (events.length || tracking.length)) {
+                    return src.a.try(function() {
+                        if (Object(belter_src.isBrowser)() && (events.length || tracking.length)) {
                             for (var meta = {}, _i2 = 0, _length2 = null == metaBuilders ? 0 : metaBuilders.length; _i2 < _length2; _i2++) extendIfDefined(meta, (0, 
                             metaBuilders[_i2])(meta));
                             for (var headers = {}, _i4 = 0, _length4 = null == headerBuilders ? 0 : headerBuilders.length; _i4 < _length4; _i4++) extendIfDefined(headers, (0, 
@@ -1170,16 +1276,16 @@
                             });
                             events = [];
                             tracking = [];
-                            return req.then(src.noop);
+                            return req.then(belter_src.noop);
                         }
                     });
                 }
-                var flush = Object(src.promiseDebounce)(immediateFlush);
+                var flush = Object(belter_src.promiseDebounce)(immediateFlush);
                 function log(level, event) {
                     var payload = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : {};
-                    if (Object(src.isBrowser)()) {
+                    if (Object(belter_src.isBrowser)()) {
                         prefix && (event = prefix + "_" + event);
-                        for (var logPayload = _extends({}, Object(src.objFilter)(payload), {
+                        for (var logPayload = _extends({}, Object(belter_src.objFilter)(payload), {
                             timestamp: Date.now().toString()
                         }), _i6 = 0, _length6 = null == payloadBuilders ? 0 : payloadBuilders.length; _i6 < _length6; _i6++) extendIfDefined(logPayload, (0, 
                         payloadBuilders[_i6])(logPayload));
@@ -1194,7 +1300,7 @@
                         print(level, event, logPayload);
                     }
                 }
-                Object(src.isBrowser)() && Object(src.safeInterval)(flush, flushInterval);
+                Object(belter_src.isBrowser)() && Object(belter_src.safeInterval)(flush, flushInterval);
                 return {
                     debug: function(event, payload) {
                         log("debug", event, payload);
@@ -1210,8 +1316,8 @@
                     },
                     track: function() {
                         var payload = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : {};
-                        if (Object(src.isBrowser)()) {
-                            for (var trackingPayload = Object(src.objFilter)(payload), _i8 = 0, _length8 = null == trackingBuilders ? 0 : trackingBuilders.length; _i8 < _length8; _i8++) extendIfDefined(trackingPayload, (0, 
+                        if (Object(belter_src.isBrowser)()) {
+                            for (var trackingPayload = Object(belter_src.objFilter)(payload), _i8 = 0, _length8 = null == trackingBuilders ? 0 : trackingBuilders.length; _i8 < _length8; _i8++) extendIfDefined(trackingPayload, (0, 
                             trackingBuilders[_i8])(trackingPayload));
                             print("debug", "track", trackingPayload);
                             tracking.push(trackingPayload);
@@ -1236,8 +1342,8 @@
                     }
                 };
             }({
-                url: URLS.LOGGER
-            }), storage = Object(src.getStorage)({
+                url: config.a.LOGGER
+            }), storage = Object(belter_src.getStorage)({
                 name: "paypal_payments_sdk"
             });
             function getSessionID() {
@@ -1252,54 +1358,13 @@
             });
             logger.addTrackingBuilder(function() {
                 var _ref, sessionID = getSessionID();
-                return (_ref = {})[FPTI_KEY.FEED] = FPTI_FEED.PAYMENTS_SDK, _ref[FPTI_KEY.DATA_SOURCE] = FPTI_DATA_SOURCE.PAYMENTS_SDK, 
-                _ref[FPTI_KEY.CLIENT_ID] = __CLIENT_ID__, _ref[FPTI_KEY.SELLER_ID] = __MERCHANT_ID__, 
-                _ref[FPTI_KEY.SESSION_UID] = sessionID, _ref[FPTI_KEY.REFERER] = window.location.host, 
+                return (_ref = {})[constants.g.FEED] = constants.f.PAYMENTS_SDK, _ref[constants.g.DATA_SOURCE] = constants.e.PAYMENTS_SDK, 
+                _ref[constants.g.CLIENT_ID] = __CLIENT_ID__, _ref[constants.g.SELLER_ID] = __MERCHANT_ID__, 
+                _ref[constants.g.SESSION_UID] = sessionID, _ref[constants.g.REFERER] = window.location.host, 
                 _ref;
             });
-            __webpack_require__.d(__webpack_exports__, "attach", function() {
-                return attach;
-            });
-            __webpack_require__.d(__webpack_exports__, "GLOBAL_KEY", function() {
-                return GLOBAL_KEY;
-            });
-            __webpack_require__.d(__webpack_exports__, "ENV", function() {
-                return ENV;
-            });
-            __webpack_require__.d(__webpack_exports__, "GLOBAL_NAMESPACE", function() {
-                return GLOBAL_NAMESPACE;
-            });
-            __webpack_require__.d(__webpack_exports__, "DEFAULT_ENV", function() {
-                return DEFAULT_ENV;
-            });
-            __webpack_require__.d(__webpack_exports__, "COUNTRY", function() {
-                return COUNTRY;
-            });
-            __webpack_require__.d(__webpack_exports__, "LANG", function() {
-                return LANG;
-            });
-            __webpack_require__.d(__webpack_exports__, "COUNTRY_LANGS", function() {
-                return COUNTRY_LANGS;
-            });
-            __webpack_require__.d(__webpack_exports__, "FPTI_KEY", function() {
-                return FPTI_KEY;
-            });
-            __webpack_require__.d(__webpack_exports__, "FPTI_DATA_SOURCE", function() {
-                return FPTI_DATA_SOURCE;
-            });
-            __webpack_require__.d(__webpack_exports__, "FPTI_FEED", function() {
-                return FPTI_FEED;
-            });
-            __webpack_require__.d(__webpack_exports__, "URLS", function() {
-                return URLS;
-            });
-            __webpack_require__.d(__webpack_exports__, "logger", function() {
-                return logger;
-            });
-            __webpack_require__.d(__webpack_exports__, "getSessionID", function() {
-                return getSessionID;
-            });
-        }
+        },
+        "./src/types.js": function(module, exports) {}
     });
 });
 //# sourceMappingURL=paypal-braintree-sdk-client.js.map
