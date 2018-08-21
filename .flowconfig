@@ -6,6 +6,7 @@
 .*/node_modules/cross-domain-utils/dist
 .*/node_modules/cross-domain-utils/test
 .*/node_modules/npm
+.*/dist/module
 [include]
 [libs]
 flow-typed
