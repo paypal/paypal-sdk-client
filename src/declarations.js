@@ -12,3 +12,6 @@ declare var __MERCHANT_ID__ : string;
 declare var __LOCALE__: { __COUNTRY__ : $Values<typeof COUNTRY>, __LANG__ : $Values<typeof LANG> };
 declare var __DEBUG__ : boolean;
 declare var __STAGE__ : string;
+declare var __INTENT__ : string;
+declare var __COMMIT__ : boolean;
+declare var __VAULT__ : boolean;
