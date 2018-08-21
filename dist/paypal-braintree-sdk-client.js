@@ -46,11 +46,11 @@
         },
         "./node_modules/belter/src/dom.js": function(module, __webpack_exports__, __webpack_require__) {
             "use strict";
+            __webpack_require__("./node_modules/zalgo-promise/src/index.js"), __webpack_require__("./node_modules/belter/src/util.js"), 
+            __webpack_require__("./node_modules/belter/src/device.js");
             __webpack_exports__.a = function() {
                 return "undefined" != typeof window;
             };
-            __webpack_require__("./node_modules/zalgo-promise/src/index.js"), __webpack_require__("./node_modules/belter/src/util.js"), 
-            __webpack_require__("./node_modules/belter/src/device.js");
         },
         "./node_modules/belter/src/experiment.js": function(module, __webpack_exports__, __webpack_require__) {
             "use strict";
@@ -87,20 +87,17 @@
                             return result;
                         }(this.getAllResponseHeaders());
                         if (!this.status) return reject(new Error("Request to " + method.toLowerCase() + " " + url + " failed: no response status code."));
-                        var contentType = responseHeaders["content-type"], isJSON = contentType && (0 === contentType.indexOf("application/json") || 0 === contentType.indexOf("text/json")), res = this.responseText;
+                        var contentType = responseHeaders["content-type"], isJSON = contentType && (0 === contentType.indexOf("application/json") || 0 === contentType.indexOf("text/json")), responseBody = this.responseText;
                         try {
-                            res = JSON.parse(this.responseText);
+                            responseBody = JSON.parse(responseBody);
                         } catch (err) {
                             if (isJSON) return reject(new Error("Invalid json: " + this.responseText + "."));
                         }
-                        if (this.status >= 400) {
-                            var message = "Request to " + method.toLowerCase() + " " + url + " failed with " + this.status + " error.";
-                            if (res) {
-                                "object" === (void 0 === res ? "undefined" : _typeof(res)) && null !== res && (res = JSON.stringify(res, null, 4));
-                                message = message + "\n\n" + res + "\n";
-                            }
-                            return reject(new Error(message));
-                        }
+                        var res = {
+                            status: this.status,
+                            headers: responseHeaders,
+                            body: responseBody
+                        };
                         return resolve(res);
                     }, !1);
                     xhr.addEventListener("error", function(evt) {
@@ -118,15 +115,11 @@
                     xhr.send(body);
                 });
             };
-            var __WEBPACK_IMPORTED_MODULE_0_zalgo_promise_src__ = __webpack_require__("./node_modules/zalgo-promise/src/index.js"), _typeof = (__webpack_require__("./node_modules/cross-domain-utils/src/index.js"), 
-            "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
-                return typeof obj;
-            } : function(obj) {
-                return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-            }), HEADERS = {
+            var __WEBPACK_IMPORTED_MODULE_0_zalgo_promise_src__ = __webpack_require__("./node_modules/zalgo-promise/src/index.js"), HEADERS = (__webpack_require__("./node_modules/cross-domain-utils/src/index.js"), 
+            {
                 CONTENT_TYPE: "content-type",
                 ACCEPT: "accept"
-            }, headerBuilders = [];
+            }), headerBuilders = [];
         },
         "./node_modules/belter/src/index.js": function(module, __webpack_exports__, __webpack_require__) {
             "use strict";
@@ -204,7 +197,8 @@
                     this.children = children;
                 }
                 JsxHTMLNode.prototype.toString = function() {
-                    return "<" + this.name + (this.props ? " " : "") + (this.props ? this.propsToString() : "") + ">" + this.childrenToString() + "</" + this.name + ">";
+                    var name = this.name, props = this.propsToString(), children = this.childrenToString();
+                    return "<" + name + (props ? " " : "") + props + ">" + children + "</" + name + ">";
                 };
                 JsxHTMLNode.prototype.propsToString = function() {
                     var props = this.props;
@@ -372,6 +366,7 @@
                 };
             };
             var __WEBPACK_IMPORTED_MODULE_0_zalgo_promise_src__ = __webpack_require__("./node_modules/zalgo-promise/src/index.js");
+            "function" == typeof Symbol && Symbol.iterator;
             function getGlobal() {
                 if ("undefined" != typeof window) return window;
                 if ("undefined" != typeof global) return global;
