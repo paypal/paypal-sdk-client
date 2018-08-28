@@ -313,8 +313,8 @@
             };
             __webpack_exports__.g = function(str, regex, handler) {
                 var results = [];
-                str.replace(regex, function() {
-                    results.push(handler.apply(null, arguments));
+                str.replace(regex, function(item) {
+                    results.push(handler ? handler.apply(null, arguments) : item);
                 });
                 return results;
             };
@@ -400,6 +400,9 @@
                             value: value
                         };
                         return cache[key].value;
+                    };
+                    method.__memoized__.reset = function() {
+                        cache = {};
                     };
                     return method.__memoized__;
                 }(logic));
@@ -574,13 +577,14 @@
                 ZalgoPromise.prototype.catch = function(onError) {
                     return this.then(void 0, onError);
                 };
-                ZalgoPromise.prototype.finally = function(handler) {
+                ZalgoPromise.prototype.finally = function(onFinally) {
+                    if (onFinally && "function" != typeof onFinally && !onFinally.call) throw new Error("Promise.finally expected a function");
                     return this.then(function(result) {
-                        return ZalgoPromise.try(handler).then(function() {
+                        return ZalgoPromise.try(onFinally).then(function() {
                             return result;
                         });
                     }, function(err) {
-                        return ZalgoPromise.try(handler).then(function() {
+                        return ZalgoPromise.try(onFinally).then(function() {
                             throw err;
                         });
                     });
@@ -661,6 +665,7 @@
                     }(handler);
                 };
                 ZalgoPromise.try = function(method, context, args) {
+                    if (method && "function" != typeof method && !method.call) throw new Error("Promise.try expected a function");
                     var result = void 0;
                     try {
                         result = method.apply(context, args || []);
@@ -700,7 +705,7 @@
                 return URLS;
             });
             var URLS = {
-                LOGGER: "https://www.paypal.com/webapps/hermes/logger"
+                LOGGER: "https://www.paypal.com/webapps/hermes/api/logger"
             };
         },
         "./src/constants.js": function(module, __webpack_exports__, __webpack_require__) {

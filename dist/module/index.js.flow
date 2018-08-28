@@ -41,7 +41,7 @@ declare class Class0 {
   catch<X, Y>(onError: (error: mixed) => Class0<X> | Y): Class0<X | Y>;
   constructor(handler: ?(resolve: (result: R) => void, reject: (error: mixed) => void) => void): any;
   dispatch(): any;
-  finally(handler: () => mixed): Class0<R>;
+  finally(onFinally: () => mixed): Class0<R>;
   reject(error: mixed): Class0<R>;
   resolve(result: R): Class0<R>;
   then<X, Y>(onSuccess: void | (result: R) => Class0<X> | Y, onError: void | (error: mixed) => Class0<X> | Y): Class0<X | Y>;
