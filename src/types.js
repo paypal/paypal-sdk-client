@@ -21,10 +21,6 @@ export type ExportsType = {
     [ string ] : mixed
 };
 
-export type SDKGlobalType = {
-    queryOptions : QueryOptionsType
-};
-
 export type FundingEligibilityType = {
     bancontact : {
         eligible : boolean,

@@ -1,8 +1,7 @@
 /* @flow */
 
-import { extend } from './util';
-import { getGlobal } from './global';
-import { validateClientOptions } from './validation';
+import { extend, getScript } from 'belter/src';
+
 import { GLOBAL_NAMESPACE, DEFAULT_ENV } from './constants';
 import type { ClientOptionsType, ExportsType } from './types';
 
@@ -10,40 +9,66 @@ type AttachOptions = {
     clientOptions : ClientOptionsType
 };
 
-let exportBuilders : { [string] : (AttachOptions) => ExportsType } = getGlobal('exportBuilders', {});
+let exportBuilders : { [string] : (?AttachOptions) => ExportsType } = {};
+
+type SDKScriptSettings = {
+    clientToken : ?string
+};
+
+const currentScript = document.currentScript;  // eslint-disable-line compat/compat
+
+function getSDKScriptSettings() : SDKScriptSettings {
+    let script = getScript({ host: __HOST__, path: __PATH__ });
+
+    if (!script) {
+        throw new Error(`PayPal Payments SDK script not loaded on page!`);
+    }
+
+    if (currentScript && script !== currentScript) {
+        throw new Error(`PayPal Payments SDK is not the current script!`);
+    }
+
+    return {
+        clientToken: script.getAttribute('data-client-token')
+    };
+}
 
 /**
  * Instantiate the public client
  */
 export function client(clientOptions? : ClientOptionsType = { env: DEFAULT_ENV }) : Object {
+
+    let scriptSettings = getSDKScriptSettings();
+
     clientOptions = JSON.parse(JSON.stringify(clientOptions));
+    clientOptions.env = __ENV__;
+    clientOptions.auth = clientOptions.auth || {
+        [ __ENV__ ]: scriptSettings.clientToken
+    };
 
-    if (typeof __sdk__ !== 'undefined') {
-        clientOptions.env = __sdk__.queryOptions.env;
-    }
-    
-    validateClientOptions(clientOptions);
-
-    let xports = {};
-
+    window[GLOBAL_NAMESPACE] = window[GLOBAL_NAMESPACE] || {};
     Object.keys(exportBuilders).forEach(moduleName => {
-        extend(xports, exportBuilders[moduleName]({ clientOptions }));
+        extend(window[GLOBAL_NAMESPACE], exportBuilders[moduleName]({ clientOptions }));
     });
 
-    return xports;
+    return window[GLOBAL_NAMESPACE];
 }
 
 
 /**
  * Attach an interface builder function
  */
-export function attach(moduleName : string, exportBuilder : (AttachOptions) => ExportsType) {
+export function attach(moduleName : string, exportBuilder : (?AttachOptions) => ExportsType, auto : boolean = false) {
     if (exportBuilders[moduleName]) {
         throw new Error(`Already attached ${ moduleName }`);
     }
 
     window[GLOBAL_NAMESPACE] = window[GLOBAL_NAMESPACE] || {};
-    window[GLOBAL_NAMESPACE].client = window.client || client;
+    window[GLOBAL_NAMESPACE].client = client;
 
-    exportBuilders[moduleName] = exportBuilder;
+    if (auto) {
+        extend(window[GLOBAL_NAMESPACE], exportBuilders[moduleName]());
+    } else {
+        exportBuilders[moduleName] = exportBuilder;
+    }
 }
