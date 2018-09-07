@@ -1,11 +1,13 @@
 /* @flow */
 
+import { getStageHost } from './globals';
+
 export const URLS = {
     local: {
         LOGGER: 'http://localhost.paypal.com:8000/webapps/hermes/api/logger'
     },
     stage: {
-        get LOGGER() : string { return `http://www.${ __STAGE__ }/webapps/hermes/api/logger`; }
+        get LOGGER() : string { return `http://www.${ getStageHost() }/webapps/hermes/api/logger`; }
     },
     sandbox: {
         LOGGER: `https://www.sandbox.paypal.com/webapps/hermes/api/logger`

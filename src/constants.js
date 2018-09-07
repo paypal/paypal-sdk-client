@@ -15,6 +15,10 @@ export const GLOBAL_NAMESPACE = 'paypal';
 
 export const DEFAULT_ENV = ENV.PRODUCTION;
 
+export const SDK_SETTINGS = {
+    CLIENT_TOKEN: 'data-client-token'
+};
+
 export const COUNTRY = {
     AD: ('AD' : 'AD'),
     AE: ('AE' : 'AE'),

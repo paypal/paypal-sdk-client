@@ -8,10 +8,7 @@ const MODULE_NAME = 'btppClientConfig';
 
 export let WEBPACK_CONFIG = getWebpackConfig({
     filename:   `${ FILE_NAME }.js`,
-    modulename: MODULE_NAME,
-    vars:       {
-        __sdk__: undefined
-    }
+    modulename: MODULE_NAME
 });
 
 export let WEBPACK_CONFIG_MIN = getWebpackConfig({
@@ -19,7 +16,6 @@ export let WEBPACK_CONFIG_MIN = getWebpackConfig({
     modulename: MODULE_NAME,
     minify:     true,
     vars:       {
-        __sdk__: undefined,
         __MIN__: true
     }
 });
@@ -31,7 +27,6 @@ export let WEBPACK_CONFIG_TEST = getWebpackConfig({
         devtool: 'inline-source-map'
     },
     vars: {
-        __sdk__:  undefined,
         __TEST__: true
     }
 });

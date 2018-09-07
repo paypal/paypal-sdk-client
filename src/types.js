@@ -1,12 +1,5 @@
 /* @flow */
 
-export type ClientOptionsType = {
-    env : string,
-    auth? : {
-        [string] : string
-    }
-};
-
 export type QueryOptionsType = {
     components : Array<string>,
     merchantID : string,
