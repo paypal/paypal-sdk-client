@@ -1,44 +1,26 @@
-import { extend } from './util';
-import { getGlobal } from './global';
-import { validateClientOptions } from './validation';
-import { GLOBAL_NAMESPACE, DEFAULT_ENV } from './constants';
+import { setupLogger } from './logger';
+import { SDK_SETTINGS } from './constants';
+import { getSDKScript } from './script';
+import { getEnv } from './globals';
 
-
-var exportBuilders = getGlobal('exportBuilders', {});
-
-/**
- * Instantiate the public client
- */
 export function client() {
-    var clientOptions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { env: DEFAULT_ENV };
+    var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+        _ref$auth = _ref.auth,
+        auth = _ref$auth === undefined ? {} : _ref$auth;
 
-    clientOptions = JSON.parse(JSON.stringify(clientOptions));
+    // eslint-disable-next-line no-console
+    console.warn('paypal.client() is deprecated; please pass client token as data-client-token="xyz" in ' + getSDKScript().outerHTML);
 
-    if (typeof __sdk__ !== 'undefined') {
-        clientOptions.env = __sdk__.queryOptions.env;
+    var clientToken = auth[getEnv()];
+    if (!clientToken) {
+        throw new Error('Expected paypal.client() to be called with client token for ' + getEnv() + ': paypal.client({ auth: { ' + getEnv() + ': \'xyz\' } })');
     }
 
-    validateClientOptions(clientOptions);
-
-    var xports = {};
-
-    Object.keys(exportBuilders).forEach(function (moduleName) {
-        extend(xports, exportBuilders[moduleName]({ clientOptions: clientOptions }));
-    });
-
-    return xports;
+    getSDKScript().setAttribute(SDK_SETTINGS.CLIENT_TOKEN, clientToken);
+    return window.paypal;
 }
 
-/**
- * Attach an interface builder function
- */
-export function attach(moduleName, exportBuilder) {
-    if (exportBuilders[moduleName]) {
-        throw new Error('Already attached ' + moduleName);
-    }
-
-    window[GLOBAL_NAMESPACE] = window[GLOBAL_NAMESPACE] || {};
-    window[GLOBAL_NAMESPACE].client = window.client || client;
-
-    exportBuilders[moduleName] = exportBuilder;
+export function setupClient() {
+    getSDKScript();
+    setupLogger();
 }
