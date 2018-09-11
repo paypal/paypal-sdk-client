@@ -1,21 +1,63 @@
 /* @flow */
 
-import { getStageHost } from './globals';
+import { isBrowser, getActualDomain } from 'cross-domain-utils/src';
 
-export const URLS = {
+import { getStageHost, getPort } from './globals';
+
+export function buildConfigUrl(domain : string, uri? : string) : string {
+    if (__TEST__ && isBrowser()) {
+        domain = getActualDomain();
+    }
+    return `${ domain }${ uri || '' }`;
+}
+
+export const DOMAINS = {
     local: {
-        LOGGER: 'http://localhost.paypal.com:8000/webapps/hermes/api/logger'
+        get PAYPAL() : string {
+            return `http://localhost.paypal.com:${ getPort() }`;
+        },
+        get LOGGER() : string {
+            return `https://www.${ getStageHost() }`;
+        },
+        get API() : string {
+            return `https://www.${ getStageHost() }`;
+        }
     },
     stage: {
-        get LOGGER() : string { return `http://www.${ getStageHost() }/webapps/hermes/api/logger`; }
+        get PAYPAL() : string {
+            return `https://www.${ getStageHost() }`;
+        },
+        get LOGGER() : string {
+            return `https://www.${ getStageHost() }`;
+        },
+        get API() : string {
+            return `https://www.${ getStageHost() }:12326`;
+        }
     },
     sandbox: {
-        LOGGER: `https://www.sandbox.paypal.com/webapps/hermes/api/logger`
+        PAYPAL: `https://www.sandbox.paypal.com`,
+        LOGGER: `https://www.sandbox.paypal.com`,
+        API:    `https://cors.api.sandbox.paypal.com`
     },
     production: {
-        LOGGER: `https://www.paypal.com/webapps/hermes/api/logger`
+        PAYPAL: `https://www.paypal.com`,
+        LOGGER: `https://www.paypal.com`,
+        API:    `https://www.cors.api.paypal.com`
     },
     test: {
-        LOGGER: `mock://www.paypal.com/webapps/hermes/api/logger`
+        PAYPAL: `mock://www.paypal.com`,
+        LOGGER: `mock://www.paypal.com`,
+        API:    `mock://api.paypal.com`
     }
 }[__ENV__];
+
+
+const URIS = {
+    LOGGER: `/xoplatform/logger/api/logger`
+};
+
+export const URLS = {
+    get LOGGER() : string {
+        return buildConfigUrl(DOMAINS.LOGGER, URIS.LOGGER);
+    }
+};
