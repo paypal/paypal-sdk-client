@@ -406,7 +406,7 @@
             "function" == typeof Symbol && Symbol.iterator;
             function getGlobal() {
                 if ("undefined" != typeof window) return window;
-                if ("undefined" != typeof window) return window;
+                if ("undefined" != typeof global) return global;
                 throw new Error("No global found");
             }
             function inlineMemoize(method, logic) {
@@ -738,12 +738,25 @@
         },
         "./src/config.js": function(module, __webpack_exports__, __webpack_require__) {
             "use strict";
+            __webpack_exports__.c = buildConfigUrl;
             __webpack_require__.d(__webpack_exports__, "a", function() {
+                return DOMAINS;
+            });
+            __webpack_require__.d(__webpack_exports__, "b", function() {
                 return URLS;
             });
-            __webpack_require__("./src/globals.js");
-            var URLS = {
-                LOGGER: "https://www.paypal.com/webapps/hermes/api/logger"
+            __webpack_require__("./node_modules/cross-domain-utils/src/index.js"), __webpack_require__("./src/globals.js");
+            function buildConfigUrl(domain, uri) {
+                return "" + domain + (uri || "");
+            }
+            var DOMAINS = {
+                PAYPAL: "https://www.paypal.com",
+                LOGGER: "https://www.paypal.com",
+                API: "https://www.cors.api.paypal.com"
+            }, URLS = {
+                get LOGGER() {
+                    return buildConfigUrl(DOMAINS.LOGGER, "/xoplatform/logger/api/logger");
+                }
             };
         },
         "./src/constants.js": function(module, __webpack_exports__, __webpack_require__) {
@@ -1237,8 +1250,14 @@
                 return __WEBPACK_IMPORTED_MODULE_0__constants__.f;
             });
             var __WEBPACK_IMPORTED_MODULE_1__config__ = __webpack_require__("./src/config.js");
-            __webpack_require__.d(__webpack_exports__, "URLS", function() {
+            __webpack_require__.d(__webpack_exports__, "buildConfigUrl", function() {
+                return __WEBPACK_IMPORTED_MODULE_1__config__.c;
+            });
+            __webpack_require__.d(__webpack_exports__, "DOMAINS", function() {
                 return __WEBPACK_IMPORTED_MODULE_1__config__.a;
+            });
+            __webpack_require__.d(__webpack_exports__, "URLS", function() {
+                return __WEBPACK_IMPORTED_MODULE_1__config__.b;
             });
             var __WEBPACK_IMPORTED_MODULE_2__logger__ = __webpack_require__("./src/logger.js");
             __webpack_require__.d(__webpack_exports__, "logger", function() {
@@ -1252,7 +1271,7 @@
             });
             var __WEBPACK_IMPORTED_MODULE_3__types__ = __webpack_require__("./src/types.js");
             __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__types__);
-            for (var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_3__types__) [ "GLOBAL_KEY", "ENV", "GLOBAL_NAMESPACE", "DEFAULT_ENV", "SDK_SETTINGS", "COUNTRY", "LANG", "COUNTRY_LANGS", "FPTI_KEY", "FPTI_DATA_SOURCE", "FPTI_FEED", "URLS", "logger", "getSessionID", "setupLogger", "default" ].indexOf(__WEBPACK_IMPORT_KEY__) < 0 && function(key) {
+            for (var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_3__types__) [ "GLOBAL_KEY", "ENV", "GLOBAL_NAMESPACE", "DEFAULT_ENV", "SDK_SETTINGS", "COUNTRY", "LANG", "COUNTRY_LANGS", "FPTI_KEY", "FPTI_DATA_SOURCE", "FPTI_FEED", "buildConfigUrl", "DOMAINS", "URLS", "logger", "getSessionID", "setupLogger", "default" ].indexOf(__WEBPACK_IMPORT_KEY__) < 0 && function(key) {
                 __webpack_require__.d(__webpack_exports__, key, function() {
                     return __WEBPACK_IMPORTED_MODULE_3__types__[key];
                 });
@@ -1459,7 +1478,7 @@
                     }
                 };
             }({
-                url: config.a.LOGGER
+                url: config.b.LOGGER
             }), storage = Object(belter_src.getStorage)({
                 name: "paypal_payments_sdk"
             });
