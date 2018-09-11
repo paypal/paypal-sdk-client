@@ -25,7 +25,8 @@
   },
   "files": [
     "dist/",
-    "src/"
+    "src/",
+    "__sdk__.js"
   ],
   "browserslist": [
     "IE >= 9",
