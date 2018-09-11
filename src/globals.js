@@ -1,6 +1,6 @@
 /* @flow */
 
-import type { LocaleType } from './constants';
+import { type LocaleType, COUNTRY, LANG } from './constants';
 
 export function getHost() : string {
     return __HOST__;
@@ -30,10 +30,18 @@ export function getMerchantID() : string {
     return __MERCHANT_ID__;
 }
 
+export function getCountry() : $Values<typeof COUNTRY> {
+    return __LOCALE__.__LANG__;
+}
+
+export function getLang() : $Values<typeof LANG> {
+    return __LOCALE__.__LANG__;
+}
+
 export function getLocale() : LocaleType {
     return {
-        lang:    __LOCALE__.__LANG__,
-        country: __LOCALE__.__COUNTRY__
+        lang:    getLang(),
+        country: getCountry()
     };
 }
 
