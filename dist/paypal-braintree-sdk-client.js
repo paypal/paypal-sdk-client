@@ -412,12 +412,9 @@
             function inlineMemoize(method, logic) {
                 var args = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : [];
                 method.__memoized__ || (method.__memoized__ = function(method) {
-                    var options = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : {};
-                    if (method.__memoized__) return method.__memoized__;
-                    var cache = {};
-                    method.__memoized__ = function() {
+                    var options = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : {}, cache = {};
+                    function memoizedFunction() {
                         for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) args[_key] = arguments[_key];
-                        if (method.__memoized__ && method.__memoized__.__calling__) throw new Error("Can not call memoized method recursively");
                         var key = void 0;
                         try {
                             key = JSON.stringify(Array.prototype.slice.call(arguments));
@@ -429,20 +426,21 @@
                         var glob = getGlobal();
                         glob.__CACHE_START_TIME__ && cache[key] && cache[key].time < glob.__CACHE_START_TIME__ && delete cache[key];
                         if (cache[key]) return cache[key].value;
-                        method.__memoized__.__calling__ = !0;
+                        memoizedFunction.__calling__ = !0;
                         var time = Date.now(), value = method.apply(this, arguments);
-                        method.__memoized__.__calling__ = !1;
+                        memoizedFunction.__calling__ = !1;
                         cache[key] = {
                             time: time,
                             value: value
                         };
                         return cache[key].value;
-                    };
-                    method.__memoized__.reset = function() {
+                    }
+                    memoizedFunction.reset = function() {
                         cache = {};
                     };
-                    return method.__memoized__;
+                    return memoizedFunction;
                 }(logic));
+                if (method.__memoized__ && method.__memoized__.__calling__) throw new Error("Can not call memoized method recursively");
                 return method.__memoized__.apply(method, args);
             }
             function base64encode(str) {
@@ -1161,7 +1159,10 @@
                 FUNDING_COUNT: "eligible_payment_count",
                 CHOSEN_FUNDING: "selected_payment_method",
                 BUTTON_LAYOUT: "button_layout",
-                VERSION: "checkoutjs_version"
+                VERSION: "checkoutjs_version",
+                LOCALE: "locale",
+                BUYER_COUNTRY: "buyer_cntry",
+                INTEGRATION_IDENTIFIER: "integration_identifier"
             }, FPTI_DATA_SOURCE = {
                 PAYMENTS_SDK: "payments_sdk"
             }, FPTI_FEED = {
@@ -1170,45 +1171,54 @@
         },
         "./src/globals.js": function(module, __webpack_exports__, __webpack_require__) {
             "use strict";
-            __webpack_exports__.d = function() {
+            __webpack_exports__.e = function() {
                 return __HOST__;
             };
-            __webpack_exports__.e = function() {
+            __webpack_exports__.f = function() {
                 return __HOSTNAME__;
             };
-            __webpack_exports__.j = function() {
+            __webpack_exports__.l = function() {
                 return __PORT__;
             };
-            __webpack_exports__.i = function() {
+            __webpack_exports__.k = function() {
                 return __PATH__;
             };
-            __webpack_exports__.c = function() {
+            __webpack_exports__.d = function() {
                 return "production";
             };
             __webpack_exports__.a = function() {
                 return __CLIENT_ID__;
             };
-            __webpack_exports__.h = function() {
+            __webpack_exports__.j = function() {
                 return __MERCHANT_ID__;
             };
-            __webpack_exports__.g = function() {
+            __webpack_exports__.c = getCountry;
+            __webpack_exports__.h = getLang;
+            __webpack_exports__.i = function() {
                 return {
-                    lang: __LOCALE__.__LANG__,
-                    country: __LOCALE__.__COUNTRY__
+                    lang: getLang(),
+                    country: getCountry()
                 };
             };
-            __webpack_exports__.k = function() {
+            __webpack_exports__.m = function() {
                 return __STAGE_HOST__;
             };
-            __webpack_exports__.f = function() {
+            __webpack_exports__.g = function() {
                 return __INTENT__;
             };
             __webpack_exports__.b = function() {
                 return __COMMIT__;
             };
-            __webpack_exports__.l = function() {
+            __webpack_exports__.n = function() {
                 return __VAULT__;
             };
+            __webpack_require__("./src/constants.js");
+            function getCountry() {
+                return __LOCALE__.__LANG__;
+            }
+            function getLang() {
+                return __LOCALE__.__LANG__;
+            }
         },
         "./src/index.js": function(module, __webpack_exports__, __webpack_require__) {
             "use strict";
@@ -1278,40 +1288,46 @@
             }(__WEBPACK_IMPORT_KEY__);
             var __WEBPACK_IMPORTED_MODULE_4__globals__ = __webpack_require__("./src/globals.js");
             __webpack_require__.d(__webpack_exports__, "getHost", function() {
-                return __WEBPACK_IMPORTED_MODULE_4__globals__.d;
-            });
-            __webpack_require__.d(__webpack_exports__, "getHostName", function() {
                 return __WEBPACK_IMPORTED_MODULE_4__globals__.e;
             });
+            __webpack_require__.d(__webpack_exports__, "getHostName", function() {
+                return __WEBPACK_IMPORTED_MODULE_4__globals__.f;
+            });
             __webpack_require__.d(__webpack_exports__, "getPort", function() {
-                return __WEBPACK_IMPORTED_MODULE_4__globals__.j;
+                return __WEBPACK_IMPORTED_MODULE_4__globals__.l;
             });
             __webpack_require__.d(__webpack_exports__, "getPath", function() {
-                return __WEBPACK_IMPORTED_MODULE_4__globals__.i;
+                return __WEBPACK_IMPORTED_MODULE_4__globals__.k;
             });
             __webpack_require__.d(__webpack_exports__, "getEnv", function() {
-                return __WEBPACK_IMPORTED_MODULE_4__globals__.c;
+                return __WEBPACK_IMPORTED_MODULE_4__globals__.d;
             });
             __webpack_require__.d(__webpack_exports__, "getClientID", function() {
                 return __WEBPACK_IMPORTED_MODULE_4__globals__.a;
             });
             __webpack_require__.d(__webpack_exports__, "getMerchantID", function() {
+                return __WEBPACK_IMPORTED_MODULE_4__globals__.j;
+            });
+            __webpack_require__.d(__webpack_exports__, "getCountry", function() {
+                return __WEBPACK_IMPORTED_MODULE_4__globals__.c;
+            });
+            __webpack_require__.d(__webpack_exports__, "getLang", function() {
                 return __WEBPACK_IMPORTED_MODULE_4__globals__.h;
             });
             __webpack_require__.d(__webpack_exports__, "getLocale", function() {
-                return __WEBPACK_IMPORTED_MODULE_4__globals__.g;
+                return __WEBPACK_IMPORTED_MODULE_4__globals__.i;
             });
             __webpack_require__.d(__webpack_exports__, "getStageHost", function() {
-                return __WEBPACK_IMPORTED_MODULE_4__globals__.k;
+                return __WEBPACK_IMPORTED_MODULE_4__globals__.m;
             });
             __webpack_require__.d(__webpack_exports__, "getIntent", function() {
-                return __WEBPACK_IMPORTED_MODULE_4__globals__.f;
+                return __WEBPACK_IMPORTED_MODULE_4__globals__.g;
             });
             __webpack_require__.d(__webpack_exports__, "getCommit", function() {
                 return __WEBPACK_IMPORTED_MODULE_4__globals__.b;
             });
             __webpack_require__.d(__webpack_exports__, "getVault", function() {
-                return __WEBPACK_IMPORTED_MODULE_4__globals__.l;
+                return __WEBPACK_IMPORTED_MODULE_4__globals__.n;
             });
             var __WEBPACK_IMPORTED_MODULE_5__script__ = __webpack_require__("./src/script.js");
             __webpack_require__.d(__webpack_exports__, "getSDKScript", function() {
@@ -1355,15 +1371,16 @@
                     return {
                         referer: window.location.host,
                         uid: getSessionID(),
-                        env: Object(globals.c)()
+                        env: Object(globals.d)()
                     };
                 });
                 logger.addTrackingBuilder(function() {
                     var _ref, sessionID = getSessionID();
                     return (_ref = {})[constants.g.FEED] = constants.f.PAYMENTS_SDK, _ref[constants.g.DATA_SOURCE] = constants.e.PAYMENTS_SDK, 
-                    _ref[constants.g.CLIENT_ID] = Object(globals.a)(), _ref[constants.g.SELLER_ID] = Object(globals.h)(), 
+                    _ref[constants.g.CLIENT_ID] = Object(globals.a)(), _ref[constants.g.SELLER_ID] = Object(globals.j)(), 
                     _ref[constants.g.SESSION_UID] = sessionID, _ref[constants.g.REFERER] = window.location.host, 
-                    _ref;
+                    _ref[constants.g.LOCALE] = Object(globals.h)() + "_" + Object(globals.c)(), _ref[constants.g.BUYER_COUNTRY] = Object(globals.c)(), 
+                    _ref[constants.g.INTEGRATION_IDENTIFIER] = Object(globals.a)(), _ref;
                 });
                 src.a.onPossiblyUnhandledException(function(err) {
                     var _logger$track;
@@ -1498,8 +1515,8 @@
             var __WEBPACK_IMPORTED_MODULE_0_belter_src__ = __webpack_require__("./node_modules/belter/src/index.js"), __WEBPACK_IMPORTED_MODULE_1__constants__ = __webpack_require__("./src/constants.js"), __WEBPACK_IMPORTED_MODULE_2__globals__ = __webpack_require__("./src/globals.js");
             function getSDKScript() {
                 var script = Object(__WEBPACK_IMPORTED_MODULE_0_belter_src__.getScript)({
-                    host: Object(__WEBPACK_IMPORTED_MODULE_2__globals__.d)(),
-                    path: Object(__WEBPACK_IMPORTED_MODULE_2__globals__.i)()
+                    host: Object(__WEBPACK_IMPORTED_MODULE_2__globals__.e)(),
+                    path: Object(__WEBPACK_IMPORTED_MODULE_2__globals__.k)()
                 });
                 if (!script) throw new Error("PayPal Payments SDK script not present on page!");
                 return script;

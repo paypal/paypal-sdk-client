@@ -4,7 +4,7 @@ import { ZalgoPromise } from 'zalgo-promise/src';
 
 import { URLS } from './config';
 import { FPTI_KEY, FPTI_FEED, FPTI_DATA_SOURCE } from './constants';
-import { getEnv, getClientID, getMerchantID } from './globals';
+import { getEnv, getClientID, getMerchantID, getLang, getCountry } from './globals';
 
 export var logger = Logger({
     url: URLS.LOGGER
@@ -30,7 +30,7 @@ export function setupLogger() {
 
         var sessionID = getSessionID();
 
-        return _ref = {}, _ref[FPTI_KEY.FEED] = FPTI_FEED.PAYMENTS_SDK, _ref[FPTI_KEY.DATA_SOURCE] = FPTI_DATA_SOURCE.PAYMENTS_SDK, _ref[FPTI_KEY.CLIENT_ID] = getClientID(), _ref[FPTI_KEY.SELLER_ID] = getMerchantID(), _ref[FPTI_KEY.SESSION_UID] = sessionID, _ref[FPTI_KEY.REFERER] = window.location.host, _ref;
+        return _ref = {}, _ref[FPTI_KEY.FEED] = FPTI_FEED.PAYMENTS_SDK, _ref[FPTI_KEY.DATA_SOURCE] = FPTI_DATA_SOURCE.PAYMENTS_SDK, _ref[FPTI_KEY.CLIENT_ID] = getClientID(), _ref[FPTI_KEY.SELLER_ID] = getMerchantID(), _ref[FPTI_KEY.SESSION_UID] = sessionID, _ref[FPTI_KEY.REFERER] = window.location.host, _ref[FPTI_KEY.LOCALE] = getLang() + '_' + getCountry(), _ref[FPTI_KEY.BUYER_COUNTRY] = getCountry(), _ref[FPTI_KEY.INTEGRATION_IDENTIFIER] = getClientID(), _ref;
     });
 
     ZalgoPromise.onPossiblyUnhandledException(function (err) {

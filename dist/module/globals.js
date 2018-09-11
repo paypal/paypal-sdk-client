@@ -1,4 +1,4 @@
-
+import { COUNTRY, LANG } from './constants';
 
 export function getHost() {
     return __HOST__;
@@ -28,10 +28,18 @@ export function getMerchantID() {
     return __MERCHANT_ID__;
 }
 
+export function getCountry() {
+    return __LOCALE__.__LANG__;
+}
+
+export function getLang() {
+    return __LOCALE__.__LANG__;
+}
+
 export function getLocale() {
     return {
-        lang: __LOCALE__.__LANG__,
-        country: __LOCALE__.__COUNTRY__
+        lang: getLang(),
+        country: getCountry()
     };
 }
 

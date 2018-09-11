@@ -282,7 +282,10 @@ export var FPTI_KEY = {
     FUNDING_COUNT: 'eligible_payment_count',
     CHOSEN_FUNDING: 'selected_payment_method',
     BUTTON_LAYOUT: 'button_layout',
-    VERSION: 'checkoutjs_version'
+    VERSION: 'checkoutjs_version',
+    LOCALE: 'locale',
+    BUYER_COUNTRY: 'buyer_cntry',
+    INTEGRATION_IDENTIFIER: 'integration_identifier'
 };
 
 export var FPTI_DATA_SOURCE = {
