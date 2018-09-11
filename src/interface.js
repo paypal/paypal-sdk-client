@@ -6,8 +6,15 @@ import { getSDKScript } from './script';
 import { getEnv } from './globals';
 
 export function client({ auth = {} } : { auth : { [string] : string } } = {}) : mixed {
+
+    let msg = `paypal.client() is deprecated; please pass client token as data-client-token="xyz" in ${ getSDKScript().outerHTML }`;
+
+    if (__SANDBOX__ || __PRODUCTION__) {
+        throw new Error(msg);
+    }
+
     // eslint-disable-next-line no-console
-    console.warn(`paypal.client() is deprecated; please pass client token as data-client-token="xyz" in ${ getSDKScript().outerHTML }`);
+    console.warn(msg);
     
     let clientToken = auth[getEnv()];
     if (!clientToken) {
