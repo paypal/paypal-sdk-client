@@ -8,8 +8,14 @@ export function client() {
         _ref$auth = _ref.auth,
         auth = _ref$auth === undefined ? {} : _ref$auth;
 
+    var msg = 'paypal.client() is deprecated; please pass client token as data-client-token="xyz" in ' + getSDKScript().outerHTML;
+
+    if (__SANDBOX__ || __PRODUCTION__) {
+        throw new Error(msg);
+    }
+
     // eslint-disable-next-line no-console
-    console.warn('paypal.client() is deprecated; please pass client token as data-client-token="xyz" in ' + getSDKScript().outerHTML);
+    console.warn(msg);
 
     var clientToken = auth[getEnv()];
     if (!clientToken) {
