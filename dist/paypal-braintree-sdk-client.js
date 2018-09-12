@@ -49,10 +49,10 @@
             __webpack_require__("./node_modules/zalgo-promise/src/index.js");
             var util = __webpack_require__("./node_modules/belter/src/util.js");
             __webpack_require__("./node_modules/belter/src/device.js");
-            __webpack_exports__.b = function() {
+            __webpack_exports__.c = function() {
                 return "undefined" != typeof window;
             };
-            __webpack_exports__.a = function getScript(_ref2) {
+            __webpack_exports__.b = function getScript(_ref2) {
                 var _ref2$host = _ref2.host, host = void 0 === _ref2$host ? window.location.host : _ref2$host, path = _ref2.path;
                 return Object(util.b)(getScript, function() {
                     for (var url = "" + host + path, scripts = Array.prototype.slice.call(document.getElementsByTagName("script")), _i4 = 0, _length4 = null == scripts ? 0 : scripts.length; _i4 < _length4; _i4++) {
@@ -60,6 +60,38 @@
                         if (script.src && script.src.replace(/^https?:\/\//, "").split("?")[0] === url) return script;
                     }
                 }, [ path ]);
+            };
+            __webpack_exports__.d = function isLocalStorageEnabled() {
+                return Object(util.b)(isLocalStorageEnabled, function() {
+                    try {
+                        if ("undefined" == typeof window) return !1;
+                        if (window.localStorage) {
+                            var value = Math.random().toString();
+                            window.localStorage.setItem("__test__localStorage__", value);
+                            var result = window.localStorage.getItem("__test__localStorage__");
+                            window.localStorage.removeItem("__test__localStorage__");
+                            if (value === result) return !0;
+                        }
+                    } catch (err) {}
+                    return !1;
+                });
+            };
+            __webpack_exports__.a = function() {
+                var nav = window.navigator, locales = nav.languages ? Array.prototype.slice.apply(nav.languages) : [];
+                nav.language && locales.push(nav.language);
+                nav.userLanguage && locales.push(nav.userLanguage);
+                return locales.map(function(locale) {
+                    if (locale && locale.match(/^[a-z]{2}[-_][A-Z]{2}$/)) {
+                        var _locale$split = locale.split(/[-_]/), _lang = _locale$split[0];
+                        return {
+                            country: _locale$split[1],
+                            lang: _lang
+                        };
+                    }
+                    return locale && locale.match(/^[a-z]{2}$/) ? {
+                        lang: locale
+                    } : null;
+                }).filter(Boolean);
             };
         },
         "./node_modules/belter/src/experiment.js": function(module, __webpack_exports__, __webpack_require__) {
@@ -135,11 +167,14 @@
             "use strict";
             __webpack_require__("./node_modules/belter/src/device.js");
             var __WEBPACK_IMPORTED_MODULE_1__dom__ = __webpack_require__("./node_modules/belter/src/dom.js");
-            __webpack_require__.d(__webpack_exports__, "getScript", function() {
+            __webpack_require__.d(__webpack_exports__, "getBrowserLocales", function() {
                 return __WEBPACK_IMPORTED_MODULE_1__dom__.a;
             });
-            __webpack_require__.d(__webpack_exports__, "isBrowser", function() {
+            __webpack_require__.d(__webpack_exports__, "getScript", function() {
                 return __WEBPACK_IMPORTED_MODULE_1__dom__.b;
+            });
+            __webpack_require__.d(__webpack_exports__, "isBrowser", function() {
+                return __WEBPACK_IMPORTED_MODULE_1__dom__.c;
             });
             __webpack_require__("./node_modules/belter/src/experiment.js"), __webpack_require__("./node_modules/belter/src/global.js"), 
             __webpack_require__("./node_modules/belter/src/jsx.jsx");
@@ -149,22 +184,22 @@
             });
             var __WEBPACK_IMPORTED_MODULE_6__util__ = __webpack_require__("./node_modules/belter/src/util.js");
             __webpack_require__.d(__webpack_exports__, "noop", function() {
-                return __WEBPACK_IMPORTED_MODULE_6__util__.d;
+                return __WEBPACK_IMPORTED_MODULE_6__util__.c;
             });
             __webpack_require__.d(__webpack_exports__, "objFilter", function() {
-                return __WEBPACK_IMPORTED_MODULE_6__util__.e;
+                return __WEBPACK_IMPORTED_MODULE_6__util__.d;
             });
             __webpack_require__.d(__webpack_exports__, "promiseDebounce", function() {
-                return __WEBPACK_IMPORTED_MODULE_6__util__.f;
+                return __WEBPACK_IMPORTED_MODULE_6__util__.e;
             });
             __webpack_require__.d(__webpack_exports__, "safeInterval", function() {
-                return __WEBPACK_IMPORTED_MODULE_6__util__.i;
+                return __WEBPACK_IMPORTED_MODULE_6__util__.h;
             });
             __webpack_require__.d(__webpack_exports__, "stringifyError", function() {
-                return __WEBPACK_IMPORTED_MODULE_6__util__.j;
+                return __WEBPACK_IMPORTED_MODULE_6__util__.i;
             });
             __webpack_require__.d(__webpack_exports__, "stringifyErrorMessage", function() {
-                return __WEBPACK_IMPORTED_MODULE_6__util__.k;
+                return __WEBPACK_IMPORTED_MODULE_6__util__.j;
             });
             var __WEBPACK_IMPORTED_MODULE_7__http__ = __webpack_require__("./node_modules/belter/src/http.js");
             __webpack_require__.d(__webpack_exports__, "request", function() {
@@ -249,7 +284,7 @@
             __webpack_exports__.a = function(_ref) {
                 var name = _ref.name, _ref$version = _ref.version, version = void 0 === _ref$version ? "latest" : _ref$version, _ref$lifetime = _ref.lifetime, lifetime = void 0 === _ref$lifetime ? 3e5 : _ref$lifetime, STORAGE_KEY = "__" + name + "_" + version + "_storage__", accessedStorage = void 0;
                 function getState(handler) {
-                    var localStorageEnabled = Object(__WEBPACK_IMPORTED_MODULE_0__util__.c)(), storage = void 0;
+                    var localStorageEnabled = Object(__WEBPACK_IMPORTED_MODULE_1__dom__.d)(), storage = void 0;
                     accessedStorage && (storage = accessedStorage);
                     if (!storage && localStorageEnabled) {
                         var rawStorage = window.localStorage.getItem(STORAGE_KEY);
@@ -257,9 +292,9 @@
                     }
                     storage || (storage = Object(__WEBPACK_IMPORTED_MODULE_0__util__.a)()[STORAGE_KEY]);
                     storage || (storage = {
-                        id: Object(__WEBPACK_IMPORTED_MODULE_0__util__.m)()
+                        id: Object(__WEBPACK_IMPORTED_MODULE_0__util__.l)()
                     });
-                    storage.id || (storage.id = Object(__WEBPACK_IMPORTED_MODULE_0__util__.m)());
+                    storage.id || (storage.id = Object(__WEBPACK_IMPORTED_MODULE_0__util__.l)());
                     accessedStorage = storage;
                     var result = handler(storage);
                     localStorageEnabled ? window.localStorage.setItem(STORAGE_KEY, JSON.stringify(storage)) : Object(__WEBPACK_IMPORTED_MODULE_0__util__.a)()[STORAGE_KEY] = storage;
@@ -271,7 +306,7 @@
                         var session = storage.__session__, now = Date.now();
                         session && now - session.created > lifetime && (session = null);
                         session || (session = {
-                            guid: Object(__WEBPACK_IMPORTED_MODULE_0__util__.m)(),
+                            guid: Object(__WEBPACK_IMPORTED_MODULE_0__util__.l)(),
                             created: now
                         });
                         storage.__session__ = session;
@@ -298,118 +333,18 @@
                     }
                 };
             };
-            var __WEBPACK_IMPORTED_MODULE_0__util__ = __webpack_require__("./node_modules/belter/src/util.js");
+            var __WEBPACK_IMPORTED_MODULE_0__util__ = __webpack_require__("./node_modules/belter/src/util.js"), __WEBPACK_IMPORTED_MODULE_1__dom__ = __webpack_require__("./node_modules/belter/src/dom.js");
         },
         "./node_modules/belter/src/types.js": function(module, exports) {},
         "./node_modules/belter/src/util.js": function(module, __webpack_exports__, __webpack_require__) {
             "use strict";
-            __webpack_exports__.a = getGlobal;
-            __webpack_exports__.b = inlineMemoize;
-            __webpack_exports__.d = function() {};
-            __webpack_exports__.m = function() {
-                var chars = "0123456789abcdef";
-                return "xxxxxxxxxx".replace(/./g, function() {
-                    return chars.charAt(Math.floor(Math.random() * chars.length));
-                }) + "_" + base64encode(new Date().toISOString().slice(11, 19).replace("T", ".")).replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
-            };
-            __webpack_exports__.j = function stringifyError(err) {
-                var level = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : 1;
-                if (level >= 3) return "stringifyError stack overflow";
-                try {
-                    if (!err) return "<unknown error: " + Object.prototype.toString.call(err) + ">";
-                    if ("string" == typeof err) return err;
-                    if (err instanceof Error) {
-                        var stack = err && err.stack, message = err && err.message;
-                        if (stack && message) return -1 !== stack.indexOf(message) ? stack : message + "\n" + stack;
-                        if (stack) return stack;
-                        if (message) return message;
-                    }
-                    return "function" == typeof err.toString ? err.toString() : Object.prototype.toString.call(err);
-                } catch (newErr) {
-                    return "Error while stringifying error: " + stringifyError(newErr, level + 1);
-                }
-            };
-            __webpack_exports__.k = function(err) {
-                var defaultMessage = "<unknown error: " + Object.prototype.toString.call(err) + ">";
-                return err ? err instanceof Error ? err.message || defaultMessage : "string" == typeof err.message && err.message || defaultMessage : defaultMessage;
-            };
-            __webpack_exports__.c = function isLocalStorageEnabled() {
-                return inlineMemoize(isLocalStorageEnabled, function() {
-                    try {
-                        if ("undefined" == typeof window) return !1;
-                        if (window.localStorage) {
-                            var _value = Math.random().toString();
-                            window.localStorage.setItem("__test__localStorage__", _value);
-                            var result = window.localStorage.getItem("__test__localStorage__");
-                            window.localStorage.removeItem("__test__localStorage__");
-                            if (_value === result) return !0;
-                        }
-                    } catch (err) {}
-                    return !1;
-                });
-            };
-            __webpack_exports__.g = function(str, regex, handler) {
-                var results = [];
-                str.replace(regex, function(item) {
-                    results.push(handler ? handler.apply(null, arguments) : item);
-                });
-                return results;
-            };
-            __webpack_exports__.l = function(svg) {
-                return "data:image/svg+xml;base64," + base64encode(svg);
-            };
-            __webpack_exports__.e = function(obj) {
-                var filter = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : Boolean, result = {};
-                for (var _key4 in obj) obj.hasOwnProperty(_key4) && filter(obj[_key4], _key4) && (result[_key4] = obj[_key4]);
-                return result;
-            };
-            __webpack_exports__.h = function(text, regex) {
-                var result = [];
-                text.replace(regex, function(token) {
-                    result.push(token);
-                    return "";
-                });
-                return result;
-            };
-            __webpack_exports__.f = function(method) {
-                var delay = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : 50, promise = void 0, timeout = void 0;
-                return function() {
-                    timeout && clearTimeout(timeout);
-                    var localPromise = promise = promise || new __WEBPACK_IMPORTED_MODULE_0_zalgo_promise_src__.a();
-                    timeout = setTimeout(function() {
-                        promise = null;
-                        timeout = null;
-                        __WEBPACK_IMPORTED_MODULE_0_zalgo_promise_src__.a.try(method).then(function(result) {
-                            localPromise.resolve(result);
-                        }, function(err) {
-                            localPromise.reject(err);
-                        });
-                    }, delay);
-                    return localPromise;
-                };
-            };
-            __webpack_exports__.i = function(method, time) {
-                var timeout = void 0;
-                !function loop() {
-                    timeout = setTimeout(function() {
-                        method();
-                        loop();
-                    }, time);
-                }();
-                return {
-                    cancel: function() {
-                        clearTimeout(timeout);
-                    }
-                };
-            };
-            var __WEBPACK_IMPORTED_MODULE_0_zalgo_promise_src__ = __webpack_require__("./node_modules/zalgo-promise/src/index.js");
-            "function" == typeof Symbol && Symbol.iterator;
-            function getGlobal() {
+            __webpack_exports__.a = function() {
+                if ("undefined" != typeof window) return window;
                 if ("undefined" != typeof window) return window;
                 if ("undefined" != typeof global) return global;
                 throw new Error("No global found");
-            }
-            function inlineMemoize(method, logic) {
+            };
+            __webpack_exports__.b = function(method, logic) {
                 var args = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : [];
                 method.__memoized__ || (method.__memoized__ = function(method) {
                     var options = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : {}, cache = {};
@@ -423,8 +358,6 @@
                         }
                         var cacheTime = options.time;
                         cache[key] && cacheTime && Date.now() - cache[key].time < cacheTime && delete cache[key];
-                        var glob = getGlobal();
-                        glob.__CACHE_START_TIME__ && cache[key] && cache[key].time < glob.__CACHE_START_TIME__ && delete cache[key];
                         if (cache[key]) return cache[key].value;
                         memoizedFunction.__calling__ = !0;
                         var time = Date.now(), value = method.apply(this, arguments);
@@ -442,7 +375,91 @@
                 }(logic));
                 if (method.__memoized__ && method.__memoized__.__calling__) throw new Error("Can not call memoized method recursively");
                 return method.__memoized__.apply(method, args);
-            }
+            };
+            __webpack_exports__.c = function() {};
+            __webpack_exports__.l = function() {
+                var chars = "0123456789abcdef";
+                return "xxxxxxxxxx".replace(/./g, function() {
+                    return chars.charAt(Math.floor(Math.random() * chars.length));
+                }) + "_" + base64encode(new Date().toISOString().slice(11, 19).replace("T", ".")).replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
+            };
+            __webpack_exports__.i = function stringifyError(err) {
+                var level = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : 1;
+                if (level >= 3) return "stringifyError stack overflow";
+                try {
+                    if (!err) return "<unknown error: " + Object.prototype.toString.call(err) + ">";
+                    if ("string" == typeof err) return err;
+                    if (err instanceof Error) {
+                        var stack = err && err.stack, message = err && err.message;
+                        if (stack && message) return -1 !== stack.indexOf(message) ? stack : message + "\n" + stack;
+                        if (stack) return stack;
+                        if (message) return message;
+                    }
+                    return "function" == typeof err.toString ? err.toString() : Object.prototype.toString.call(err);
+                } catch (newErr) {
+                    return "Error while stringifying error: " + stringifyError(newErr, level + 1);
+                }
+            };
+            __webpack_exports__.j = function(err) {
+                var defaultMessage = "<unknown error: " + Object.prototype.toString.call(err) + ">";
+                return err ? err instanceof Error ? err.message || defaultMessage : "string" == typeof err.message && err.message || defaultMessage : defaultMessage;
+            };
+            __webpack_exports__.f = function(str, regex, handler) {
+                var results = [];
+                str.replace(regex, function(item) {
+                    results.push(handler ? handler.apply(null, arguments) : item);
+                });
+                return results;
+            };
+            __webpack_exports__.k = function(svg) {
+                return "data:image/svg+xml;base64," + base64encode(svg);
+            };
+            __webpack_exports__.d = function(obj) {
+                var filter = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : Boolean, result = {};
+                for (var _key4 in obj) obj.hasOwnProperty(_key4) && filter(obj[_key4], _key4) && (result[_key4] = obj[_key4]);
+                return result;
+            };
+            __webpack_exports__.g = function(text, regex) {
+                var result = [];
+                text.replace(regex, function(token) {
+                    result.push(token);
+                    return "";
+                });
+                return result;
+            };
+            __webpack_exports__.e = function(method) {
+                var delay = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : 50, promise = void 0, timeout = void 0;
+                return function() {
+                    timeout && clearTimeout(timeout);
+                    var localPromise = promise = promise || new __WEBPACK_IMPORTED_MODULE_0_zalgo_promise_src__.a();
+                    timeout = setTimeout(function() {
+                        promise = null;
+                        timeout = null;
+                        __WEBPACK_IMPORTED_MODULE_0_zalgo_promise_src__.a.try(method).then(function(result) {
+                            localPromise.resolve(result);
+                        }, function(err) {
+                            localPromise.reject(err);
+                        });
+                    }, delay);
+                    return localPromise;
+                };
+            };
+            __webpack_exports__.h = function(method, time) {
+                var timeout = void 0;
+                !function loop() {
+                    timeout = setTimeout(function() {
+                        method();
+                        loop();
+                    }, time);
+                }();
+                return {
+                    cancel: function() {
+                        clearTimeout(timeout);
+                    }
+                };
+            };
+            var __WEBPACK_IMPORTED_MODULE_0_zalgo_promise_src__ = __webpack_require__("./node_modules/zalgo-promise/src/index.js");
+            "function" == typeof Symbol && Symbol.iterator;
             function base64encode(str) {
                 return window.btoa(str);
             }
@@ -759,41 +776,50 @@
         },
         "./src/constants.js": function(module, __webpack_exports__, __webpack_require__) {
             "use strict";
-            __webpack_require__.d(__webpack_exports__, "i", function() {
+            __webpack_require__.d(__webpack_exports__, "j", function() {
                 return GLOBAL_KEY;
             });
-            __webpack_require__.d(__webpack_exports__, "d", function() {
+            __webpack_require__.d(__webpack_exports__, "e", function() {
                 return ENV;
             });
-            __webpack_require__.d(__webpack_exports__, "j", function() {
+            __webpack_require__.d(__webpack_exports__, "k", function() {
                 return GLOBAL_NAMESPACE;
             });
-            __webpack_require__.d(__webpack_exports__, "c", function() {
+            __webpack_require__.d(__webpack_exports__, "d", function() {
                 return DEFAULT_ENV;
             });
-            __webpack_require__.d(__webpack_exports__, "l", function() {
+            __webpack_require__.d(__webpack_exports__, "n", function() {
                 return SDK_SETTINGS;
             });
-            __webpack_require__.d(__webpack_exports__, "a", function() {
+            __webpack_require__.d(__webpack_exports__, "b", function() {
                 return COUNTRY;
             });
-            __webpack_require__.d(__webpack_exports__, "k", function() {
+            __webpack_require__.d(__webpack_exports__, "m", function() {
                 return LANG;
             });
-            __webpack_require__.d(__webpack_exports__, "b", function() {
+            __webpack_require__.d(__webpack_exports__, "c", function() {
                 return COUNTRY_LANGS;
             });
-            __webpack_require__.d(__webpack_exports__, "g", function() {
+            __webpack_require__.d(__webpack_exports__, "h", function() {
                 return FPTI_KEY;
             });
-            __webpack_require__.d(__webpack_exports__, "e", function() {
+            __webpack_require__.d(__webpack_exports__, "f", function() {
                 return FPTI_DATA_SOURCE;
             });
-            __webpack_require__.d(__webpack_exports__, "f", function() {
+            __webpack_require__.d(__webpack_exports__, "g", function() {
                 return FPTI_FEED;
             });
-            __webpack_require__.d(__webpack_exports__, "h", function() {
+            __webpack_require__.d(__webpack_exports__, "i", function() {
                 return FPTI_SDK_NAME;
+            });
+            __webpack_require__.d(__webpack_exports__, "l", function() {
+                return INTENT;
+            });
+            __webpack_require__.d(__webpack_exports__, "a", function() {
+                return COMMIT;
+            });
+            __webpack_require__.d(__webpack_exports__, "o", function() {
+                return VAULT;
             });
             var _COUNTRY_LANGS, GLOBAL_KEY = "__paypal_braintree_global__", ENV = {
                 LOCAL: "local",
@@ -1177,6 +1203,16 @@
                 PAYMENTS_SDK: "payments_sdk"
             }, FPTI_SDK_NAME = {
                 PAYMENTS_SDK: "payments_sdk"
+            }, INTENT = {
+                CAPTURE: "capture",
+                AUTH: "auth",
+                ORDER: "order"
+            }, COMMIT = {
+                TRUE: !0,
+                FALSE: !1
+            }, VAULT = {
+                TRUE: !0,
+                FALSE: !1
             };
         },
         "./src/globals.js": function(module, __webpack_exports__, __webpack_require__) {
@@ -1225,12 +1261,17 @@
             __webpack_exports__.o = function() {
                 return __VERSION__;
             };
-            __webpack_require__("./src/constants.js");
+            var __WEBPACK_IMPORTED_MODULE_0_belter_src__ = __webpack_require__("./node_modules/belter/src/index.js"), __WEBPACK_IMPORTED_MODULE_1__constants__ = __webpack_require__("./src/constants.js");
             function getCountry() {
-                return __LOCALE__.__LANG__;
+                return __LOCALE_COUNTRY__;
             }
             function getLang() {
-                return __LOCALE__.__LANG__;
+                if ("undefined" != typeof __LOCALE_LANG__) return __LOCALE_LANG__;
+                for (var _i2 = 0, _getBrowserLocales2 = Object(__WEBPACK_IMPORTED_MODULE_0_belter_src__.getBrowserLocales)(), _length2 = null == _getBrowserLocales2 ? 0 : _getBrowserLocales2.length; _i2 < _length2; _i2++) {
+                    var _ref2 = _getBrowserLocales2[_i2], country = _ref2.country, lang = _ref2.lang;
+                    if (country && country === __LOCALE_COUNTRY__ && -1 !== __WEBPACK_IMPORTED_MODULE_1__constants__.c[__LOCALE_COUNTRY__].indexOf(lang)) return lang;
+                }
+                return __DEFAULT_LANG__;
             }
         },
         "./src/index.js": function(module, __webpack_exports__, __webpack_require__) {
@@ -1240,40 +1281,49 @@
             });
             var __WEBPACK_IMPORTED_MODULE_0__constants__ = __webpack_require__("./src/constants.js");
             __webpack_require__.d(__webpack_exports__, "GLOBAL_KEY", function() {
-                return __WEBPACK_IMPORTED_MODULE_0__constants__.i;
-            });
-            __webpack_require__.d(__webpack_exports__, "ENV", function() {
-                return __WEBPACK_IMPORTED_MODULE_0__constants__.d;
-            });
-            __webpack_require__.d(__webpack_exports__, "GLOBAL_NAMESPACE", function() {
                 return __WEBPACK_IMPORTED_MODULE_0__constants__.j;
             });
-            __webpack_require__.d(__webpack_exports__, "DEFAULT_ENV", function() {
-                return __WEBPACK_IMPORTED_MODULE_0__constants__.c;
-            });
-            __webpack_require__.d(__webpack_exports__, "SDK_SETTINGS", function() {
-                return __WEBPACK_IMPORTED_MODULE_0__constants__.l;
-            });
-            __webpack_require__.d(__webpack_exports__, "COUNTRY", function() {
-                return __WEBPACK_IMPORTED_MODULE_0__constants__.a;
-            });
-            __webpack_require__.d(__webpack_exports__, "LANG", function() {
-                return __WEBPACK_IMPORTED_MODULE_0__constants__.k;
-            });
-            __webpack_require__.d(__webpack_exports__, "COUNTRY_LANGS", function() {
-                return __WEBPACK_IMPORTED_MODULE_0__constants__.b;
-            });
-            __webpack_require__.d(__webpack_exports__, "FPTI_KEY", function() {
-                return __WEBPACK_IMPORTED_MODULE_0__constants__.g;
-            });
-            __webpack_require__.d(__webpack_exports__, "FPTI_DATA_SOURCE", function() {
+            __webpack_require__.d(__webpack_exports__, "ENV", function() {
                 return __WEBPACK_IMPORTED_MODULE_0__constants__.e;
             });
-            __webpack_require__.d(__webpack_exports__, "FPTI_FEED", function() {
+            __webpack_require__.d(__webpack_exports__, "GLOBAL_NAMESPACE", function() {
+                return __WEBPACK_IMPORTED_MODULE_0__constants__.k;
+            });
+            __webpack_require__.d(__webpack_exports__, "DEFAULT_ENV", function() {
+                return __WEBPACK_IMPORTED_MODULE_0__constants__.d;
+            });
+            __webpack_require__.d(__webpack_exports__, "SDK_SETTINGS", function() {
+                return __WEBPACK_IMPORTED_MODULE_0__constants__.n;
+            });
+            __webpack_require__.d(__webpack_exports__, "COUNTRY", function() {
+                return __WEBPACK_IMPORTED_MODULE_0__constants__.b;
+            });
+            __webpack_require__.d(__webpack_exports__, "LANG", function() {
+                return __WEBPACK_IMPORTED_MODULE_0__constants__.m;
+            });
+            __webpack_require__.d(__webpack_exports__, "COUNTRY_LANGS", function() {
+                return __WEBPACK_IMPORTED_MODULE_0__constants__.c;
+            });
+            __webpack_require__.d(__webpack_exports__, "FPTI_KEY", function() {
+                return __WEBPACK_IMPORTED_MODULE_0__constants__.h;
+            });
+            __webpack_require__.d(__webpack_exports__, "FPTI_DATA_SOURCE", function() {
                 return __WEBPACK_IMPORTED_MODULE_0__constants__.f;
             });
+            __webpack_require__.d(__webpack_exports__, "FPTI_FEED", function() {
+                return __WEBPACK_IMPORTED_MODULE_0__constants__.g;
+            });
             __webpack_require__.d(__webpack_exports__, "FPTI_SDK_NAME", function() {
-                return __WEBPACK_IMPORTED_MODULE_0__constants__.h;
+                return __WEBPACK_IMPORTED_MODULE_0__constants__.i;
+            });
+            __webpack_require__.d(__webpack_exports__, "INTENT", function() {
+                return __WEBPACK_IMPORTED_MODULE_0__constants__.l;
+            });
+            __webpack_require__.d(__webpack_exports__, "COMMIT", function() {
+                return __WEBPACK_IMPORTED_MODULE_0__constants__.a;
+            });
+            __webpack_require__.d(__webpack_exports__, "VAULT", function() {
+                return __WEBPACK_IMPORTED_MODULE_0__constants__.o;
             });
             var __WEBPACK_IMPORTED_MODULE_1__config__ = __webpack_require__("./src/config.js");
             __webpack_require__.d(__webpack_exports__, "buildConfigUrl", function() {
@@ -1297,7 +1347,7 @@
             });
             var __WEBPACK_IMPORTED_MODULE_3__types__ = __webpack_require__("./src/types.js");
             __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__types__);
-            for (var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_3__types__) [ "GLOBAL_KEY", "ENV", "GLOBAL_NAMESPACE", "DEFAULT_ENV", "SDK_SETTINGS", "COUNTRY", "LANG", "COUNTRY_LANGS", "FPTI_KEY", "FPTI_DATA_SOURCE", "FPTI_FEED", "FPTI_SDK_NAME", "buildConfigUrl", "DOMAINS", "URLS", "logger", "getSessionID", "setupLogger", "default" ].indexOf(__WEBPACK_IMPORT_KEY__) < 0 && function(key) {
+            for (var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_3__types__) [ "GLOBAL_KEY", "ENV", "GLOBAL_NAMESPACE", "DEFAULT_ENV", "SDK_SETTINGS", "COUNTRY", "LANG", "COUNTRY_LANGS", "FPTI_KEY", "FPTI_DATA_SOURCE", "FPTI_FEED", "FPTI_SDK_NAME", "INTENT", "COMMIT", "VAULT", "buildConfigUrl", "DOMAINS", "URLS", "logger", "getSessionID", "setupLogger", "default" ].indexOf(__WEBPACK_IMPORT_KEY__) < 0 && function(key) {
                 __webpack_require__.d(__webpack_exports__, key, function() {
                     return __WEBPACK_IMPORTED_MODULE_3__types__[key];
                 });
@@ -1395,18 +1445,18 @@
                 });
                 logger.addTrackingBuilder(function() {
                     var _ref;
-                    return (_ref = {})[constants.g.FEED] = constants.f.PAYMENTS_SDK, _ref[constants.g.DATA_SOURCE] = constants.e.PAYMENTS_SDK, 
-                    _ref[constants.g.CLIENT_ID] = Object(globals.a)(), _ref[constants.g.SELLER_ID] = Object(globals.j)(), 
-                    _ref[constants.g.SESSION_UID] = getSessionID(), _ref[constants.g.REFERER] = window.location.host, 
-                    _ref[constants.g.LOCALE] = Object(globals.h)() + "_" + Object(globals.c)(), _ref[constants.g.BUYER_COUNTRY] = Object(globals.c)(), 
-                    _ref[constants.g.INTEGRATION_IDENTIFIER] = window.location.host, _ref[constants.g.PARTNER_ATTRIBUTION_ID] = Object(script.c)().partnerAttributionID, 
-                    _ref[constants.g.SDK_NAME] = constants.h.PAYMENTS_SDK, _ref[constants.g.SDK_VERSION] = Object(globals.o)(), 
-                    _ref[constants.g.USER_AGENT] = window.navigator && window.navigator.userAgent, _ref;
+                    return (_ref = {})[constants.h.FEED] = constants.g.PAYMENTS_SDK, _ref[constants.h.DATA_SOURCE] = constants.f.PAYMENTS_SDK, 
+                    _ref[constants.h.CLIENT_ID] = Object(globals.a)(), _ref[constants.h.SELLER_ID] = Object(globals.j)(), 
+                    _ref[constants.h.SESSION_UID] = getSessionID(), _ref[constants.h.REFERER] = window.location.host, 
+                    _ref[constants.h.LOCALE] = Object(globals.h)() + "_" + Object(globals.c)(), _ref[constants.h.BUYER_COUNTRY] = Object(globals.c)(), 
+                    _ref[constants.h.INTEGRATION_IDENTIFIER] = window.location.host, _ref[constants.h.PARTNER_ATTRIBUTION_ID] = Object(script.c)().partnerAttributionID, 
+                    _ref[constants.h.SDK_NAME] = constants.i.PAYMENTS_SDK, _ref[constants.h.SDK_VERSION] = Object(globals.o)(), 
+                    _ref[constants.h.USER_AGENT] = window.navigator && window.navigator.userAgent, _ref;
                 });
                 src.a.onPossiblyUnhandledException(function(err) {
                     var _logger$track;
-                    logger.track(((_logger$track = {})[constants.g.ERROR_CODE] = "checkoutjs_error", 
-                    _logger$track[constants.g.ERROR_DESC] = Object(belter_src.stringifyErrorMessage)(err), 
+                    logger.track(((_logger$track = {})[constants.h.ERROR_CODE] = "checkoutjs_error", 
+                    _logger$track[constants.h.ERROR_DESC] = Object(belter_src.stringifyErrorMessage)(err), 
                     _logger$track));
                     logger.error("unhandled_error", {
                         stack: Object(belter_src.stringifyError)(err),
@@ -1539,14 +1589,14 @@
                     host: Object(__WEBPACK_IMPORTED_MODULE_2__globals__.e)(),
                     path: Object(__WEBPACK_IMPORTED_MODULE_2__globals__.k)()
                 });
-                if (!script) throw new Error("PayPal Payments SDK script not present on page!");
+                if (!script) throw new Error('PayPal Payments SDK script not present on page! Excected to find <script src="https://' + Object(__WEBPACK_IMPORTED_MODULE_2__globals__.e)() + Object(__WEBPACK_IMPORTED_MODULE_2__globals__.k)() + '">');
                 return script;
             }
             function getSDKSettings() {
                 var sdkScript = getSDKScript();
                 return {
-                    clientToken: sdkScript.getAttribute(__WEBPACK_IMPORTED_MODULE_1__constants__.l.CLIENT_TOKEN),
-                    partnerAttributionID: sdkScript.getAttribute(__WEBPACK_IMPORTED_MODULE_1__constants__.l.PARTNER_ATTRIBUTION_ID)
+                    clientToken: sdkScript.getAttribute(__WEBPACK_IMPORTED_MODULE_1__constants__.n.CLIENT_TOKEN),
+                    partnerAttributionID: sdkScript.getAttribute(__WEBPACK_IMPORTED_MODULE_1__constants__.n.PARTNER_ATTRIBUTION_ID)
                 };
             }
         },

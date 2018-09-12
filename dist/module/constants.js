@@ -304,3 +304,19 @@ export var FPTI_FEED = {
 export var FPTI_SDK_NAME = {
     PAYMENTS_SDK: 'payments_sdk'
 };
+
+export var INTENT = {
+    CAPTURE: 'capture',
+    AUTH: 'auth',
+    ORDER: 'order'
+};
+
+export var COMMIT = {
+    TRUE: true,
+    FALSE: false
+};
+
+export var VAULT = {
+    TRUE: true,
+    FALSE: false
+};

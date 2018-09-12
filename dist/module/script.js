@@ -7,7 +7,7 @@ export function getSDKScript() {
     var script = getScript({ host: getHost(), path: getPath() });
 
     if (!script) {
-        throw new Error('PayPal Payments SDK script not present on page!');
+        throw new Error('PayPal Payments SDK script not present on page! Excected to find <script src="https://' + getHost() + getPath() + '">');
     }
 
     return script;
