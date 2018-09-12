@@ -183,6 +183,9 @@
                 return __WEBPACK_IMPORTED_MODULE_5__storage__.a;
             });
             var __WEBPACK_IMPORTED_MODULE_6__util__ = __webpack_require__("./node_modules/belter/src/util.js");
+            __webpack_require__.d(__webpack_exports__, "inlineMemoize", function() {
+                return __WEBPACK_IMPORTED_MODULE_6__util__.b;
+            });
             __webpack_require__.d(__webpack_exports__, "noop", function() {
                 return __WEBPACK_IMPORTED_MODULE_6__util__.c;
             });
@@ -281,57 +284,64 @@
         },
         "./node_modules/belter/src/storage.js": function(module, __webpack_exports__, __webpack_require__) {
             "use strict";
-            __webpack_exports__.a = function(_ref) {
-                var name = _ref.name, _ref$version = _ref.version, version = void 0 === _ref$version ? "latest" : _ref$version, _ref$lifetime = _ref.lifetime, lifetime = void 0 === _ref$lifetime ? 3e5 : _ref$lifetime, STORAGE_KEY = "__" + name + "_" + version + "_storage__", accessedStorage = void 0;
-                function getState(handler) {
-                    var localStorageEnabled = Object(__WEBPACK_IMPORTED_MODULE_1__dom__.d)(), storage = void 0;
-                    accessedStorage && (storage = accessedStorage);
-                    if (!storage && localStorageEnabled) {
-                        var rawStorage = window.localStorage.getItem(STORAGE_KEY);
-                        rawStorage && (storage = JSON.parse(rawStorage));
-                    }
-                    storage || (storage = Object(__WEBPACK_IMPORTED_MODULE_0__util__.a)()[STORAGE_KEY]);
-                    storage || (storage = {
-                        id: Object(__WEBPACK_IMPORTED_MODULE_0__util__.l)()
-                    });
-                    storage.id || (storage.id = Object(__WEBPACK_IMPORTED_MODULE_0__util__.l)());
-                    accessedStorage = storage;
-                    var result = handler(storage);
-                    localStorageEnabled ? window.localStorage.setItem(STORAGE_KEY, JSON.stringify(storage)) : Object(__WEBPACK_IMPORTED_MODULE_0__util__.a)()[STORAGE_KEY] = storage;
-                    accessedStorage = null;
-                    return result;
-                }
-                function getSession(handler) {
-                    return getState(function(storage) {
-                        var session = storage.__session__, now = Date.now();
-                        session && now - session.created > lifetime && (session = null);
-                        session || (session = {
-                            guid: Object(__WEBPACK_IMPORTED_MODULE_0__util__.l)(),
-                            created: now
+            __webpack_exports__.a = function getStorage(_ref) {
+                var name = _ref.name, _ref$version = _ref.version, version = void 0 === _ref$version ? "latest" : _ref$version, _ref$lifetime = _ref.lifetime, lifetime = void 0 === _ref$lifetime ? 3e5 : _ref$lifetime;
+                return Object(__WEBPACK_IMPORTED_MODULE_0__util__.b)(getStorage, function() {
+                    var STORAGE_KEY = "__" + name + "_" + version + "_storage__", accessedStorage = void 0;
+                    function getState(handler) {
+                        var localStorageEnabled = Object(__WEBPACK_IMPORTED_MODULE_1__dom__.d)(), storage = void 0;
+                        accessedStorage && (storage = accessedStorage);
+                        if (!storage && localStorageEnabled) {
+                            var rawStorage = window.localStorage.getItem(STORAGE_KEY);
+                            rawStorage && (storage = JSON.parse(rawStorage));
+                        }
+                        storage || (storage = Object(__WEBPACK_IMPORTED_MODULE_0__util__.a)()[STORAGE_KEY]);
+                        storage || (storage = {
+                            id: Object(__WEBPACK_IMPORTED_MODULE_0__util__.l)()
                         });
-                        storage.__session__ = session;
-                        return handler(session);
-                    });
-                }
-                return {
-                    getState: getState,
-                    getID: function() {
+                        storage.id || (storage.id = Object(__WEBPACK_IMPORTED_MODULE_0__util__.l)());
+                        accessedStorage = storage;
+                        var result = handler(storage);
+                        localStorageEnabled ? window.localStorage.setItem(STORAGE_KEY, JSON.stringify(storage)) : Object(__WEBPACK_IMPORTED_MODULE_0__util__.a)()[STORAGE_KEY] = storage;
+                        accessedStorage = null;
+                        return result;
+                    }
+                    function getSession(handler) {
                         return getState(function(storage) {
-                            return storage.id;
-                        });
-                    },
-                    getSessionState: function(handler) {
-                        return getSession(function(session) {
-                            session.state = session.state || {};
-                            return handler(session.state);
-                        });
-                    },
-                    getSessionID: function() {
-                        return getSession(function(session) {
-                            return session.guid;
+                            var session = storage.__session__, now = Date.now();
+                            session && now - session.created > lifetime && (session = null);
+                            session || (session = {
+                                guid: Object(__WEBPACK_IMPORTED_MODULE_0__util__.l)(),
+                                created: now
+                            });
+                            storage.__session__ = session;
+                            return handler(session);
                         });
                     }
-                };
+                    return {
+                        getState: getState,
+                        getID: function() {
+                            return getState(function(storage) {
+                                return storage.id;
+                            });
+                        },
+                        getSessionState: function(handler) {
+                            return getSession(function(session) {
+                                session.state = session.state || {};
+                                return handler(session.state);
+                            });
+                        },
+                        getSessionID: function() {
+                            return getSession(function(session) {
+                                return session.guid;
+                            });
+                        }
+                    };
+                }, [ {
+                    name: name,
+                    version: version,
+                    lifetime: lifetime
+                } ]);
             };
             var __WEBPACK_IMPORTED_MODULE_0__util__ = __webpack_require__("./node_modules/belter/src/util.js"), __WEBPACK_IMPORTED_MODULE_1__dom__ = __webpack_require__("./node_modules/belter/src/dom.js");
         },
@@ -1336,18 +1346,21 @@
                 return __WEBPACK_IMPORTED_MODULE_1__config__.b;
             });
             var __WEBPACK_IMPORTED_MODULE_2__logger__ = __webpack_require__("./src/logger.js");
-            __webpack_require__.d(__webpack_exports__, "logger", function() {
+            __webpack_require__.d(__webpack_exports__, "getLogger", function() {
+                return __WEBPACK_IMPORTED_MODULE_2__logger__.a;
+            });
+            __webpack_require__.d(__webpack_exports__, "getPaymentsSDKStorage", function() {
                 return __WEBPACK_IMPORTED_MODULE_2__logger__.b;
             });
             __webpack_require__.d(__webpack_exports__, "getSessionID", function() {
-                return __WEBPACK_IMPORTED_MODULE_2__logger__.a;
+                return __WEBPACK_IMPORTED_MODULE_2__logger__.c;
             });
             __webpack_require__.d(__webpack_exports__, "setupLogger", function() {
-                return __WEBPACK_IMPORTED_MODULE_2__logger__.c;
+                return __WEBPACK_IMPORTED_MODULE_2__logger__.d;
             });
             var __WEBPACK_IMPORTED_MODULE_3__types__ = __webpack_require__("./src/types.js");
             __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__types__);
-            for (var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_3__types__) [ "GLOBAL_KEY", "ENV", "GLOBAL_NAMESPACE", "DEFAULT_ENV", "SDK_SETTINGS", "COUNTRY", "LANG", "COUNTRY_LANGS", "FPTI_KEY", "FPTI_DATA_SOURCE", "FPTI_FEED", "FPTI_SDK_NAME", "INTENT", "COMMIT", "VAULT", "buildConfigUrl", "DOMAINS", "URLS", "logger", "getSessionID", "setupLogger", "default" ].indexOf(__WEBPACK_IMPORT_KEY__) < 0 && function(key) {
+            for (var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_3__types__) [ "GLOBAL_KEY", "ENV", "GLOBAL_NAMESPACE", "DEFAULT_ENV", "SDK_SETTINGS", "COUNTRY", "LANG", "COUNTRY_LANGS", "FPTI_KEY", "FPTI_DATA_SOURCE", "FPTI_FEED", "FPTI_SDK_NAME", "INTENT", "COMMIT", "VAULT", "buildConfigUrl", "DOMAINS", "URLS", "getLogger", "getPaymentsSDKStorage", "getSessionID", "setupLogger", "default" ].indexOf(__WEBPACK_IMPORT_KEY__) < 0 && function(key) {
                 __webpack_require__.d(__webpack_exports__, key, function() {
                     return __WEBPACK_IMPORTED_MODULE_3__types__[key];
                 });
@@ -1411,7 +1424,12 @@
         },
         "./src/logger.js": function(module, __webpack_exports__, __webpack_require__) {
             "use strict";
-            var src = __webpack_require__("./node_modules/zalgo-promise/src/index.js"), belter_src = __webpack_require__("./node_modules/belter/src/index.js"), AUTO_FLUSH_LEVEL = [ "warn", "error" ], LOG_LEVEL_PRIORITY = [ "error", "warn", "info", "debug" ], _extends = Object.assign || function(target) {
+            var src = __webpack_require__("./node_modules/zalgo-promise/src/index.js"), belter_src = __webpack_require__("./node_modules/belter/src/index.js"), LOG_LEVEL = {
+                DEBUG: "debug",
+                INFO: "info",
+                WARN: "warn",
+                ERROR: "error"
+            }, AUTO_FLUSH_LEVEL = [ LOG_LEVEL.WARN, LOG_LEVEL.ERROR ], LOG_LEVEL_PRIORITY = [ LOG_LEVEL.ERROR, LOG_LEVEL.WARN, LOG_LEVEL.INFO, LOG_LEVEL.DEBUG ], FLUSH_INTERVAL = 6e4, DEFAULT_LOG_LEVEL = LOG_LEVEL.WARN, _extends = Object.assign || function(target) {
                 for (var i = 1; i < arguments.length; i++) {
                     var source = arguments[i];
                     for (var key in source) Object.prototype.hasOwnProperty.call(source, key) && (target[key] = source[key]);
@@ -1431,11 +1449,11 @@
                 for (var key in source) source.hasOwnProperty(key) && source[key] && (target[key] = source[key]);
             }
             var config = __webpack_require__("./src/config.js"), constants = __webpack_require__("./src/constants.js"), globals = __webpack_require__("./src/globals.js"), script = __webpack_require__("./src/script.js");
-            __webpack_require__.d(__webpack_exports__, "b", function() {
-                return logger;
-            });
-            __webpack_exports__.a = getSessionID;
-            __webpack_exports__.c = function() {
+            __webpack_exports__.a = getLogger;
+            __webpack_exports__.b = getPaymentsSDKStorage;
+            __webpack_exports__.c = getSessionID;
+            __webpack_exports__.d = function() {
+                var logger = getLogger();
                 logger.addPayloadBuilder(function() {
                     return {
                         referer: window.location.host,
@@ -1465,113 +1483,120 @@
                     logger.flush().catch(belter_src.noop);
                 });
             };
-            var logger = function(_ref2) {
-                var url = _ref2.url, prefix = _ref2.prefix, _ref2$logLevel = _ref2.logLevel, logLevel = void 0 === _ref2$logLevel ? "warn" : _ref2$logLevel, _ref2$transport = _ref2.transport, transport = void 0 === _ref2$transport ? httpTransport : _ref2$transport, _ref2$flushInterval = _ref2.flushInterval, flushInterval = void 0 === _ref2$flushInterval ? 6e4 : _ref2$flushInterval, events = [], tracking = [], payloadBuilders = [], metaBuilders = [], trackingBuilders = [], headerBuilders = [];
-                function print(level, event, payload) {
-                    if (Object(belter_src.isBrowser)() && window.console && window.console.log) {
-                        var consoleLogLevel = logLevel;
-                        window.LOG_LEVEL && -1 !== LOG_LEVEL_PRIORITY.indexOf(window.LOG_LEVEL) && (consoleLogLevel = window.LOG_LEVEL);
-                        if (!(LOG_LEVEL_PRIORITY.indexOf(level) > LOG_LEVEL_PRIORITY.indexOf(consoleLogLevel))) {
-                            var args = [ event ];
-                            args.push(payload);
-                            (payload.error || payload.warning) && args.push("\n\n", payload.error || payload.warning);
-                            try {
-                                window.console[level] && window.console[level].apply ? window.console[level].apply(window.console, args) : window.console.log && window.console.log.apply && window.console.log.apply(window.console, args);
-                            } catch (err) {}
+            function getLogger() {
+                return Object(belter_src.inlineMemoize)(getLogger, function() {
+                    return function(_ref2) {
+                        var url = _ref2.url, prefix = _ref2.prefix, _ref2$logLevel = _ref2.logLevel, logLevel = void 0 === _ref2$logLevel ? DEFAULT_LOG_LEVEL : _ref2$logLevel, _ref2$transport = _ref2.transport, transport = void 0 === _ref2$transport ? httpTransport : _ref2$transport, _ref2$flushInterval = _ref2.flushInterval, flushInterval = void 0 === _ref2$flushInterval ? FLUSH_INTERVAL : _ref2$flushInterval, events = [], tracking = [], payloadBuilders = [], metaBuilders = [], trackingBuilders = [], headerBuilders = [];
+                        function print(level, event, payload) {
+                            if (Object(belter_src.isBrowser)() && window.console && window.console.log) {
+                                var consoleLogLevel = logLevel;
+                                window.LOG_LEVEL && -1 !== LOG_LEVEL_PRIORITY.indexOf(window.LOG_LEVEL) && (consoleLogLevel = window.LOG_LEVEL);
+                                if (!(LOG_LEVEL_PRIORITY.indexOf(level) > LOG_LEVEL_PRIORITY.indexOf(consoleLogLevel))) {
+                                    var args = [ event ];
+                                    args.push(payload);
+                                    (payload.error || payload.warning) && args.push("\n\n", payload.error || payload.warning);
+                                    try {
+                                        window.console[level] && window.console[level].apply ? window.console[level].apply(window.console, args) : window.console.log && window.console.log.apply && window.console.log.apply(window.console, args);
+                                    } catch (err) {}
+                                }
+                            }
                         }
-                    }
-                }
-                function immediateFlush() {
-                    return src.a.try(function() {
-                        if (Object(belter_src.isBrowser)() && (events.length || tracking.length)) {
-                            for (var meta = {}, _i2 = 0, _length2 = null == metaBuilders ? 0 : metaBuilders.length; _i2 < _length2; _i2++) extendIfDefined(meta, (0, 
-                            metaBuilders[_i2])(meta));
-                            for (var headers = {}, _i4 = 0, _length4 = null == headerBuilders ? 0 : headerBuilders.length; _i4 < _length4; _i4++) extendIfDefined(headers, (0, 
-                            headerBuilders[_i4])(headers));
-                            var req = transport({
-                                method: "POST",
-                                url: url,
-                                headers: headers,
-                                json: {
-                                    events: events,
-                                    meta: meta,
-                                    tracking: tracking
+                        function immediateFlush() {
+                            return src.a.try(function() {
+                                if (Object(belter_src.isBrowser)() && (events.length || tracking.length)) {
+                                    for (var meta = {}, _i2 = 0, _length2 = null == metaBuilders ? 0 : metaBuilders.length; _i2 < _length2; _i2++) extendIfDefined(meta, (0, 
+                                    metaBuilders[_i2])(meta));
+                                    for (var headers = {}, _i4 = 0, _length4 = null == headerBuilders ? 0 : headerBuilders.length; _i4 < _length4; _i4++) extendIfDefined(headers, (0, 
+                                    headerBuilders[_i4])(headers));
+                                    var req = transport({
+                                        method: "POST",
+                                        url: url,
+                                        headers: headers,
+                                        json: {
+                                            events: events,
+                                            meta: meta,
+                                            tracking: tracking
+                                        }
+                                    });
+                                    events = [];
+                                    tracking = [];
+                                    return req.then(belter_src.noop);
                                 }
                             });
-                            events = [];
-                            tracking = [];
-                            return req.then(belter_src.noop);
                         }
+                        var flush = Object(belter_src.promiseDebounce)(immediateFlush);
+                        function log(level, event) {
+                            var payload = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : {};
+                            if (Object(belter_src.isBrowser)()) {
+                                prefix && (event = prefix + "_" + event);
+                                for (var logPayload = _extends({}, Object(belter_src.objFilter)(payload), {
+                                    timestamp: Date.now().toString()
+                                }), _i6 = 0, _length6 = null == payloadBuilders ? 0 : payloadBuilders.length; _i6 < _length6; _i6++) extendIfDefined(logPayload, (0, 
+                                payloadBuilders[_i6])(logPayload));
+                                !function(level, event, payload) {
+                                    events.push({
+                                        level: level,
+                                        event: event,
+                                        payload: payload
+                                    });
+                                    -1 !== AUTO_FLUSH_LEVEL.indexOf(level) && flush();
+                                }(level, event, logPayload);
+                                print(level, event, logPayload);
+                            }
+                        }
+                        Object(belter_src.isBrowser)() && Object(belter_src.safeInterval)(flush, flushInterval);
+                        return {
+                            debug: function(event, payload) {
+                                log(LOG_LEVEL.DEBUG, event, payload);
+                            },
+                            info: function(event, payload) {
+                                log(LOG_LEVEL.INFO, event, payload);
+                            },
+                            warn: function(event, payload) {
+                                log(LOG_LEVEL.WARN, event, payload);
+                            },
+                            error: function(event, payload) {
+                                log(LOG_LEVEL.ERROR, event, payload);
+                            },
+                            track: function() {
+                                var payload = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : {};
+                                if (Object(belter_src.isBrowser)()) {
+                                    for (var trackingPayload = Object(belter_src.objFilter)(payload), _i8 = 0, _length8 = null == trackingBuilders ? 0 : trackingBuilders.length; _i8 < _length8; _i8++) extendIfDefined(trackingPayload, (0, 
+                                    trackingBuilders[_i8])(trackingPayload));
+                                    print(LOG_LEVEL.DEBUG, "track", trackingPayload);
+                                    tracking.push(trackingPayload);
+                                }
+                            },
+                            flush: flush,
+                            immediateFlush: immediateFlush,
+                            addPayloadBuilder: function(builder) {
+                                payloadBuilders.push(builder);
+                            },
+                            addMetaBuilder: function(builder) {
+                                metaBuilders.push(builder);
+                            },
+                            addTrackingBuilder: function(builder) {
+                                trackingBuilders.push(builder);
+                            },
+                            addHeaderBuilder: function(builder) {
+                                headerBuilders.push(builder);
+                            },
+                            setTransport: function(newTransport) {
+                                transport = newTransport;
+                            }
+                        };
+                    }({
+                        url: config.b.LOGGER
                     });
-                }
-                var flush = Object(belter_src.promiseDebounce)(immediateFlush);
-                function log(level, event) {
-                    var payload = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : {};
-                    if (Object(belter_src.isBrowser)()) {
-                        prefix && (event = prefix + "_" + event);
-                        for (var logPayload = _extends({}, Object(belter_src.objFilter)(payload), {
-                            timestamp: Date.now().toString()
-                        }), _i6 = 0, _length6 = null == payloadBuilders ? 0 : payloadBuilders.length; _i6 < _length6; _i6++) extendIfDefined(logPayload, (0, 
-                        payloadBuilders[_i6])(logPayload));
-                        !function(level, event, payload) {
-                            events.push({
-                                level: level,
-                                event: event,
-                                payload: payload
-                            });
-                            -1 !== AUTO_FLUSH_LEVEL.indexOf(level) && flush();
-                        }(level, event, logPayload);
-                        print(level, event, logPayload);
-                    }
-                }
-                Object(belter_src.isBrowser)() && Object(belter_src.safeInterval)(flush, flushInterval);
-                return {
-                    debug: function(event, payload) {
-                        log("debug", event, payload);
-                    },
-                    info: function(event, payload) {
-                        log("info", event, payload);
-                    },
-                    warn: function(event, payload) {
-                        log("warn", event, payload);
-                    },
-                    error: function(event, payload) {
-                        log("error", event, payload);
-                    },
-                    track: function() {
-                        var payload = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : {};
-                        if (Object(belter_src.isBrowser)()) {
-                            for (var trackingPayload = Object(belter_src.objFilter)(payload), _i8 = 0, _length8 = null == trackingBuilders ? 0 : trackingBuilders.length; _i8 < _length8; _i8++) extendIfDefined(trackingPayload, (0, 
-                            trackingBuilders[_i8])(trackingPayload));
-                            print("debug", "track", trackingPayload);
-                            tracking.push(trackingPayload);
-                        }
-                    },
-                    flush: flush,
-                    immediateFlush: immediateFlush,
-                    addPayloadBuilder: function(builder) {
-                        payloadBuilders.push(builder);
-                    },
-                    addMetaBuilder: function(builder) {
-                        metaBuilders.push(builder);
-                    },
-                    addTrackingBuilder: function(builder) {
-                        trackingBuilders.push(builder);
-                    },
-                    addHeaderBuilder: function(builder) {
-                        headerBuilders.push(builder);
-                    },
-                    setTransport: function(newTransport) {
-                        transport = newTransport;
-                    }
-                };
-            }({
-                url: config.b.LOGGER
-            }), storage = Object(belter_src.getStorage)({
-                name: "paypal_payments_sdk"
-            });
+                });
+            }
+            function getPaymentsSDKStorage() {
+                return Object(belter_src.getStorage)({
+                    name: "paypal_payments_sdk"
+                });
+            }
             function getSessionID() {
-                return storage.getSessionID();
+                return getPaymentsSDKStorage().getSessionID();
             }
         },
         "./src/script.js": function(module, __webpack_exports__, __webpack_require__) {

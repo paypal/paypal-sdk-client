@@ -1,5 +1,5 @@
 import { Logger } from 'beaver-logger/src';
-import { getStorage, noop, stringifyError, stringifyErrorMessage } from 'belter/src';
+import { getStorage, noop, stringifyError, stringifyErrorMessage, inlineMemoize } from 'belter/src';
 import { ZalgoPromise } from 'zalgo-promise/src';
 
 import { URLS } from './config';
@@ -7,17 +7,25 @@ import { FPTI_KEY, FPTI_FEED, FPTI_DATA_SOURCE, FPTI_SDK_NAME } from './constant
 import { getEnv, getClientID, getMerchantID, getLang, getCountry, getVersion } from './globals';
 import { getSDKSettings } from './script';
 
-export var logger = Logger({
-    url: URLS.LOGGER
-});
+export function getLogger() {
+    return inlineMemoize(getLogger, function () {
+        return Logger({
+            url: URLS.LOGGER
+        });
+    });
+}
 
-var storage = getStorage({ name: 'paypal_payments_sdk' });
+export function getPaymentsSDKStorage() {
+    return getStorage({ name: 'paypal_payments_sdk' });
+}
 
 export function getSessionID() {
-    return storage.getSessionID();
+    return getPaymentsSDKStorage().getSessionID();
 }
 
 export function setupLogger() {
+    var logger = getLogger();
+
     logger.addPayloadBuilder(function () {
         return {
             referer: window.location.host,
