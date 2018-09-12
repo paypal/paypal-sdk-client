@@ -18,3 +18,4 @@ declare var __STAGE__ : string;
 declare var __INTENT__ : string;
 declare var __COMMIT__ : boolean;
 declare var __VAULT__ : boolean;
+declare var __VERSION__ : string;

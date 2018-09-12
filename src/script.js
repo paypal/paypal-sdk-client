@@ -16,14 +16,16 @@ export function getSDKScript() : HTMLScriptElement {
 }
 
 type SDKScriptSettings = {
-    clientToken : ?string
+    clientToken : ?string,
+    partnerAttributionID : ?string
 };
 
 export function getSDKSettings() : SDKScriptSettings {
     let sdkScript = getSDKScript();
 
     return {
-        clientToken: sdkScript.getAttribute(SDK_SETTINGS.CLIENT_TOKEN)
+        clientToken:          sdkScript.getAttribute(SDK_SETTINGS.CLIENT_TOKEN),
+        partnerAttributionID: sdkScript.getAttribute(SDK_SETTINGS.PARTNER_ATTRIBUTION_ID)
     };
 }
 

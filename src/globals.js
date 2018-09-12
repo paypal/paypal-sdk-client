@@ -60,3 +60,7 @@ export function getCommit() : boolean {
 export function getVault() : boolean {
     return __VAULT__;
 }
+
+export function getVersion() : string {
+    return __VERSION__;
+}

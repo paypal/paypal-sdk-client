@@ -16,7 +16,8 @@ export const GLOBAL_NAMESPACE = 'paypal';
 export const DEFAULT_ENV = ENV.PRODUCTION;
 
 export const SDK_SETTINGS = {
-    CLIENT_TOKEN: 'data-client-token'
+    CLIENT_TOKEN:           'data-client-token',
+    PARTNER_ATTRIBUTION_ID: 'data-partner-attribution-id'
 };
 
 export const COUNTRY = {
@@ -703,7 +704,11 @@ export const FPTI_KEY = {
     VERSION:                ('checkoutjs_version' : 'checkoutjs_version'),
     LOCALE:                 ('locale' : 'locale'),
     BUYER_COUNTRY:          ('buyer_cntry' : 'buyer_cntry'),
-    INTEGRATION_IDENTIFIER: ('integration_identifier' : 'integration_identifier')
+    INTEGRATION_IDENTIFIER: ('integration_identifier' : 'integration_identifier'),
+    PARTNER_ATTRIBUTION_ID: ('bn_code' : 'bn_code'),
+    SDK_NAME:               ('sdk_name' : 'sdk_name'),
+    SDK_VERSION:            ('sdk_version' : 'sdk_version'),
+    USER_AGENT:             ('user_agent' : 'user_agent')
 };
 
 export const FPTI_DATA_SOURCE = {
@@ -711,5 +716,9 @@ export const FPTI_DATA_SOURCE = {
 };
 
 export const FPTI_FEED = {
+    PAYMENTS_SDK: ('payments_sdk' : 'payments_sdk')
+};
+
+export const FPTI_SDK_NAME = {
     PAYMENTS_SDK: ('payments_sdk' : 'payments_sdk')
 };

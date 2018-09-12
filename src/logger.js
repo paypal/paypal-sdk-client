@@ -5,8 +5,9 @@ import { getStorage, noop, stringifyError, stringifyErrorMessage } from 'belter/
 import { ZalgoPromise } from 'zalgo-promise/src';
 
 import { URLS } from './config';
-import { FPTI_KEY, FPTI_FEED, FPTI_DATA_SOURCE } from './constants';
-import { getEnv, getClientID, getMerchantID, getLang, getCountry } from './globals';
+import { FPTI_KEY, FPTI_FEED, FPTI_DATA_SOURCE, FPTI_SDK_NAME } from './constants';
+import { getEnv, getClientID, getMerchantID, getLang, getCountry, getVersion } from './globals';
+import { getSDKSettings } from './script';
 
 export let logger = Logger({
     url: URLS.LOGGER
@@ -28,19 +29,20 @@ export function setupLogger() {
     });
 
     logger.addTrackingBuilder(() => {
-
-        let sessionID = getSessionID();
-
         return {
             [FPTI_KEY.FEED]:                   FPTI_FEED.PAYMENTS_SDK,
             [FPTI_KEY.DATA_SOURCE]:            FPTI_DATA_SOURCE.PAYMENTS_SDK,
             [FPTI_KEY.CLIENT_ID]:              getClientID(),
             [FPTI_KEY.SELLER_ID]:              getMerchantID(),
-            [FPTI_KEY.SESSION_UID]:            sessionID,
+            [FPTI_KEY.SESSION_UID]:            getSessionID(),
             [FPTI_KEY.REFERER]:                window.location.host,
             [FPTI_KEY.LOCALE]:                 `${ getLang() }_${ getCountry() }`,
             [FPTI_KEY.BUYER_COUNTRY]:          getCountry(),
-            [FPTI_KEY.INTEGRATION_IDENTIFIER]: getClientID()
+            [FPTI_KEY.INTEGRATION_IDENTIFIER]: window.location.host,
+            [FPTI_KEY.PARTNER_ATTRIBUTION_ID]: getSDKSettings().partnerAttributionID,
+            [FPTI_KEY.SDK_NAME]:               FPTI_SDK_NAME.PAYMENTS_SDK,
+            [FPTI_KEY.SDK_VERSION]:            getVersion(),
+            [FPTI_KEY.USER_AGENT]:             window.navigator && window.navigator.userAgent
         };
     });
 

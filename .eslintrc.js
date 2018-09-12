@@ -11,6 +11,7 @@ module.exports = {
         __INTENT__: true,
         __COMMIT__: true,
         __VAULT__: true,
+        __VERSION__: true,
 
         __HOST__: true,
         __HOSTNAME__: true,
