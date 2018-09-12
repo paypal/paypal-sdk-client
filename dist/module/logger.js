@@ -3,8 +3,9 @@ import { getStorage, noop, stringifyError, stringifyErrorMessage } from 'belter/
 import { ZalgoPromise } from 'zalgo-promise/src';
 
 import { URLS } from './config';
-import { FPTI_KEY, FPTI_FEED, FPTI_DATA_SOURCE } from './constants';
-import { getEnv, getClientID, getMerchantID, getLang, getCountry } from './globals';
+import { FPTI_KEY, FPTI_FEED, FPTI_DATA_SOURCE, FPTI_SDK_NAME } from './constants';
+import { getEnv, getClientID, getMerchantID, getLang, getCountry, getVersion } from './globals';
+import { getSDKSettings } from './script';
 
 export var logger = Logger({
     url: URLS.LOGGER
@@ -28,9 +29,7 @@ export function setupLogger() {
     logger.addTrackingBuilder(function () {
         var _ref;
 
-        var sessionID = getSessionID();
-
-        return _ref = {}, _ref[FPTI_KEY.FEED] = FPTI_FEED.PAYMENTS_SDK, _ref[FPTI_KEY.DATA_SOURCE] = FPTI_DATA_SOURCE.PAYMENTS_SDK, _ref[FPTI_KEY.CLIENT_ID] = getClientID(), _ref[FPTI_KEY.SELLER_ID] = getMerchantID(), _ref[FPTI_KEY.SESSION_UID] = sessionID, _ref[FPTI_KEY.REFERER] = window.location.host, _ref[FPTI_KEY.LOCALE] = getLang() + '_' + getCountry(), _ref[FPTI_KEY.BUYER_COUNTRY] = getCountry(), _ref[FPTI_KEY.INTEGRATION_IDENTIFIER] = getClientID(), _ref;
+        return _ref = {}, _ref[FPTI_KEY.FEED] = FPTI_FEED.PAYMENTS_SDK, _ref[FPTI_KEY.DATA_SOURCE] = FPTI_DATA_SOURCE.PAYMENTS_SDK, _ref[FPTI_KEY.CLIENT_ID] = getClientID(), _ref[FPTI_KEY.SELLER_ID] = getMerchantID(), _ref[FPTI_KEY.SESSION_UID] = getSessionID(), _ref[FPTI_KEY.REFERER] = window.location.host, _ref[FPTI_KEY.LOCALE] = getLang() + '_' + getCountry(), _ref[FPTI_KEY.BUYER_COUNTRY] = getCountry(), _ref[FPTI_KEY.INTEGRATION_IDENTIFIER] = window.location.host, _ref[FPTI_KEY.PARTNER_ATTRIBUTION_ID] = getSDKSettings().partnerAttributionID, _ref[FPTI_KEY.SDK_NAME] = FPTI_SDK_NAME.PAYMENTS_SDK, _ref[FPTI_KEY.SDK_VERSION] = getVersion(), _ref[FPTI_KEY.USER_AGENT] = window.navigator && window.navigator.userAgent, _ref;
     });
 
     ZalgoPromise.onPossiblyUnhandledException(function (err) {

@@ -58,3 +58,7 @@ export function getCommit() {
 export function getVault() {
     return __VAULT__;
 }
+
+export function getVersion() {
+    return __VERSION__;
+}

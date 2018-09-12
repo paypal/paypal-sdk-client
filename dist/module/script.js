@@ -17,7 +17,8 @@ export function getSDKSettings() {
     var sdkScript = getSDKScript();
 
     return {
-        clientToken: sdkScript.getAttribute(SDK_SETTINGS.CLIENT_TOKEN)
+        clientToken: sdkScript.getAttribute(SDK_SETTINGS.CLIENT_TOKEN),
+        partnerAttributionID: sdkScript.getAttribute(SDK_SETTINGS.PARTNER_ATTRIBUTION_ID)
     };
 }
 

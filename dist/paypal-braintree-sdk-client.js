@@ -759,25 +759,25 @@
         },
         "./src/constants.js": function(module, __webpack_exports__, __webpack_require__) {
             "use strict";
-            __webpack_require__.d(__webpack_exports__, "h", function() {
+            __webpack_require__.d(__webpack_exports__, "i", function() {
                 return GLOBAL_KEY;
             });
             __webpack_require__.d(__webpack_exports__, "d", function() {
                 return ENV;
             });
-            __webpack_require__.d(__webpack_exports__, "i", function() {
+            __webpack_require__.d(__webpack_exports__, "j", function() {
                 return GLOBAL_NAMESPACE;
             });
             __webpack_require__.d(__webpack_exports__, "c", function() {
                 return DEFAULT_ENV;
             });
-            __webpack_require__.d(__webpack_exports__, "k", function() {
+            __webpack_require__.d(__webpack_exports__, "l", function() {
                 return SDK_SETTINGS;
             });
             __webpack_require__.d(__webpack_exports__, "a", function() {
                 return COUNTRY;
             });
-            __webpack_require__.d(__webpack_exports__, "j", function() {
+            __webpack_require__.d(__webpack_exports__, "k", function() {
                 return LANG;
             });
             __webpack_require__.d(__webpack_exports__, "b", function() {
@@ -792,6 +792,9 @@
             __webpack_require__.d(__webpack_exports__, "f", function() {
                 return FPTI_FEED;
             });
+            __webpack_require__.d(__webpack_exports__, "h", function() {
+                return FPTI_SDK_NAME;
+            });
             var _COUNTRY_LANGS, GLOBAL_KEY = "__paypal_braintree_global__", ENV = {
                 LOCAL: "local",
                 STAGE: "stage",
@@ -800,7 +803,8 @@
                 TEST: "test",
                 DEMO: "demo"
             }, GLOBAL_NAMESPACE = "paypal", DEFAULT_ENV = ENV.PRODUCTION, SDK_SETTINGS = {
-                CLIENT_TOKEN: "data-client-token"
+                CLIENT_TOKEN: "data-client-token",
+                PARTNER_ATTRIBUTION_ID: "data-partner-attribution-id"
             }, COUNTRY = {
                 AD: "AD",
                 AE: "AE",
@@ -1162,10 +1166,16 @@
                 VERSION: "checkoutjs_version",
                 LOCALE: "locale",
                 BUYER_COUNTRY: "buyer_cntry",
-                INTEGRATION_IDENTIFIER: "integration_identifier"
+                INTEGRATION_IDENTIFIER: "integration_identifier",
+                PARTNER_ATTRIBUTION_ID: "bn_code",
+                SDK_NAME: "sdk_name",
+                SDK_VERSION: "sdk_version",
+                USER_AGENT: "user_agent"
             }, FPTI_DATA_SOURCE = {
                 PAYMENTS_SDK: "payments_sdk"
             }, FPTI_FEED = {
+                PAYMENTS_SDK: "payments_sdk"
+            }, FPTI_SDK_NAME = {
                 PAYMENTS_SDK: "payments_sdk"
             };
         },
@@ -1212,6 +1222,9 @@
             __webpack_exports__.n = function() {
                 return __VAULT__;
             };
+            __webpack_exports__.o = function() {
+                return __VERSION__;
+            };
             __webpack_require__("./src/constants.js");
             function getCountry() {
                 return __LOCALE__.__LANG__;
@@ -1227,25 +1240,25 @@
             });
             var __WEBPACK_IMPORTED_MODULE_0__constants__ = __webpack_require__("./src/constants.js");
             __webpack_require__.d(__webpack_exports__, "GLOBAL_KEY", function() {
-                return __WEBPACK_IMPORTED_MODULE_0__constants__.h;
+                return __WEBPACK_IMPORTED_MODULE_0__constants__.i;
             });
             __webpack_require__.d(__webpack_exports__, "ENV", function() {
                 return __WEBPACK_IMPORTED_MODULE_0__constants__.d;
             });
             __webpack_require__.d(__webpack_exports__, "GLOBAL_NAMESPACE", function() {
-                return __WEBPACK_IMPORTED_MODULE_0__constants__.i;
+                return __WEBPACK_IMPORTED_MODULE_0__constants__.j;
             });
             __webpack_require__.d(__webpack_exports__, "DEFAULT_ENV", function() {
                 return __WEBPACK_IMPORTED_MODULE_0__constants__.c;
             });
             __webpack_require__.d(__webpack_exports__, "SDK_SETTINGS", function() {
-                return __WEBPACK_IMPORTED_MODULE_0__constants__.k;
+                return __WEBPACK_IMPORTED_MODULE_0__constants__.l;
             });
             __webpack_require__.d(__webpack_exports__, "COUNTRY", function() {
                 return __WEBPACK_IMPORTED_MODULE_0__constants__.a;
             });
             __webpack_require__.d(__webpack_exports__, "LANG", function() {
-                return __WEBPACK_IMPORTED_MODULE_0__constants__.j;
+                return __WEBPACK_IMPORTED_MODULE_0__constants__.k;
             });
             __webpack_require__.d(__webpack_exports__, "COUNTRY_LANGS", function() {
                 return __WEBPACK_IMPORTED_MODULE_0__constants__.b;
@@ -1258,6 +1271,9 @@
             });
             __webpack_require__.d(__webpack_exports__, "FPTI_FEED", function() {
                 return __WEBPACK_IMPORTED_MODULE_0__constants__.f;
+            });
+            __webpack_require__.d(__webpack_exports__, "FPTI_SDK_NAME", function() {
+                return __WEBPACK_IMPORTED_MODULE_0__constants__.h;
             });
             var __WEBPACK_IMPORTED_MODULE_1__config__ = __webpack_require__("./src/config.js");
             __webpack_require__.d(__webpack_exports__, "buildConfigUrl", function() {
@@ -1281,7 +1297,7 @@
             });
             var __WEBPACK_IMPORTED_MODULE_3__types__ = __webpack_require__("./src/types.js");
             __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__types__);
-            for (var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_3__types__) [ "GLOBAL_KEY", "ENV", "GLOBAL_NAMESPACE", "DEFAULT_ENV", "SDK_SETTINGS", "COUNTRY", "LANG", "COUNTRY_LANGS", "FPTI_KEY", "FPTI_DATA_SOURCE", "FPTI_FEED", "buildConfigUrl", "DOMAINS", "URLS", "logger", "getSessionID", "setupLogger", "default" ].indexOf(__WEBPACK_IMPORT_KEY__) < 0 && function(key) {
+            for (var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_3__types__) [ "GLOBAL_KEY", "ENV", "GLOBAL_NAMESPACE", "DEFAULT_ENV", "SDK_SETTINGS", "COUNTRY", "LANG", "COUNTRY_LANGS", "FPTI_KEY", "FPTI_DATA_SOURCE", "FPTI_FEED", "FPTI_SDK_NAME", "buildConfigUrl", "DOMAINS", "URLS", "logger", "getSessionID", "setupLogger", "default" ].indexOf(__WEBPACK_IMPORT_KEY__) < 0 && function(key) {
                 __webpack_require__.d(__webpack_exports__, key, function() {
                     return __WEBPACK_IMPORTED_MODULE_3__types__[key];
                 });
@@ -1329,6 +1345,9 @@
             __webpack_require__.d(__webpack_exports__, "getVault", function() {
                 return __WEBPACK_IMPORTED_MODULE_4__globals__.n;
             });
+            __webpack_require__.d(__webpack_exports__, "getVersion", function() {
+                return __WEBPACK_IMPORTED_MODULE_4__globals__.o;
+            });
             var __WEBPACK_IMPORTED_MODULE_5__script__ = __webpack_require__("./src/script.js");
             __webpack_require__.d(__webpack_exports__, "getSDKScript", function() {
                 return __WEBPACK_IMPORTED_MODULE_5__script__.b;
@@ -1361,7 +1380,7 @@
             function extendIfDefined(target, source) {
                 for (var key in source) source.hasOwnProperty(key) && source[key] && (target[key] = source[key]);
             }
-            var config = __webpack_require__("./src/config.js"), constants = __webpack_require__("./src/constants.js"), globals = __webpack_require__("./src/globals.js");
+            var config = __webpack_require__("./src/config.js"), constants = __webpack_require__("./src/constants.js"), globals = __webpack_require__("./src/globals.js"), script = __webpack_require__("./src/script.js");
             __webpack_require__.d(__webpack_exports__, "b", function() {
                 return logger;
             });
@@ -1375,12 +1394,14 @@
                     };
                 });
                 logger.addTrackingBuilder(function() {
-                    var _ref, sessionID = getSessionID();
+                    var _ref;
                     return (_ref = {})[constants.g.FEED] = constants.f.PAYMENTS_SDK, _ref[constants.g.DATA_SOURCE] = constants.e.PAYMENTS_SDK, 
                     _ref[constants.g.CLIENT_ID] = Object(globals.a)(), _ref[constants.g.SELLER_ID] = Object(globals.j)(), 
-                    _ref[constants.g.SESSION_UID] = sessionID, _ref[constants.g.REFERER] = window.location.host, 
+                    _ref[constants.g.SESSION_UID] = getSessionID(), _ref[constants.g.REFERER] = window.location.host, 
                     _ref[constants.g.LOCALE] = Object(globals.h)() + "_" + Object(globals.c)(), _ref[constants.g.BUYER_COUNTRY] = Object(globals.c)(), 
-                    _ref[constants.g.INTEGRATION_IDENTIFIER] = Object(globals.a)(), _ref;
+                    _ref[constants.g.INTEGRATION_IDENTIFIER] = window.location.host, _ref[constants.g.PARTNER_ATTRIBUTION_ID] = Object(script.c)().partnerAttributionID, 
+                    _ref[constants.g.SDK_NAME] = constants.h.PAYMENTS_SDK, _ref[constants.g.SDK_VERSION] = Object(globals.o)(), 
+                    _ref[constants.g.USER_AGENT] = window.navigator && window.navigator.userAgent, _ref;
                 });
                 src.a.onPossiblyUnhandledException(function(err) {
                     var _logger$track;
@@ -1522,8 +1543,10 @@
                 return script;
             }
             function getSDKSettings() {
+                var sdkScript = getSDKScript();
                 return {
-                    clientToken: getSDKScript().getAttribute(__WEBPACK_IMPORTED_MODULE_1__constants__.k.CLIENT_TOKEN)
+                    clientToken: sdkScript.getAttribute(__WEBPACK_IMPORTED_MODULE_1__constants__.l.CLIENT_TOKEN),
+                    partnerAttributionID: sdkScript.getAttribute(__WEBPACK_IMPORTED_MODULE_1__constants__.l.PARTNER_ATTRIBUTION_ID)
                 };
             }
         },
