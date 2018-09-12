@@ -1,6 +1,8 @@
 /* @flow */
 
-import { type LocaleType, COUNTRY, LANG } from './constants';
+import { getBrowserLocales } from 'belter/src';
+
+import { type LocaleType, COUNTRY, LANG, INTENT, COMMIT, VAULT, ENV, COUNTRY_LANGS } from './constants';
 
 export function getHost() : string {
     return __HOST__;
@@ -18,7 +20,7 @@ export function getPath() : string {
     return __PATH__;
 }
 
-export function getEnv() : string {
+export function getEnv() : $Values<typeof ENV> {
     return __ENV__;
 }
 
@@ -31,11 +33,22 @@ export function getMerchantID() : string {
 }
 
 export function getCountry() : $Values<typeof COUNTRY> {
-    return __LOCALE__.__LANG__;
+    return __LOCALE_COUNTRY__;
 }
 
 export function getLang() : $Values<typeof LANG> {
-    return __LOCALE__.__LANG__;
+    if (typeof __LOCALE_LANG__ !== 'undefined') {
+        return __LOCALE_LANG__;
+    }
+    
+    for (let { country, lang } of getBrowserLocales()) {
+        if (country && country === __LOCALE_COUNTRY__ && COUNTRY_LANGS[__LOCALE_COUNTRY__].indexOf(lang) !== -1) {
+            // $FlowFixMe
+            return lang;
+        }
+    }
+
+    return __DEFAULT_LANG__;
 }
 
 export function getLocale() : LocaleType {
@@ -49,15 +62,15 @@ export function getStageHost() : string {
     return __STAGE_HOST__;
 }
 
-export function getIntent() : string {
+export function getIntent() : $Values<typeof INTENT> {
     return __INTENT__;
 }
 
-export function getCommit() : boolean {
+export function getCommit() : $Values<typeof COMMIT> {
     return __COMMIT__;
 }
 
-export function getVault() : boolean {
+export function getVault() : $Values<typeof VAULT> {
     return __VAULT__;
 }
 

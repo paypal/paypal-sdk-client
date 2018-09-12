@@ -722,3 +722,19 @@ export const FPTI_FEED = {
 export const FPTI_SDK_NAME = {
     PAYMENTS_SDK: ('payments_sdk' : 'payments_sdk')
 };
+
+export const INTENT = {
+    CAPTURE: ('capture' : 'capture'),
+    AUTH:    ('auth' : 'auth'),
+    ORDER:   ('order' : 'order')
+};
+
+export const COMMIT = {
+    TRUE:  (true : true),
+    FALSE: (false : false)
+};
+
+export const VAULT = {
+    TRUE:  (true : true),
+    FALSE: (false : false)
+};
