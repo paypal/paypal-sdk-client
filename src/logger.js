@@ -1,7 +1,7 @@
 /* @flow */
 
-import { Logger } from 'beaver-logger/src';
-import { getStorage, noop, stringifyError, stringifyErrorMessage } from 'belter/src';
+import { Logger, type LoggerType } from 'beaver-logger/src';
+import { getStorage, type Storage, noop, stringifyError, stringifyErrorMessage, inlineMemoize } from 'belter/src';
 import { ZalgoPromise } from 'zalgo-promise/src';
 
 import { URLS } from './config';
@@ -9,17 +9,25 @@ import { FPTI_KEY, FPTI_FEED, FPTI_DATA_SOURCE, FPTI_SDK_NAME } from './constant
 import { getEnv, getClientID, getMerchantID, getLang, getCountry, getVersion } from './globals';
 import { getSDKSettings } from './script';
 
-export let logger = Logger({
-    url: URLS.LOGGER
-});
+export function getLogger() : LoggerType {
+    return inlineMemoize(getLogger, () =>
+        Logger({
+            url: URLS.LOGGER
+        })
+    );
+}
 
-let storage = getStorage({ name: 'paypal_payments_sdk' });
+export function getPaymentsSDKStorage() : Storage {
+    return getStorage({ name: 'paypal_payments_sdk' });
+}
 
 export function getSessionID() : string {
-    return storage.getSessionID();
+    return getPaymentsSDKStorage().getSessionID();
 }
 
 export function setupLogger() {
+    let logger = getLogger();
+    
     logger.addPayloadBuilder(() => {
         return {
             referer: window.location.host,
