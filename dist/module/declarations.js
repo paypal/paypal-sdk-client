@@ -1,1 +1,1 @@
-import { COUNTRY, LANG, ENV, INTENT, COMMIT, VAULT } from './constants';
+import { COUNTRY, LANG, ENV, INTENT, COMMIT, VAULT, CURRENCY } from './constants';

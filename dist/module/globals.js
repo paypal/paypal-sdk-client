@@ -1,6 +1,6 @@
 import { getBrowserLocales } from 'belter/src';
 
-import { COUNTRY, LANG, INTENT, COMMIT, VAULT, ENV, COUNTRY_LANGS } from './constants';
+import { COUNTRY, LANG, INTENT, COMMIT, VAULT, ENV, COUNTRY_LANGS, CURRENCY } from './constants';
 
 export function getHost() {
     return __HOST__;
@@ -76,6 +76,18 @@ export function getVault() {
     return __VAULT__;
 }
 
+export function getCurrency() {
+    return __CURRENCY__;
+}
+
 export function getVersion() {
     return __VERSION__;
+}
+
+export function getPartnerAttributionID() {
+    return __PARTNER_ATTRIBUTION_ID__;
+}
+
+export function getCorrelationID() {
+    return __CORRELATION_ID__;
 }
