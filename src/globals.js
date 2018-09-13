@@ -2,7 +2,7 @@
 
 import { getBrowserLocales } from 'belter/src';
 
-import { type LocaleType, COUNTRY, LANG, INTENT, COMMIT, VAULT, ENV, COUNTRY_LANGS } from './constants';
+import { type LocaleType, COUNTRY, LANG, INTENT, COMMIT, VAULT, ENV, COUNTRY_LANGS, CURRENCY } from './constants';
 
 export function getHost() : string {
     return __HOST__;
@@ -74,6 +74,18 @@ export function getVault() : $Values<typeof VAULT> {
     return __VAULT__;
 }
 
+export function getCurrency() : $Values<typeof CURRENCY> {
+    return __CURRENCY__;
+}
+
 export function getVersion() : string {
     return __VERSION__;
+}
+
+export function getPartnerAttributionID() : string {
+    return __PARTNER_ATTRIBUTION_ID__;
+}
+
+export function getCorrelationID() : string {
+    return __CORRELATION_ID__;
 }

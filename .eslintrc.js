@@ -6,10 +6,12 @@ module.exports = {
     globals: {
         __STAGE__: true,
         __CLIENT_ID__: true,
+        __PARTNER_ATTRIBUTION_ID__: true,
         __MERCHANT_ID__: true,
         __LOCALE_COUNTRY__: true,
         __LOCALE_LANG__: true,
         __DEFAULT_LANG__: true,
+        __CURRENCY__: true,
         __INTENT__: true,
         __COMMIT__: true,
         __VAULT__: true,
@@ -19,6 +21,7 @@ module.exports = {
         __HOSTNAME__: true,
         __PORT__: true,
         __PATH__: true,
-        __STAGE_HOST__: true
+        __STAGE_HOST__: true,
+        __CORRELATION_ID__: true
     }
 };
