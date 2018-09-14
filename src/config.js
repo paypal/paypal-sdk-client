@@ -17,21 +17,21 @@ export const DOMAINS = {
             return `http://localhost.paypal.com:${ getPort() }`;
         },
         get LOGGER() : string {
-            return `https://www.${ getStageHost() }`;
+            return `https://${ getStageHost() }`;
         },
         get API() : string {
-            return `https://www.${ getStageHost() }`;
+            return `https://${ getStageHost() }`;
         }
     },
     stage: {
         get PAYPAL() : string {
-            return `https://www.${ getStageHost() }`;
+            return `https://${ getStageHost() }`;
         },
         get LOGGER() : string {
-            return `https://www.${ getStageHost() }`;
+            return `https://${ getStageHost() }`;
         },
         get API() : string {
-            return `https://www.${ getStageHost() }:12326`;
+            return `https://${ getStageHost() }:12326`;
         }
     },
     sandbox: {
