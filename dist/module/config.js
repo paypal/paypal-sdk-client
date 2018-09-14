@@ -15,21 +15,21 @@ export var DOMAINS = {
             return 'http://localhost.paypal.com:' + getPort();
         },
         get LOGGER() {
-            return 'https://www.' + getStageHost();
+            return 'https://' + getStageHost();
         },
         get API() {
-            return 'https://www.' + getStageHost();
+            return 'https://' + getStageHost();
         }
     },
     stage: {
         get PAYPAL() {
-            return 'https://www.' + getStageHost();
+            return 'https://' + getStageHost();
         },
         get LOGGER() {
-            return 'https://www.' + getStageHost();
+            return 'https://' + getStageHost();
         },
         get API() {
-            return 'https://www.' + getStageHost() + ':12326';
+            return 'https://' + getStageHost() + ':12326';
         }
     },
     sandbox: {
