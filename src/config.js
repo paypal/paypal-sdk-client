@@ -3,7 +3,7 @@
 import { isBrowser, getActualDomain } from 'cross-domain-utils/src';
 
 import { getPort } from './globals';
-import { getStageHost } from './script';
+import { getStageHost, getAPIStageHost } from './script';
 
 export function buildConfigUrl(domain : string, uri? : string) : string {
     if (__TEST__ && isBrowser()) {
@@ -24,8 +24,8 @@ export function getPayPalDomain() : string {
 
 export function getPayPalAPIDomain() : string {
     return {
-        local:   `https://${ getStageHost() }:12326`,
-        stage:   `https://${ getStageHost() }:12326`,
+        local:   `https://${ getAPIStageHost() }:12326`,
+        stage:   `https://${ getAPIStageHost() }:12326`,
         sandbox: `https://cors.api.sandbox.paypal.com`,
         paypal:  `https://www.cors.api.paypal.com`,
         test:    `mock://api.paypal.com`

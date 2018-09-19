@@ -21,7 +21,8 @@ export function getSDKScript() : HTMLScriptElement {
 type SDKScriptSettings = {
     clientToken : ?string,
     partnerAttributionID : ?string,
-    stageHost : ?string
+    stageHost : ?string,
+    apiStageHost : ?string
 };
 
 export function getSDKSettings() : SDKScriptSettings {
@@ -31,7 +32,8 @@ export function getSDKSettings() : SDKScriptSettings {
         return {
             clientToken:          sdkScript.getAttribute(SDK_SETTINGS.CLIENT_TOKEN),
             partnerAttributionID: sdkScript.getAttribute(SDK_SETTINGS.PARTNER_ATTRIBUTION_ID),
-            stageHost:            sdkScript.getAttribute(SDK_SETTINGS.STAGE_HOST)
+            stageHost:            sdkScript.getAttribute(SDK_SETTINGS.STAGE_HOST),
+            apiStageHost:         sdkScript.getAttribute(SDK_SETTINGS.API_STAGE_HOST)
         };
     });
 }
@@ -52,4 +54,8 @@ export function getPartnerAttributionID() : ?string {
 
 export function getStageHost() : string {
     return getSDKSettings().stageHost || getDefaultStageHost();
+}
+
+export function getAPIStageHost() : string {
+    return getSDKSettings().apiStageHost || getStageHost();
 }

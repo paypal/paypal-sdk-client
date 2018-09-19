@@ -13,7 +13,8 @@ export const ENV = {
 export const SDK_SETTINGS = {
     CLIENT_TOKEN:           ('data-client-token' : 'data-client-token'),
     PARTNER_ATTRIBUTION_ID: ('data-partner-attribution-id' : 'data-partner-attribution-id'),
-    STAGE_HOST:             ('data-stage-host' : 'data-stage-host')
+    STAGE_HOST:             ('data-stage-host' : 'data-stage-host'),
+    API_STAGE_HOST:         ('data-api-stage-host' : 'data-api-stage-host')
 };
 
 export const COUNTRY = {
