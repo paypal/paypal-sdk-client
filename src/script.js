@@ -1,32 +1,39 @@
 /* @flow */
 
-import { getScript } from 'belter/src';
+import { getScript, inlineMemoize } from 'belter/src';
 
 import { SDK_SETTINGS } from './constants';
-import { getHost, getPath } from './globals';
+import { getHost, getPath, getDefaultStageHost } from './globals';
 
 export function getSDKScript() : HTMLScriptElement {
-    let script = getScript({ host: getHost(), path: getPath() });
+    return inlineMemoize(getSDKScript, () => {
+        let { host, path } = { host: getHost(), path: getPath() };
+        let script = getScript({ host, path });
 
-    if (!script) {
-        throw new Error(`PayPal Payments SDK script not present on page! Excected to find <script src="https://${ getHost() }${ getPath() }">`);
-    }
+        if (!script) {
+            throw new Error(`PayPal Payments SDK script not present on page! Excected to find <script src="https://${ host }${ path }">`);
+        }
 
-    return script;
+        return script;
+    });
 }
 
 type SDKScriptSettings = {
     clientToken : ?string,
-    partnerAttributionID : ?string
+    partnerAttributionID : ?string,
+    stageHost : ?string
 };
 
 export function getSDKSettings() : SDKScriptSettings {
-    let sdkScript = getSDKScript();
+    return inlineMemoize(getSDKSettings, () => {
+        let sdkScript = getSDKScript();
 
-    return {
-        clientToken:          sdkScript.getAttribute(SDK_SETTINGS.CLIENT_TOKEN),
-        partnerAttributionID: sdkScript.getAttribute(SDK_SETTINGS.PARTNER_ATTRIBUTION_ID)
-    };
+        return {
+            clientToken:          sdkScript.getAttribute(SDK_SETTINGS.CLIENT_TOKEN),
+            partnerAttributionID: sdkScript.getAttribute(SDK_SETTINGS.PARTNER_ATTRIBUTION_ID),
+            stageHost:            sdkScript.getAttribute(SDK_SETTINGS.STAGE_HOST)
+        };
+    });
 }
 
 export function getClientToken() : string {
@@ -37,4 +44,12 @@ export function getClientToken() : string {
     }
 
     return clientToken;
+}
+
+export function getPartnerAttributionID() : ?string {
+    return getSDKSettings().partnerAttributionID;
+}
+
+export function getStageHost() : string {
+    return getSDKSettings().stageHost || getDefaultStageHost();
 }

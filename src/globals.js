@@ -58,7 +58,7 @@ export function getLocale() : LocaleType {
     };
 }
 
-export function getStageHost() : string {
+export function getDefaultStageHost() : string {
     return __STAGE_HOST__;
 }
 
@@ -80,10 +80,6 @@ export function getCurrency() : $Values<typeof CURRENCY> {
 
 export function getVersion() : string {
     return __VERSION__;
-}
-
-export function getPartnerAttributionID() : string {
-    return __PARTNER_ATTRIBUTION_ID__;
 }
 
 export function getCorrelationID() : string {

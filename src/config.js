@@ -2,7 +2,8 @@
 
 import { isBrowser, getActualDomain } from 'cross-domain-utils/src';
 
-import { getStageHost, getPort } from './globals';
+import { getPort } from './globals';
+import { getStageHost } from './script';
 
 export function buildConfigUrl(domain : string, uri? : string) : string {
     if (__TEST__ && isBrowser()) {
