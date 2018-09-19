@@ -1,25 +1,34 @@
-import { getScript } from 'belter/src';
+import { getScript, inlineMemoize } from 'belter/src';
 
 import { SDK_SETTINGS } from './constants';
-import { getHost, getPath } from './globals';
+import { getHost, getPath, getDefaultStageHost } from './globals';
 
 export function getSDKScript() {
-    var script = getScript({ host: getHost(), path: getPath() });
+    return inlineMemoize(getSDKScript, function () {
+        var _host$path = { host: getHost(), path: getPath() },
+            host = _host$path.host,
+            path = _host$path.path;
 
-    if (!script) {
-        throw new Error('PayPal Payments SDK script not present on page! Excected to find <script src="https://' + getHost() + getPath() + '">');
-    }
+        var script = getScript({ host: host, path: path });
 
-    return script;
+        if (!script) {
+            throw new Error('PayPal Payments SDK script not present on page! Excected to find <script src="https://' + host + path + '">');
+        }
+
+        return script;
+    });
 }
 
 export function getSDKSettings() {
-    var sdkScript = getSDKScript();
+    return inlineMemoize(getSDKSettings, function () {
+        var sdkScript = getSDKScript();
 
-    return {
-        clientToken: sdkScript.getAttribute(SDK_SETTINGS.CLIENT_TOKEN),
-        partnerAttributionID: sdkScript.getAttribute(SDK_SETTINGS.PARTNER_ATTRIBUTION_ID)
-    };
+        return {
+            clientToken: sdkScript.getAttribute(SDK_SETTINGS.CLIENT_TOKEN),
+            partnerAttributionID: sdkScript.getAttribute(SDK_SETTINGS.PARTNER_ATTRIBUTION_ID),
+            stageHost: sdkScript.getAttribute(SDK_SETTINGS.STAGE_HOST)
+        };
+    });
 }
 
 export function getClientToken() {
@@ -31,4 +40,12 @@ export function getClientToken() {
     }
 
     return clientToken;
+}
+
+export function getPartnerAttributionID() {
+    return getSDKSettings().partnerAttributionID;
+}
+
+export function getStageHost() {
+    return getSDKSettings().stageHost || getDefaultStageHost();
 }

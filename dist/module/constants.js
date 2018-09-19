@@ -2,8 +2,6 @@ var _COUNTRY_LANGS;
 
 /* eslint max-lines: 0 */
 
-export var GLOBAL_KEY = '__paypal_braintree_global__';
-
 export var ENV = {
     LOCAL: 'local',
     STAGE: 'stage',
@@ -12,13 +10,11 @@ export var ENV = {
     TEST: 'test',
     DEMO: 'demo'
 };
-export var GLOBAL_NAMESPACE = 'paypal';
-
-export var DEFAULT_ENV = ENV.PRODUCTION;
 
 export var SDK_SETTINGS = {
     CLIENT_TOKEN: 'data-client-token',
-    PARTNER_ATTRIBUTION_ID: 'data-partner-attribution-id'
+    PARTNER_ATTRIBUTION_ID: 'data-partner-attribution-id',
+    STAGE_HOST: 'data-stage-host'
 };
 
 export var COUNTRY = {

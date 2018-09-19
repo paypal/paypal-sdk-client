@@ -60,7 +60,7 @@ export function getLocale() {
     };
 }
 
-export function getStageHost() {
+export function getDefaultStageHost() {
     return __STAGE_HOST__;
 }
 
@@ -82,10 +82,6 @@ export function getCurrency() {
 
 export function getVersion() {
     return __VERSION__;
-}
-
-export function getPartnerAttributionID() {
-    return __PARTNER_ATTRIBUTION_ID__;
 }
 
 export function getCorrelationID() {
