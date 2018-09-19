@@ -12,53 +12,36 @@ export function buildConfigUrl(domain : string, uri? : string) : string {
     return `${ domain }${ uri || '' }`;
 }
 
-export const DOMAINS = {
-    local: {
-        get PAYPAL() : string {
-            return `http://localhost.paypal.com:${ getPort() }`;
-        },
-        get LOGGER() : string {
-            return `https://${ getStageHost() }`;
-        },
-        get API() : string {
-            return `https://${ getStageHost() }`;
-        }
-    },
-    stage: {
-        get PAYPAL() : string {
-            return `https://${ getStageHost() }`;
-        },
-        get LOGGER() : string {
-            return `https://${ getStageHost() }`;
-        },
-        get API() : string {
-            return `https://${ getStageHost() }:12326`;
-        }
-    },
-    sandbox: {
-        PAYPAL: `https://www.sandbox.paypal.com`,
-        LOGGER: `https://www.sandbox.paypal.com`,
-        API:    `https://cors.api.sandbox.paypal.com`
-    },
-    production: {
-        PAYPAL: `https://www.paypal.com`,
-        LOGGER: `https://www.paypal.com`,
-        API:    `https://www.cors.api.paypal.com`
-    },
-    test: {
-        PAYPAL: `mock://www.paypal.com`,
-        LOGGER: `mock://www.paypal.com`,
-        API:    `mock://api.paypal.com`
-    }
-}[__ENV__];
+export function getPayPalDomain() : string {
+    return {
+        local:   `http://localhost.paypal.com:${ getPort() }`,
+        stage:   `https://${ getStageHost() }`,
+        sandbox: `https://www.sandbox.paypal.com`,
+        paypal:  `https://www.paypal.com`,
+        test:    `mock://www.paypal.com`
+    }[__ENV__];
+}
 
+export function getPayPalAPIDomain() : string {
+    return {
+        local:   `https://${ getStageHost() }:12326`,
+        stage:   `https://${ getStageHost() }:12326`,
+        sandbox: `https://cors.api.sandbox.paypal.com`,
+        paypal:  `https://www.cors.api.paypal.com`,
+        test:    `mock://api.paypal.com`
+    }[__ENV__];
+}
 
-const URIS = {
-    LOGGER: `/xoplatform/logger/api/logger`
-};
+export function getPayPalLoggerDomain() : string {
+    return {
+        local:   `https://${ getStageHost() }`,
+        stage:   getPayPalDomain(),
+        sandbox: getPayPalDomain(),
+        paypal:  getPayPalDomain(),
+        test:    getPayPalDomain()
+    }[__ENV__];
+}
 
-export const URLS = {
-    get LOGGER() : string {
-        return buildConfigUrl(DOMAINS.LOGGER, URIS.LOGGER);
-    }
-};
+export function getPayPalLoggerUrl() : string {
+    return `${ getPayPalLoggerDomain() }/xoplatform/logger/api/logger`;
+}
