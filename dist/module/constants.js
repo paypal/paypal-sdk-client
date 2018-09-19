@@ -14,7 +14,8 @@ export var ENV = {
 export var SDK_SETTINGS = {
     CLIENT_TOKEN: 'data-client-token',
     PARTNER_ATTRIBUTION_ID: 'data-partner-attribution-id',
-    STAGE_HOST: 'data-stage-host'
+    STAGE_HOST: 'data-stage-host',
+    API_STAGE_HOST: 'data-api-stage-host'
 };
 
 export var COUNTRY = {

@@ -769,8 +769,8 @@
             __webpack_exports__.c = getPayPalDomain;
             __webpack_exports__.b = function() {
                 return {
-                    local: "https://" + Object(__WEBPACK_IMPORTED_MODULE_2__script__.e)() + ":12326",
-                    stage: "https://" + Object(__WEBPACK_IMPORTED_MODULE_2__script__.e)() + ":12326",
+                    local: "https://" + Object(__WEBPACK_IMPORTED_MODULE_2__script__.a)() + ":12326",
+                    stage: "https://" + Object(__WEBPACK_IMPORTED_MODULE_2__script__.a)() + ":12326",
                     sandbox: "https://cors.api.sandbox.paypal.com",
                     paypal: "https://www.cors.api.paypal.com",
                     test: "mock://api.paypal.com"
@@ -785,7 +785,7 @@
             function getPayPalDomain() {
                 return {
                     local: "http://localhost.paypal.com:" + Object(__WEBPACK_IMPORTED_MODULE_1__globals__.o)(),
-                    stage: "https://" + Object(__WEBPACK_IMPORTED_MODULE_2__script__.e)(),
+                    stage: "https://" + Object(__WEBPACK_IMPORTED_MODULE_2__script__.f)(),
                     sandbox: "https://www.sandbox.paypal.com",
                     paypal: "https://www.paypal.com",
                     test: "mock://www.paypal.com"
@@ -793,7 +793,7 @@
             }
             function getPayPalLoggerDomain() {
                 return {
-                    local: "https://" + Object(__WEBPACK_IMPORTED_MODULE_2__script__.e)(),
+                    local: "https://" + Object(__WEBPACK_IMPORTED_MODULE_2__script__.f)(),
                     stage: getPayPalDomain(),
                     sandbox: getPayPalDomain(),
                     paypal: getPayPalDomain(),
@@ -852,7 +852,8 @@
             }, SDK_SETTINGS = {
                 CLIENT_TOKEN: "data-client-token",
                 PARTNER_ATTRIBUTION_ID: "data-partner-attribution-id",
-                STAGE_HOST: "data-stage-host"
+                STAGE_HOST: "data-stage-host",
+                API_STAGE_HOST: "data-api-stage-host"
             }, COUNTRY = {
                 AD: "AD",
                 AE: "AE",
@@ -1463,19 +1464,22 @@
             });
             var __WEBPACK_IMPORTED_MODULE_5__script__ = __webpack_require__("./src/script.js");
             __webpack_require__.d(__webpack_exports__, "getSDKScript", function() {
-                return __WEBPACK_IMPORTED_MODULE_5__script__.c;
-            });
-            __webpack_require__.d(__webpack_exports__, "getSDKSettings", function() {
                 return __WEBPACK_IMPORTED_MODULE_5__script__.d;
             });
-            __webpack_require__.d(__webpack_exports__, "getClientToken", function() {
-                return __WEBPACK_IMPORTED_MODULE_5__script__.a;
+            __webpack_require__.d(__webpack_exports__, "getSDKSettings", function() {
+                return __WEBPACK_IMPORTED_MODULE_5__script__.e;
             });
-            __webpack_require__.d(__webpack_exports__, "getPartnerAttributionID", function() {
+            __webpack_require__.d(__webpack_exports__, "getClientToken", function() {
                 return __WEBPACK_IMPORTED_MODULE_5__script__.b;
             });
+            __webpack_require__.d(__webpack_exports__, "getPartnerAttributionID", function() {
+                return __WEBPACK_IMPORTED_MODULE_5__script__.c;
+            });
             __webpack_require__.d(__webpack_exports__, "getStageHost", function() {
-                return __WEBPACK_IMPORTED_MODULE_5__script__.e;
+                return __WEBPACK_IMPORTED_MODULE_5__script__.f;
+            });
+            __webpack_require__.d(__webpack_exports__, "getAPIStageHost", function() {
+                return __WEBPACK_IMPORTED_MODULE_5__script__.a;
             });
         },
         "./src/logger.js": function(module, __webpack_exports__, __webpack_require__) {
@@ -1523,7 +1527,7 @@
                     _ref[constants.h.CLIENT_ID] = Object(globals.a)(), _ref[constants.h.SELLER_ID] = Object(globals.m)(), 
                     _ref[constants.h.SESSION_UID] = getSessionID(), _ref[constants.h.REFERER] = window.location.host, 
                     _ref[constants.h.LOCALE] = Object(globals.k)() + "_" + Object(globals.d)(), _ref[constants.h.BUYER_COUNTRY] = Object(globals.d)(), 
-                    _ref[constants.h.INTEGRATION_IDENTIFIER] = Object(globals.a)(), _ref[constants.h.PARTNER_ATTRIBUTION_ID] = Object(script.b)(), 
+                    _ref[constants.h.INTEGRATION_IDENTIFIER] = Object(globals.a)(), _ref[constants.h.PARTNER_ATTRIBUTION_ID] = Object(script.c)(), 
                     _ref[constants.h.SDK_NAME] = constants.i.PAYMENTS_SDK, _ref[constants.h.SDK_VERSION] = Object(globals.q)(), 
                     _ref[constants.h.USER_AGENT] = window.navigator && window.navigator.userAgent, _ref;
                 });
@@ -1657,18 +1661,19 @@
         },
         "./src/script.js": function(module, __webpack_exports__, __webpack_require__) {
             "use strict";
-            __webpack_exports__.c = getSDKScript;
-            __webpack_exports__.d = getSDKSettings;
-            __webpack_exports__.a = function() {
+            __webpack_exports__.d = getSDKScript;
+            __webpack_exports__.e = getSDKSettings;
+            __webpack_exports__.b = function() {
                 var clientToken = getSDKSettings().clientToken;
                 if (!clientToken) throw new Error('Expected data-client-token="xyz" to be passed with client token, to ' + getSDKScript().outerHTML);
                 return clientToken;
             };
-            __webpack_exports__.b = function() {
+            __webpack_exports__.c = function() {
                 return getSDKSettings().partnerAttributionID;
             };
-            __webpack_exports__.e = function() {
-                return getSDKSettings().stageHost || Object(__WEBPACK_IMPORTED_MODULE_2__globals__.f)();
+            __webpack_exports__.f = getStageHost;
+            __webpack_exports__.a = function() {
+                return getSDKSettings().apiStageHost || getStageHost();
             };
             var __WEBPACK_IMPORTED_MODULE_0_belter_src__ = __webpack_require__("./node_modules/belter/src/index.js"), __WEBPACK_IMPORTED_MODULE_1__constants__ = __webpack_require__("./src/constants.js"), __WEBPACK_IMPORTED_MODULE_2__globals__ = __webpack_require__("./src/globals.js");
             function getSDKScript() {
@@ -1690,9 +1695,13 @@
                     return {
                         clientToken: sdkScript.getAttribute(__WEBPACK_IMPORTED_MODULE_1__constants__.l.CLIENT_TOKEN),
                         partnerAttributionID: sdkScript.getAttribute(__WEBPACK_IMPORTED_MODULE_1__constants__.l.PARTNER_ATTRIBUTION_ID),
-                        stageHost: sdkScript.getAttribute(__WEBPACK_IMPORTED_MODULE_1__constants__.l.STAGE_HOST)
+                        stageHost: sdkScript.getAttribute(__WEBPACK_IMPORTED_MODULE_1__constants__.l.STAGE_HOST),
+                        apiStageHost: sdkScript.getAttribute(__WEBPACK_IMPORTED_MODULE_1__constants__.l.API_STAGE_HOST)
                     };
                 });
+            }
+            function getStageHost() {
+                return getSDKSettings().stageHost || Object(__WEBPACK_IMPORTED_MODULE_2__globals__.f)();
             }
         },
         "./src/types.js": function(module, exports) {}

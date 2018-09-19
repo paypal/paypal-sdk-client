@@ -26,7 +26,8 @@ export function getSDKSettings() {
         return {
             clientToken: sdkScript.getAttribute(SDK_SETTINGS.CLIENT_TOKEN),
             partnerAttributionID: sdkScript.getAttribute(SDK_SETTINGS.PARTNER_ATTRIBUTION_ID),
-            stageHost: sdkScript.getAttribute(SDK_SETTINGS.STAGE_HOST)
+            stageHost: sdkScript.getAttribute(SDK_SETTINGS.STAGE_HOST),
+            apiStageHost: sdkScript.getAttribute(SDK_SETTINGS.API_STAGE_HOST)
         };
     });
 }
@@ -48,4 +49,8 @@ export function getPartnerAttributionID() {
 
 export function getStageHost() {
     return getSDKSettings().stageHost || getDefaultStageHost();
+}
+
+export function getAPIStageHost() {
+    return getSDKSettings().apiStageHost || getStageHost();
 }
