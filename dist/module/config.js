@@ -1,14 +1,7 @@
-import { isBrowser, getActualDomain } from 'cross-domain-utils/src';
+import { getActualDomain, isCurrentDomain } from 'cross-domain-utils/src';
 
 import { getPort } from './globals';
 import { getStageHost, getAPIStageHost } from './script';
-
-export function buildConfigUrl(domain, uri) {
-    if (__TEST__ && isBrowser()) {
-        domain = getActualDomain();
-    }
-    return '' + domain + (uri || '');
-}
 
 export function getPayPalDomain() {
     return {
@@ -40,6 +33,24 @@ export function getPayPalLoggerDomain() {
     }[__ENV__];
 }
 
+export function buildPayPalUrl() {
+    var path = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+
+    return __TEST__ && __WEB__ ? '' + getActualDomain() + path : '' + getPayPalDomain() + path;
+}
+
+export function buildPayPalAPIUrl() {
+    var path = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+
+    var paypalAPIDomain = isCurrentDomain(getPayPalDomain()) ? getPayPalDomain() : getPayPalAPIDomain();
+
+    return __TEST__ && __WEB__ ? '' + getActualDomain() + path : '' + paypalAPIDomain + path;
+}
+
+var URI = {
+    LOGGER: '/xoplatform/logger/api/logger'
+};
+
 export function getPayPalLoggerUrl() {
-    return getPayPalLoggerDomain() + '/xoplatform/logger/api/logger';
+    return buildPayPalUrl(URI.LOGGER);
 }

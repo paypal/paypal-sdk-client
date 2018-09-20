@@ -77,7 +77,8 @@ export type LocaleType = {country: mixed /* UNEXPECTED TYPE: EvalT */, lang: mix
 export type QueryOptionsType = {components: Array<string>, env: string, locale: {country: string, lang: string}, merchantID: string};
 declare export var SDK_SETTINGS: {API_STAGE_HOST: "data-api-stage-host", CLIENT_TOKEN: "data-client-token", PARTNER_ATTRIBUTION_ID: "data-partner-attribution-id", STAGE_HOST: "data-stage-host"};
 declare export var VAULT: {FALSE: false, TRUE: true};
-declare export function buildConfigUrl(domain: string, uri?: string): string;
+declare export function buildPayPalAPIUrl(path?: string): string;
+declare export function buildPayPalUrl(path?: string): string;
 declare export function getAPIStageHost(): string;
 declare export function getClientID(): string;
 declare export function getClientToken(): string;
