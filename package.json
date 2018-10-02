@@ -52,6 +52,7 @@
   "dependencies": {
     "beaver-logger": "^4.0.0",
     "belter": "^1.0.16",
+    "paypal-sdk-constants": "^1.0.1",
     "zalgo-promise": "^1.0.22"
   },
   "devDependencies": {

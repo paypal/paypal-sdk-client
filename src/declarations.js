@@ -1,6 +1,6 @@
 /* @flow */
 
-import { COUNTRY, LANG, ENV, INTENT, COMMIT, VAULT, CURRENCY } from './constants';
+import { COUNTRY, LANG, ENV, INTENT, COMMIT, VAULT, CURRENCY } from 'paypal-sdk-constants/src';
 
 declare var __HOST__ : string;
 declare var __HOSTNAME__ : string;
@@ -17,7 +17,7 @@ declare var __LOCALE_COUNTRY__ : $Values<typeof COUNTRY>;
 declare var __LOCALE_LANG__ : $Values<typeof LANG> | void;
 declare var __DEFAULT_LANG__ : $Values<typeof LANG>;
 declare var __DEBUG__ : boolean;
-declare var __STAGE__ : string;
+declare var __STAGE__ : boolean;
 declare var __CURRENCY__ : $Values<typeof CURRENCY>;
 declare var __INTENT__ : $Values<typeof INTENT>;
 declare var __COMMIT__: $Values<typeof COMMIT>;

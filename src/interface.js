@@ -1,7 +1,8 @@
 /* @flow */
 
+import { SDK_SETTINGS } from 'paypal-sdk-constants/src';
+
 import { setupLogger } from './logger';
-import { SDK_SETTINGS } from './constants';
 import { getSDKScript } from './script';
 import { getEnv } from './globals';
 
