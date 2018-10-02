@@ -1264,8 +1264,6 @@
                 PARTNER_ATTRIBUTION_ID: "data-partner-attribution-id",
                 STAGE_HOST: "data-stage-host",
                 API_STAGE_HOST: "data-api-stage-host"
-            }, SDK_QUERY = {
-                CLIENT_ID: "client-id"
             }, SDK_QUERY_KEYS = {
                 COMPONENTS: "components",
                 ENV: "env",
@@ -1278,7 +1276,9 @@
                 ORDER_CURRENCY: "order-currency",
                 ORDER_INTENT: "order-intent",
                 ORDER_COMMIT: "order-commit",
-                ORDER_VAULT: "order-vault"
+                ORDER_VAULT: "order-vault",
+                DISABLE_FUNDING: "disable-funding",
+                DISABLE_CARD: "disable-card"
             }, ENV = {
                 LOCAL: "local",
                 STAGE: "stage",
@@ -1401,9 +1401,6 @@
                 return SDK_SETTINGS;
             });
             __webpack_require__.d(__webpack_exports__, "f", function() {
-                return SDK_QUERY;
-            });
-            __webpack_require__.d(__webpack_exports__, !1, function() {
                 return SDK_QUERY_KEYS;
             });
             __webpack_require__.d(__webpack_exports__, !1, function() {

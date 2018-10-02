@@ -1,5 +1,5 @@
 import { getScript, inlineMemoize, parseQuery } from 'belter/src';
-import { SDK_SETTINGS, SDK_QUERY } from 'paypal-sdk-constants/src';
+import { SDK_SETTINGS, SDK_QUERY_KEYS } from 'paypal-sdk-constants/src';
 
 import { getHost, getPath, getDefaultStageHost } from './globals';
 
@@ -49,7 +49,7 @@ export function getScriptQueryParams() {
 }
 
 export function getClientID() {
-    return getScriptQueryParams()[SDK_QUERY.CLIENT_ID];
+    return getScriptQueryParams()[SDK_QUERY_KEYS.CLIENT_ID];
 }
 
 export function getPartnerAttributionID() {
