@@ -1,1 +1,1 @@
-import { COUNTRY, LANG, ENV, INTENT, COMMIT, VAULT, CURRENCY } from './constants';
+import { COUNTRY, LANG, ENV, INTENT, COMMIT, VAULT, CURRENCY } from 'paypal-sdk-constants/src';

@@ -1,6 +1,5 @@
 import { getBrowserLocales } from 'belter/src';
-
-import { COUNTRY, LANG, INTENT, COMMIT, VAULT, ENV, COUNTRY_LANGS, CURRENCY } from './constants';
+import { COUNTRY, LANG, INTENT, COMMIT, VAULT, ENV, COUNTRY_LANGS, CURRENCY } from 'paypal-sdk-constants/src';
 
 export function getHost() {
     return __HOST__;
@@ -20,10 +19,6 @@ export function getPath() {
 
 export function getEnv() {
     return __ENV__;
-}
-
-export function getClientID() {
-    return __CLIENT_ID__;
 }
 
 export function getMerchantID() {

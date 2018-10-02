@@ -1,11 +1,11 @@
 import { Logger } from 'beaver-logger/src';
 import { getStorage, noop, stringifyError, stringifyErrorMessage, inlineMemoize } from 'belter/src';
 import { ZalgoPromise } from 'zalgo-promise/src';
+import { FPTI_KEY, FPTI_FEED, FPTI_DATA_SOURCE, FPTI_SDK_NAME } from 'paypal-sdk-constants/src';
 
 import { getPayPalLoggerUrl } from './config';
-import { FPTI_KEY, FPTI_FEED, FPTI_DATA_SOURCE, FPTI_SDK_NAME } from './constants';
-import { getEnv, getClientID, getMerchantID, getLang, getCountry, getVersion } from './globals';
-import { getPartnerAttributionID } from './script';
+import { getEnv, getMerchantID, getLang, getCountry, getVersion } from './globals';
+import { getPartnerAttributionID, getClientID } from './script';
 
 export function getLogger() {
     return inlineMemoize(getLogger, function () {
