@@ -43,6 +43,9 @@ export type FundingEligibilityType = {
             },
             jcb : {
                 eligible : boolean
+            },
+            cup : {
+                eligible : boolean
             }
         }
     },
