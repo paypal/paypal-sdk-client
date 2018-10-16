@@ -282,7 +282,7 @@
                 if (!(instance instanceof Constructor)) throw new TypeError("Cannot call a class as a function");
             }
             function htmlEncode() {
-                return (arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : "").toString().replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;").replace(/\//g, "&#x2F;");
+                return (arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : "").toString().replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#x27;").replace(/\//g, "&#x2F;");
             }
             !function(_JsxHTMLNode) {
                 !function(subClass, superClass) {
@@ -616,18 +616,18 @@
                     counter += 1;
                     this.name = "__weakmap_" + (1e9 * Math.random() >>> 0) + "__" + counter;
                     if (function() {
-                        if (!window.WeakMap) return !1;
-                        if (!window.Object.freeze) return !1;
+                        if ("undefined" == typeof WeakMap) return !1;
+                        if (void 0 === Object.freeze) return !1;
                         try {
-                            var testWeakMap = new window.WeakMap(), testKey = {};
-                            window.Object.freeze(testKey);
+                            var testWeakMap = new WeakMap(), testKey = {};
+                            Object.freeze(testKey);
                             testWeakMap.set(testKey, "__testvalue__");
                             return "__testvalue__" === testWeakMap.get(testKey);
                         } catch (err) {
                             return !1;
                         }
                     }()) try {
-                        this.weakmap = new window.WeakMap();
+                        this.weakmap = new WeakMap();
                     } catch (err) {}
                     this.keys = [];
                     this.values = [];
@@ -1318,7 +1318,11 @@
                 PARTNER_ATTRIBUTION_ID: "bn_code",
                 SDK_NAME: "sdk_name",
                 SDK_VERSION: "sdk_version",
-                USER_AGENT: "user_agent"
+                USER_AGENT: "user_agent",
+                USER_ACTION: "user_action"
+            }, FPTI_USER_ACTION = {
+                COMMIT: "commit",
+                CONTINUE: "continue"
             }, FPTI_DATA_SOURCE = {
                 PAYMENTS_SDK: "payments_sdk"
             }, FPTI_FEED = {
@@ -1386,7 +1390,8 @@
                 DISCOVER: "discover",
                 HIPER: "hiper",
                 ELO: "elo",
-                JCB: "jcb"
+                JCB: "jcb",
+                CUP: "cup"
             };
             __webpack_require__.d(__webpack_exports__, !1, function() {
                 return COUNTRY;
@@ -1408,6 +1413,9 @@
             });
             __webpack_require__.d(__webpack_exports__, "d", function() {
                 return FPTI_KEY;
+            });
+            __webpack_require__.d(__webpack_exports__, !1, function() {
+                return FPTI_USER_ACTION;
             });
             __webpack_require__.d(__webpack_exports__, "b", function() {
                 return FPTI_DATA_SOURCE;
