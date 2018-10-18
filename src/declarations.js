@@ -10,9 +10,6 @@ declare var __STAGE_HOST__ : string;
 
 declare var __TEST__ : boolean;
 declare var __ENV__ : $Values<typeof ENV>;
-declare var __CLIENT_ID__ : string;
-declare var __MERCHANT_ID__ : string;
-declare var __PARTNER_ATTRIBUTION_ID__ : string;
 declare var __LOCALE_COUNTRY__ : $Values<typeof COUNTRY>;
 declare var __LOCALE_LANG__ : $Values<typeof LANG> | void;
 declare var __DEFAULT_LANG__ : $Values<typeof LANG>;

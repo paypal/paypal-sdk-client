@@ -64,6 +64,10 @@ export function getClientID() : string {
     return clientID;
 }
 
+export function getMerchantID() : ?string {
+    return getScriptQueryParams()[SDK_QUERY_KEYS.MERCHANT_ID];
+}
+
 export function getPartnerAttributionID() : ?string {
     return getSDKSettings().partnerAttributionID;
 }

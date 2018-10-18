@@ -23,10 +23,6 @@ export function getEnv() : $Values<typeof ENV> {
     return __ENV__;
 }
 
-export function getMerchantID() : string {
-    return __MERCHANT_ID__;
-}
-
 export function getCountry() : $Values<typeof COUNTRY> {
     return __LOCALE_COUNTRY__;
 }

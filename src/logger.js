@@ -6,8 +6,8 @@ import { ZalgoPromise } from 'zalgo-promise/src';
 import { FPTI_KEY, FPTI_FEED, FPTI_DATA_SOURCE, FPTI_SDK_NAME, FPTI_USER_ACTION } from 'paypal-sdk-constants/src';
 
 import { getPayPalLoggerUrl } from './config';
-import { getEnv, getMerchantID, getLang, getCountry, getVersion, getCommit, getCorrelationID } from './globals';
-import { getPartnerAttributionID, getClientID } from './script';
+import { getEnv, getLang, getCountry, getVersion, getCommit, getCorrelationID } from './globals';
+import { getPartnerAttributionID, getClientID, getMerchantID } from './script';
 
 export function getLogger() : LoggerType {
     return inlineMemoize(getLogger, () =>

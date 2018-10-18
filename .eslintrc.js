@@ -5,9 +5,7 @@ module.exports = {
 
     globals: {
         __STAGE__: true,
-        __CLIENT_ID__: true,
         __PARTNER_ATTRIBUTION_ID__: true,
-        __MERCHANT_ID__: true,
         __LOCALE_COUNTRY__: true,
         __LOCALE_LANG__: true,
         __DEFAULT_LANG__: true,
