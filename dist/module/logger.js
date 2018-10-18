@@ -1,11 +1,11 @@
 import { Logger } from 'beaver-logger/src';
 import { getStorage, noop, stringifyError, stringifyErrorMessage, inlineMemoize } from 'belter/src';
 import { ZalgoPromise } from 'zalgo-promise/src';
-import { FPTI_KEY, FPTI_FEED, FPTI_DATA_SOURCE, FPTI_SDK_NAME } from 'paypal-sdk-constants/src';
+import { FPTI_KEY, FPTI_FEED, FPTI_DATA_SOURCE, FPTI_SDK_NAME, FPTI_USER_ACTION } from 'paypal-sdk-constants/src';
 
 import { getPayPalLoggerUrl } from './config';
-import { getEnv, getMerchantID, getLang, getCountry, getVersion } from './globals';
-import { getPartnerAttributionID, getClientID } from './script';
+import { getEnv, getLang, getCountry, getVersion, getCommit, getCorrelationID } from './globals';
+import { getPartnerAttributionID, getClientID, getMerchantID } from './script';
 
 export function getLogger() {
     return inlineMemoize(getLogger, function () {
@@ -37,7 +37,7 @@ export function setupLogger() {
     logger.addTrackingBuilder(function () {
         var _ref;
 
-        return _ref = {}, _ref[FPTI_KEY.FEED] = FPTI_FEED.PAYMENTS_SDK, _ref[FPTI_KEY.DATA_SOURCE] = FPTI_DATA_SOURCE.PAYMENTS_SDK, _ref[FPTI_KEY.CLIENT_ID] = getClientID(), _ref[FPTI_KEY.SELLER_ID] = getMerchantID(), _ref[FPTI_KEY.SESSION_UID] = getSessionID(), _ref[FPTI_KEY.REFERER] = window.location.host, _ref[FPTI_KEY.LOCALE] = getLang() + '_' + getCountry(), _ref[FPTI_KEY.BUYER_COUNTRY] = getCountry(), _ref[FPTI_KEY.INTEGRATION_IDENTIFIER] = getClientID(), _ref[FPTI_KEY.PARTNER_ATTRIBUTION_ID] = getPartnerAttributionID(), _ref[FPTI_KEY.SDK_NAME] = FPTI_SDK_NAME.PAYMENTS_SDK, _ref[FPTI_KEY.SDK_VERSION] = getVersion(), _ref[FPTI_KEY.USER_AGENT] = window.navigator && window.navigator.userAgent, _ref;
+        return _ref = {}, _ref[FPTI_KEY.FEED] = FPTI_FEED.PAYMENTS_SDK, _ref[FPTI_KEY.DATA_SOURCE] = FPTI_DATA_SOURCE.PAYMENTS_SDK, _ref[FPTI_KEY.CLIENT_ID] = getClientID(), _ref[FPTI_KEY.SELLER_ID] = getMerchantID(), _ref[FPTI_KEY.SESSION_UID] = getSessionID(), _ref[FPTI_KEY.REFERER] = window.location.host, _ref[FPTI_KEY.LOCALE] = getLang() + '_' + getCountry(), _ref[FPTI_KEY.BUYER_COUNTRY] = getCountry(), _ref[FPTI_KEY.INTEGRATION_IDENTIFIER] = getClientID(), _ref[FPTI_KEY.PARTNER_ATTRIBUTION_ID] = getPartnerAttributionID(), _ref[FPTI_KEY.SDK_NAME] = FPTI_SDK_NAME.PAYMENTS_SDK, _ref[FPTI_KEY.SDK_VERSION] = getVersion(), _ref[FPTI_KEY.USER_AGENT] = window.navigator && window.navigator.userAgent, _ref[FPTI_KEY.USER_ACTION] = getCommit() ? FPTI_USER_ACTION.COMMIT : FPTI_USER_ACTION.CONTINUE, _ref[FPTI_KEY.CONTEXT_CORRID] = getCorrelationID(), _ref;
     });
 
     ZalgoPromise.onPossiblyUnhandledException(function (err) {

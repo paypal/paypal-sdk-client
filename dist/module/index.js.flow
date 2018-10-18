@@ -59,6 +59,7 @@ declare class Class2 extends HTMLElement {
   text: string;
   type: string;
 }
+declare export var CLIENT_ID_ALIAS: {sb: string};
 export type ExportsType = {[_: string]: mixed};
 export type FundingEligibilityType = {bancontact: {branded: boolean, eligible: boolean}, card: {branded: boolean, eligible: boolean, vendors: {amex: {eligible: boolean}, cup: {eligible: boolean}, discover: {eligible: boolean}, elo: {eligible: boolean}, hiper: {eligible: boolean}, jcb: {eligible: boolean}, mastercard: {eligible: boolean}, visa: {eligible: boolean}}}, credit: {branded: boolean, eligible: boolean}, eps: {branded: boolean, eligible: boolean}, giropay: {branded: boolean, eligible: boolean}, ideal: {branded: boolean, eligible: boolean}, mybank: {branded: boolean, eligible: boolean}, p24: {branded: boolean, eligible: boolean}, paypal: {branded: boolean, eligible: boolean}, sepa: {branded: boolean, eligible: boolean}, sofort: {branded: boolean, eligible: boolean}, venmo: {branded: boolean, eligible: boolean}, wechatpay: {branded: boolean, eligible: boolean}, zimpler: {branded: boolean, eligible: boolean}};
 export type QueryOptionsType = {components: Array<string>, env: string, locale: {country: string, lang: string}, merchantID: string};
@@ -79,7 +80,7 @@ declare export function getIntent(): mixed /* UNEXPECTED TYPE: EvalT */;
 declare export function getLang(): mixed /* UNEXPECTED TYPE: EvalT */;
 declare export function getLocale(): {country: mixed /* UNEXPECTED TYPE: EvalT */, lang: mixed /* UNEXPECTED TYPE: EvalT */};
 declare export function getLogger(): {addHeaderBuilder: (_: (_: {[_: string]: string}) => {[_: string]: ?string}) => void, addMetaBuilder: (_: (_: {[_: string]: string}) => {[_: string]: ?string}) => void, addPayloadBuilder: (_: (_: {[_: string]: string}) => {[_: string]: ?string}) => void, addTrackingBuilder: (_: (_: {[_: string]: string}) => {[_: string]: ?string}) => void, debug: (name: string, payload?: {[_: string]: ?string}) => void, error: (name: string, payload?: {[_: string]: ?string}) => void, flush: () => Class0<void>, immediateFlush: () => Class0<void>, info: (name: string, payload?: {[_: string]: ?string}) => void, setTransport: (_: (_: {headers: {[_: string]: string}, json: Object, method: string, url: string}) => Class0<void>) => void, track: (payload: {[_: string]: ?string}) => void, warn: (name: string, payload?: {[_: string]: ?string}) => void};
-declare export function getMerchantID(): string;
+declare export function getMerchantID(): ?string;
 declare export function getPartnerAttributionID(): ?string;
 declare export function getPath(): string;
 declare export function getPayPalAPIDomain(): string;

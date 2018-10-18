@@ -54,3 +54,7 @@ var URI = {
 export function getPayPalLoggerUrl() {
     return buildPayPalUrl(URI.LOGGER);
 }
+
+export var CLIENT_ID_ALIAS = {
+    sb: 'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R'
+};

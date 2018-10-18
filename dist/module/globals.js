@@ -21,10 +21,6 @@ export function getEnv() {
     return __ENV__;
 }
 
-export function getMerchantID() {
-    return __MERCHANT_ID__;
-}
-
 export function getCountry() {
     return __LOCALE_COUNTRY__;
 }
