@@ -3,10 +3,10 @@
 import { Logger, type LoggerType } from 'beaver-logger/src';
 import { getStorage, type Storage, noop, stringifyError, stringifyErrorMessage, inlineMemoize } from 'belter/src';
 import { ZalgoPromise } from 'zalgo-promise/src';
-import { FPTI_KEY, FPTI_FEED, FPTI_DATA_SOURCE, FPTI_SDK_NAME } from 'paypal-sdk-constants/src';
+import { FPTI_KEY, FPTI_FEED, FPTI_DATA_SOURCE, FPTI_SDK_NAME, FPTI_USER_ACTION } from 'paypal-sdk-constants/src';
 
 import { getPayPalLoggerUrl } from './config';
-import { getEnv, getMerchantID, getLang, getCountry, getVersion } from './globals';
+import { getEnv, getMerchantID, getLang, getCountry, getVersion, getCommit, getCorrelationID } from './globals';
 import { getPartnerAttributionID, getClientID } from './script';
 
 export function getLogger() : LoggerType {
@@ -50,7 +50,9 @@ export function setupLogger() {
             [FPTI_KEY.PARTNER_ATTRIBUTION_ID]: getPartnerAttributionID(),
             [FPTI_KEY.SDK_NAME]:               FPTI_SDK_NAME.PAYMENTS_SDK,
             [FPTI_KEY.SDK_VERSION]:            getVersion(),
-            [FPTI_KEY.USER_AGENT]:             window.navigator && window.navigator.userAgent
+            [FPTI_KEY.USER_AGENT]:             window.navigator && window.navigator.userAgent,
+            [FPTI_KEY.USER_ACTION]:            getCommit() ? FPTI_USER_ACTION.COMMIT : FPTI_USER_ACTION.CONTINUE,
+            [FPTI_KEY.CONTEXT_CORRID]:         getCorrelationID()
         };
     });
 
