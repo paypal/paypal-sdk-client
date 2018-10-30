@@ -54,16 +54,6 @@ export function getSDKQueryParamBool<T : boolean>(name : $Values<typeof SDK_QUER
     return getSDKQueryParam(name, def ? def.toString() : QUERY_BOOL.FALSE) === QUERY_BOOL.TRUE;
 }
 
-export function getClientToken() : string {
-    let { clientToken } = getSDKAttributes();
-
-    if (!clientToken) {
-        throw new Error(`Expected data-client-token="xyz" to be passed with client token, to ${ getSDKScript().outerHTML }`);
-    }
-
-    return clientToken;
-}
-
 export function getClientID() : string {
     let clientID = getSDKQueryParam(SDK_QUERY_KEYS.CLIENT_ID);
 
@@ -81,18 +71,6 @@ export function getClientID() : string {
 export function getMerchantID() : ?string {
     return getSDKQueryParam(SDK_QUERY_KEYS.MERCHANT_ID);
 }
-    
-export function getPartnerAttributionID() : ?string {
-    return getSDKAttribute(SDK_SETTINGS.PARTNER_ATTRIBUTION_ID);
-}
-
-export function getStageHost() : string {
-    return getSDKAttribute(SDK_SETTINGS.STAGE_HOST, getDefaultStageHost());
-}
-
-export function getAPIStageHost() : string {
-    return getSDKAttribute(SDK_SETTINGS.API_STAGE_HOST, getStageHost());
-}
 
 export function getIntent() : $Values<typeof INTENT> {
     return getSDKQueryParam(SDK_QUERY_KEYS.ORDER_INTENT, DEFAULT_INTENT);
@@ -108,4 +86,26 @@ export function getVault() : $Values<typeof VAULT> {
 
 export function getCurrency() : $Values<typeof CURRENCY> {
     return getSDKQueryParam(SDK_QUERY_KEYS.ORDER_CURRENCY, DEFAULT_CURRENCY);
+}
+
+export function getClientToken() : string {
+    let clientToken = getSDKAttribute(SDK_SETTINGS.CLIENT_TOKEN);
+
+    if (!clientToken) {
+        throw new Error(`Expected data-client-token="xyz" to be passed with client token, to ${ getSDKScript().outerHTML }`);
+    }
+
+    return clientToken;
+}
+
+export function getPartnerAttributionID() : ?string {
+    return getSDKAttribute(SDK_SETTINGS.PARTNER_ATTRIBUTION_ID);
+}
+
+export function getStageHost() : string {
+    return getSDKAttribute(SDK_SETTINGS.STAGE_HOST, getDefaultStageHost());
+}
+
+export function getAPIStageHost() : string {
+    return getSDKAttribute(SDK_SETTINGS.API_STAGE_HOST, getStageHost());
 }
