@@ -1960,23 +1960,11 @@
             __webpack_require__.d(__webpack_exports__, "getSDKQueryParamBool", function() {
                 return __WEBPACK_IMPORTED_MODULE_4__script__.m;
             });
-            __webpack_require__.d(__webpack_exports__, "getClientToken", function() {
-                return __WEBPACK_IMPORTED_MODULE_4__script__.d;
-            });
             __webpack_require__.d(__webpack_exports__, "getClientID", function() {
                 return __WEBPACK_IMPORTED_MODULE_4__script__.c;
             });
             __webpack_require__.d(__webpack_exports__, "getMerchantID", function() {
                 return __WEBPACK_IMPORTED_MODULE_4__script__.h;
-            });
-            __webpack_require__.d(__webpack_exports__, "getPartnerAttributionID", function() {
-                return __WEBPACK_IMPORTED_MODULE_4__script__.i;
-            });
-            __webpack_require__.d(__webpack_exports__, "getStageHost", function() {
-                return __WEBPACK_IMPORTED_MODULE_4__script__.p;
-            });
-            __webpack_require__.d(__webpack_exports__, "getAPIStageHost", function() {
-                return __WEBPACK_IMPORTED_MODULE_4__script__.b;
             });
             __webpack_require__.d(__webpack_exports__, "getIntent", function() {
                 return __WEBPACK_IMPORTED_MODULE_4__script__.g;
@@ -1989,6 +1977,18 @@
             });
             __webpack_require__.d(__webpack_exports__, "getCurrency", function() {
                 return __WEBPACK_IMPORTED_MODULE_4__script__.f;
+            });
+            __webpack_require__.d(__webpack_exports__, "getClientToken", function() {
+                return __WEBPACK_IMPORTED_MODULE_4__script__.d;
+            });
+            __webpack_require__.d(__webpack_exports__, "getPartnerAttributionID", function() {
+                return __WEBPACK_IMPORTED_MODULE_4__script__.i;
+            });
+            __webpack_require__.d(__webpack_exports__, "getStageHost", function() {
+                return __WEBPACK_IMPORTED_MODULE_4__script__.p;
+            });
+            __webpack_require__.d(__webpack_exports__, "getAPIStageHost", function() {
+                return __WEBPACK_IMPORTED_MODULE_4__script__.b;
             });
         },
         "./src/logger.js": function(module, __webpack_exports__, __webpack_require__) {
@@ -2182,11 +2182,6 @@
             __webpack_exports__.n = getSDKQueryParams;
             __webpack_exports__.l = getSDKQueryParam;
             __webpack_exports__.m = getSDKQueryParamBool;
-            __webpack_exports__.d = function() {
-                var clientToken = getSDKAttributes().clientToken;
-                if (!clientToken) throw new Error('Expected data-client-token="xyz" to be passed with client token, to ' + getSDKScript().outerHTML);
-                return clientToken;
-            };
             __webpack_exports__.c = function() {
                 var clientID = getSDKQueryParam(__WEBPACK_IMPORTED_MODULE_1_paypal_sdk_constants_src__.l.CLIENT_ID);
                 if (!clientID) throw new Error("Expected " + __WEBPACK_IMPORTED_MODULE_1_paypal_sdk_constants_src__.l.CLIENT_ID + " parameter in SDK URL");
@@ -2194,13 +2189,6 @@
             };
             __webpack_exports__.h = function() {
                 return getSDKQueryParam(__WEBPACK_IMPORTED_MODULE_1_paypal_sdk_constants_src__.l.MERCHANT_ID);
-            };
-            __webpack_exports__.i = function() {
-                return getSDKAttribute(__WEBPACK_IMPORTED_MODULE_1_paypal_sdk_constants_src__.m.PARTNER_ATTRIBUTION_ID);
-            };
-            __webpack_exports__.p = getStageHost;
-            __webpack_exports__.b = function() {
-                return getSDKAttribute(__WEBPACK_IMPORTED_MODULE_1_paypal_sdk_constants_src__.m.API_STAGE_HOST, getStageHost());
             };
             __webpack_exports__.g = function() {
                 return getSDKQueryParam(__WEBPACK_IMPORTED_MODULE_1_paypal_sdk_constants_src__.l.ORDER_INTENT, __WEBPACK_IMPORTED_MODULE_1_paypal_sdk_constants_src__.d);
@@ -2213,6 +2201,18 @@
             };
             __webpack_exports__.f = function() {
                 return getSDKQueryParam(__WEBPACK_IMPORTED_MODULE_1_paypal_sdk_constants_src__.l.ORDER_CURRENCY, __WEBPACK_IMPORTED_MODULE_1_paypal_sdk_constants_src__.c);
+            };
+            __webpack_exports__.d = function() {
+                var clientToken = getSDKAttribute(__WEBPACK_IMPORTED_MODULE_1_paypal_sdk_constants_src__.m.CLIENT_TOKEN);
+                if (!clientToken) throw new Error('Expected data-client-token="xyz" to be passed with client token, to ' + getSDKScript().outerHTML);
+                return clientToken;
+            };
+            __webpack_exports__.i = function() {
+                return getSDKAttribute(__WEBPACK_IMPORTED_MODULE_1_paypal_sdk_constants_src__.m.PARTNER_ATTRIBUTION_ID);
+            };
+            __webpack_exports__.p = getStageHost;
+            __webpack_exports__.b = function() {
+                return getSDKAttribute(__WEBPACK_IMPORTED_MODULE_1_paypal_sdk_constants_src__.m.API_STAGE_HOST, getStageHost());
             };
             var __WEBPACK_IMPORTED_MODULE_0_belter_src__ = __webpack_require__("./node_modules/belter/src/index.js"), __WEBPACK_IMPORTED_MODULE_1_paypal_sdk_constants_src__ = __webpack_require__("./node_modules/paypal-sdk-constants/src/index.js"), __WEBPACK_IMPORTED_MODULE_2__globals__ = __webpack_require__("./src/globals.js"), CLIENT_ID_ALIAS = {
                 sb: "AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R"

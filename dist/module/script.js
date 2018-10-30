@@ -57,17 +57,6 @@ export function getSDKQueryParamBool(name, def) {
     return getSDKQueryParam(name, def ? def.toString() : QUERY_BOOL.FALSE) === QUERY_BOOL.TRUE;
 }
 
-export function getClientToken() {
-    var _getSDKAttributes = getSDKAttributes(),
-        clientToken = _getSDKAttributes.clientToken;
-
-    if (!clientToken) {
-        throw new Error('Expected data-client-token="xyz" to be passed with client token, to ' + getSDKScript().outerHTML);
-    }
-
-    return clientToken;
-}
-
 export function getClientID() {
     var clientID = getSDKQueryParam(SDK_QUERY_KEYS.CLIENT_ID);
 
@@ -86,18 +75,6 @@ export function getMerchantID() {
     return getSDKQueryParam(SDK_QUERY_KEYS.MERCHANT_ID);
 }
 
-export function getPartnerAttributionID() {
-    return getSDKAttribute(SDK_SETTINGS.PARTNER_ATTRIBUTION_ID);
-}
-
-export function getStageHost() {
-    return getSDKAttribute(SDK_SETTINGS.STAGE_HOST, getDefaultStageHost());
-}
-
-export function getAPIStageHost() {
-    return getSDKAttribute(SDK_SETTINGS.API_STAGE_HOST, getStageHost());
-}
-
 export function getIntent() {
     return getSDKQueryParam(SDK_QUERY_KEYS.ORDER_INTENT, DEFAULT_INTENT);
 }
@@ -112,4 +89,26 @@ export function getVault() {
 
 export function getCurrency() {
     return getSDKQueryParam(SDK_QUERY_KEYS.ORDER_CURRENCY, DEFAULT_CURRENCY);
+}
+
+export function getClientToken() {
+    var clientToken = getSDKAttribute(SDK_SETTINGS.CLIENT_TOKEN);
+
+    if (!clientToken) {
+        throw new Error('Expected data-client-token="xyz" to be passed with client token, to ' + getSDKScript().outerHTML);
+    }
+
+    return clientToken;
+}
+
+export function getPartnerAttributionID() {
+    return getSDKAttribute(SDK_SETTINGS.PARTNER_ATTRIBUTION_ID);
+}
+
+export function getStageHost() {
+    return getSDKAttribute(SDK_SETTINGS.STAGE_HOST, getDefaultStageHost());
+}
+
+export function getAPIStageHost() {
+    return getSDKAttribute(SDK_SETTINGS.API_STAGE_HOST, getStageHost());
 }
