@@ -19,8 +19,8 @@ export function getPayPalAPIDomain() : string {
     return {
         local:   `https://${ getAPIStageHost() }:12326`,
         stage:   `https://${ getAPIStageHost() }:12326`,
-        sandbox: `https://cors.api.sandbox.paypal.com`,
-        paypal:  `https://www.cors.api.paypal.com`,
+        sandbox: `https://api.sandbox.paypal.com`,
+        paypal:  `https://api.paypal.com`,
         test:    `mock://api.paypal.com`
     }[__ENV__];
 }
