@@ -89,9 +89,15 @@ declare export function getPayPalLoggerDomain(): string;
 declare export function getPayPalLoggerUrl(): string;
 declare export function getPaymentsSDKStorage(): {getID: () => string, getSessionID: () => string, getSessionState: <any>(handler: (_: Object) => T) => T, getState: <any>(handler: (_: Object) => T) => T};
 declare export function getPort(): number;
+declare export function getSDKAttribute<T: string | void>(name: mixed /* UNEXPECTED TYPE: EvalT */, def: T): T;
+
+declare export function getSDKAttributes(): {[_: string]: string};
+declare export function getSDKQueryParam<T: string | void>(name: mixed /* UNEXPECTED TYPE: EvalT */, def: T): T;
+
+declare export function getSDKQueryParamBool<T: boolean>(name: mixed /* UNEXPECTED TYPE: EvalT */, def?: T): T;
+
+declare export function getSDKQueryParams(): {[_: string]: string};
 declare export function getSDKScript(): Class2;
-declare export function getSDKSettings(): {apiStageHost: ?string, clientToken: ?string, partnerAttributionID: ?string, stageHost: ?string};
-declare export function getScriptQueryParams(): {[_: string]: string};
 declare export function getSessionID(): string;
 declare export function getStageHost(): string;
 declare export function getVault(): mixed /* UNEXPECTED TYPE: EvalT */;

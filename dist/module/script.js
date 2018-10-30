@@ -1,8 +1,11 @@
 import { getScript, inlineMemoize, parseQuery } from 'belter/src';
-import { SDK_SETTINGS, SDK_QUERY_KEYS } from 'paypal-sdk-constants/src';
+import { SDK_SETTINGS, SDK_QUERY_KEYS, INTENT, COMMIT, VAULT, CURRENCY, DEFAULT_INTENT, DEFAULT_COMMIT, DEFAULT_CURRENCY, DEFAULT_VAULT, QUERY_BOOL } from 'paypal-sdk-constants/src';
 
 import { getHost, getPath, getDefaultStageHost } from './globals';
-import { CLIENT_ID_ALIAS } from './config';
+
+export var CLIENT_ID_ALIAS = {
+    sb: 'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R'
+};
 
 export function getSDKScript() {
     return inlineMemoize(getSDKScript, function () {
@@ -20,22 +23,43 @@ export function getSDKScript() {
     });
 }
 
-export function getSDKSettings() {
-    return inlineMemoize(getSDKSettings, function () {
+export function getSDKAttributes() {
+    return inlineMemoize(getSDKAttributes, function () {
         var sdkScript = getSDKScript();
+        var result = {};
 
-        return {
-            clientToken: sdkScript.getAttribute(SDK_SETTINGS.CLIENT_TOKEN),
-            partnerAttributionID: sdkScript.getAttribute(SDK_SETTINGS.PARTNER_ATTRIBUTION_ID),
-            stageHost: sdkScript.getAttribute(SDK_SETTINGS.STAGE_HOST),
-            apiStageHost: sdkScript.getAttribute(SDK_SETTINGS.API_STAGE_HOST)
-        };
+        for (var _i2 = 0, _sdkScript$attributes2 = sdkScript.attributes, _length2 = _sdkScript$attributes2 == null ? 0 : _sdkScript$attributes2.length; _i2 < _length2; _i2++) {
+            var attr = _sdkScript$attributes2[_i2];
+            result[attr.name] = attr.value;
+        }
+
+        return result;
     });
 }
 
+export function getSDKAttribute(name, def) {
+    // $FlowFixMe
+    return getSDKAttributes()[name] || def;
+}
+
+export function getSDKQueryParams() {
+    var script = getSDKScript();
+    return parseQuery(script.src.split('?')[1] || '');
+}
+
+export function getSDKQueryParam(name, def) {
+    // $FlowFixMe
+    return getSDKQueryParams()[name] || def;
+}
+
+export function getSDKQueryParamBool(name, def) {
+    // $FlowFixMe
+    return getSDKQueryParam(name, def ? def.toString() : QUERY_BOOL.FALSE) === QUERY_BOOL.TRUE;
+}
+
 export function getClientToken() {
-    var _getSDKSettings = getSDKSettings(),
-        clientToken = _getSDKSettings.clientToken;
+    var _getSDKAttributes = getSDKAttributes(),
+        clientToken = _getSDKAttributes.clientToken;
 
     if (!clientToken) {
         throw new Error('Expected data-client-token="xyz" to be passed with client token, to ' + getSDKScript().outerHTML);
@@ -44,13 +68,12 @@ export function getClientToken() {
     return clientToken;
 }
 
-export function getScriptQueryParams() {
-    var script = getSDKScript();
-    return parseQuery(script.src.split('?')[1] || '');
-}
-
 export function getClientID() {
-    var clientID = getScriptQueryParams()[SDK_QUERY_KEYS.CLIENT_ID];
+    var clientID = getSDKQueryParam(SDK_QUERY_KEYS.CLIENT_ID);
+
+    if (!clientID) {
+        throw new Error('Expected ' + SDK_QUERY_KEYS.CLIENT_ID + ' parameter in SDK URL');
+    }
 
     if (CLIENT_ID_ALIAS[clientID]) {
         return CLIENT_ID_ALIAS[clientID];
@@ -60,17 +83,33 @@ export function getClientID() {
 }
 
 export function getMerchantID() {
-    return getScriptQueryParams()[SDK_QUERY_KEYS.MERCHANT_ID];
+    return getSDKQueryParam(SDK_QUERY_KEYS.MERCHANT_ID);
 }
 
 export function getPartnerAttributionID() {
-    return getSDKSettings().partnerAttributionID;
+    return getSDKAttribute(SDK_SETTINGS.PARTNER_ATTRIBUTION_ID);
 }
 
 export function getStageHost() {
-    return getSDKSettings().stageHost || getDefaultStageHost();
+    return getSDKAttribute(SDK_SETTINGS.STAGE_HOST, getDefaultStageHost());
 }
 
 export function getAPIStageHost() {
-    return getSDKSettings().apiStageHost || getStageHost();
+    return getSDKAttribute(SDK_SETTINGS.API_STAGE_HOST, getStageHost());
+}
+
+export function getIntent() {
+    return getSDKQueryParam(SDK_QUERY_KEYS.ORDER_INTENT, DEFAULT_INTENT);
+}
+
+export function getCommit() {
+    return getSDKQueryParamBool(SDK_QUERY_KEYS.ORDER_COMMIT, DEFAULT_COMMIT);
+}
+
+export function getVault() {
+    return getSDKQueryParamBool(SDK_QUERY_KEYS.ORDER_VAULT, DEFAULT_VAULT);
+}
+
+export function getCurrency() {
+    return getSDKQueryParam(SDK_QUERY_KEYS.ORDER_CURRENCY, DEFAULT_CURRENCY);
 }

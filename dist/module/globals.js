@@ -1,5 +1,5 @@
 import { getBrowserLocales } from 'belter/src';
-import { COUNTRY, LANG, INTENT, COMMIT, VAULT, ENV, COUNTRY_LANGS, CURRENCY } from 'paypal-sdk-constants/src';
+import { COUNTRY, LANG, ENV, COUNTRY_LANGS } from 'paypal-sdk-constants/src';
 
 export function getHost() {
     return __HOST__;
@@ -53,22 +53,6 @@ export function getLocale() {
 
 export function getDefaultStageHost() {
     return __STAGE_HOST__;
-}
-
-export function getIntent() {
-    return __INTENT__;
-}
-
-export function getCommit() {
-    return __COMMIT__;
-}
-
-export function getVault() {
-    return __VAULT__;
-}
-
-export function getCurrency() {
-    return __CURRENCY__;
 }
 
 export function getVersion() {
