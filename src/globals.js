@@ -1,7 +1,7 @@
 /* @flow */
 
 import { getBrowserLocales } from 'belter/src';
-import { type LocaleType, COUNTRY, LANG, INTENT, COMMIT, VAULT, ENV, COUNTRY_LANGS, CURRENCY } from 'paypal-sdk-constants/src';
+import { type LocaleType, COUNTRY, LANG, ENV, COUNTRY_LANGS } from 'paypal-sdk-constants/src';
 
 export function getHost() : string {
     return __HOST__;
@@ -51,22 +51,6 @@ export function getLocale() : LocaleType {
 
 export function getDefaultStageHost() : string {
     return __STAGE_HOST__;
-}
-
-export function getIntent() : $Values<typeof INTENT> {
-    return __INTENT__;
-}
-
-export function getCommit() : $Values<typeof COMMIT> {
-    return __COMMIT__;
-}
-
-export function getVault() : $Values<typeof VAULT> {
-    return __VAULT__;
-}
-
-export function getCurrency() : $Values<typeof CURRENCY> {
-    return __CURRENCY__;
 }
 
 export function getVersion() : string {
