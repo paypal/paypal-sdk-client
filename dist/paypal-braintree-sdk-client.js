@@ -1800,8 +1800,8 @@
                 return {
                     local: "https://" + Object(__WEBPACK_IMPORTED_MODULE_2__script__.b)() + ":12326",
                     stage: "https://" + Object(__WEBPACK_IMPORTED_MODULE_2__script__.b)() + ":12326",
-                    sandbox: "https://cors.api.sandbox.paypal.com",
-                    paypal: "https://www.cors.api.paypal.com",
+                    sandbox: "https://api.sandbox.paypal.com",
+                    paypal: "https://api.paypal.com",
                     test: "mock://api.paypal.com"
                 }.production;
             }
