@@ -7,31 +7,31 @@ import { getStageHost, getAPIStageHost } from './script';
 
 export function getPayPalDomain() : string {
     return {
-        local:   `http://localhost.paypal.com:${ getPort() }`,
-        stage:   `https://${ getStageHost() }`,
-        sandbox: `https://www.sandbox.paypal.com`,
-        paypal:  `https://www.paypal.com`,
-        test:    `mock://www.paypal.com`
+        local:      `http://localhost.paypal.com:${ getPort() }`,
+        stage:      `https://${ getStageHost() }`,
+        sandbox:    `https://www.sandbox.paypal.com`,
+        production: `https://www.paypal.com`,
+        test:       `mock://www.paypal.com`
     }[__ENV__];
 }
 
 export function getPayPalAPIDomain() : string {
     return {
-        local:   `https://${ getAPIStageHost() }:12326`,
-        stage:   `https://${ getAPIStageHost() }:12326`,
-        sandbox: `https://api.sandbox.paypal.com`,
-        paypal:  `https://api.paypal.com`,
-        test:    `mock://api.paypal.com`
+        local:      `https://${ getAPIStageHost() }:12326`,
+        stage:      `https://${ getAPIStageHost() }:12326`,
+        sandbox:    `https://api.sandbox.paypal.com`,
+        production: `https://api.paypal.com`,
+        test:       `mock://api.paypal.com`
     }[__ENV__];
 }
 
 export function getPayPalLoggerDomain() : string {
     return {
-        local:   `https://${ getStageHost() }`,
-        stage:   getPayPalDomain(),
-        sandbox: getPayPalDomain(),
-        paypal:  getPayPalDomain(),
-        test:    getPayPalDomain()
+        local:      `https://${ getStageHost() }`,
+        stage:      getPayPalDomain(),
+        sandbox:    getPayPalDomain(),
+        production: getPayPalDomain(),
+        test:       getPayPalDomain()
     }[__ENV__];
 }
 
