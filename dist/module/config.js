@@ -8,7 +8,7 @@ export function getPayPalDomain() {
         local: 'http://localhost.paypal.com:' + getPort(),
         stage: 'https://' + getStageHost(),
         sandbox: 'https://www.sandbox.paypal.com',
-        paypal: 'https://www.paypal.com',
+        production: 'https://www.paypal.com',
         test: 'mock://www.paypal.com'
     }[__ENV__];
 }
@@ -18,7 +18,7 @@ export function getPayPalAPIDomain() {
         local: 'https://' + getAPIStageHost() + ':12326',
         stage: 'https://' + getAPIStageHost() + ':12326',
         sandbox: 'https://api.sandbox.paypal.com',
-        paypal: 'https://api.paypal.com',
+        production: 'https://api.paypal.com',
         test: 'mock://api.paypal.com'
     }[__ENV__];
 }
@@ -28,7 +28,7 @@ export function getPayPalLoggerDomain() {
         local: 'https://' + getStageHost(),
         stage: getPayPalDomain(),
         sandbox: getPayPalDomain(),
-        paypal: getPayPalDomain(),
+        production: getPayPalDomain(),
         test: getPayPalDomain()
     }[__ENV__];
 }

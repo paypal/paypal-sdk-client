@@ -1770,13 +1770,7 @@
             __webpack_exports__.d = getPayPalDomain;
             __webpack_exports__.c = getPayPalAPIDomain;
             __webpack_exports__.e = function() {
-                return {
-                    local: "https://" + Object(__WEBPACK_IMPORTED_MODULE_2__script__.p)(),
-                    stage: getPayPalDomain(),
-                    sandbox: getPayPalDomain(),
-                    paypal: getPayPalDomain(),
-                    test: getPayPalDomain()
-                }.production;
+                return [ Object(__WEBPACK_IMPORTED_MODULE_2__script__.p)(), getPayPalDomain(), getPayPalDomain(), getPayPalDomain(), getPayPalDomain() ][3];
             };
             __webpack_exports__.b = buildPayPalUrl;
             __webpack_exports__.a = function() {
@@ -1788,22 +1782,12 @@
             };
             var __WEBPACK_IMPORTED_MODULE_0_cross_domain_utils_src__ = __webpack_require__("./node_modules/cross-domain-utils/src/index.js"), __WEBPACK_IMPORTED_MODULE_1__globals__ = __webpack_require__("./src/globals.js"), __WEBPACK_IMPORTED_MODULE_2__script__ = __webpack_require__("./src/script.js");
             function getPayPalDomain() {
-                return {
-                    local: "http://localhost.paypal.com:" + Object(__WEBPACK_IMPORTED_MODULE_1__globals__.j)(),
-                    stage: "https://" + Object(__WEBPACK_IMPORTED_MODULE_2__script__.p)(),
-                    sandbox: "https://www.sandbox.paypal.com",
-                    paypal: "https://www.paypal.com",
-                    test: "mock://www.paypal.com"
-                }.production;
+                return Object(__WEBPACK_IMPORTED_MODULE_1__globals__.j)(), Object(__WEBPACK_IMPORTED_MODULE_2__script__.p)(), 
+                "https://www.paypal.com";
             }
             function getPayPalAPIDomain() {
-                return {
-                    local: "https://" + Object(__WEBPACK_IMPORTED_MODULE_2__script__.b)() + ":12326",
-                    stage: "https://" + Object(__WEBPACK_IMPORTED_MODULE_2__script__.b)() + ":12326",
-                    sandbox: "https://api.sandbox.paypal.com",
-                    paypal: "https://api.paypal.com",
-                    test: "mock://api.paypal.com"
-                }.production;
+                return Object(__WEBPACK_IMPORTED_MODULE_2__script__.b)(), Object(__WEBPACK_IMPORTED_MODULE_2__script__.b)(), 
+                "https://api.paypal.com";
             }
             function buildPayPalUrl() {
                 var path = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : "";
