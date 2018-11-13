@@ -6,7 +6,7 @@ import urlLib from 'url';
 import { SDK_PATH, SDK_QUERY_KEYS } from 'paypal-sdk-constants';
 
 import { HOST, PROTOCOL } from './constants';
-import { constHas } from './util';
+import { constHas, entries } from './util';
 
 type SDKMeta = {|
     url : string,
@@ -34,7 +34,9 @@ function validateSDKUrl(sdkUrl : string) {
         throw new Error(`Invalid path for sdk url: ${ pathname || 'undefined' }`);
     }
 
-    for (const [ key, val ] of Object.entries(query)) {
+    // $FlowFixMe
+    for (const [ key, val ] of entries(query)) {
+        
         // $FlowFixMe
         if (!constHas(SDK_QUERY_KEYS, key)) {
             throw new Error(`Unexpected query key for sdk url: ${ key }`);
