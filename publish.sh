@@ -15,11 +15,7 @@ fi;
 rm -rf node_modules
 npm install
 
-rm -r dist/*;
-npm run build;
-
-git add dist;
-git commit -m "Dist" || echo "Nothing to distribute";
+npm test;
 
 npm version ${1-patch}
 
