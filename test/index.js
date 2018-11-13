@@ -1,4 +1,3 @@
 /* @flow */
 
-import './util';
-import './tests';
+import './client';

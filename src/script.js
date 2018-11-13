@@ -28,7 +28,9 @@ export function getSDKAttributes() : { [string] : string } {
         let sdkScript = getSDKScript();
         let result = {};
         for (let attr of sdkScript.attributes) {
-            result[attr.name] = attr.value;
+            if (attr.name.indexOf('data-') === 0) {
+                result[attr.name] = attr.value;
+            }
         }
         return result;
     });
@@ -47,6 +49,14 @@ export function getSDKQueryParams() : { [string] : string } {
 export function getSDKQueryParam<T : string | void>(name : $Values<typeof SDK_QUERY_KEYS>, def : T) : T {
     // $FlowFixMe
     return getSDKQueryParams()[name] || def;
+}
+
+export function getScriptUrl() : string {
+    const src = getSDKScript().getAttribute('src');
+    if (!src) {
+        throw new Error(`Can not find src for sdk script`);
+    }
+    return src;
 }
 
 export function getSDKQueryParamBool<T : boolean>(name : $Values<typeof SDK_QUERY_KEYS>, def? : T) : T {

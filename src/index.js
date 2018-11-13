@@ -5,3 +5,4 @@ export * from './logger';
 export * from './types';
 export * from './globals';
 export * from './script';
+export * from './meta';
