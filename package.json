@@ -4,14 +4,13 @@
   "description": "Shared config between PayPal/Braintree.",
   "main": "index.js",
   "scripts": {
-    "babel": "babel src/ --out-dir dist/module",
+    "babel": "babel ./server --exclude=node_modules --out-dir ./server",
     "build": "npm run test && npm run doc",
     "clean": "rimraf dist coverage",
     "debug": "cross-env NODE_ENV=debug",
     "doc": "esdoc",
     "flow": "flow",
     "flow-typed": "rm -rf ./flow-typed && flow-typed install",
-    "flow:build": "flow gen-flow-files ./src/index.js --out-dir ./dist/module",
     "karma": "cross-env NODE_ENV=test babel-node --plugins=transform-es2015-modules-commonjs ./node_modules/.bin/karma start",
     "lint": "eslint src/ server/ test/ *.js",
     "reinstall": "rimraf flow-typed && rimraf node_modules && npm install && flow-typed install",
@@ -23,8 +22,8 @@
     "test": "npm run lint && npm run flow-typed && npm run flow && npm run jest && npm run karma",
     "webpack": "babel-node --plugins=transform-es2015-modules-commonjs ./node_modules/.bin/webpack --progress",
     "jest": "jest test/server --env=node --no-cache --coverage --verbose --runInBand --silent=false",
-    "prepublish": "in-publish && npm run flow:build && npm run babel || not-in-publish",
-    "postpublish": "git checkout ./src && rm ./src/index.js.flow"
+    "prepublish": "in-publish && npm run babel || not-in-publish",
+    "postpublish": "git checkout ./server"
   },
   "files": [
     "dist/",
