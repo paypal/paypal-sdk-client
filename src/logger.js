@@ -59,7 +59,7 @@ export function setupLogger() {
     ZalgoPromise.onPossiblyUnhandledException(err => {
 
         logger.track({
-            [FPTI_KEY.ERROR_CODE]: 'checkoutjs_error',
+            [FPTI_KEY.ERROR_CODE]: 'payments_sdk_error',
             [FPTI_KEY.ERROR_DESC]: stringifyErrorMessage(err)
         });
 
