@@ -68,7 +68,7 @@ export function getClientID() : string {
     let clientID = getSDKQueryParam(SDK_QUERY_KEYS.CLIENT_ID);
 
     if (!clientID) {
-        throw new Error(`Expected ${ SDK_QUERY_KEYS.CLIENT_ID } parameter in SDK URL`);
+        throw new Error(`Expected ${ SDK_QUERY_KEYS.CLIENT_ID } parameter in sdk url`);
     }
 
     if (CLIENT_ID_ALIAS[clientID]) {
@@ -102,7 +102,7 @@ export function getClientToken() : string {
     let clientToken = getSDKAttribute(SDK_SETTINGS.CLIENT_TOKEN);
 
     if (!clientToken) {
-        throw new Error(`Expected data-client-token="xyz" to be passed with client token, to ${ getSDKScript().outerHTML }`);
+        throw new Error(`Expected data-client-token to be passed with client token, to ${ getSDKScript().outerHTML }`);
     }
 
     return clientToken;

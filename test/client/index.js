@@ -2,3 +2,4 @@
 
 import './common';
 import './meta';
+import './script';
