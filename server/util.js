@@ -9,11 +9,6 @@ export const constHas = <X : (string | boolean | number), T : {[string] : X }>(c
 };
 
 export function entries<T>(obj : { [string] : T }) : $ReadOnlyArray<[ string, T ]> {
-    if (Object.entries) {
-        // $FlowFixMe
-        return Object.entries(obj);
-    }
-
     const result = [];
 
     for (const key of Object.keys(obj)) {
