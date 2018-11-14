@@ -1,20 +1,20 @@
 /* @flow */
 
-export type QueryOptionsType = {
-    components : Array<string>,
+export type QueryOptionsType = {|
+    components : $ReadOnlyArray<string>,
     merchantID : string,
     locale : {
         country : string,
         lang : string
     },
     env : string
-};
+|};
 
 export type ExportsType = {
     [ string ] : mixed
 };
 
-export type FundingEligibilityType = {
+export type FundingEligibilityType = {|
     bancontact : {
         eligible : boolean,
         branded : boolean
@@ -97,4 +97,4 @@ export type FundingEligibilityType = {
         eligible : boolean,
         branded : boolean
     }
-};
+|};

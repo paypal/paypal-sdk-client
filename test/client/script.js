@@ -8,7 +8,7 @@ describe(`script cases`, () => {
     it('should successfully get a client id', () => {
         const clientID = 'foobar123';
 
-        let url = createSDKScript({
+        const url = createSDKScript({
             query: {
                 'client-id': clientID
             }
@@ -43,7 +43,7 @@ describe(`script cases`, () => {
     it('should successfully get a client id alias', () => {
         const clientID = 'sb';
 
-        let url = createSDKScript({
+        const url = createSDKScript({
             query: {
                 'client-id': clientID
             }
@@ -57,7 +57,7 @@ describe(`script cases`, () => {
     it('should successfully get a client id', () => {
         const merchantID = 'abc987';
 
-        let url = createSDKScript({
+        const url = createSDKScript({
             query: {
                 'merchant-id': merchantID
             }
@@ -71,7 +71,7 @@ describe(`script cases`, () => {
     it('should successfully get an intent', () => {
         const intent = 'authorize';
 
-        let url = createSDKScript({
+        const url = createSDKScript({
             query: {
                 'order-intent': intent
             }
@@ -85,7 +85,7 @@ describe(`script cases`, () => {
     it('should successfully get a currency', () => {
         const currency = 'EUR';
 
-        let url = createSDKScript({
+        const url = createSDKScript({
             query: {
                 'order-currency': currency
             }
@@ -99,7 +99,7 @@ describe(`script cases`, () => {
     it('should successfully get vault', () => {
         const vault = true;
 
-        let url = createSDKScript({
+        const url = createSDKScript({
             query: {
                 'order-vault': vault.toString()
             }
@@ -113,7 +113,7 @@ describe(`script cases`, () => {
     it('should successfully get commit', () => {
         const commit = false;
 
-        let url = createSDKScript({
+        const url = createSDKScript({
             query: {
                 'order-commit': commit.toString()
             }
@@ -127,7 +127,7 @@ describe(`script cases`, () => {
     it('should successfully get client token', () => {
         const clientToken = 'abc-xyz-123';
 
-        let url = createSDKScript({
+        const url = createSDKScript({
             attributes: {
                 'data-client-token': clientToken
             }
@@ -156,7 +156,7 @@ describe(`script cases`, () => {
     it('should successfully get partner attribution id', () => {
         const partnerAttributionID = 'abc-xyz-123';
 
-        let url = createSDKScript({
+        const url = createSDKScript({
             attributes: {
                 'data-partner-attribution-id': partnerAttributionID
             }
@@ -170,7 +170,7 @@ describe(`script cases`, () => {
     it('should successfully get stage host', () => {
         const stageHost = 'foo.qa.paypal.com';
 
-        let url = createSDKScript({
+        const url = createSDKScript({
             attributes: {
                 'data-stage-host': stageHost
             }
@@ -184,7 +184,7 @@ describe(`script cases`, () => {
     it('should successfully get api stage host', () => {
         const apiStageHost = 'bar.qa.paypal.com';
 
-        let url = createSDKScript({
+        const url = createSDKScript({
             attributes: {
                 'data-stage-host': apiStageHost
             }

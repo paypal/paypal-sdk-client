@@ -32,7 +32,7 @@ export function getLang() : $Values<typeof LANG> {
         return __LOCALE_LANG__;
     }
     
-    for (let { country, lang } of getBrowserLocales()) {
+    for (const { country, lang } of getBrowserLocales()) {
         if (country && country === __LOCALE_COUNTRY__ && COUNTRY_LANGS[__LOCALE_COUNTRY__].indexOf(lang) !== -1) {
             // $FlowFixMe
             return lang;

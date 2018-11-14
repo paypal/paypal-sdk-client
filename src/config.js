@@ -42,7 +42,7 @@ export function buildPayPalUrl(path : string = '') : string {
 }
 
 export function buildPayPalAPIUrl(path : string = '') : string {
-    let paypalAPIDomain = isCurrentDomain(getPayPalDomain())
+    const paypalAPIDomain = isCurrentDomain(getPayPalDomain())
         ? getPayPalDomain()
         : getPayPalAPIDomain();
 

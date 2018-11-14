@@ -26,11 +26,11 @@ describe('logger tests', () => {
             }
         });
 
-        let logger = getLogger();
+        const logger = getLogger();
 
         let logData;
 
-        let logEndpoint = $mockEndpoint.register({
+        const logEndpoint = $mockEndpoint.register({
             method:  'POST',
             uri:     `${ window.location.protocol }//${ window.location.host }/xoplatform/logger/api/logger`,
             handler: (req) => {
@@ -50,7 +50,7 @@ describe('logger tests', () => {
                 throw new Error(`Expected log data to be populated`);
             }
 
-            let event = logData.events.find(e => (e.event === 'foo'));
+            const event = logData.events.find(e => (e.event === 'foo'));
 
             if (!event) {
                 throw new Error(`Expected to find foo event`);
@@ -62,7 +62,7 @@ describe('logger tests', () => {
                 bar:     'baz'
             };
 
-            for (let key of Object.keys(expectedPayload)) {
+            for (const key of Object.keys(expectedPayload)) {
                 if (event.payload[key] !== expectedPayload[key]) {
                     throw new Error(`Expected logger payload value ${ key } to be ${ expectedPayload[key] } - got ${ event.payload[key] }`);
                 }
@@ -92,7 +92,7 @@ describe('logger tests', () => {
                 throw new Error(`Expected to find hello=world event`);
             }
 
-            for (let key of Object.keys(expectedTracking)) {
+            for (const key of Object.keys(expectedTracking)) {
                 if (!tracking[key]) {
                     throw new Error(`Expected logger tracking value ${ key } to be passed`);
                 } else if (expectedTracking[key] instanceof RegExp && !tracking[key].match(expectedTracking[key])) {
@@ -106,11 +106,11 @@ describe('logger tests', () => {
 
     it('should auto-log on any unhandled errors', () => {
 
-        let logger = getLogger();
+        const logger = getLogger();
 
         let logData;
 
-        let logEndpoint = $mockEndpoint.register({
+        const logEndpoint = $mockEndpoint.register({
             method:  'POST',
             uri:     `${ window.location.protocol }//${ window.location.host }/xoplatform/logger/api/logger`,
             handler: (req) => {
@@ -131,7 +131,7 @@ describe('logger tests', () => {
                 throw new Error(`Expected log data to be populated`);
             }
 
-            let event = logData.events.find(e => (e.event === 'unhandled_error'));
+            const event = logData.events.find(e => (e.event === 'unhandled_error'));
 
             if (!event) {
                 throw new Error(`Expected to find unhandled_error event`);
@@ -141,7 +141,7 @@ describe('logger tests', () => {
                 err: /meep/
             };
 
-            for (let key of Object.keys(expectedPayload)) {
+            for (const key of Object.keys(expectedPayload)) {
                 if (!event.payload[key]) {
                     throw new Error(`Expected logger tracking value ${ key } to be passed`);
                 } else if (expectedPayload[key] instanceof RegExp && !event.payload[key].match(expectedPayload[key])) {
@@ -162,7 +162,7 @@ describe('logger tests', () => {
                 throw new Error(`Expected to find ext_error_code=payments_sdk_error event`);
             }
 
-            for (let key of Object.keys(expectedTracking)) {
+            for (const key of Object.keys(expectedTracking)) {
                 if (!tracking[key]) {
                     throw new Error(`Expected logger tracking value ${ key } to be passed`);
                 } else if (expectedTracking[key] instanceof RegExp && !tracking[key].match(expectedTracking[key])) {

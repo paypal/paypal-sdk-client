@@ -6,7 +6,7 @@ import { createSDKScript } from './common';
 
 describe(`meta cases`, () => {
     it('should successfully create a meta payload', () => {
-        let expectedUrl = createSDKScript({
+        const expectedUrl = createSDKScript({
             query: {
                 'client-id': 'foobar'
             }
@@ -18,7 +18,7 @@ describe(`meta cases`, () => {
             throw new Error(`Expected meta string to be returned`);
         }
 
-        let { url } = JSON.parse(window.atob(meta));
+        const { url } = JSON.parse(window.atob(meta));
 
         if (url !== expectedUrl) {
             throw new Error(`Expected sdk url to be ${ expectedUrl }, got ${ url }`);

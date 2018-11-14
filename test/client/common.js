@@ -6,14 +6,14 @@ import { getSDKScript, getSDKAttributes } from '../../src';
 
 const TEST_SDK_URL = 'https://test.paypal.com/sdk/js';
 
-type ScriptSettings = {
+type ScriptSettings = {|
     query? : {
         [string] : string
     },
     attributes? : {
         [string] : string
     }
-};
+|};
 
 export function createSDKScript({ query = { 'client-id': 'meep' }, attributes = {} } : ScriptSettings = {}) : string {
     let script = document.querySelector('script[type="test/javascript"]');
@@ -49,6 +49,11 @@ export function createSDKScript({ query = { 'client-id': 'meep' }, attributes = 
     return url;
 }
 
+function clearErrorListener() {
+    // eslint-disable-next-line unicorn/prefer-add-event-listener
+    window.onerror = noop;
+}
+
 function clearMemoizeCaches() {
     // $FlowFixMe
     delete getScript.__inline_memoize_cache__;
@@ -59,13 +64,13 @@ function clearMemoizeCaches() {
 }
 
 beforeEach(() => {
-    window.onerror = noop;
+    clearErrorListener();
     clearMemoizeCaches();
     createSDKScript();
 });
 
 window.console.karma = function consoleKarma() {
-    let karma = window.karma || (window.top && window.top.karma) || (window.opener && window.opener.karma);
+    const karma = window.karma || (window.top && window.top.karma) || (window.opener && window.opener.karma);
     karma.log('debug', arguments);
     console.log.apply(console, arguments); // eslint-disable-line no-console
 };

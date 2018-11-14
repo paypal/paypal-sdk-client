@@ -13,8 +13,7 @@ export function getLogger() : LoggerType {
     return inlineMemoize(getLogger, () =>
         Logger({
             url: getPayPalLoggerUrl()
-        })
-    );
+        }));
 }
 
 export function getPaymentsSDKStorage() : Storage {
@@ -26,7 +25,7 @@ export function getSessionID() : string {
 }
 
 export function setupLogger() {
-    let logger = getLogger();
+    const logger = getLogger();
     
     logger.addPayloadBuilder(() => {
         return {

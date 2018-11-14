@@ -12,8 +12,8 @@ export const CLIENT_ID_ALIAS = {
 
 export function getSDKScript() : HTMLScriptElement {
     return inlineMemoize(getSDKScript, () => {
-        let { host, path } = { host: getHost(), path: getPath() };
-        let script = getScript({ host, path });
+        const { host, path } = { host: getHost(), path: getPath() };
+        const script = getScript({ host, path });
 
         if (!script) {
             throw new Error(`PayPal Payments SDK script not present on page! Excected to find <script src="https://${ host }${ path }">`);
@@ -25,9 +25,9 @@ export function getSDKScript() : HTMLScriptElement {
 
 export function getSDKAttributes() : { [string] : string } {
     return inlineMemoize(getSDKAttributes, () => {
-        let sdkScript = getSDKScript();
-        let result = {};
-        for (let attr of sdkScript.attributes) {
+        const sdkScript = getSDKScript();
+        const result = {};
+        for (const attr of sdkScript.attributes) {
             if (attr.name.indexOf('data-') === 0) {
                 result[attr.name] = attr.value;
             }
@@ -42,7 +42,7 @@ export function getSDKAttribute<T : string | void>(name : $Values<typeof SDK_SET
 }
 
 export function getSDKQueryParams() : { [string] : string } {
-    let script = getSDKScript();
+    const script = getSDKScript();
     return parseQuery(script.src.split('?')[1] || '');
 }
 
@@ -65,7 +65,7 @@ export function getSDKQueryParamBool<T : boolean>(name : $Values<typeof SDK_QUER
 }
 
 export function getClientID() : string {
-    let clientID = getSDKQueryParam(SDK_QUERY_KEYS.CLIENT_ID);
+    const clientID = getSDKQueryParam(SDK_QUERY_KEYS.CLIENT_ID);
 
     if (!clientID) {
         throw new Error(`Expected ${ SDK_QUERY_KEYS.CLIENT_ID } parameter in sdk url`);
@@ -99,7 +99,7 @@ export function getCurrency() : $Values<typeof CURRENCY> {
 }
 
 export function getClientToken() : string {
-    let clientToken = getSDKAttribute(SDK_SETTINGS.CLIENT_TOKEN);
+    const clientToken = getSDKAttribute(SDK_SETTINGS.CLIENT_TOKEN);
 
     if (!clientToken) {
         throw new Error(`Expected data-client-token to be passed with client token, to ${ getSDKScript().outerHTML }`);
