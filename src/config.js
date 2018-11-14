@@ -35,6 +35,19 @@ export function getPayPalLoggerDomain() : string {
     }[__ENV__];
 }
 
+export const SUPPORTED_BROWSERS = {
+    msie:           '11',
+    firefox:        '30',
+    chrome:         '27',
+    safari:         '7',
+    opera:          '16',
+    msedge:         '12',
+    samsungBrowser: '2.1',
+    silk:           '59.3',
+    ucbrowser:      '10.0.0.488',
+    vivaldi:        '1.91'
+};
+
 export function buildPayPalUrl(path : string = '') : string {
     return (__TEST__ && __WEB__)
         ? `${ getActualDomain() }${ path }`
