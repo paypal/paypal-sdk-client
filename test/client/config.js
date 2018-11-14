@@ -24,7 +24,7 @@ describe(`config cases`, () => {
         let expectedPayPalDomain = 'mock://www.paypal.com';
 
         if (getPayPalLoggerDomain() !== expectedPayPalDomain) {
-            throw new Error(`Expected paypal domain to be ${ expectedPayPalDomain }, got ${ getPayPalLoggerDomain() }`);
+            throw new Error(`Expected paypal logger domain to be ${ expectedPayPalDomain }, got ${ getPayPalLoggerDomain() }`);
         }
     });
 
@@ -33,7 +33,7 @@ describe(`config cases`, () => {
         let result = buildPayPalUrl('/foo/bar');
 
         if (result !== expectedPayPalUrl) {
-            throw new Error(`Expected paypal domain to be ${ expectedPayPalUrl }, got ${ result }`);
+            throw new Error(`Expected paypal url to be ${ expectedPayPalUrl }, got ${ result }`);
         }
     });
 
@@ -42,7 +42,7 @@ describe(`config cases`, () => {
         let result = buildPayPalAPIUrl('/bar/baz');
 
         if (result !== expectedPayPalUrl) {
-            throw new Error(`Expected paypal domain to be ${ expectedPayPalUrl }, got ${ result }`);
+            throw new Error(`Expected paypal api url to be ${ expectedPayPalUrl }, got ${ result }`);
         }
     });
 
@@ -51,7 +51,7 @@ describe(`config cases`, () => {
         let result = getPayPalLoggerUrl();
 
         if (result !== expectedPayPalUrl) {
-            throw new Error(`Expected paypal domain to be ${ expectedPayPalUrl }, got ${ result }`);
+            throw new Error(`Expected paypal logger url to be ${ expectedPayPalUrl }, got ${ result }`);
         }
     });
 });

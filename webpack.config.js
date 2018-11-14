@@ -3,7 +3,7 @@
 
 import { getWebpackConfig } from 'grumbler-scripts/config/webpack.config';
 
-import { testGlobals } from './test/client/globals';
+import { testGlobals } from './test/client/test-globals';
 
 export let WEBPACK_CONFIG_TEST = getWebpackConfig({
     test:       true,
