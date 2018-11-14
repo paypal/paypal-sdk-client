@@ -5,12 +5,11 @@ import urlLib from 'url';
 
 import { SDK_PATH, SDK_QUERY_KEYS } from 'paypal-sdk-constants';
 
-import { HOST, PROTOCOL, LEGACY_SDK_PATH } from './constants';
+import { HOST, PROTOCOL, LEGACY_SDK_PATH, DEFAULT_SDK_META, DEFAULT_LEGACY_SDK_BASE_URL } from './constants';
 import { constHas, entries } from './util';
 
 type SDKMeta = {|
-    url : string,
-    getScriptTag : () => string
+    getSDKLoader : (options? : { baseURL? : string, nonce? : string }) => string
 |};
 
 function validatePaymentsSDKUrl({ protocol, hostname, pathname, query, hash }) {
@@ -82,17 +81,48 @@ function validateSDKUrl(sdkUrl : string) {
     }
 }
 
-export function unpackSDKMeta(sdkMeta : string) : SDKMeta {
-    const { url } = JSON.parse(Buffer.from(sdkMeta, 'base64').toString('utf8'));
+export function unpackSDKMeta(sdkMeta? : string) : SDKMeta {
 
-    validateSDKUrl(url);
+    const { url } = sdkMeta
+        ? JSON.parse(Buffer.from(sdkMeta, 'base64').toString('utf8'))
+        : DEFAULT_SDK_META;
 
-    const getScriptTag = () => {
-        return `<script src="${ url }"></script>`;
+    if (url) {
+        validateSDKUrl(url);
+    }
+
+    const getSDKLoader = ({ baseURL = DEFAULT_LEGACY_SDK_BASE_URL, nonce = '' } = {}) => {
+        if (url) {
+            return `<script nonce="${ nonce }" src="${ url }"></script>`;
+        }
+
+        return `
+            <script nonce="${ nonce }">
+                (function() {
+                    if (!window.name || window.name.indexOf('xcomponent') !== 0) {
+                        return;
+                    }
+
+                    var version = window.name.split('__')[2].replace(/_/g, '.');
+                    
+                    if (!version.match(/^[0-9a-zA-Z.]+$/)) {
+                        return;
+                    }
+
+                    if (version === '4' || version === 'latest') {
+                        version = '';
+                    }
+
+                    var url = '${ baseURL }/checkout' + (version ? ('.' + version) : '') + '.js';
+
+                    var scriptTag = '<scr' + 'ipt src="${ url }" data-paypal-checkout data-no-bridge data-state="ppxo_checkout"></scr' + 'ipt>';
+                    document.write(scriptTag);
+                })();
+            </script>
+        `;
     };
     
     return {
-        url,
-        getScriptTag
+        getSDKLoader
     };
 }

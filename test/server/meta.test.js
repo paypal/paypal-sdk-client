@@ -2,29 +2,16 @@
 
 import { unpackSDKMeta } from '../../server';
 
-test('should unpack a valid sdk meta bundle', () => {
-
-    const sdkUrl = 'https://www.paypal.com/sdk/js?client-id=foo';
-
-    const { url } = unpackSDKMeta(Buffer.from(JSON.stringify({
-        url: sdkUrl
-    })).toString('base64'));
-
-    if (url !== sdkUrl) {
-        throw new Error(`Expected url to be ${ sdkUrl } - got ${ url }`);
-    }
-});
-
 test('should consruct a valid script url', () => {
 
     const sdkUrl = 'https://www.paypal.com/sdk/js?client-id=foo';
-    const sdkScript = `<script src="${ sdkUrl }"></script>`;
+    const sdkScript = `<script nonce="" src="${ sdkUrl }"></script>`;
 
-    const { getScriptTag } = unpackSDKMeta(Buffer.from(JSON.stringify({
+    const { getSDKLoader } = unpackSDKMeta(Buffer.from(JSON.stringify({
         url: sdkUrl
     })).toString('base64'));
 
-    const script = getScriptTag();
+    const script = getSDKLoader();
 
     if (script !== sdkScript) {
         throw new Error(`Expected script to be ${ sdkScript } - got ${ script }`);
@@ -34,13 +21,13 @@ test('should consruct a valid script url', () => {
 test('should consruct a valid script url with paypalobjects', () => {
 
     const sdkUrl = 'https://www.paypalobjects.com/api/checkout.js';
-    const sdkScript = `<script src="${ sdkUrl }"></script>`;
+    const sdkScript = `<script nonce="" src="${ sdkUrl }"></script>`;
 
-    const { getScriptTag } = unpackSDKMeta(Buffer.from(JSON.stringify({
+    const { getSDKLoader } = unpackSDKMeta(Buffer.from(JSON.stringify({
         url: sdkUrl
     })).toString('base64'));
 
-    const script = getScriptTag();
+    const script = getSDKLoader();
 
     if (script !== sdkScript) {
         throw new Error(`Expected script to be ${ sdkScript } - got ${ script }`);
@@ -50,13 +37,13 @@ test('should consruct a valid script url with paypalobjects', () => {
 test('should consruct a valid minified script url with paypalobjects', () => {
 
     const sdkUrl = 'https://www.paypalobjects.com/api/checkout.min.js';
-    const sdkScript = `<script src="${ sdkUrl }"></script>`;
+    const sdkScript = `<script nonce="" src="${ sdkUrl }"></script>`;
 
-    const { getScriptTag } = unpackSDKMeta(Buffer.from(JSON.stringify({
+    const { getSDKLoader } = unpackSDKMeta(Buffer.from(JSON.stringify({
         url: sdkUrl
     })).toString('base64'));
 
-    const script = getScriptTag();
+    const script = getSDKLoader();
 
     if (script !== sdkScript) {
         throw new Error(`Expected script to be ${ sdkScript } - got ${ script }`);
@@ -66,13 +53,13 @@ test('should consruct a valid minified script url with paypalobjects', () => {
 test('should consruct a valid versioned script url with paypalobjects', () => {
 
     const sdkUrl = 'https://www.paypalobjects.com/api/checkout.4.0.125.js';
-    const sdkScript = `<script src="${ sdkUrl }"></script>`;
+    const sdkScript = `<script nonce="" src="${ sdkUrl }"></script>`;
 
-    const { getScriptTag } = unpackSDKMeta(Buffer.from(JSON.stringify({
+    const { getSDKLoader } = unpackSDKMeta(Buffer.from(JSON.stringify({
         url: sdkUrl
     })).toString('base64'));
 
-    const script = getScriptTag();
+    const script = getSDKLoader();
 
     if (script !== sdkScript) {
         throw new Error(`Expected script to be ${ sdkScript } - got ${ script }`);
@@ -82,13 +69,13 @@ test('should consruct a valid versioned script url with paypalobjects', () => {
 test('should consruct a valid versioned minified script url with paypalobjects', () => {
 
     const sdkUrl = 'https://www.paypalobjects.com/api/checkout.4.0.125.min.js';
-    const sdkScript = `<script src="${ sdkUrl }"></script>`;
+    const sdkScript = `<script nonce="" src="${ sdkUrl }"></script>`;
 
-    const { getScriptTag } = unpackSDKMeta(Buffer.from(JSON.stringify({
+    const { getSDKLoader } = unpackSDKMeta(Buffer.from(JSON.stringify({
         url: sdkUrl
     })).toString('base64'));
 
-    const script = getScriptTag();
+    const script = getSDKLoader();
 
     if (script !== sdkScript) {
         throw new Error(`Expected script to be ${ sdkScript } - got ${ script }`);
@@ -98,13 +85,13 @@ test('should consruct a valid versioned minified script url with paypalobjects',
 test('should consruct a valid localhost script url', () => {
 
     const sdkUrl = 'http://localhost.paypal.com:8000/sdk/js?client-id=foo';
-    const sdkScript = `<script src="${ sdkUrl }"></script>`;
+    const sdkScript = `<script nonce="" src="${ sdkUrl }"></script>`;
 
-    const { getScriptTag } = unpackSDKMeta(Buffer.from(JSON.stringify({
+    const { getSDKLoader } = unpackSDKMeta(Buffer.from(JSON.stringify({
         url: sdkUrl
     })).toString('base64'));
 
-    const script = getScriptTag();
+    const script = getSDKLoader();
 
     if (script !== sdkScript) {
         throw new Error(`Expected script to be ${ sdkScript } - got ${ script }`);
@@ -114,26 +101,32 @@ test('should consruct a valid localhost script url', () => {
 test('should unpack a valid sdk meta bundle with a component', () => {
 
     const sdkUrl = 'https://www.paypal.com/sdk/js?client-id=foo&components=buttons';
+    const sdkScript = `<script nonce="" src="${ sdkUrl }"></script>`;
 
-    const { url } = unpackSDKMeta(Buffer.from(JSON.stringify({
+    const { getSDKLoader } = unpackSDKMeta(Buffer.from(JSON.stringify({
         url: sdkUrl
     })).toString('base64'));
 
-    if (url !== sdkUrl) {
-        throw new Error(`Expected url to be ${ sdkUrl } - got ${ url }`);
+    const script = getSDKLoader();
+
+    if (script !== sdkScript) {
+        throw new Error(`Expected script to be ${ sdkScript } - got ${ script }`);
     }
 });
 
 test('should unpack a valid sdk meta bundle with multiple components', () => {
 
     const sdkUrl = 'https://www.paypal.com/sdk/js?client-id=foo&components=buttons,hosted-fields';
+    const sdkScript = `<script nonce="" src="${ sdkUrl }"></script>`;
 
-    const { url } = unpackSDKMeta(Buffer.from(JSON.stringify({
+    const { getSDKLoader } = unpackSDKMeta(Buffer.from(JSON.stringify({
         url: sdkUrl
     })).toString('base64'));
 
-    if (url !== sdkUrl) {
-        throw new Error(`Expected url to be ${ sdkUrl } - got ${ url }`);
+    const script = getSDKLoader();
+
+    if (script !== sdkScript) {
+        throw new Error(`Expected script to be ${ sdkScript } - got ${ script }`);
     }
 });
 
@@ -336,3 +329,12 @@ test('should error out with a hash', () => {
     }
 });
 
+test('should consruct a valid loader even when no url passed', () => {
+    const { getSDKLoader } = unpackSDKMeta();
+
+    const script = getSDKLoader();
+
+    if (!script || script.indexOf('<script') === -1) {
+        throw new Error(`Expected loader script to be returned`);
+    }
+});
