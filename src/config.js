@@ -58,3 +58,7 @@ const URI = {
 export function getPayPalLoggerUrl() : string {
     return buildPayPalUrl(URI.LOGGER);
 }
+
+export function isPayPalDomain() : boolean {
+    return getActualDomain() === getPayPalDomain();
+}
