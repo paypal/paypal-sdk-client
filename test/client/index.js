@@ -5,3 +5,4 @@ import './meta';
 import './script';
 import './config';
 import './globals';
+import './logger';

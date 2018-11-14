@@ -22,6 +22,12 @@ describe(`script cases`, () => {
     it('should error out when client id not passed', () => {
 
         let error;
+        
+        createSDKScript({
+            query: {
+                'client-id': ''
+            }
+        });
 
         try {
             getClientID();

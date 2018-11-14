@@ -1,10 +1,10 @@
 /* @flow */
 
-import { getScript } from 'belter/src';
+import { getScript, noop } from 'belter/src';
 
 import { getSDKScript, getSDKAttributes } from '../../src';
 
-export const TEST_SDK_URL = 'https://test.paypal.com/sdk/js';
+const TEST_SDK_URL = 'https://test.paypal.com/sdk/js';
 
 type ScriptSettings = {
     query? : {
@@ -15,7 +15,7 @@ type ScriptSettings = {
     }
 };
 
-export function createSDKScript({ query = {}, attributes = {} } : ScriptSettings = {}) : string {
+export function createSDKScript({ query = { 'client-id': 'meep' }, attributes = {} } : ScriptSettings = {}) : string {
     let script = document.querySelector('script[type="test/javascript"]');
 
     if (script && script.parentNode) {
@@ -59,6 +59,7 @@ function clearMemoizeCaches() {
 }
 
 beforeEach(() => {
+    window.onerror = noop;
     clearMemoizeCaches();
     createSDKScript();
 });

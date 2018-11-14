@@ -64,8 +64,7 @@ export function setupLogger() {
         });
 
         logger.error('unhandled_error', {
-            stack:   stringifyError(err),
-            errtype: ({}).toString.call(err)
+            err: stringifyError(err)
         });
 
         // eslint-disable-next-line promise/no-promise-in-callback
