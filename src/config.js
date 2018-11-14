@@ -5,6 +5,25 @@ import { getActualDomain, isCurrentDomain } from 'cross-domain-utils/src';
 import { getPort } from './globals';
 import { getStageHost, getAPIStageHost } from './script';
 
+export const SUPPORTED_BROWSERS = {
+    msie:           '11',
+    firefox:        '30',
+    chrome:         '27',
+    safari:         '7',
+    opera:          '16',
+    msedge:         '12',
+    samsungBrowser: '2.1',
+    silk:           '59.3',
+    ucbrowser:      '10.0.0.488',
+    vivaldi:        '1.91'
+};
+
+export const URI = {
+    LOGGER: `/xoplatform/logger/api/logger`,
+    AUTH:   `/v1/oauth2/token`,
+    ORDER:  `/v2/checkout/orders`
+};
+
 export function getPayPalDomain() : string {
     return {
         local:      `http://localhost.paypal.com:${ getPort() }`,
@@ -35,19 +54,6 @@ export function getPayPalLoggerDomain() : string {
     }[__ENV__];
 }
 
-export const SUPPORTED_BROWSERS = {
-    msie:           '11',
-    firefox:        '30',
-    chrome:         '27',
-    safari:         '7',
-    opera:          '16',
-    msedge:         '12',
-    samsungBrowser: '2.1',
-    silk:           '59.3',
-    ucbrowser:      '10.0.0.488',
-    vivaldi:        '1.91'
-};
-
 export function buildPayPalUrl(path : string = '') : string {
     return (__TEST__ && __WEB__)
         ? `${ getActualDomain() }${ path }`
@@ -64,12 +70,16 @@ export function buildPayPalAPIUrl(path : string = '') : string {
         : `${ paypalAPIDomain }${ path }`;
 }
 
-const URI = {
-    LOGGER: `/xoplatform/logger/api/logger`
-};
-
 export function getPayPalLoggerUrl() : string {
     return buildPayPalUrl(URI.LOGGER);
+}
+
+export function getAuthAPIUrl() : string {
+    return buildPayPalAPIUrl(URI.AUTH);
+}
+
+export function getOrderAPIUrl() : string {
+    return buildPayPalAPIUrl(URI.ORDER);
 }
 
 export function isPayPalDomain() : boolean {
