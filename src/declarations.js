@@ -18,3 +18,4 @@ declare var __STAGE__ : boolean;
 
 declare var __VERSION__ : string;
 declare var __CORRELATION_ID__ : string;
+declare var __NAMESPACE__ : string;

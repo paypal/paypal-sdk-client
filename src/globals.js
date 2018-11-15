@@ -60,3 +60,8 @@ export function getVersion() : string {
 export function getCorrelationID() : string {
     return __CORRELATION_ID__;
 }
+
+export function getNamespace() : string {
+    return __NAMESPACE__;
+}
+
