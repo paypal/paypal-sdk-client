@@ -1,6 +1,6 @@
 /* @flow */
 
-import { getActualDomain, isCurrentDomain } from 'cross-domain-utils/src';
+import { getDomain, getActualDomain, isCurrentDomain } from 'cross-domain-utils/src';
 
 import { getPort } from './globals';
 import { getStageHost, getAPIStageHost } from './script';
@@ -83,5 +83,5 @@ export function getOrderAPIUrl() : string {
 }
 
 export function isPayPalDomain() : boolean {
-    return getActualDomain() === getPayPalDomain();
+    return getDomain() === getPayPalDomain();
 }
