@@ -1,10 +1,10 @@
 /* @flow */
 
-import { getScript, inlineMemoize, parseQuery } from 'belter/src';
-import { SDK_SETTINGS, SDK_QUERY_KEYS, INTENT, COMMIT, VAULT, CURRENCY,
-    DEFAULT_INTENT, DEFAULT_COMMIT, DEFAULT_CURRENCY, DEFAULT_VAULT, QUERY_BOOL } from 'paypal-sdk-constants/src';
+import { getScript, inlineMemoize, parseQuery, getBrowserLocales } from 'belter/src';
+import { SDK_SETTINGS, SDK_QUERY_KEYS, INTENT, COMMIT, VAULT, CURRENCY, COUNTRY_LANGS,
+    DEFAULT_INTENT, DEFAULT_COMMIT, DEFAULT_CURRENCY, DEFAULT_VAULT, QUERY_BOOL, LANG, type LocaleType } from 'paypal-sdk-constants/src';
 
-import { getHost, getPath, getDefaultStageHost } from './globals';
+import { getHost, getPath, getDefaultStageHost, getCountry } from './globals';
 
 export const CLIENT_ID_ALIAS = {
     sb: 'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R'
@@ -118,4 +118,31 @@ export function getStageHost() : string {
 
 export function getAPIStageHost() : string {
     return getSDKAttribute(SDK_SETTINGS.API_STAGE_HOST, getStageHost());
+}
+
+export function getLang() : $Values<typeof LANG> {
+    const queryLang = getSDKQueryParam(SDK_QUERY_KEYS.LOCALE_LANG);
+
+    if (queryLang) {
+        return queryLang;
+    }
+
+    const queryCountry = getCountry();
+    const potentialLangs = COUNTRY_LANGS[queryCountry];
+
+    for (const { country, lang } of getBrowserLocales()) {
+        if (country && country === queryCountry && potentialLangs.indexOf(lang) !== -1) {
+            // $FlowFixMe
+            return lang;
+        }
+    }
+
+    return potentialLangs[0];
+}
+
+export function getLocale() : LocaleType {
+    return {
+        lang:    getLang(),
+        country: getCountry()
+    };
 }

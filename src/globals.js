@@ -1,7 +1,6 @@
 /* @flow */
 
-import { getBrowserLocales } from 'belter/src';
-import { type LocaleType, COUNTRY, LANG, ENV, COUNTRY_LANGS } from 'paypal-sdk-constants/src';
+import { COUNTRY, ENV } from 'paypal-sdk-constants/src';
 
 export function getHost() : string {
     return __HOST__;
@@ -25,28 +24,6 @@ export function getEnv() : $Values<typeof ENV> {
 
 export function getCountry() : $Values<typeof COUNTRY> {
     return __LOCALE_COUNTRY__;
-}
-
-export function getLang() : $Values<typeof LANG> {
-    if (typeof __LOCALE_LANG__ !== 'undefined') {
-        return __LOCALE_LANG__;
-    }
-    
-    for (const { country, lang } of getBrowserLocales()) {
-        if (country && country === __LOCALE_COUNTRY__ && COUNTRY_LANGS[__LOCALE_COUNTRY__].indexOf(lang) !== -1) {
-            // $FlowFixMe
-            return lang;
-        }
-    }
-
-    return __DEFAULT_LANG__;
-}
-
-export function getLocale() : LocaleType {
-    return {
-        lang:    getLang(),
-        country: getCountry()
-    };
 }
 
 export function getDefaultStageHost() : string {

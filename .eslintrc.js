@@ -6,8 +6,6 @@ module.exports = {
     globals: {
         __STAGE__: true,
         __LOCALE_COUNTRY__: true,
-        __LOCALE_LANG__: true,
-        __DEFAULT_LANG__: true,
         __VERSION__: true,
 
         __HOST__: true,
