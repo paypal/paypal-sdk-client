@@ -85,3 +85,7 @@ export function getOrderAPIUrl() : string {
 export function isPayPalDomain() : boolean {
     return getDomain() === getPayPalDomain();
 }
+
+export function getPayPalDomainRegex() : RegExp {
+    return /\.paypal\.com$/;
+}
