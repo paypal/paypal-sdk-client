@@ -23,7 +23,11 @@ export function getEnv() : $Values<typeof ENV> {
 }
 
 export function getBuyerCountry() : $Values<typeof COUNTRY> {
-    // Change to buyer country
+    if (typeof __BUYER_COUNTRY__ !== 'undefined') {
+        return __BUYER_COUNTRY__;
+    }
+
+    // Remove
     return __LOCALE_COUNTRY__;
 }
 

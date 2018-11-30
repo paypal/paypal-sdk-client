@@ -10,6 +10,7 @@ declare var __STAGE_HOST__ : string;
 
 declare var __TEST__ : boolean;
 declare var __ENV__ : $Values<typeof ENV>;
+declare var __BUYER_COUNTRY__: $Values<typeof COUNTRY>;
 declare var __LOCALE_COUNTRY__ : $Values<typeof COUNTRY>;
 declare var __DEBUG__ : boolean;
 declare var __STAGE__ : boolean;
