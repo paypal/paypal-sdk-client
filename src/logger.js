@@ -6,8 +6,8 @@ import { ZalgoPromise } from 'zalgo-promise/src';
 import { FPTI_KEY, FPTI_FEED, FPTI_DATA_SOURCE, FPTI_SDK_NAME, FPTI_USER_ACTION } from 'paypal-sdk-constants/src';
 
 import { getPayPalLoggerUrl } from './config';
-import { getEnv, getCountry, getVersion, getCorrelationID } from './globals';
-import { getPartnerAttributionID, getClientID, getMerchantID, getCommit, getLang } from './script';
+import { getEnv, getVersion, getCorrelationID, getBuyerCountry } from './globals';
+import { getPartnerAttributionID, getClientID, getMerchantID, getCommit, getLocale } from './script';
 import { isEligible } from './eligibility';
 import { getSessionID } from './session';
 
@@ -30,6 +30,8 @@ export function setupLogger() {
     });
 
     logger.addTrackingBuilder(() => {
+        const { lang, country } = getLocale();
+
         return {
             [FPTI_KEY.FEED]:                   FPTI_FEED.PAYMENTS_SDK,
             [FPTI_KEY.DATA_SOURCE]:            FPTI_DATA_SOURCE.PAYMENTS_SDK,
@@ -37,8 +39,8 @@ export function setupLogger() {
             [FPTI_KEY.SELLER_ID]:              getMerchantID(),
             [FPTI_KEY.SESSION_UID]:            getSessionID(),
             [FPTI_KEY.REFERER]:                window.location.host,
-            [FPTI_KEY.LOCALE]:                 `${ getLang() }_${ getCountry() }`,
-            [FPTI_KEY.BUYER_COUNTRY]:          getCountry(),
+            [FPTI_KEY.LOCALE]:                 `${ lang }_${ country }`,
+            [FPTI_KEY.BUYER_COUNTRY]:          getBuyerCountry(),
             [FPTI_KEY.INTEGRATION_IDENTIFIER]: getClientID(),
             [FPTI_KEY.PARTNER_ATTRIBUTION_ID]: getPartnerAttributionID(),
             [FPTI_KEY.SDK_NAME]:               FPTI_SDK_NAME.PAYMENTS_SDK,

@@ -22,7 +22,8 @@ export function getEnv() : $Values<typeof ENV> {
     return __ENV__;
 }
 
-export function getCountry() : $Values<typeof COUNTRY> {
+export function getBuyerCountry() : $Values<typeof COUNTRY> {
+    // Change to buyer country
     return __LOCALE_COUNTRY__;
 }
 

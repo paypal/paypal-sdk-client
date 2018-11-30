@@ -70,7 +70,7 @@ describe('logger tests', () => {
 
             const expectedTracking = {
                 feed_name:              'payments_sdk',
-                serverside_data_source: 'payments_sdk',
+                serverside_data_source: 'checkout',
                 client_id:              'foobarbaz',
                 seller_id:              'hello123',
                 page_session_id:        /^[a-zA-Z0-9_-]+$/,

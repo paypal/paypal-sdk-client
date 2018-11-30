@@ -1,10 +1,10 @@
 /* @flow */
 
 import { getScript, inlineMemoize, parseQuery, getBrowserLocales } from 'belter/src';
-import { SDK_SETTINGS, SDK_QUERY_KEYS, INTENT, COMMIT, VAULT, CURRENCY, COUNTRY_LANGS,
+import { COUNTRY, SDK_SETTINGS, SDK_QUERY_KEYS, INTENT, COMMIT, VAULT, CURRENCY, COUNTRY_LANGS,
     DEFAULT_INTENT, DEFAULT_COMMIT, DEFAULT_CURRENCY, DEFAULT_VAULT, QUERY_BOOL, LANG, type LocaleType } from 'paypal-sdk-constants/src';
 
-import { getHost, getPath, getDefaultStageHost, getCountry } from './globals';
+import { getHost, getPath, getDefaultStageHost, getBuyerCountry } from './globals';
 
 export const CLIENT_ID_ALIAS = {
     sb: 'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R'
@@ -120,29 +120,39 @@ export function getAPIStageHost() : string {
     return getSDKAttribute(SDK_SETTINGS.API_STAGE_HOST, getStageHost());
 }
 
-export function getLang() : $Values<typeof LANG> {
-    const queryLang = getSDKQueryParam(SDK_QUERY_KEYS.LOCALE_LANG);
+export function getLocale() : LocaleType {
+    const locale = getSDKQueryParam(SDK_QUERY_KEYS.LOCALE);
 
-    if (queryLang) {
-        return queryLang;
+    if (locale) {
+        const [ lang, country ] = locale.split('_');
+        return { lang, country };
     }
 
-    const queryCountry = getCountry();
-    const potentialLangs = COUNTRY_LANGS[queryCountry];
+    const buyerCountry = getBuyerCountry();
+    const potentialLangs = COUNTRY_LANGS[buyerCountry];
+    let localeLang = potentialLangs[0];
 
     for (const { country, lang } of getBrowserLocales()) {
-        if (country && country === queryCountry && potentialLangs.indexOf(lang) !== -1) {
+        if (country && country === buyerCountry && potentialLangs.indexOf(lang) !== -1) {
             // $FlowFixMe
-            return lang;
+            localeLang = lang;
+            break;
         }
     }
 
-    return potentialLangs[0];
+    return {
+        // $FlowFixMe
+        lang:    localeLang,
+        country: buyerCountry
+    };
 }
 
-export function getLocale() : LocaleType {
-    return {
-        lang:    getLang(),
-        country: getCountry()
-    };
+// Remove
+export function getCountry() : $Values<typeof COUNTRY> {
+    return getLocale().country;
+}
+
+// Remove
+export function getLang() : $Values<typeof LANG> {
+    return getLocale().lang;
 }
