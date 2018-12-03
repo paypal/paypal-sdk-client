@@ -1,10 +1,6 @@
 /* @flow */
 
 export const testGlobals = {
-
-    __LOCALE_COUNTRY__: 'FR',
-    __DEFAULT_LANG__:   'fr',
-
     __PORT__:       8000,
     __STAGE_HOST__: 'msmaster.qa.paypal.com',
     __HOST__:       'test.paypal.com',

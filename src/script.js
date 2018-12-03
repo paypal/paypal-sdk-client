@@ -4,7 +4,7 @@ import { getScript, inlineMemoize, parseQuery, getBrowserLocales } from 'belter/
 import { COUNTRY, SDK_SETTINGS, SDK_QUERY_KEYS, INTENT, COMMIT, VAULT, CURRENCY, COUNTRY_LANGS,
     DEFAULT_INTENT, DEFAULT_COMMIT, DEFAULT_CURRENCY, DEFAULT_VAULT, QUERY_BOOL, LANG, type LocaleType } from 'paypal-sdk-constants/src';
 
-import { getHost, getPath, getDefaultStageHost, getBuyerCountry } from './globals';
+import { getHost, getPath, getDefaultStageHost } from './globals';
 
 export const CLIENT_ID_ALIAS = {
     sb: 'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R'
@@ -127,23 +127,26 @@ export function getLocale() : LocaleType {
         const [ lang, country ] = locale.split('_');
         return { lang, country };
     }
-
-    const buyerCountry = getBuyerCountry();
-    const potentialLangs = COUNTRY_LANGS[buyerCountry];
-    let localeLang = potentialLangs[0];
-
+    
     for (const { country, lang } of getBrowserLocales()) {
-        if (country && country === buyerCountry && potentialLangs.indexOf(lang) !== -1) {
+        // $FlowFixMe
+        if (COUNTRY_LANGS.hasOwnProperty(country) && COUNTRY_LANGS[country].indexOf(lang) !== -1) {
             // $FlowFixMe
-            localeLang = lang;
-            break;
+            return { country, lang };
+        }
+    }
+
+    for (const { country } of getBrowserLocales()) {
+        // $FlowFixMe
+        if (COUNTRY_LANGS.hasOwnProperty(country)) {
+            // $FlowFixMe
+            return { country, lang: COUNTRY_LANGS[country][0] };
         }
     }
 
     return {
-        // $FlowFixMe
-        lang:    localeLang,
-        country: buyerCountry
+        lang:    LANG.EN,
+        country: COUNTRY.US
     };
 }
 

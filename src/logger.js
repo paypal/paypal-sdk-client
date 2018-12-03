@@ -6,7 +6,7 @@ import { ZalgoPromise } from 'zalgo-promise/src';
 import { FPTI_KEY, FPTI_FEED, FPTI_DATA_SOURCE, FPTI_SDK_NAME, FPTI_USER_ACTION } from 'paypal-sdk-constants/src';
 
 import { getPayPalLoggerUrl } from './config';
-import { getEnv, getVersion, getCorrelationID, getBuyerCountry } from './globals';
+import { getEnv, getVersion, getCorrelationID } from './globals';
 import { getPartnerAttributionID, getClientID, getMerchantID, getCommit, getLocale } from './script';
 import { isEligible } from './eligibility';
 import { getSessionID } from './session';
@@ -40,7 +40,6 @@ export function setupLogger() {
             [FPTI_KEY.SESSION_UID]:            getSessionID(),
             [FPTI_KEY.REFERER]:                window.location.host,
             [FPTI_KEY.LOCALE]:                 `${ lang }_${ country }`,
-            [FPTI_KEY.BUYER_COUNTRY]:          getBuyerCountry(),
             [FPTI_KEY.INTEGRATION_IDENTIFIER]: getClientID(),
             [FPTI_KEY.PARTNER_ATTRIBUTION_ID]: getPartnerAttributionID(),
             [FPTI_KEY.SDK_NAME]:               FPTI_SDK_NAME.PAYMENTS_SDK,

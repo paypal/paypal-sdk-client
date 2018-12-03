@@ -5,8 +5,6 @@ module.exports = {
 
     globals: {
         __STAGE__: true,
-        __BUYER_COUNTRY__: true,
-        __LOCALE_COUNTRY__: true,
         __VERSION__: true,
 
         __HOST__: true,

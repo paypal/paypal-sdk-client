@@ -1,6 +1,6 @@
 /* @flow */
 
-import { getHost, getHostName, getPort, getPath, getEnv, getCountry, getLang, getLocale, getDefaultStageHost, getVersion, getCorrelationID } from '../../src';
+import { getHost, getHostName, getPort, getPath, getEnv, getDefaultStageHost, getVersion, getCorrelationID } from '../../src';
 
 describe(`globals cases`, () => {
 
@@ -46,39 +46,6 @@ describe(`globals cases`, () => {
 
         if (expectedResult !== result) {
             throw new Error(`Expected env to be ${ expectedResult }, got ${ result }`);
-        }
-    });
-
-    it('should successfully get the country', () => {
-        const expectedResult = 'FR';
-        const result = getCountry();
-
-        if (expectedResult !== result) {
-            throw new Error(`Expected country to be ${ expectedResult }, got ${ result }`);
-        }
-    });
-
-    it('should successfully get the lang', () => {
-        const expectedResult = 'fr';
-        const result = getLang();
-
-        if (expectedResult !== result) {
-            throw new Error(`Expected lang to be ${ expectedResult }, got ${ result }`);
-        }
-    });
-
-    it('should successfully get the locale', () => {
-        const expectedCountry = 'FR';
-        const expectedLang = 'fr';
-
-        const { country, lang } = getLocale();
-
-        if (expectedCountry !== country) {
-            throw new Error(`Expected country to be ${ expectedCountry }, got ${ country }`);
-        }
-
-        if (expectedLang !== lang) {
-            throw new Error(`Expected lang to be ${ expectedLang }, got ${ lang }`);
         }
     });
 

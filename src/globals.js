@@ -1,6 +1,6 @@
 /* @flow */
 
-import { COUNTRY, ENV } from 'paypal-sdk-constants/src';
+import { ENV } from 'paypal-sdk-constants/src';
 
 export function getHost() : string {
     return __HOST__;
@@ -20,15 +20,6 @@ export function getPath() : string {
 
 export function getEnv() : $Values<typeof ENV> {
     return __ENV__;
-}
-
-export function getBuyerCountry() : $Values<typeof COUNTRY> {
-    if (typeof __BUYER_COUNTRY__ !== 'undefined') {
-        return __BUYER_COUNTRY__;
-    }
-
-    // Remove
-    return __LOCALE_COUNTRY__;
 }
 
 export function getDefaultStageHost() : string {
