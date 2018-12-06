@@ -1,9 +1,11 @@
 /* @flow */
+/* @jsx node */
 
 // eslint-disable-next-line import/no-nodejs-modules
 import urlLib from 'url';
 
-import { SDK_PATH, SDK_QUERY_KEYS } from 'paypal-sdk-constants';
+import { SDK_PATH, SDK_QUERY_KEYS, SDK_SETTINGS } from 'paypal-sdk-constants';
+import { node, html } from 'jsx-pragmatic';
 
 import { HOST, PROTOCOL, LEGACY_SDK_PATH, DEFAULT_SDK_META, DEFAULT_LEGACY_SDK_BASE_URL } from './constants';
 import { constHas, entries } from './util';
@@ -81,9 +83,21 @@ function validateSDKUrl(sdkUrl : string) {
     }
 }
 
+function validateHost(url) {
+    const { hostname } = urlLib.parse(`https://${ url }`, true);
+
+    if (url !== hostname) {
+        throw new Error(`Expected only host to be passed, got ${ url }`);
+    }
+
+    if (!url.endsWith(HOST.PAYPAL)) {
+        throw new Error(`Expected a paypal host`);
+    }
+}
+
 export function unpackSDKMeta(sdkMeta? : string) : SDKMeta {
 
-    const { url } = sdkMeta
+    const { url, stageHost, apiStageHost } = sdkMeta
         ? JSON.parse(Buffer.from(sdkMeta, 'base64').toString('utf8'))
         : DEFAULT_SDK_META;
 
@@ -91,35 +105,58 @@ export function unpackSDKMeta(sdkMeta? : string) : SDKMeta {
         validateSDKUrl(url);
     }
 
+    if (stageHost) {
+        validateHost(stageHost);
+    }
+
+    if (apiStageHost) {
+        validateHost(apiStageHost);
+    }
+
     const getSDKLoader = ({ baseURL = DEFAULT_LEGACY_SDK_BASE_URL, nonce = '' } = {}) => {
         if (url) {
-            return `<script nonce="${ nonce }" src="${ url }"></script>`;
+            const attrs = {};
+
+            if (stageHost) {
+                attrs[SDK_SETTINGS.STAGE_HOST] = stageHost;
+            }
+
+            if (apiStageHost) {
+                attrs[SDK_SETTINGS.API_STAGE_HOST] = apiStageHost;
+            }
+
+            return (
+                <script nonce={ nonce } src={ url } { ...attrs } />
+            ).render(html());
         }
 
-        return `
-            <script nonce="${ nonce }">
-                (function() {
-                    if (!window.name || window.name.indexOf('xcomponent') !== 0) {
-                        return;
-                    }
+        return (
+            <script
+                nonce={ nonce }
+                innerHTML={ `
+                    (function() {
+                        if (!window.name || window.name.indexOf('xcomponent') !== 0) {
+                            return;
+                        }
 
-                    var version = window.name.split('__')[2].replace(/_/g, '.');
-                    
-                    if (!version.match(/^[0-9a-zA-Z.]+$/)) {
-                        return;
-                    }
+                        var version = window.name.split('__')[2].replace(/_/g, '.');
 
-                    if (version === '4' || version === 'latest') {
-                        version = '';
-                    }
+                        if (!version.match(/^[0-9a-zA-Z.]+$/)) {
+                            return;
+                        }
 
-                    var url = '${ baseURL }/checkout' + (version ? ('.' + version) : '') + '.js';
+                        if (version === '4' || version === 'latest') {
+                            version = '';
+                        }
 
-                    var scriptTag = '<scr' + 'ipt src="${ url }" data-paypal-checkout data-no-bridge data-state="ppxo_checkout"></scr' + 'ipt>';
-                    document.write(scriptTag);
-                })();
-            </script>
-        `;
+                        var url = '${ baseURL }checkout' + (version ? ('.' + version) : '') + '.js';
+
+                        var scriptTag = '<scr' + 'ipt src="' + url + '" data-paypal-checkout data-no-bridge data-state="ppxo_checkout"></scr' + 'ipt>';
+                        document.write(scriptTag);
+                    })();
+                ` }
+            />
+        ).render(html());
     };
     
     return {
