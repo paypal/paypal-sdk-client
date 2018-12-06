@@ -83,19 +83,19 @@ export function getMerchantID() : ?string {
 }
 
 export function getIntent() : $Values<typeof INTENT> {
-    return getSDKQueryParam(SDK_QUERY_KEYS.ORDER_INTENT, DEFAULT_INTENT);
+    return getSDKQueryParam(SDK_QUERY_KEYS.INTENT, DEFAULT_INTENT);
 }
 
 export function getCommit() : $Values<typeof COMMIT> {
-    return getSDKQueryParamBool(SDK_QUERY_KEYS.ORDER_COMMIT, DEFAULT_COMMIT);
+    return getSDKQueryParamBool(SDK_QUERY_KEYS.COMMIT, DEFAULT_COMMIT);
 }
 
 export function getVault() : $Values<typeof VAULT> {
-    return getSDKQueryParamBool(SDK_QUERY_KEYS.ORDER_VAULT, DEFAULT_VAULT);
+    return getSDKQueryParamBool(SDK_QUERY_KEYS.VAULT, DEFAULT_VAULT);
 }
 
 export function getCurrency() : $Values<typeof CURRENCY> {
-    return getSDKQueryParam(SDK_QUERY_KEYS.ORDER_CURRENCY, DEFAULT_CURRENCY);
+    return getSDKQueryParam(SDK_QUERY_KEYS.CURRENCY, DEFAULT_CURRENCY);
 }
 
 export function getClientToken() : string {

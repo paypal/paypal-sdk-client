@@ -77,7 +77,7 @@ export function createOrder(clientID : string, order : OrderCreateRequest, { fpt
     order = { ...order };
 
     if (order.intent && order.intent !== intent) {
-        throw new Error(`Unexpected intent: ${ order.intent } passed to order.create. Please ensure you are passing /sdk/js?${ SDK_QUERY_KEYS.ORDER_INTENT }=${ order.intent } in the paypal script tag.`);
+        throw new Error(`Unexpected intent: ${ order.intent } passed to order.create. Please ensure you are passing /sdk/js?${ SDK_QUERY_KEYS.INTENT }=${ order.intent } in the paypal script tag.`);
     }
 
     // $FlowFixMe
@@ -85,7 +85,7 @@ export function createOrder(clientID : string, order : OrderCreateRequest, { fpt
 
     order.purchase_units = order.purchase_units.map(unit => {
         if (unit.amount.currency_code && unit.amount.currency_code !== currency) {
-            throw new Error(`Unexpected currency: ${ unit.amount.currency_code } passed to order.create. Please ensure you are passing /sdk/js?${ SDK_QUERY_KEYS.ORDER_CURRENCY }=${ unit.amount.currency_code } in the paypal script tag.`);
+            throw new Error(`Unexpected currency: ${ unit.amount.currency_code } passed to order.create. Please ensure you are passing /sdk/js?${ SDK_QUERY_KEYS.CURRENCY }=${ unit.amount.currency_code } in the paypal script tag.`);
         }
 
         return { ...unit, amount: { ...unit.amount, currency_code: currency } };

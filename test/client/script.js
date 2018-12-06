@@ -73,7 +73,7 @@ describe(`script cases`, () => {
 
         const url = createSDKScript({
             query: {
-                'order-intent': intent
+                intent
             }
         });
 
@@ -87,7 +87,7 @@ describe(`script cases`, () => {
 
         const url = createSDKScript({
             query: {
-                'order-currency': currency
+                currency
             }
         });
 
@@ -101,7 +101,7 @@ describe(`script cases`, () => {
 
         const url = createSDKScript({
             query: {
-                'order-vault': vault.toString()
+                'vault': vault.toString()
             }
         });
 
@@ -115,7 +115,7 @@ describe(`script cases`, () => {
 
         const url = createSDKScript({
             query: {
-                'order-commit': commit.toString()
+                'commit': commit.toString()
             }
         });
 
