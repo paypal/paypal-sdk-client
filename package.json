@@ -23,7 +23,7 @@
     "webpack": "babel-node --plugins=transform-es2015-modules-commonjs ./node_modules/.bin/webpack --progress",
     "jest": "jest test/server --env=node --no-cache --coverage --verbose --runInBand --silent=false",
     "prepublish": "in-publish && npm run babel || not-in-publish",
-    "postpublish": "git checkout ./server"
+    "postpublish": "rm -rf ./server && git checkout ./server"
   },
   "files": [
     "dist/",
