@@ -186,7 +186,7 @@ describe(`script cases`, () => {
 
         const url = createSDKScript({
             attributes: {
-                'data-stage-host': apiStageHost
+                'data-api-stage-host': apiStageHost
             }
         });
 

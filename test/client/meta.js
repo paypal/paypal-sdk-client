@@ -58,7 +58,7 @@ describe(`meta cases`, () => {
                 'client-id': 'foobar'
             },
             attributes: {
-                'data-stage-host': expectedApiStageHost
+                'data-api-stage-host': expectedApiStageHost
             }
         });
 
