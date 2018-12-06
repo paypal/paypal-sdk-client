@@ -4,7 +4,7 @@ import { getScript, inlineMemoize, parseQuery, getBrowserLocales } from 'belter/
 import { COUNTRY, SDK_SETTINGS, SDK_QUERY_KEYS, INTENT, COMMIT, VAULT, CURRENCY, COUNTRY_LANGS,
     DEFAULT_INTENT, DEFAULT_COMMIT, DEFAULT_CURRENCY, DEFAULT_VAULT, QUERY_BOOL, LANG, type LocaleType } from 'paypal-sdk-constants/src';
 
-import { getHost, getPath, getDefaultStageHost } from './globals';
+import { getHost, getPath, getDefaultStageHost, getDefaultAPIStageHost } from './globals';
 
 export const CLIENT_ID_ALIAS = {
     sb: 'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R'
@@ -117,7 +117,7 @@ export function getStageHost() : string {
 }
 
 export function getAPIStageHost() : string {
-    return getSDKAttribute(SDK_SETTINGS.API_STAGE_HOST, getStageHost());
+    return getSDKAttribute(SDK_SETTINGS.API_STAGE_HOST, getDefaultAPIStageHost());
 }
 
 export function getLocale() : LocaleType {

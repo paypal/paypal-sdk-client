@@ -12,6 +12,7 @@ module.exports = {
         __PORT__: true,
         __PATH__: true,
         __STAGE_HOST__: true,
+        __SERVICE_STAGE_HOST__: true,
         __CORRELATION_ID__: true,
         __NAMESPACE__: true
     }

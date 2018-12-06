@@ -1,5 +1,5 @@
-PayPal/Braintree SDK Client
----------------------------
+PayPal SDK Client
+-----------------
 
 A shared client for PayPal/Braintree client sdk modules. Featuring:
 
