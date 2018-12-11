@@ -2,7 +2,7 @@
 
 import { getScript, inlineMemoize, parseQuery, getBrowserLocales } from 'belter/src';
 import { COUNTRY, SDK_SETTINGS, SDK_QUERY_KEYS, INTENT, COMMIT, VAULT, CURRENCY, COUNTRY_LANGS,
-    DEFAULT_INTENT, DEFAULT_COMMIT, DEFAULT_CURRENCY, DEFAULT_VAULT, QUERY_BOOL, LANG, type LocaleType } from 'paypal-sdk-constants/src';
+    DEFAULT_INTENT, DEFAULT_COMMIT, DEFAULT_CURRENCY, DEFAULT_VAULT, QUERY_BOOL, LANG, type LocaleType } from '@paypal/sdk-constants/src';
 
 import { getHost, getPath, getDefaultStageHost, getDefaultAPIStageHost } from './globals';
 

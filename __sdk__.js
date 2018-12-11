@@ -3,7 +3,7 @@
 
 module.exports = {
 
-    '__paypal-braintree-client__': {
+    '__paypal-sdk-client__': {
         entry:        './src/interface',
         setupHandler: 'setupClient',
         automatic:    true

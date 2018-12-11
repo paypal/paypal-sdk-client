@@ -40,7 +40,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/paypal-paypal-braintree-sdk-client.git"
+    "url": "git://github.com/paypal/paypal-sdk-client.git"
   },
   "keywords": [
     "template"
@@ -53,11 +53,11 @@
   ],
   "readmeFilename": "README.md",
   "dependencies": {
+    "@paypal/sdk-constants": "^1.0.12",
     "beaver-logger": "^4.0.0",
     "belter": "^1.0.16",
     "bowser": "^1.9.4",
     "jsx-pragmatic": "^1.0.11",
-    "paypal-sdk-constants": "^1.0.12",
     "zalgo-promise": "^1.0.22"
   },
   "devDependencies": {

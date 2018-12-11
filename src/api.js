@@ -2,7 +2,7 @@
 
 import { ZalgoPromise } from 'zalgo-promise/src';
 import { inlineMemoize, request, base64encode } from 'belter/src';
-import { FPTI_KEY, SDK_QUERY_KEYS } from 'paypal-sdk-constants/src';
+import { FPTI_KEY, SDK_QUERY_KEYS } from '@paypal/sdk-constants/src';
 
 import { getOrderAPIUrl, getAuthAPIUrl } from './config';
 import { getLogger } from './logger';

@@ -101,7 +101,7 @@ Quick Start
 #### Installing
 
 ```bash
-npm install --save paypal-braintree-sdk-client
+npm install --save @paypal/sdk-client
 ```
 
 #### Getting Started

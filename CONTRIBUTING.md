@@ -9,13 +9,13 @@ your changes into our code. Ideas and other comments are also welcome.
 1. Create your own [fork](https://help.github.com/articles/fork-a-repo) of this [repository](../../fork).
 ```bash
 # Clone it
-$ git clone git@github.com:paypal/paypal-braintree-sdk-client.git
+$ git clone git@github.com:paypal/paypal-sdk-client.git
 
 # Change directory
 $ cd paypal-braintree-sdk-client
 
 # Add the upstream repo
-$ git remote add upstream git://github.com/paypal/paypal-braintree-sdk-client.git
+$ git remote add upstream git://github.com/paypal/paypal-sdk-client.git
 
 # Get the latest upstream changes
 $ git pull upstream

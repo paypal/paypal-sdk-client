@@ -1,6 +1,6 @@
 /* @flow */
 
-import { ENV } from 'paypal-sdk-constants/src';
+import { ENV } from '@paypal/sdk-constants/src';
 
 declare var __HOST__ : string;
 declare var __HOSTNAME__ : string;

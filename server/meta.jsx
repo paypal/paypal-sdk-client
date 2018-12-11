@@ -4,7 +4,7 @@
 // eslint-disable-next-line import/no-nodejs-modules
 import urlLib from 'url';
 
-import { SDK_PATH, SDK_QUERY_KEYS, SDK_SETTINGS } from 'paypal-sdk-constants';
+import { SDK_PATH, SDK_QUERY_KEYS, SDK_SETTINGS } from '@paypal/sdk-constants';
 import { node, html } from 'jsx-pragmatic';
 
 import { HOST, PROTOCOL, LEGACY_SDK_PATH, DEFAULT_SDK_META, DEFAULT_LEGACY_SDK_BASE_URL } from './constants';

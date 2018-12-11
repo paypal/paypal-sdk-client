@@ -3,7 +3,7 @@
 import { Logger, type LoggerType } from 'beaver-logger/src';
 import { noop, stringifyError, stringifyErrorMessage, inlineMemoize } from 'belter/src';
 import { ZalgoPromise } from 'zalgo-promise/src';
-import { FPTI_KEY, FPTI_FEED, FPTI_DATA_SOURCE, FPTI_SDK_NAME, FPTI_USER_ACTION } from 'paypal-sdk-constants/src';
+import { FPTI_KEY, FPTI_FEED, FPTI_DATA_SOURCE, FPTI_SDK_NAME, FPTI_USER_ACTION } from '@paypal/sdk-constants/src';
 
 import { getPayPalLoggerUrl } from './config';
 import { getEnv, getVersion, getCorrelationID } from './globals';
