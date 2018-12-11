@@ -37,6 +37,42 @@ test('should consruct a valid script url with paypalobjects', () => {
     }
 });
 
+test('should consruct a valid script url with checkout.jh on localhost', () => {
+
+    const sdkUrl = 'http://localhost.paypal.com:8000/api/checkout.js';
+
+    const { getSDKLoader } = unpackSDKMeta(Buffer.from(JSON.stringify({
+        url: sdkUrl
+    })).toString('base64'));
+
+    const $ = cheerio.load(getSDKLoader());
+    const src = $('script').attr('src');
+
+    if (src !== sdkUrl) {
+        throw new Error(`Expected script url to be ${ sdkUrl } - got ${ src }`);
+    }
+});
+
+test('should fail to consruct a script url with checkout.js on localhost without a paypal.com domain', () => {
+
+    const sdkUrl = 'http://localhost:8000/api/checkout.js';
+
+    let error;
+
+    try {
+        unpackSDKMeta(Buffer.from(JSON.stringify({
+            url: sdkUrl
+        })).toString('base64'));
+    } catch (err) {
+        error = err;
+    }
+
+    if (!error) {
+        throw new Error(`Expected error to be thrown`);
+    }
+});
+
+
 test('should consruct a valid minified script url with paypalobjects', () => {
 
     const sdkUrl = 'https://www.paypalobjects.com/api/checkout.min.js';

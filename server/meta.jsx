@@ -63,6 +63,26 @@ function validateLegacySDKUrl({ pathname }) {
     }
 }
 
+function isLegacySDKUrl(hostname : string, pathname : string) : boolean {
+    if (hostname === HOST.PAYPALOBJECTS) {
+        return true;
+    }
+
+    if (hostname.endsWith(HOST.PAYPAL) && pathname.match(LEGACY_SDK_PATH)) {
+        return true;
+    }
+
+    return false;
+}
+
+function isSDKUrl(hostname : string) : boolean {
+    if (hostname.endsWith(HOST.PAYPAL)) {
+        return true;
+    }
+
+    return false;
+}
+
 function validateSDKUrl(sdkUrl : string) {
     const { protocol, hostname, pathname, query, hash } = urlLib.parse(sdkUrl, true);
 
@@ -74,10 +94,10 @@ function validateSDKUrl(sdkUrl : string) {
         throw new Error(`Expected pathname for sdk url`);
     }
 
-    if (hostname.endsWith(HOST.PAYPAL)) {
-        validatePaymentsSDKUrl({ protocol, hostname, pathname, query, hash });
-    } else if (hostname === HOST.PAYPALOBJECTS) {
+    if (isLegacySDKUrl(hostname, pathname)) {
         validateLegacySDKUrl({ pathname });
+    } else if (isSDKUrl(hostname)) {
+        validatePaymentsSDKUrl({ protocol, hostname, pathname, query, hash });
     } else {
         throw new Error(`Expected host to be a subdomain of ${ HOST.PAYPAL } or ${ HOST.PAYPALOBJECTS }`);
     }
