@@ -12,7 +12,7 @@ Your client-side sdk component can take advantage of any common utilities or fun
 - Running experiments.
 
 ```javascript
-import { getClientID } from '@paypal/web-client/src';
+import { getClientID } from '@paypal/sdk-client/src';
 
 fetch('https://api.paypal.com/v1/foo', {
   headers: {
@@ -43,7 +43,7 @@ This module helps with that.
 1. Import `unpackSDKMeta`:
 
 ```javascript
-import { unpackSDKMeta } from '@paypal/web-client';
+import { unpackSDKMeta } from '@paypal/sdk-client';
 ```
 
 2. Call `unpackSDKMeta` with `req.query.sdkMeta`, passed from the client in the query string, and pass the script tag in the page render.
@@ -71,7 +71,7 @@ app.get('/my-app', (req, res) => {
 3. Ensure the `sdkMeta` payload is passed to the child window from the parent. If you are using [zoid](https://github.com/krakenjs/zoid) to construct your component, please add the following:
 
 ```javascript
-import { getSdkMeta } from '@paypal/web-client/src';
+import { getSdkMeta } from '@paypal/sdk-client/src';
 
 let MyComponent = zoid.create({
     tag: 'my-component',
