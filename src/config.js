@@ -83,7 +83,8 @@ export function getOrderAPIUrl() : string {
 }
 
 export function getPayPalDomainRegex() : RegExp {
-    return /\.paypal\.com$/;
+    // eslint-disable-next-line security/detect-unsafe-regex, unicorn/no-unsafe-regex
+    return /\.paypal\.com(:\d+)?$/;
 }
 
 export function isPayPalDomain() : boolean {
