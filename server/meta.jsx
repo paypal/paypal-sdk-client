@@ -104,13 +104,13 @@ function validateSDKUrl(sdkUrl : string) {
 }
 
 function validateHost(url) {
-    const { hostname } = urlLib.parse(`https://${ url }`, true);
+    const { host, hostname } = urlLib.parse(`https://${ url }`, true);
 
-    if (url !== hostname) {
+    if (url !== host) {
         throw new Error(`Expected only host to be passed, got ${ url }`);
     }
 
-    if (!url.endsWith(HOST.PAYPAL)) {
+    if (!hostname || !hostname.endsWith(HOST.PAYPAL)) {
         throw new Error(`Expected a paypal host`);
     }
 }
