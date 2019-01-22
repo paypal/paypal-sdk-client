@@ -77,7 +77,7 @@ export function createOrder(clientID : string, order : OrderCreateRequest, { fpt
     order = { ...order };
 
     if (order.intent && order.intent !== intent) {
-        throw new Error(`Unexpected intent: ${ order.intent } passed to order.create. Please ensure you are passing /sdk/js?${ SDK_QUERY_KEYS.INTENT }=${ order.intent } in the paypal script tag.`);
+        throw new Error(`Unexpected intent: ${ order.intent } passed to order.create. Please ensure you are passing /sdk/js?${ SDK_QUERY_KEYS.INTENT }=${ order.intent.toLowerCase() } in the paypal script tag.`);
     }
 
     // $FlowFixMe
