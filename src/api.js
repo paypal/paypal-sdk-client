@@ -71,12 +71,12 @@ export function createOrder(clientID : string, order : OrderCreateRequest, { fpt
         throw new Error(`Expected order details to be passed`);
     }
 
-    const currency = window.xprops ? window.xprops.currency : getCurrency();
-    const intent = window.xprops ? window.xprops.intent : getIntent();
+    const currency = getCurrency();
+    const intent = getIntent();
 
     order = { ...order };
 
-    if (order.intent && order.intent !== intent) {
+    if (order.intent && order.intent.toLowerCase() !== intent) {
         throw new Error(`Unexpected intent: ${ order.intent } passed to order.create. Please ensure you are passing /sdk/js?${ SDK_QUERY_KEYS.INTENT }=${ order.intent.toLowerCase() } in the paypal script tag.`);
     }
 
