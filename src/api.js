@@ -2,21 +2,24 @@
 
 import { ZalgoPromise } from 'zalgo-promise/src';
 import { inlineMemoize, request, base64encode } from 'belter/src';
-import { FPTI_KEY, SDK_QUERY_KEYS } from '@paypal/sdk-constants/src';
+import { FPTI_KEY, SDK_QUERY_KEYS, UNKNOWN } from '@paypal/sdk-constants/src';
 
 import { getOrderAPIUrl, getAuthAPIUrl } from './config';
 import { getLogger } from './logger';
-import { getIntent, getCurrency, getPartnerAttributionID } from './script';
+import { getIntent, getCurrency, getPartnerAttributionID, getMerchantID } from './script';
 import { FPTI_CONTEXT_TYPE, FPTI_TRANSITION } from './constants';
 
 export type OrderCreateRequest = {|
     intent? : 'CAPTURE' | 'AUTHORIZE',
-        purchase_units : $ReadOnlyArray<{
-            amount : {
-                currency_code : string,
-                value : string
-            }
-        }>
+    purchase_units : $ReadOnlyArray<{
+        amount : {
+            currency_code : string,
+            value : string
+        },
+        payee? : {
+            merchant_id? : string
+        }
+    }>
 |};
 
 export type OrderCaptureResponse = {||};
@@ -73,6 +76,7 @@ export function createOrder(clientID : string, order : OrderCreateRequest, { fpt
 
     const currency = getCurrency();
     const intent = getIntent();
+    const merchantID = getMerchantID();
 
     order = { ...order };
 
@@ -88,7 +92,26 @@ export function createOrder(clientID : string, order : OrderCreateRequest, { fpt
             throw new Error(`Unexpected currency: ${ unit.amount.currency_code } passed to order.create. Please ensure you are passing /sdk/js?${ SDK_QUERY_KEYS.CURRENCY }=${ unit.amount.currency_code } in the paypal script tag.`);
         }
 
-        return { ...unit, amount: { ...unit.amount, currency_code: currency } };
+        let payee = unit.payee;
+
+        if (payee) {
+            if (!merchantID) {
+                throw new Error(`Pass ${ SDK_QUERY_KEYS.MERCHANT_ID }=XYZ in the paypal script tag. Pass ${ SDK_QUERY_KEYS.MERCHANT_ID }=${ UNKNOWN } if you do not have access to the merchant id`);
+            }
+
+            if (payee.merchant_id && merchantID !== UNKNOWN && payee.merchant_id !== merchantID) {
+                throw new Error(`Expected payee.merchant_id to be "${ merchantID }"`);
+            }
+        }
+        
+        if (merchantID && merchantID !== UNKNOWN) {
+            payee = {
+                ...payee,
+                merchant_id: merchantID
+            };
+        }
+
+        return { ...unit, payee, amount: { ...unit.amount, currency_code: currency } };
     });
 
     return createAccessToken(clientID).then((accessToken) : ZalgoPromise<Object> => {
