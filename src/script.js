@@ -2,7 +2,7 @@
 
 import { getScript, inlineMemoize, parseQuery, getBrowserLocales } from 'belter/src';
 import { COUNTRY, SDK_SETTINGS, SDK_QUERY_KEYS, INTENT, COMMIT, VAULT, CURRENCY, COUNTRY_LANGS,
-    DEFAULT_INTENT, DEFAULT_COMMIT, DEFAULT_CURRENCY, DEFAULT_VAULT, QUERY_BOOL, LANG, type LocaleType } from '@paypal/sdk-constants/src';
+    DEFAULT_INTENT, DEFAULT_CURRENCY, DEFAULT_VAULT, QUERY_BOOL, LANG, type LocaleType, DEFAULT_SALE_COMMIT, DEFAULT_NONSALE_COMMIT } from '@paypal/sdk-constants/src';
 
 import { getHost, getPath, getDefaultStageHost, getDefaultAPIStageHost } from './globals';
 
@@ -87,7 +87,7 @@ export function getIntent() : $Values<typeof INTENT> {
 }
 
 export function getCommit() : $Values<typeof COMMIT> {
-    return getSDKQueryParamBool(SDK_QUERY_KEYS.COMMIT, DEFAULT_COMMIT);
+    return getSDKQueryParamBool(SDK_QUERY_KEYS.COMMIT, getIntent() === INTENT.CAPTURE ? DEFAULT_SALE_COMMIT : DEFAULT_NONSALE_COMMIT);
 }
 
 export function getVault() : $Values<typeof VAULT> {
