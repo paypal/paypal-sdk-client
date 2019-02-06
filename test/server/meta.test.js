@@ -30,14 +30,15 @@ test('should consruct a valid script url with paypalobjects', () => {
     })).toString('base64'));
 
     const $ = cheerio.load(getSDKLoader());
-    const src = $('script').attr('src');
+    const script = $('script[data-paypal-checkout]');
+    const src = script.attr('src');
 
     if (src !== sdkUrl) {
         throw new Error(`Expected script url to be ${ sdkUrl } - got ${ src }`);
     }
 });
 
-test('should consruct a valid script url with checkout.jh on localhost', () => {
+test('should consruct a valid script url with checkout.js on localhost', () => {
 
     const sdkUrl = 'http://localhost.paypal.com:8000/api/checkout.js';
 
@@ -46,7 +47,8 @@ test('should consruct a valid script url with checkout.jh on localhost', () => {
     })).toString('base64'));
 
     const $ = cheerio.load(getSDKLoader());
-    const src = $('script').attr('src');
+    const script = $('script[data-paypal-checkout]');
+    const src = script.attr('src');
 
     if (src !== sdkUrl) {
         throw new Error(`Expected script url to be ${ sdkUrl } - got ${ src }`);
@@ -82,7 +84,8 @@ test('should consruct a valid minified script url with paypalobjects', () => {
     })).toString('base64'));
 
     const $ = cheerio.load(getSDKLoader());
-    const src = $('script').attr('src');
+    const script = $('script[data-paypal-checkout]');
+    const src = script.attr('src');
 
     if (src !== sdkUrl) {
         throw new Error(`Expected script url to be ${ sdkUrl } - got ${ src }`);
@@ -98,7 +101,8 @@ test('should consruct a valid versioned script url with paypalobjects', () => {
     })).toString('base64'));
 
     const $ = cheerio.load(getSDKLoader());
-    const src = $('script').attr('src');
+    const script = $('script[data-paypal-checkout]');
+    const src = script.attr('src');
 
     if (src !== sdkUrl) {
         throw new Error(`Expected script url to be ${ sdkUrl } - got ${ src }`);
@@ -114,7 +118,8 @@ test('should consruct a valid versioned minified script url with paypalobjects',
     })).toString('base64'));
 
     const $ = cheerio.load(getSDKLoader());
-    const src = $('script').attr('src');
+    const script = $('script[data-paypal-checkout]');
+    const src = script.attr('src');
 
     if (src !== sdkUrl) {
         throw new Error(`Expected script url to be ${ sdkUrl } - got ${ src }`);
@@ -470,7 +475,8 @@ test('should consruct a valid loader even when no url passed', () => {
     eval(script);
 
     const $$ = cheerio.load(scriptTag);
-    const src = $$('script').attr('src');
+    const scriptz = $$('script[data-paypal-checkout]');
+    const src = scriptz.attr('src');
 
     if (src !== sdkUrl) {
         throw new Error(`Expected script url to be ${ sdkUrl } - got ${ src }`);
@@ -569,7 +575,8 @@ test('should consruct a valid loader even when no url passed with version 4', ()
     eval(script);
 
     const $$ = cheerio.load(scriptTag);
-    const src = $$('script').attr('src');
+    const scriptz = $$('script[data-paypal-checkout]');
+    const src = scriptz.attr('src');
 
     if (src !== sdkUrl) {
         throw new Error(`Expected script url to be ${ sdkUrl } - got ${ src }`);

@@ -8,7 +8,6 @@ import { FPTI_KEY, FPTI_FEED, FPTI_DATA_SOURCE, FPTI_SDK_NAME, FPTI_USER_ACTION 
 import { getPayPalLoggerUrl } from './config';
 import { getEnv, getVersion, getCorrelationID } from './globals';
 import { getPartnerAttributionID, getClientID, getMerchantID, getCommit, getLocale } from './script';
-import { isEligible } from './eligibility';
 import { getSessionID } from './session';
 
 export function getLogger() : LoggerType {
@@ -64,10 +63,6 @@ export function setupLogger() {
         // eslint-disable-next-line promise/no-promise-in-callback
         logger.flush().catch(noop);
     });
-
-    if (!isEligible()) {
-        logger.warn('ineligible');
-    }
 
     logger.info(`setup_${ getEnv() }`);
 }

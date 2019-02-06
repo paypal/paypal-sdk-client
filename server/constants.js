@@ -21,3 +21,8 @@ export const DEFAULT_SDK_META = {
 };
 
 export const DEFAULT_LEGACY_SDK_BASE_URL = 'https://www.paypalobjects.com/api/';
+
+export const DATA_ATTRIBUTES = {
+    PAYPAL_CHECKOUT: 'data-paypal-checkout',
+    NO_BRIDGE:       'data-no-bridge'
+};

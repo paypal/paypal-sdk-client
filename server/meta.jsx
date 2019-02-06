@@ -1,5 +1,5 @@
 /* @flow */
-/* @jsx node */
+/** @jsx node */
 
 // eslint-disable-next-line import/no-nodejs-modules
 import urlLib from 'url';
@@ -7,7 +7,7 @@ import urlLib from 'url';
 import { SDK_PATH, SDK_QUERY_KEYS, SDK_SETTINGS } from '@paypal/sdk-constants';
 import { node, html } from 'jsx-pragmatic';
 
-import { HOST, PROTOCOL, LEGACY_SDK_PATH, DEFAULT_SDK_META, DEFAULT_LEGACY_SDK_BASE_URL } from './constants';
+import { HOST, PROTOCOL, LEGACY_SDK_PATH, DEFAULT_SDK_META, DEFAULT_LEGACY_SDK_BASE_URL, DATA_ATTRIBUTES } from './constants';
 import { constHas, entries } from './util';
 
 type SDKMeta = {|
@@ -115,6 +115,37 @@ function validateHost(url) {
     }
 }
 
+function getSDKScriptAttributes(sdkUrl : ?string, stageHost : ?string, apiStageHost : ?string) : { [string] : string } {
+    const attrs = {};
+
+    if (stageHost) {
+        attrs[SDK_SETTINGS.STAGE_HOST] = stageHost;
+    }
+
+    if (apiStageHost) {
+        attrs[SDK_SETTINGS.API_STAGE_HOST] = apiStageHost;
+    }
+
+    if (sdkUrl) {
+        const { hostname, pathname } = urlLib.parse(sdkUrl, true);
+
+        if (!hostname) {
+            throw new Error(`Expected host to be passed for sdk url`);
+        }
+    
+        if (!pathname) {
+            throw new Error(`Expected pathname for sdk url`);
+        }
+
+        if (isLegacySDKUrl(hostname, pathname)) {
+            attrs[DATA_ATTRIBUTES.PAYPAL_CHECKOUT] = true;
+            attrs[DATA_ATTRIBUTES.NO_BRIDGE] = true;
+        }
+    }
+
+    return attrs;
+}
+
 export function unpackSDKMeta(sdkMeta? : string) : SDKMeta {
 
     const { url, stageHost, apiStageHost } = sdkMeta
@@ -135,15 +166,7 @@ export function unpackSDKMeta(sdkMeta? : string) : SDKMeta {
 
     const getSDKLoader = ({ baseURL = DEFAULT_LEGACY_SDK_BASE_URL, nonce = '' } = {}) => {
         if (url) {
-            const attrs = {};
-
-            if (stageHost) {
-                attrs[SDK_SETTINGS.STAGE_HOST] = stageHost;
-            }
-
-            if (apiStageHost) {
-                attrs[SDK_SETTINGS.API_STAGE_HOST] = apiStageHost;
-            }
+            const attrs = getSDKScriptAttributes(url, stageHost, apiStageHost);
 
             return (
                 <script nonce={ nonce } src={ url } { ...attrs } />
@@ -171,7 +194,7 @@ export function unpackSDKMeta(sdkMeta? : string) : SDKMeta {
 
                         var url = '${ baseURL }checkout' + (version ? ('.' + version) : '') + '.js';
 
-                        var scriptTag = '<scr' + 'ipt src="' + url + '" data-paypal-checkout data-no-bridge data-state="ppxo_checkout"></scr' + 'ipt>';
+                        var scriptTag = '<scr' + 'ipt src="' + url + '" ${ DATA_ATTRIBUTES.PAYPAL_CHECKOUT } ${ DATA_ATTRIBUTES.NO_BRIDGE }></scr' + 'ipt>';
                         document.write(scriptTag);
                     })();
                 ` }
