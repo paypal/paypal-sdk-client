@@ -2,12 +2,11 @@
 
 import { getStorage, type Storage } from 'belter/src';
 
-import { getVersion, getNamespace } from './globals';
+import { getNamespace } from './globals';
 
 function getSDKStorage() : Storage {
     return getStorage({
-        name:    getNamespace(),
-        version: getVersion()
+        name: getNamespace()
     });
 }
 
