@@ -1,5 +1,6 @@
 /* @flow */
 
+export * from './setup';
 export * from './config';
 export * from './logger';
 export * from './types';
