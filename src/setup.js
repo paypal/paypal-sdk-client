@@ -3,7 +3,7 @@
 type Component<T> = {|
     name : string,
     requirer : () => T,
-    setupHandler : ?string
+    setupHandler? : string
 |};
 
 export function setupSDK(namespace : string, version : string, components : $ReadOnlyArray<Component<mixed>>) {
