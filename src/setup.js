@@ -15,7 +15,7 @@ export function setupSDK(components : $ReadOnlyArray<Component<mixed>>) {
     const INTERNAL_DESTROY_KEY = `__destroy_${ version }_internal__`;
 
     if (window[namespace]) {
-        if (window[namespace].version !== version) {
+        if (!window[namespace][INTERNAL_DESTROY_KEY]) {
             throw new Error(`Error loading ${ namespace } version ${ version } - version ${ window[namespace].version || '(unknown)' } already loaded on page`);
         }
 
