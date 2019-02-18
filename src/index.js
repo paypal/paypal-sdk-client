@@ -10,3 +10,4 @@ export * from './meta';
 export * from './api';
 export * from './experiment';
 export * from './session';
+export * from './test';
