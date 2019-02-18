@@ -2,13 +2,13 @@
 
 import { getNamespace, getVersion } from './globals';
 
-type Component<T> = {|
+export type SetupComponent<T> = {|
     name : string,
     requirer : () => T,
     setupHandler? : string
 |};
 
-export function setupSDK(components : $ReadOnlyArray<Component<mixed>>) {
+export function setupSDK(components : $ReadOnlyArray<SetupComponent<mixed>>) {
     const namespace = getNamespace();
     const version = getVersion();
 
