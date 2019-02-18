@@ -1,12 +1,17 @@
 /* @flow */
 
+import { getNamespace, getVersion } from './globals';
+
 type Component<T> = {|
     name : string,
     requirer : () => T,
     setupHandler? : string
 |};
 
-export function setupSDK(namespace : string, version : string, components : $ReadOnlyArray<Component<mixed>>) {
+export function setupSDK(components : $ReadOnlyArray<Component<mixed>>) {
+    const namespace = getNamespace();
+    const version = getVersion();
+
     const INTERNAL_DESTROY_KEY = `__destroy_${ version }_internal__`;
 
     if (window[namespace]) {
