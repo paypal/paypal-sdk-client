@@ -57,7 +57,7 @@
     "beaver-logger": "^4.0.0",
     "belter": "^1.0.16",
     "bowser": "^1.9.4",
-    "jsx-pragmatic": "^1.0.11",
+    "jsx-pragmatic": "^2",
     "zalgo-promise": "^1.0.22"
   },
   "devDependencies": {
