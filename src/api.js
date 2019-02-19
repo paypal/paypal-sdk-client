@@ -114,6 +114,10 @@ export function createOrder(clientID : string, order : OrderCreateRequest, { fpt
         return { ...unit, payee, amount: { ...unit.amount, currency_code: currency } };
     });
 
+    order.application_context = order.application_context || {};
+    order.application_context.return_url = 'https://www.paypal.com/checkoutnow/error';
+    order.application_context.cancel_url = 'https://www.paypal.com/checkoutnow/error';
+
     return createAccessToken(clientID).then((accessToken) : ZalgoPromise<Object> => {
 
         const headers : Object = {
