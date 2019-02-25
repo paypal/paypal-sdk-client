@@ -1,6 +1,9 @@
 /* @flow */
 
+import { destroyElement } from 'belter/src';
+
 import { getNamespace, getVersion } from './globals';
+import { getSDKScript } from './script';
 
 export type SetupComponent<T> = {|
     name : string,
@@ -63,6 +66,7 @@ export function setupSDK(components : $ReadOnlyArray<SetupComponent<mixed>>) {
         enumerable: false,
         value:      () => {
             destroyers.forEach(destroy => destroy());
+            destroyElement(getSDKScript());
             delete window[namespace];
         }
     });
