@@ -150,6 +150,10 @@ export function getLocale() : LocaleType {
     };
 }
 
+export function getCSPNonce() : ?string {
+    return getSDKAttribute(SDK_SETTINGS.CSP_NONCE);
+}
+
 // Remove
 export function getCountry() : $Values<typeof COUNTRY> {
     return getLocale().country;
