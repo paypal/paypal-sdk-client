@@ -25,11 +25,11 @@ export function insertMockSDKScript({ query = {} } : MockScriptOptions = {}) {
     script.setAttribute('type', 'mock/javascript');
     script.setAttribute('src', src);
 
-    const body = document.body;
+    const head = document.head;
 
-    if (body) {
-        body.appendChild(script);
+    if (head) {
+        head.appendChild(script);
     } else {
-        throw new Error(`Could not find body`);
+        throw new Error(`Could not find head`);
     }
 }
