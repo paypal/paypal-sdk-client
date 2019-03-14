@@ -98,6 +98,10 @@ export function getCurrency() : $Values<typeof CURRENCY> {
     return getSDKQueryParam(SDK_QUERY_KEYS.CURRENCY, DEFAULT_CURRENCY);
 }
 
+export function getBuyerCountry() : ?$Values<typeof COUNTRY> {
+    return getSDKQueryParam(SDK_QUERY_KEYS.BUYER_COUNTRY);
+}
+
 export function getClientToken() : string {
     const clientToken = getSDKAttribute(SDK_SETTINGS.CLIENT_TOKEN);
 
