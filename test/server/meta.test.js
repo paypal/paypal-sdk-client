@@ -705,3 +705,21 @@ test('should error out if a non http or https url passed for the sdk', () => {
     }
 });
 
+test('should error out if special characters are passed in the checkout.js path', () => {
+
+    const sdkUrl = 'https://www.paypalobjects.com/**/checkout.js';
+
+    let error;
+
+    try {
+        unpackSDKMeta(Buffer.from(JSON.stringify({
+            url: sdkUrl
+        })).toString('base64'));
+    } catch (err) {
+        error = err;
+    }
+
+    if (!error) {
+        throw new Error(`Expected error to be thrown`);
+    }
+});
