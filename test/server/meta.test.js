@@ -666,3 +666,42 @@ test('should error out if the custom api stage host has a path', () => {
         throw new Error(`Expected error to be thrown`);
     }
 });
+
+test('should error out if a non http or https url passed', () => {
+
+    const sdkUrl = 'data://www.paypalobjects.com/api/checkout.js';
+
+    let error;
+
+    try {
+        unpackSDKMeta(Buffer.from(JSON.stringify({
+            url: sdkUrl
+        })).toString('base64'));
+    } catch (err) {
+        error = err;
+    }
+
+    if (!error) {
+        throw new Error(`Expected error to be thrown`);
+    }
+});
+
+test('should error out if a non http or https url passed for the sdk', () => {
+
+    const sdkUrl = 'data://www.paypal.com/sdk/js?client-id=foo';
+
+    let error;
+
+    try {
+        unpackSDKMeta(Buffer.from(JSON.stringify({
+            url: sdkUrl
+        })).toString('base64'));
+    } catch (err) {
+        error = err;
+    }
+
+    if (!error) {
+        throw new Error(`Expected error to be thrown`);
+    }
+});
+

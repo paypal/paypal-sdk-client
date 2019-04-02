@@ -14,17 +14,7 @@ type SDKMeta = {|
     getSDKLoader : (options? : { baseURL? : string, nonce? : string }) => string
 |};
 
-function validatePaymentsSDKUrl({ protocol, hostname, pathname, query, hash }) {
-    
-    if (hostname === HOST.LOCALHOST) {
-        if (protocol !== PROTOCOL.HTTP && protocol !== PROTOCOL.HTTPS) {
-            throw new Error(`Expected protocol for sdk url to be ${ PROTOCOL.HTTP } or ${ PROTOCOL.HTTPS } for host: ${ hostname } - got ${ protocol || 'undefined' }`);
-        }
-    } else {
-        if (protocol !== PROTOCOL.HTTPS) {
-            throw new Error(`Expected protocol for sdk url to be ${ PROTOCOL.HTTPS } for host: ${ hostname } - got ${ protocol || 'undefined' }`);
-        }
-    }
+function validatePaymentsSDKUrl({ pathname, query, hash }) {
 
     if (pathname !== SDK_PATH) {
         throw new Error(`Invalid path for sdk url: ${ pathname || 'undefined' }`);
@@ -92,6 +82,16 @@ function validateSDKUrl(sdkUrl : string) {
 
     if (!pathname) {
         throw new Error(`Expected pathname for sdk url`);
+    }
+
+    if (hostname === HOST.LOCALHOST) {
+        if (protocol !== PROTOCOL.HTTP && protocol !== PROTOCOL.HTTPS) {
+            throw new Error(`Expected protocol for sdk url to be ${ PROTOCOL.HTTP } or ${ PROTOCOL.HTTPS } for host: ${ hostname } - got ${ protocol || 'undefined' }`);
+        }
+    } else {
+        if (protocol !== PROTOCOL.HTTPS) {
+            throw new Error(`Expected protocol for sdk url to be ${ PROTOCOL.HTTPS } for host: ${ hostname } - got ${ protocol || 'undefined' }`);
+        }
     }
 
     if (isLegacySDKUrl(hostname, pathname)) {
