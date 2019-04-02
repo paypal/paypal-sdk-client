@@ -1,6 +1,6 @@
 /* @flow */
 
-import { ENV } from '@paypal/sdk-constants/src';
+import { ENV, COMPONENTS } from '@paypal/sdk-constants/src';
 
 declare var __HOST__ : string;
 declare var __HOSTNAME__ : string;
@@ -17,3 +17,4 @@ declare var __STAGE__ : boolean;
 declare var __VERSION__ : string;
 declare var __CORRELATION_ID__ : string;
 declare var __NAMESPACE__ : string;
+declare var __COMPONENTS__ : $ReadOnlyArray<$Values<typeof COMPONENTS>>;
