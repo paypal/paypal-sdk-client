@@ -97,6 +97,10 @@ function validateSDKUrl(sdkUrl : string) {
     if (isLegacySDKUrl(hostname, pathname)) {
         validateLegacySDKUrl({ pathname });
     } else if (isSDKUrl(hostname)) {
+        if (sdkUrl.match(/&{2,}/) || sdkUrl.match(/&$/)) {
+            throw new Error(`Expected sdk url to not contain double ampersand or end in ampersand`);
+        }
+
         validatePaymentsSDKUrl({ protocol, hostname, pathname, query, hash });
     } else {
         throw new Error(`Expected host to be a subdomain of ${ HOST.PAYPAL } or ${ HOST.PAYPALOBJECTS }`);

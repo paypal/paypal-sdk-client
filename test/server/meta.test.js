@@ -723,3 +723,41 @@ test('should error out if special characters are passed in the checkout.js path'
         throw new Error(`Expected error to be thrown`);
     }
 });
+
+test('should error out if a double && passed in the sdk url', () => {
+
+    const sdkUrl = 'https://www.paypal.com/sdk/js?client-id=foo&&currency=USD';
+
+    let error;
+
+    try {
+        unpackSDKMeta(Buffer.from(JSON.stringify({
+            url: sdkUrl
+        })).toString('base64'));
+    } catch (err) {
+        error = err;
+    }
+
+    if (!error) {
+        throw new Error(`Expected error to be thrown`);
+    }
+});
+
+test('should error out if sdk url ends with &', () => {
+
+    const sdkUrl = 'https://www.paypal.com/sdk/js?client-id=foo&';
+
+    let error;
+
+    try {
+        unpackSDKMeta(Buffer.from(JSON.stringify({
+            url: sdkUrl
+        })).toString('base64'));
+    } catch (err) {
+        error = err;
+    }
+
+    if (!error) {
+        throw new Error(`Expected error to be thrown`);
+    }
+});
