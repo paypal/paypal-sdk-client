@@ -102,14 +102,8 @@ export function getBuyerCountry() : ?$Values<typeof COUNTRY> {
     return getSDKQueryParam(SDK_QUERY_KEYS.BUYER_COUNTRY);
 }
 
-export function getClientToken() : string {
-    const clientToken = getSDKAttribute(SDK_SETTINGS.CLIENT_TOKEN);
-
-    if (!clientToken) {
-        throw new Error(`Expected data-client-token to be passed with client token, to ${ getSDKScript().outerHTML }`);
-    }
-
-    return clientToken;
+export function getClientToken() : ?string {
+    return getSDKAttribute(SDK_SETTINGS.CLIENT_TOKEN);
 }
 
 export function getPartnerAttributionID() : ?string {

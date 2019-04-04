@@ -134,11 +134,11 @@ describe(`script cases`, () => {
         });
 
         if (clientToken !== getClientToken()) {
-            throw new Error(`Expected client token to be ${ clientToken }, got ${ getClientToken() } from ${ url }`);
+            throw new Error(`Expected client token to be ${ clientToken }, got ${ getClientToken() || 'undefined' } from ${ url }`);
         }
     });
 
-    it('should error out when client token not passed', () => {
+    it('should not error out when client token not passed', () => {
 
         let error;
 
@@ -148,8 +148,8 @@ describe(`script cases`, () => {
             error = err;
         }
 
-        if (!error) {
-            throw new Error(`Expected error to be thrown`);
+        if (error) {
+            throw new Error(`Expected error to not be thrown`);
         }
     });
 
