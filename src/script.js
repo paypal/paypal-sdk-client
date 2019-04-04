@@ -1,6 +1,6 @@
 /* @flow */
 
-import { getScript, inlineMemoize, parseQuery, getBrowserLocales } from 'belter/src';
+import { getScript, inlineMemoize, parseQuery, getBrowserLocales, base64decode } from 'belter/src';
 import { COUNTRY, SDK_SETTINGS, SDK_QUERY_KEYS, INTENT, COMMIT, VAULT, CURRENCY, COUNTRY_LANGS,
     DEFAULT_INTENT, DEFAULT_CURRENCY, DEFAULT_VAULT, QUERY_BOOL, LANG, type LocaleType, DEFAULT_SALE_COMMIT, DEFAULT_NONSALE_COMMIT } from '@paypal/sdk-constants/src';
 
@@ -104,6 +104,16 @@ export function getBuyerCountry() : ?$Values<typeof COUNTRY> {
 
 export function getClientToken() : ?string {
     return getSDKAttribute(SDK_SETTINGS.CLIENT_TOKEN);
+}
+
+export function getClientAccessToken() : ?string {
+    const clientToken = getClientToken();
+
+    if (!clientToken) {
+        return;
+    }
+
+    return JSON.parse(base64decode(clientToken)).paypal.accessToken;
 }
 
 export function getPartnerAttributionID() : ?string {

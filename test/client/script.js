@@ -1,6 +1,8 @@
 /* @flow */
 
-import { getClientID, getIntent, getCurrency, getVault, getCommit, getClientToken, getPartnerAttributionID, getMerchantID, getStageHost, getAPIStageHost } from '../../src';
+import { base64encode } from 'belter/src';
+
+import { getClientID, getIntent, getCurrency, getVault, getCommit, getClientToken, getPartnerAttributionID, getMerchantID, getStageHost, getAPIStageHost, getClientAccessToken } from '../../src';
 
 import { createSDKScript } from './common';
 
@@ -150,6 +152,25 @@ describe(`script cases`, () => {
 
         if (error) {
             throw new Error(`Expected error to not be thrown`);
+        }
+    });
+
+    it('should successfully get client access token', () => {
+        const clientAccessToken = 'abc12354321';
+        const clientToken = base64encode(JSON.stringify({
+            paypal: {
+                accessToken: clientAccessToken
+            }
+        }));
+
+        const url = createSDKScript({
+            attributes: {
+                'data-client-token': clientToken
+            }
+        });
+
+        if (clientAccessToken !== getClientAccessToken()) {
+            throw new Error(`Expected client access token to be ${ clientAccessToken }, got ${ getClientAccessToken() || 'undefined' } from ${ url }`);
         }
     });
 
