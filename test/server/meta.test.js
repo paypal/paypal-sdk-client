@@ -761,3 +761,38 @@ test('should error out if sdk url ends with &', () => {
         throw new Error(`Expected error to be thrown`);
     }
 });
+
+test('should consruct a valid script url with paypalobjects on http', () => {
+
+    const sdkUrl = 'http://www.paypalobjects.com/api/checkout.js';
+
+    const { getSDKLoader } = unpackSDKMeta(Buffer.from(JSON.stringify({
+        url: sdkUrl
+    })).toString('base64'));
+
+    const $ = cheerio.load(getSDKLoader());
+    const script = $('script[data-paypal-checkout]');
+    const src = script.attr('src');
+
+    if (src !== sdkUrl) {
+        throw new Error(`Expected script url to be ${ sdkUrl } - got ${ src }`);
+    }
+});
+
+test('should consruct a valid min script url with paypalobjects on http', () => {
+
+    const sdkUrl = 'http://www.paypalobjects.com/api/checkout.min.js';
+
+    const { getSDKLoader } = unpackSDKMeta(Buffer.from(JSON.stringify({
+        url: sdkUrl
+    })).toString('base64'));
+
+    const $ = cheerio.load(getSDKLoader());
+    const script = $('script[data-paypal-checkout]');
+    const src = script.attr('src');
+
+    if (src !== sdkUrl) {
+        throw new Error(`Expected script url to be ${ sdkUrl } - got ${ src }`);
+    }
+});
+

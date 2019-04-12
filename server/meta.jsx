@@ -84,19 +84,17 @@ function validateSDKUrl(sdkUrl : string) {
         throw new Error(`Expected pathname for sdk url`);
     }
 
-    if (hostname === HOST.LOCALHOST) {
-        if (protocol !== PROTOCOL.HTTP && protocol !== PROTOCOL.HTTPS) {
-            throw new Error(`Expected protocol for sdk url to be ${ PROTOCOL.HTTP } or ${ PROTOCOL.HTTPS } for host: ${ hostname } - got ${ protocol || 'undefined' }`);
-        }
-    } else {
-        if (protocol !== PROTOCOL.HTTPS) {
-            throw new Error(`Expected protocol for sdk url to be ${ PROTOCOL.HTTPS } for host: ${ hostname } - got ${ protocol || 'undefined' }`);
-        }
+    if (protocol !== PROTOCOL.HTTP && protocol !== PROTOCOL.HTTPS) {
+        throw new Error(`Expected protocol for sdk url to be ${ PROTOCOL.HTTP } or ${ PROTOCOL.HTTPS } for host: ${ hostname } - got ${ protocol || 'undefined' }`);
     }
 
     if (isLegacySDKUrl(hostname, pathname)) {
         validateLegacySDKUrl({ pathname });
     } else if (isSDKUrl(hostname)) {
+        if (hostname !== HOST.LOCALHOST && protocol !== PROTOCOL.HTTPS) {
+            throw new Error(`Expected protocol for sdk url to be ${ PROTOCOL.HTTPS } for host: ${ hostname } - got ${ protocol || 'undefined' }`);
+        }
+        
         if (sdkUrl.match(/&{2,}/) || sdkUrl.match(/&$/)) {
             throw new Error(`Expected sdk url to not contain double ampersand or end in ampersand`);
         }
