@@ -105,7 +105,7 @@ export function getDisableFunding() : ?$ReadOnlyArray<$Values<typeof FUNDING>> {
     }
 }
 
-export function getDisableCard() : ?$ReadOnlyArray<?$Values<typeof CARD>> {
+export function getDisableCard() : ?$ReadOnlyArray<$Values<typeof CARD>> {
     const funding = getSDKQueryParam(SDK_QUERY_KEYS.DISABLE_CARD);
     if (funding) {
         return funding.split(',');
