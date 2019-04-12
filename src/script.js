@@ -1,7 +1,7 @@
 /* @flow */
 
 import { getScript, inlineMemoize, parseQuery, getBrowserLocales, base64decode } from 'belter/src';
-import { COUNTRY, SDK_SETTINGS, SDK_QUERY_KEYS, INTENT, COMMIT, VAULT, CURRENCY, COUNTRY_LANGS,
+import { COUNTRY, SDK_SETTINGS, SDK_QUERY_KEYS, INTENT, COMMIT, VAULT, CURRENCY, FUNDING, CARD, COUNTRY_LANGS,
     DEFAULT_INTENT, DEFAULT_CURRENCY, DEFAULT_VAULT, QUERY_BOOL, LANG, type LocaleType, DEFAULT_SALE_COMMIT, DEFAULT_NONSALE_COMMIT } from '@paypal/sdk-constants/src';
 
 import { getHost, getPath, getDefaultStageHost, getDefaultAPIStageHost } from './globals';
@@ -96,6 +96,20 @@ export function getVault() : $Values<typeof VAULT> {
 
 export function getCurrency() : $Values<typeof CURRENCY> {
     return getSDKQueryParam(SDK_QUERY_KEYS.CURRENCY, DEFAULT_CURRENCY);
+}
+
+export function getDisableFunding() : ?$ReadOnlyArray<$Values<typeof FUNDING>> {
+    const funding = getSDKQueryParam(SDK_QUERY_KEYS.DISABLE_FUNDING);
+    if (funding) {
+        return funding.split(',');
+    }
+}
+
+export function getDisableCard() : ?$ReadOnlyArray<$Values<typeof CARD>> {
+    const funding = getSDKQueryParam(SDK_QUERY_KEYS.DISABLE_CARD);
+    if (funding) {
+        return funding.split(',');
+    }
 }
 
 export function getBuyerCountry() : ?$Values<typeof COUNTRY> {
