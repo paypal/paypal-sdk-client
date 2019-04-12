@@ -98,7 +98,7 @@ export function getCurrency() : $Values<typeof CURRENCY> {
     return getSDKQueryParam(SDK_QUERY_KEYS.CURRENCY, DEFAULT_CURRENCY);
 }
 
-export function getDisableFunding() : ?$ReadOnlyArray<?$Values<typeof FUNDING>> {
+export function getDisableFunding() : ?$ReadOnlyArray<$Values<typeof FUNDING>> {
     const funding = getSDKQueryParam(SDK_QUERY_KEYS.DISABLE_FUNDING);
     if (funding) {
         return funding.split(',');
