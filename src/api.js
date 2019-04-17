@@ -99,15 +99,15 @@ export function createOrder(clientID : string, order : OrderCreateRequest, { fpt
                 throw new Error(`Pass ${ SDK_QUERY_KEYS.MERCHANT_ID }=XYZ in the paypal script tag. Pass ${ SDK_QUERY_KEYS.MERCHANT_ID }=${ UNKNOWN } if you do not have access to the merchant id`);
             }
 
-            if (payee.merchant_id && merchantID !== UNKNOWN && payee.merchant_id !== merchantID) {
-                throw new Error(`Expected payee.merchant_id to be "${ merchantID }"`);
+            if (payee.merchant_id && merchantID[0] !== UNKNOWN && payee.merchant_id !== merchantID) {
+                throw new Error(`Expected payee.merchant_id to be "${ merchantID[0] }"`);
             }
         }
         
-        if (merchantID && merchantID !== UNKNOWN) {
+        if (merchantID && merchantID[0] !== UNKNOWN) {
             payee = {
                 ...payee,
-                merchant_id: merchantID
+                merchant_id: merchantID[0]
             };
         }
 

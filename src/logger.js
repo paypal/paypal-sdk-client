@@ -30,12 +30,13 @@ export function setupLogger() {
 
     logger.addTrackingBuilder(() => {
         const { lang, country } = getLocale();
+        const mID = getMerchantID();
 
         return {
             [FPTI_KEY.FEED]:                   FPTI_FEED.PAYMENTS_SDK,
             [FPTI_KEY.DATA_SOURCE]:            FPTI_DATA_SOURCE.PAYMENTS_SDK,
             [FPTI_KEY.CLIENT_ID]:              getClientID(),
-            [FPTI_KEY.SELLER_ID]:              getMerchantID(),
+            [FPTI_KEY.SELLER_ID]:              mID && mID[0],
             [FPTI_KEY.SESSION_UID]:            getSessionID(),
             [FPTI_KEY.REFERER]:                window.location.host,
             [FPTI_KEY.LOCALE]:                 `${ lang }_${ country }`,

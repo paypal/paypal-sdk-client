@@ -65,8 +65,9 @@ describe(`script cases`, () => {
             }
         });
 
-        if (merchantID !== getMerchantID()) {
-            throw new Error(`Expected merchant id to be ${ merchantID }, got ${ getMerchantID() || 'undefined' } from ${ url }`);
+        const mID = getMerchantID();
+        if (merchantID !== (mID && mID[0])) {
+            throw new Error(`Expected merchant id to be ${ merchantID }, got ${ (mID && mID[0]) || 'undefined' } from ${ url }`);
         }
     });
 
