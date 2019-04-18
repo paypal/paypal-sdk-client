@@ -78,12 +78,14 @@ export function getClientID() : string {
     return clientID;
 }
 
-export function getMerchantID() : ?$ReadOnlyArray<string> {
+export function getMerchantID() : $ReadOnlyArray<string> {
     const merchantID = getSDKQueryParam(SDK_QUERY_KEYS.MERCHANT_ID);
     
     if (merchantID) {
         return merchantID.split(',');
     }
+
+    return [];
 }
 
 export function getIntent() : $Values<typeof INTENT> {
