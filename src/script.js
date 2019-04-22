@@ -104,18 +104,20 @@ export function getCurrency() : $Values<typeof CURRENCY> {
     return getSDKQueryParam(SDK_QUERY_KEYS.CURRENCY, DEFAULT_CURRENCY);
 }
 
-export function getDisableFunding() : ?$ReadOnlyArray<$Values<typeof FUNDING>> {
+export function getDisableFunding() : $ReadOnlyArray<?$Values<typeof FUNDING>> {
     const funding = getSDKQueryParam(SDK_QUERY_KEYS.DISABLE_FUNDING);
     if (funding) {
         return funding.split(',');
     }
+    return [];
 }
 
-export function getDisableCard() : ?$ReadOnlyArray<$Values<typeof CARD>> {
+export function getDisableCard() : $ReadOnlyArray<?$Values<typeof CARD>> {
     const funding = getSDKQueryParam(SDK_QUERY_KEYS.DISABLE_CARD);
     if (funding) {
         return funding.split(',');
     }
+    return [];
 }
 
 export function getBuyerCountry() : ?$Values<typeof COUNTRY> {
