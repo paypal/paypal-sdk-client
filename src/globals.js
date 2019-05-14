@@ -44,3 +44,6 @@ export function getNamespace() : string {
     return __NAMESPACE__;
 }
 
+export function getDebug() : boolean {
+    return __DEBUG__;
+}
