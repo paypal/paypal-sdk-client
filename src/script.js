@@ -184,6 +184,10 @@ export function getCSPNonce() : ?string {
     return getSDKAttribute(SDK_SETTINGS.CSP_NONCE);
 }
 
+export function getEnableThreeDomainSecure() : boolean {
+    return getSDKAttributes().hasOwnProperty(SDK_SETTINGS.ENABLE_3DS);
+}
+
 // Remove
 export function getCountry() : $Values<typeof COUNTRY> {
     return getLocale().country;
