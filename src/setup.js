@@ -17,12 +17,15 @@ export function setupSDK(components : $ReadOnlyArray<SetupComponent<mixed>>) {
 
     const INTERNAL_DESTROY_KEY = `__destroy_${ version }_internal__`;
 
-    if (window[namespace]) {
-        if (!window[namespace][INTERNAL_DESTROY_KEY]) {
-            throw new Error(`Error loading ${ namespace } version ${ version } - version ${ window[namespace].version || '(unknown)' } already loaded on page`);
-        }
+    const existingNamespace = window[namespace];
+    const existingVersion = existingNamespace && existingNamespace.version;
 
-        window[namespace][INTERNAL_DESTROY_KEY]();
+    if (existingNamespace && existingNamespace[INTERNAL_DESTROY_KEY]()) {
+        existingNamespace[INTERNAL_DESTROY_KEY]();
+    }
+
+    if (existingVersion) {
+        throw new Error(`Error loading ${ namespace } version ${ version } - version ${ existingVersion } already loaded on page`);
     }
 
     window[namespace] = window[namespace] || {};
