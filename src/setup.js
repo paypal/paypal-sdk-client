@@ -20,12 +20,12 @@ export function setupSDK(components : $ReadOnlyArray<SetupComponent<mixed>>) {
     const existingNamespace = window[namespace];
     const existingVersion = existingNamespace && existingNamespace.version;
 
-    if (existingNamespace && existingNamespace[INTERNAL_DESTROY_KEY]()) {
-        existingNamespace[INTERNAL_DESTROY_KEY]();
-    }
-
-    if (existingVersion) {
-        throw new Error(`Error loading ${ namespace } version ${ version } - version ${ existingVersion } already loaded on page`);
+    if (existingNamespace) {
+        if (existingNamespace[INTERNAL_DESTROY_KEY]()) {
+            existingNamespace[INTERNAL_DESTROY_KEY]();
+        } else if (existingVersion) {
+            throw new Error(`Error loading ${ namespace } version ${ version } - version ${ existingVersion } already loaded on page`);
+        }
     }
 
     window[namespace] = window[namespace] || {};
