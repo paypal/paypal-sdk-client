@@ -2,6 +2,10 @@
 
 import { ENV } from '@paypal/sdk-constants/src';
 
+export function getSDKHost() : string {
+    return __SDK_HOST__;
+}
+
 export function getHost() : string {
     return __HOST__;
 }
