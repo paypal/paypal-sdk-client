@@ -2,9 +2,9 @@
 
 import { getScript, inlineMemoize, parseQuery, getBrowserLocales, base64decode } from 'belter/src';
 import { COUNTRY, SDK_SETTINGS, SDK_QUERY_KEYS, INTENT, COMMIT, VAULT, CURRENCY, FUNDING, CARD, COUNTRY_LANGS,
-    DEFAULT_INTENT, DEFAULT_CURRENCY, DEFAULT_VAULT, QUERY_BOOL, LANG, type LocaleType, DEFAULT_SALE_COMMIT, DEFAULT_NONSALE_COMMIT } from '@paypal/sdk-constants/src';
+    DEFAULT_INTENT, DEFAULT_CURRENCY, DEFAULT_VAULT, QUERY_BOOL, LANG, type LocaleType, DEFAULT_SALE_COMMIT, DEFAULT_NONSALE_COMMIT, ENV } from '@paypal/sdk-constants/src';
 
-import { getHost, getPath, getDefaultStageHost, getDefaultAPIStageHost } from './globals';
+import { getHost, getPath, getDefaultStageHost, getDefaultAPIStageHost, getEnv } from './globals';
 
 export const CLIENT_ID_ALIAS = {
     sb: 'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R'
@@ -12,7 +12,10 @@ export const CLIENT_ID_ALIAS = {
 
 export function getSDKScript() : HTMLScriptElement {
     return inlineMemoize(getSDKScript, () => {
-        const { host, path } = { host: getHost(), path: getPath() };
+        // Add new __SDK_HOST__ global instead of determining this on the client side
+        const host = (getEnv() === ENV.SANDBOX) ? 'www.paypal.com' : getHost();
+        const path = getPath();
+
         const script = getScript({ host, path });
 
         if (!script) {
