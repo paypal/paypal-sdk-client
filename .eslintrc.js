@@ -15,6 +15,7 @@ module.exports = {
         __STAGE_HOST__: true,
         __SERVICE_STAGE_HOST__: true,
         __CORRELATION_ID__: true,
-        __NAMESPACE__: true
+        __NAMESPACE__: true,
+        __COMPONENTS__: true
     }
 };

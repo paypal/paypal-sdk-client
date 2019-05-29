@@ -1,6 +1,6 @@
 /* @flow */
 
-import { ENV } from '@paypal/sdk-constants/src';
+import { ENV, COMPONENTS } from '@paypal/sdk-constants/src';
 
 export function getSDKHost() : string {
     return __SDK_HOST__;
@@ -50,4 +50,8 @@ export function getNamespace() : string {
 
 export function getDebug() : boolean {
     return __DEBUG__;
+}
+
+export function getComponents() : $ReadOnlyArray<$Values<typeof COMPONENTS>> {
+    return __COMPONENTS__;
 }
