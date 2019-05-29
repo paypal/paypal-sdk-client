@@ -9,5 +9,5 @@ export function getSDKMeta() : string {
         url:          getScriptUrl(),
         stageHost:    getStageHost(),
         apiStageHost: getAPIStageHost()
-    }));
+    })).replace(/\=+$/, ''); // eslint-disable-line no-useless-escape
 }
