@@ -66,7 +66,7 @@
     "esdoc": "^1.0.4",
     "esdoc-flow-type-plugin": "^1.0.1",
     "esdoc-standard-plugin": "^1.0.0",
-    "flow-bin": "^0.70.0",
+    "flow-bin": "^0.100.0",
     "grumbler-scripts": "^3",
     "mocha": "^4",
     "sync-browser-mocks": "^2.0.0"
