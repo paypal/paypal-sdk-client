@@ -1,9 +1,13 @@
 /* @flow */
 
-import { ENV, COMPONENTS } from '@paypal/sdk-constants/src';
+import { ENV, PROTOCOL, COMPONENTS } from '@paypal/sdk-constants/src';
 
 export function getSDKHost() : string {
     return __SDK_HOST__;
+}
+
+export function getProtocol() : $Values<typeof PROTOCOL> {
+    return (typeof __PROTOCOL__ !== 'undefined') ? __PROTOCOL__ : PROTOCOL.HTTPS;
 }
 
 export function getHost() : string {

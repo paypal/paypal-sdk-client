@@ -7,6 +7,7 @@ module.exports = {
         __STAGE__: true,
         __VERSION__: true,
 
+        __PROTOCOL__: true,
         __SDK_HOST__: true,
         __HOST__: true,
         __HOSTNAME__: true,
