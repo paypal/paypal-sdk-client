@@ -1,7 +1,8 @@
 /* @flow */
 
-import { ENV, COMPONENTS } from '@paypal/sdk-constants/src';
+import { ENV, COMPONENTS, PROTOCOL } from '@paypal/sdk-constants/src';
 
+declare var __PROTOCOL__ : $Values<typeof PROTOCOL>;
 declare var __HOST__ : string;
 declare var __HOSTNAME__ : string;
 declare var __PORT__ : number;

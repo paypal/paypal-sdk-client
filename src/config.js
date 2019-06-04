@@ -2,7 +2,7 @@
 
 import { getDomain, getActualDomain, isCurrentDomain } from 'cross-domain-utils/src';
 
-import { getPort } from './globals';
+import { getProtocol, getHost } from './globals';
 import { getStageHost, getAPIStageHost } from './script';
 
 export const SUPPORTED_BROWSERS = {
@@ -26,27 +26,27 @@ export const URI = {
 
 export function getPayPalDomain() : string {
     return {
-        local:      `http://localhost.paypal.com:${ getPort() }`,
-        stage:      `https://${ getStageHost() }`,
-        sandbox:    `https://www.sandbox.paypal.com`,
-        production: `https://www.paypal.com`,
+        local:      `${ getProtocol() }://${ getHost() }`,
+        stage:      `${ getProtocol() }://${ getStageHost() }`,
+        sandbox:    `${ getProtocol() }://www.sandbox.paypal.com`,
+        production: `${ getProtocol() }://www.paypal.com`,
         test:       `mock://www.paypal.com`
     }[__ENV__];
 }
 
 export function getPayPalAPIDomain() : string {
     return {
-        local:      `https://${ getAPIStageHost() }:12326`,
-        stage:      `https://${ getAPIStageHost() }:12326`,
-        sandbox:    `https://cors.api.sandbox.paypal.com`,
-        production: `https://cors.api.paypal.com`,
+        local:      `${ getProtocol() }://${ getAPIStageHost() }:12326`,
+        stage:      `${ getProtocol() }://${ getAPIStageHost() }:12326`,
+        sandbox:    `${ getProtocol() }://cors.api.sandbox.paypal.com`,
+        production: `${ getProtocol() }://cors.api.paypal.com`,
         test:       `mock://api.paypal.com`
     }[__ENV__];
 }
 
 export function getPayPalLoggerDomain() : string {
     return {
-        local:      `https://${ getStageHost() }`,
+        local:      `${ getProtocol() }://${ getStageHost() }`,
         stage:      getPayPalDomain(),
         sandbox:    getPayPalDomain(),
         production: getPayPalDomain(),
