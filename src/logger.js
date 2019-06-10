@@ -1,7 +1,7 @@
 /* @flow */
 
 import { Logger, type LoggerType } from 'beaver-logger/src';
-import { noop, stringifyError, stringifyErrorMessage, inlineMemoize } from 'belter/src';
+import { noop, stringifyError, stringifyErrorMessage, inlineMemoize, isIEIntranet } from 'belter/src';
 import { ZalgoPromise } from 'zalgo-promise/src';
 import { FPTI_KEY, FPTI_FEED, FPTI_DATA_SOURCE, FPTI_SDK_NAME, FPTI_USER_ACTION } from '@paypal/sdk-constants/src';
 
@@ -66,4 +66,8 @@ export function setupLogger() {
     });
 
     logger.info(`setup_${ getEnv() }`);
+
+    if (isIEIntranet()) {
+        logger.warn('ie_intranet_mode');
+    }
 }
