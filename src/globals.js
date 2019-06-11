@@ -48,7 +48,7 @@ export function getCorrelationID() : string {
     return __CORRELATION_ID__;
 }
 
-export function getNamespace() : string {
+export function getDefaultNamespace() : string {
     return __NAMESPACE__;
 }
 

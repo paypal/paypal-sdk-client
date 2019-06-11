@@ -4,7 +4,7 @@ import { getScript, inlineMemoize, parseQuery, getBrowserLocales, base64decode }
 import { COUNTRY, SDK_SETTINGS, SDK_QUERY_KEYS, INTENT, COMMIT, VAULT, CURRENCY, FUNDING, CARD, COUNTRY_LANGS,
     DEFAULT_INTENT, DEFAULT_CURRENCY, DEFAULT_VAULT, QUERY_BOOL, LANG, type LocaleType, DEFAULT_SALE_COMMIT, DEFAULT_NONSALE_COMMIT, ENV } from '@paypal/sdk-constants/src';
 
-import { getHost, getPath, getDefaultStageHost, getDefaultAPIStageHost, getEnv } from './globals';
+import { getHost, getPath, getDefaultStageHost, getDefaultAPIStageHost, getEnv, getDefaultNamespace } from './globals';
 
 export const CLIENT_ID_ALIAS = {
     sb: 'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R'
@@ -125,6 +125,10 @@ export function getDisableCard() : $ReadOnlyArray<?$Values<typeof CARD>> {
 
 export function getBuyerCountry() : ?$Values<typeof COUNTRY> {
     return getSDKQueryParam(SDK_QUERY_KEYS.BUYER_COUNTRY);
+}
+
+export function getNamespace() : string {
+    return getSDKAttribute(SDK_SETTINGS.NAMESPACE) || getDefaultNamespace();
 }
 
 export function getClientToken() : ?string {

@@ -2,8 +2,8 @@
 
 import { destroyElement } from 'belter/src';
 
-import { getNamespace, getVersion } from './globals';
-import { getSDKScript } from './script';
+import { getVersion } from './globals';
+import { getSDKScript, getNamespace } from './script';
 
 export type SetupComponent<T> = {|
     name : string,
