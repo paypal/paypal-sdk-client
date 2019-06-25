@@ -3,9 +3,7 @@
 import { $mockEndpoint, patchXmlHttpRequest } from 'sync-browser-mocks/dist/sync-browser-mocks';
 import { ZalgoPromise } from 'zalgo-promise/src';
 
-import { setupLogger, getLogger } from '../../src';
-
-import { createSDKScript } from './common';
+import { setupLogger, getLogger, insertMockSDKScript } from '../../src';
 
 describe('logger tests', () => {
 
@@ -16,7 +14,7 @@ describe('logger tests', () => {
 
     it('should log and flush with all expected keys', () => {
 
-        createSDKScript({
+        insertMockSDKScript({
             query: {
                 'client-id':   'foobarbaz',
                 'merchant-id': 'hello123'

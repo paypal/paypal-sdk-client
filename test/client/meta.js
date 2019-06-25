@@ -1,12 +1,10 @@
 /* @flow */
 
-import { getSDKMeta } from '../../src';
-
-import { createSDKScript } from './common';
+import { getSDKMeta, insertMockSDKScript } from '../../src';
 
 describe(`meta cases`, () => {
     it('should successfully create a meta payload', () => {
-        const expectedUrl = createSDKScript({
+        const expectedUrl = insertMockSDKScript({
             query: {
                 'client-id': 'foobar'
             }
@@ -28,7 +26,7 @@ describe(`meta cases`, () => {
     it('should successfully create a meta payload with a custom stage host', () => {
         const expectedStageHost = 'foo.qa.paypal.com';
 
-        createSDKScript({
+        insertMockSDKScript({
             query: {
                 'client-id': 'foobar'
             },
@@ -53,7 +51,7 @@ describe(`meta cases`, () => {
     it('should successfully create a meta payload with a custom api stage host', () => {
         const expectedApiStageHost = 'api.bar.qa.paypal.com';
 
-        createSDKScript({
+        insertMockSDKScript({
             query: {
                 'client-id': 'foobar'
             },

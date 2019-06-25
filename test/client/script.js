@@ -2,15 +2,14 @@
 
 import { base64encode } from 'belter/src';
 
-import { getClientID, getIntent, getCurrency, getVault, getCommit, getClientToken, getPartnerAttributionID, getMerchantID, getStageHost, getAPIStageHost, getClientAccessToken } from '../../src';
-
-import { createSDKScript } from './common';
+import { getClientID, getIntent, getCurrency, getVault, getCommit, getClientToken, getPartnerAttributionID,
+    getMerchantID, getStageHost, getAPIStageHost, getClientAccessToken, insertMockSDKScript } from '../../src';
 
 describe(`script cases`, () => {
     it('should successfully get a client id', () => {
         const clientID = 'foobar123';
 
-        const url = createSDKScript({
+        const url = insertMockSDKScript({
             query: {
                 'client-id': clientID
             }
@@ -25,7 +24,7 @@ describe(`script cases`, () => {
 
         let error;
         
-        createSDKScript({
+        insertMockSDKScript({
             query: {
                 'client-id': ''
             }
@@ -45,7 +44,7 @@ describe(`script cases`, () => {
     it('should successfully get a client id alias', () => {
         const clientID = 'sb';
 
-        const url = createSDKScript({
+        const url = insertMockSDKScript({
             query: {
                 'client-id': clientID
             }
@@ -59,7 +58,7 @@ describe(`script cases`, () => {
     it('should successfully get a client id', () => {
         const merchantID = 'abc987';
 
-        const url = createSDKScript({
+        const url = insertMockSDKScript({
             query: {
                 'merchant-id': merchantID
             }
@@ -74,7 +73,7 @@ describe(`script cases`, () => {
     it('should successfully get an intent', () => {
         const intent = 'authorize';
 
-        const url = createSDKScript({
+        const url = insertMockSDKScript({
             query: {
                 intent
             }
@@ -88,7 +87,7 @@ describe(`script cases`, () => {
     it('should successfully get a currency', () => {
         const currency = 'EUR';
 
-        const url = createSDKScript({
+        const url = insertMockSDKScript({
             query: {
                 currency
             }
@@ -102,7 +101,7 @@ describe(`script cases`, () => {
     it('should successfully get vault', () => {
         const vault = true;
 
-        const url = createSDKScript({
+        const url = insertMockSDKScript({
             query: {
                 'vault': vault.toString()
             }
@@ -116,7 +115,7 @@ describe(`script cases`, () => {
     it('should successfully get commit', () => {
         const commit = false;
 
-        const url = createSDKScript({
+        const url = insertMockSDKScript({
             query: {
                 'commit': commit.toString()
             }
@@ -130,7 +129,7 @@ describe(`script cases`, () => {
     it('should successfully get client token', () => {
         const clientToken = 'abc-xyz-123';
 
-        const url = createSDKScript({
+        const url = insertMockSDKScript({
             attributes: {
                 'data-client-token': clientToken
             }
@@ -164,7 +163,7 @@ describe(`script cases`, () => {
             }
         }));
 
-        const url = createSDKScript({
+        const url = insertMockSDKScript({
             attributes: {
                 'data-client-token': clientToken
             }
@@ -178,7 +177,7 @@ describe(`script cases`, () => {
     it('should successfully get partner attribution id', () => {
         const partnerAttributionID = 'abc-xyz-123';
 
-        const url = createSDKScript({
+        const url = insertMockSDKScript({
             attributes: {
                 'data-partner-attribution-id': partnerAttributionID
             }
@@ -192,7 +191,7 @@ describe(`script cases`, () => {
     it('should successfully get stage host', () => {
         const stageHost = 'foo.qa.paypal.com';
 
-        const url = createSDKScript({
+        const url = insertMockSDKScript({
             attributes: {
                 'data-stage-host': stageHost
             }
@@ -206,7 +205,7 @@ describe(`script cases`, () => {
     it('should successfully get api stage host', () => {
         const apiStageHost = 'bar.qa.paypal.com';
 
-        const url = createSDKScript({
+        const url = insertMockSDKScript({
             attributes: {
                 'data-api-stage-host': apiStageHost
             }
