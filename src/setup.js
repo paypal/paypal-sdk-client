@@ -18,10 +18,15 @@ export function setupSDK(components : $ReadOnlyArray<SetupComponent<mixed>>) {
     const INTERNAL_DESTROY_KEY = `__internal_destroy__`;
 
     const existingNamespace = window[namespace];
+    const existingVersion = existingNamespace.version;
 
-    if (existingNamespace && existingNamespace[INTERNAL_DESTROY_KEY]) {
-        existingNamespace[INTERNAL_DESTROY_KEY]();
-        delete window[namespace];
+    if (existingNamespace) {
+        if (existingNamespace[INTERNAL_DESTROY_KEY]) {
+            existingNamespace[INTERNAL_DESTROY_KEY]();
+            delete window[namespace];
+        } else {
+            throw new Error(`Attempted to load sdk version ${ version } on page, but version ${ existingVersion || 'unknown' } already loaded.\n\nTo load this sdk alongside the existing version, please specify a different namespace in the script tag, e.g. <script src="https://www.paypal.com/sdk/js?client-id=CLIENT_ID" data-namespace="paypal_sdk"></script>, then use the paypal_sdk namespace in place of paypal in your code.`);
+        }
     }
 
     window[namespace] = window[namespace] || {};
