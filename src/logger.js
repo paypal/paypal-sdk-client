@@ -17,8 +17,20 @@ export function getLogger() : LoggerType {
         }));
 }
 
+let sdkInitTime;
+
+export function getSDKInitTime() : number {
+    if (typeof sdkInitTime === 'undefined') {
+        throw new TypeError(`SDK not initialized`);
+    }
+
+    return sdkInitTime;
+}
+
 export function setupLogger() {
     const logger = getLogger();
+
+    sdkInitTime = Date.now();
     
     logger.addPayloadBuilder(() => {
         return {
