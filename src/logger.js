@@ -1,13 +1,13 @@
 /* @flow */
 
 import { Logger, type LoggerType } from 'beaver-logger/src';
-import { noop, stringifyError, stringifyErrorMessage, inlineMemoize, isIEIntranet } from 'belter/src';
+import { noop, stringifyError, stringifyErrorMessage, inlineMemoize, isIEIntranet, getResourceLoadTime } from 'belter/src';
 import { ZalgoPromise } from 'zalgo-promise/src';
 import { FPTI_KEY, FPTI_FEED, FPTI_DATA_SOURCE, FPTI_SDK_NAME, FPTI_USER_ACTION } from '@paypal/sdk-constants/src';
 
 import { getPayPalLoggerUrl } from './config';
 import { getEnv, getVersion, getCorrelationID } from './globals';
-import { getPartnerAttributionID, getClientID, getMerchantID, getCommit, getLocale } from './script';
+import { getPartnerAttributionID, getClientID, getMerchantID, getCommit, getLocale, getSDKScript } from './script';
 import { getSessionID } from './session';
 
 export function getLogger() : LoggerType {
@@ -65,7 +65,25 @@ export function setupLogger() {
         logger.flush().catch(noop);
     });
 
-    logger.info(`setup_${ getEnv() }`);
+    const loadTime = getResourceLoadTime(getSDKScript().src);
+    let cache;
+
+    if (loadTime === 0) {
+        cache = 'sdk_client_cache_hit';
+    } else if (typeof loadTime === 'number') {
+        cache = 'sdk_client_cache_miss';
+    } else {
+        cache = 'sdk_client_cache_unknown';
+    }
+
+    logger
+        .info(`setup_${ getEnv() }`)
+        .info(cache)
+        .track({
+            [FPTI_KEY.TRANSITION]:    'process_js_sdk_init_client',
+            [FPTI_KEY.SDK_LOAD_TIME]: loadTime ? loadTime.toString() : undefined,
+            [FPTI_KEY.SDK_CACHE]:     cache
+        }).flush();
 
     if (isIEIntranet()) {
         logger.warn('ie_intranet_mode');

@@ -37,6 +37,7 @@ export function insertMockSDKScript({ query = DEFAULT_QUERY, attributes = DEFAUL
 
     script = document.createElement('script');
     script.setAttribute('type', 'test/javascript');
+    script.setAttribute('id', 'test-sdk-script');
 
     const url = extendUrl(`https://${ getHost() }${ getPath() }`, {
         query: {
