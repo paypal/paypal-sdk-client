@@ -18,7 +18,7 @@ export function setupSDK(components : $ReadOnlyArray<SetupComponent<mixed>>) {
     const INTERNAL_DESTROY_KEY = `__internal_destroy__`;
 
     const existingNamespace = window[namespace];
-    const existingVersion = existingNamespace.version;
+    const existingVersion = existingNamespace && existingNamespace.version;
 
     if (existingNamespace) {
         if (existingNamespace[INTERNAL_DESTROY_KEY]) {
