@@ -94,7 +94,7 @@ export function setupLogger() {
             .info(cache)
             .track({
                 [FPTI_KEY.TRANSITION]:    'process_js_sdk_init_client',
-                [FPTI_KEY.SDK_LOAD_TIME]: loadTime ? loadTime.toString() : undefined,
+                [FPTI_KEY.SDK_LOAD_TIME]: (typeof loadTime === 'number') ? loadTime.toString() : undefined,
                 [FPTI_KEY.SDK_CACHE]:     cache
             }).flush();
 
