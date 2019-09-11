@@ -31,13 +31,13 @@ export function getEnv() : $Values<typeof ENV> {
 }
 
 export function getDefaultStageHost() : string {
-    return __STAGE_HOST__ || __HOST__;
+    return __STAGE_HOST__;
 }
 
 export function getDefaultAPIStageHost() : string {
     return (typeof __SERVICE_STAGE_HOST__ !== 'undefined')
         ? __SERVICE_STAGE_HOST__
-        : getDefaultStageHost().replace('www.', '');
+        : __STAGE_HOST__.replace('www.', '');
 }
 
 export function getVersion() : string {
