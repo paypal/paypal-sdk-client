@@ -35,7 +35,7 @@ export function getDefaultStageHost() : string {
 }
 
 export function getDefaultAPIStageHost() : string {
-    return (typeof __SERVICE_STAGE_HOST__ !== 'undefined' && __SERVICE_STAGE_HOST__ !== null)
+    return (typeof __SERVICE_STAGE_HOST__ !== 'undefined')
         ? __SERVICE_STAGE_HOST__
         : getDefaultStageHost().replace('www.', '');
 }
