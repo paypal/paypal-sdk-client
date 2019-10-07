@@ -7,7 +7,7 @@ import { FPTI_KEY, FPTI_FEED, FPTI_DATA_SOURCE, FPTI_SDK_NAME, FPTI_USER_ACTION 
 
 import { getPayPalLoggerUrl } from './config';
 import { getEnv, getVersion, getCorrelationID } from './globals';
-import { getPartnerAttributionID, getClientID, getMerchantID, getCommit, getLocale, getSDKScript } from './script';
+import { getPartnerAttributionID, getClientID, getMerchantID, getCommit, getLocale, getSDKScript, getSDKIntegrationSource } from './script';
 import { getSessionID } from './session';
 
 export function getLogger() : LoggerType {
@@ -58,7 +58,8 @@ export function setupLogger() {
             [FPTI_KEY.SDK_VERSION]:            getVersion(),
             [FPTI_KEY.USER_AGENT]:             window.navigator && window.navigator.userAgent,
             [FPTI_KEY.USER_ACTION]:            getCommit() ? FPTI_USER_ACTION.COMMIT : FPTI_USER_ACTION.CONTINUE,
-            [FPTI_KEY.CONTEXT_CORRID]:         getCorrelationID()
+            [FPTI_KEY.CONTEXT_CORRID]:         getCorrelationID(),
+            [FPTI_KEY.SDK_INTEGRATION_SOURCE]: getSDKIntegrationSource()
         };
     });
 
