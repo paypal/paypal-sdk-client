@@ -3,7 +3,7 @@
 import { base64encode } from 'belter/src';
 
 import { getClientID, getIntent, getCurrency, getVault, getCommit, getClientToken, getPartnerAttributionID,
-    getMerchantID, getStageHost, getAPIStageHost, getClientAccessToken, insertMockSDKScript } from '../../src';
+    getMerchantID, getStageHost, getAPIStageHost, getClientAccessToken, getSDKIntegrationSource, insertMockSDKScript } from '../../src';
 
 describe(`script cases`, () => {
     it('should successfully get a client id', () => {
@@ -213,6 +213,20 @@ describe(`script cases`, () => {
 
         if (apiStageHost !== getAPIStageHost()) {
             throw new Error(`Expected client token to be ${ apiStageHost }, got ${ getAPIStageHost() || 'undefined' } from ${ url }`);
+        }
+    });
+
+    it('should successfully get sdk integration source', () => {
+        const SDKIntegrationSource = 'spbf';
+
+        const url = insertMockSDKScript({
+            attributes: {
+                'data-sdk-integration-source': SDKIntegrationSource
+            }
+        });
+
+        if (SDKIntegrationSource !== getSDKIntegrationSource()) {
+            throw new Error(`Expected client token to be ${ SDKIntegrationSource }, got ${ getAPIStageHost() || 'undefined' } from ${ url }`);
         }
     });
 });

@@ -195,6 +195,10 @@ export function getEnableThreeDomainSecure() : boolean {
     return getSDKAttributes().hasOwnProperty(SDK_SETTINGS.ENABLE_3DS);
 }
 
+export function getSDKIntegrationSource() : ?string {
+    return getSDKAttribute(SDK_SETTINGS.SDK_INTEGRATION_SOURCE);
+}
+
 // Remove
 export function getCountry() : $Values<typeof COUNTRY> {
     return getLocale().country;

@@ -20,7 +20,8 @@ describe('logger tests', () => {
                 'merchant-id': 'hello123'
             },
             attributes: {
-                'data-partner-attribution-id': 'myattributionid'
+                'data-partner-attribution-id': 'myattributionid',
+                'data-sdk-integration-source': 'spbf'
             }
         });
 
@@ -80,7 +81,8 @@ describe('logger tests', () => {
                 sdk_version:            '1.0.45',
                 user_agent:             window.navigator.userAgent,
                 user_action:            'commit',
-                context_correlation_id: 'abc123'
+                context_correlation_id: 'abc123',
+                sdk_integration_source: 'spbf'
             };
 
             const tracking = logData.tracking.find(e => (e.hello === 'world'));
