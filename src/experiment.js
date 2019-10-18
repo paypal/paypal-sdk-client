@@ -14,12 +14,13 @@ export function createExperiment(name : string, sample : number) : Experiment {
         name,
         sample,
 
-        logTreatment({ treatment }) {
+        logTreatment({ treatment, payload }) {
             logger.track({
                 [FPTI_KEY.STATE]:           FPTI_STATE.PXP,
                 [FPTI_KEY.TRANSITION]:      FPTI_TRANSITION.PXP,
                 [FPTI_KEY.EXPERIMENT_NAME]: name,
-                [FPTI_KEY.TREATMENT_NAME]:  treatment
+                [FPTI_KEY.TREATMENT_NAME]:  treatment,
+                ...payload
             });
             logger.flush();
         },
