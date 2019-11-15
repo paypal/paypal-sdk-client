@@ -2,6 +2,8 @@
 
 import { ENV, PROTOCOL, COMPONENTS } from '@paypal/sdk-constants/src';
 
+import type { FundingEligibilityType } from './types';
+
 export function getSDKHost() : string {
     return __SDK_HOST__;
 }
@@ -58,4 +60,8 @@ export function getDebug() : boolean {
 
 export function getComponents() : $ReadOnlyArray<$Values<typeof COMPONENTS>> {
     return __COMPONENTS__;
+}
+
+export function getFundingEligibility() : FundingEligibilityType {
+    return __FUNDING_ELIGIBILITY__;
 }
