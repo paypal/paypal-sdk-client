@@ -583,6 +583,98 @@ test('should consruct a valid loader even when no url passed with version 4', ()
     }
 });
 
+test('should consruct a valid loader even when no url passed with version 5 in a popup', () => {
+    const sdkUrl = 'https://www.paypal.com/sdk/js?client-id=foobarbaz';
+
+    const { getSDKLoader } = unpackSDKMeta();
+
+    const $ = cheerio.load(getSDKLoader());
+    const script = $('script').html();
+
+    let scriptTag;
+
+    // eslint-disable-next-line no-unused-vars
+    const window = {
+        opener: {
+            document: {
+                querySelector: (selector) => {
+                    if (selector !== 'script[src*="/sdk/js"]') {
+                        throw new Error(`Expected selector to be 'script[src*="/sdk/js"]', got ${ selector }`);
+                    }
+
+                    return {
+                        src: sdkUrl
+                    };
+                }
+            }
+        }
+    };
+
+    // eslint-disable-next-line no-unused-vars
+    const document = {
+        write: (html) => {
+            scriptTag = html;
+        }
+    };
+
+    // eslint-disable-next-line no-eval, security/detect-eval-with-expression
+    eval(script);
+
+    const $$ = cheerio.load(scriptTag);
+    const scriptz = $$('script');
+    const src = scriptz.attr('src');
+
+    if (src !== sdkUrl) {
+        throw new Error(`Expected script url to be ${ sdkUrl } - got ${ src }`);
+    }
+});
+
+test('should consruct a valid loader even when no url passed with version 5 in an iframe', () => {
+    const sdkUrl = 'https://www.paypal.com/sdk/js?client-id=foobarbaz';
+
+    const { getSDKLoader } = unpackSDKMeta();
+
+    const $ = cheerio.load(getSDKLoader());
+    const script = $('script').html();
+
+    let scriptTag;
+
+    // eslint-disable-next-line no-unused-vars
+    const window = {
+        parent: {
+            document: {
+                querySelector: (selector) => {
+                    if (selector !== 'script[src*="/sdk/js"]') {
+                        throw new Error(`Expected selector to be 'script[src*="/sdk/js"]', got ${ selector }`);
+                    }
+
+                    return {
+                        src: sdkUrl
+                    };
+                }
+            }
+        }
+    };
+
+    // eslint-disable-next-line no-unused-vars
+    const document = {
+        write: (html) => {
+            scriptTag = html;
+        }
+    };
+
+    // eslint-disable-next-line no-eval, security/detect-eval-with-expression
+    eval(script);
+
+    const $$ = cheerio.load(scriptTag);
+    const scriptz = $$('script');
+    const src = scriptz.attr('src');
+
+    if (src !== sdkUrl) {
+        throw new Error(`Expected script url to be ${ sdkUrl } - got ${ src }`);
+    }
+});
+
 test('should error out if the custom stage host is not a paypal domain', () => {
 
     const sdkUrl = 'https://www.paypal.com/sdk/js?client-id=foo';
