@@ -4,7 +4,7 @@
   "description": "Shared config between PayPal/Braintree.",
   "main": "index.js",
   "scripts": {
-    "babel": "babel ./server --exclude=node_modules --out-dir ./server",
+    "babel": "babel ./server --ignore=node_modules --out-dir ./server",
     "build": "npm run test && npm run doc",
     "clean": "rimraf dist coverage",
     "debug": "cross-env NODE_ENV=debug",
