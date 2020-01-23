@@ -1,6 +1,7 @@
 /* @flow */
 
-import { ENV, PROTOCOL, COMPONENTS } from '@paypal/sdk-constants/src';
+import { ENV, PROTOCOL, COMPONENTS, PLATFORM } from '@paypal/sdk-constants/src';
+import { isDevice } from 'belter/src';
 
 import type { FundingEligibilityType } from './types';
 
@@ -64,4 +65,8 @@ export function getComponents() : $ReadOnlyArray<$Values<typeof COMPONENTS>> {
 
 export function getFundingEligibility() : FundingEligibilityType {
     return __FUNDING_ELIGIBILITY__;
+}
+
+export function getPlatform() : $Values<typeof PLATFORM> {
+    return isDevice() ? PLATFORM.MOBILE : PLATFORM.DESKTOP;
 }
