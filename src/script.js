@@ -136,13 +136,17 @@ export function getClientToken() : ?string {
 }
 
 export function getClientAccessToken() : ?string {
-    const clientToken = getClientToken();
+    const clientAccessToken = getSDKAttribute(SDK_SETTINGS.CLIENT_ACCESS_TOKEN);
 
-    if (!clientToken) {
-        return;
+    if (clientAccessToken) {
+        return clientAccessToken;
     }
 
-    return JSON.parse(base64decode(clientToken)).paypal.accessToken;
+    const clientToken = getClientToken();
+
+    if (clientToken) {
+        return JSON.parse(base64decode(clientToken)).paypal.accessToken;
+    }
 }
 
 export function getPartnerAttributionID() : ?string {
@@ -197,6 +201,14 @@ export function getEnableThreeDomainSecure() : boolean {
 
 export function getSDKIntegrationSource() : ?string {
     return getSDKAttribute(SDK_SETTINGS.SDK_INTEGRATION_SOURCE);
+}
+
+export function getUserAccessToken() : ?string {
+    return getSDKAttribute(SDK_SETTINGS.USER_ACCESS_TOKEN);
+}
+
+export function getUserAccessCode() : ?string {
+    return getSDKAttribute(SDK_SETTINGS.USER_ACCESS_TOKEN);
 }
 
 // Remove
