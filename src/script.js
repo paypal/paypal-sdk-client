@@ -207,8 +207,8 @@ export function getUserAccessToken() : ?string {
     return getSDKAttribute(SDK_SETTINGS.USER_ACCESS_TOKEN);
 }
 
-export function getUserAccessCode() : ?string {
-    return getSDKAttribute(SDK_SETTINGS.USER_ACCESS_TOKEN);
+export function getUserAuthCode() : ?string {
+    return getSDKAttribute(SDK_SETTINGS.USER_AUTH_CODE);
 }
 
 // Remove
