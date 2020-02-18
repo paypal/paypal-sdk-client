@@ -36,7 +36,7 @@ function validatePaymentsSDKUrl({ pathname, query, hash }) {
             throw new TypeError(`Unexpected non-string key for sdk url: ${ key }`);
         }
 
-        if (!val.match(/^[a-zA-Z0-9_,-.]+$/)) {
+        if (!val.match(/^[a-zA-Z0-9_,-@.]+$/) && !val.match(/^\*$/)) {
             throw new Error(`Unexpected characters in query key for sdk url: ${ key }=${ val }`);
         }
     }
