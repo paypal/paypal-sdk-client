@@ -92,7 +92,7 @@ export function createOrder(clientID : string, order : OrderCreateRequest, { fpt
         if (unit.amount.currency_code && unit.amount.currency_code !== currency) {
             throw new Error(`Unexpected currency: ${ unit.amount.currency_code } passed to order.create. Please ensure you are passing /sdk/js?${ SDK_QUERY_KEYS.CURRENCY }=${ unit.amount.currency_code } in the paypal script tag.`);
         }
-        let payee = unit.payee;
+        const payee = unit.payee;
 
         if (payee) {
             if (!merchantID) {
