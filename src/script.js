@@ -82,7 +82,12 @@ export function getClientID() : string {
 }
 
 export function getMerchantID() : $ReadOnlyArray<string> {
-    const merchantID = getSDKQueryParam(SDK_QUERY_KEYS.MERCHANT_ID);
+    let merchantID = getSDKQueryParam(SDK_QUERY_KEYS.MERCHANT_ID);
+
+    if (merchantID === '*') {
+        // get multiple merchant ids or emails from data-merchant-id
+        merchantID = getSDKAttribute(SDK_SETTINGS.MERCHANT_ID);
+    }
     
     if (merchantID) {
         return merchantID.split(',');
