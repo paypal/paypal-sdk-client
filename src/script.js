@@ -87,6 +87,16 @@ export function getMerchantID() : $ReadOnlyArray<string> {
     if (merchantID === '*') {
         // get multiple merchant ids or emails from data-merchant-id
         merchantID = getSDKAttribute(SDK_SETTINGS.MERCHANT_ID);
+
+        if (!merchantID) {
+            throw new Error(`Must pass ${ SDK_SETTINGS.MERCHANT_ID } when ${ SDK_QUERY_KEYS.MERCHANT_ID }=* passed in url`);
+        }
+        
+        merchantID = merchantID.split(',');
+
+        if (merchantID.length <= 1) {
+            throw new Error(`Must pass multiple merchant ids to ${ SDK_SETTINGS.MERCHANT_ID }. If passing a single id, pass ${ SDK_QUERY_KEYS.MERCHANT_ID }=XYZ in url`);
+        }
     }
     
     if (merchantID) {
@@ -183,7 +193,6 @@ export function getLocale() : LocaleType {
     }
 
     for (const { country } of getBrowserLocales()) {
-        // $FlowFixMe
         if (COUNTRY_LANGS.hasOwnProperty(country)) {
             // $FlowFixMe
             return { country, lang: COUNTRY_LANGS[country][0] };
@@ -212,8 +221,8 @@ export function getUserAccessToken() : ?string {
     return getSDKAttribute(SDK_SETTINGS.USER_ACCESS_TOKEN);
 }
 
-export function getUserAccessCode() : ?string {
-    return getSDKAttribute(SDK_SETTINGS.USER_ACCESS_TOKEN);
+export function getUserAuthCode() : ?string {
+    return getSDKAttribute(SDK_SETTINGS.USER_AUTH_CODE);
 }
 
 // Remove
