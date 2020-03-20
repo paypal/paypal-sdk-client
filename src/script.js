@@ -97,6 +97,14 @@ export function getMerchantID() : $ReadOnlyArray<string> {
         if (merchantID.length <= 1) {
             throw new Error(`Must pass multiple merchant ids to ${ SDK_SETTINGS.MERCHANT_ID }. If passing a single id, pass ${ SDK_QUERY_KEYS.MERCHANT_ID }=XYZ in url`);
         }
+
+        // check duplicates
+        const hasDuplicate = merchantID.some((val, i) => merchantID && merchantID.indexOf(val) !== i);
+
+        if (hasDuplicate) {
+            throw new Error(`Duplicates ${ SDK_SETTINGS.MERCHANT_ID }. Must pass unique merchant ids to ${ SDK_SETTINGS.MERCHANT_ID }.`);
+        }
+        return merchantID;
     }
     
     if (merchantID) {
