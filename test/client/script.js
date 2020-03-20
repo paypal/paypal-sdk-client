@@ -55,9 +55,8 @@ describe(`script cases`, () => {
         }
     });
 
-    it('should successfully get a client id', () => {
+    it('should successfully get a merchant id', () => {
         const merchantID = 'abc987';
-
         const url = insertMockSDKScript({
             query: {
                 'merchant-id': merchantID
@@ -65,8 +64,100 @@ describe(`script cases`, () => {
         });
 
         const mID = getMerchantID();
+
         if (merchantID !== (mID && mID[0])) {
             throw new Error(`Expected merchant id to be ${ merchantID }, got ${ (mID && mID[0]) || 'undefined' } from ${ url }`);
+        }
+    });
+
+    it('should error out when merchant-id is * but data-merchant-id not passed', () => {
+        const merchantID = '*';
+        let error;
+        
+        insertMockSDKScript({
+            query: {
+                'merchant-id': merchantID
+            }
+        });
+
+        try {
+            getMerchantID();
+        } catch (err) {
+            error = err;
+        }
+
+        if (!error) {
+            throw new Error(`Expected error to be thrown`);
+        }
+    });
+
+    it('should error out when merchant-id is * but only one merchant id in data-merchant-id', () => {
+        const merchantID = '*';
+        const dataMerchantIDs = 'abc123';
+        let error;
+        
+        insertMockSDKScript({
+            query: {
+                'merchant-id': merchantID
+            },
+            attributes: {
+                'data-merchant-id': dataMerchantIDs
+            }
+        });
+
+        try {
+            getMerchantID();
+        } catch (err) {
+            error = err;
+        }
+
+        if (!error) {
+            throw new Error(`Expected error to be thrown`);
+        }
+    });
+
+    it('should error out when merchant-id is * but duplicated merchant id in data-merchant-id', () => {
+        const merchantID = '*';
+        const dataMerchantIDs = 'abc123,abc456,abc123';
+        let error;
+        
+        insertMockSDKScript({
+            query: {
+                'merchant-id': merchantID
+            },
+            attributes: {
+                'data-merchant-id': dataMerchantIDs
+            }
+        });
+
+        try {
+            getMerchantID();
+        } catch (err) {
+            error = err;
+        }
+
+        if (!error) {
+            throw new Error(`Expected error to be thrown`);
+        }
+    });
+
+    it('should successfully get merchant ids', () => {
+        const merchantID = '*';
+        const dataMerchantIDs = 'abc123,abc345';
+        
+        const url = insertMockSDKScript({
+            query: {
+                'merchant-id': merchantID
+            },
+            attributes: {
+                'data-merchant-id': dataMerchantIDs
+            }
+        });
+
+        const mID = getMerchantID();
+
+        if (dataMerchantIDs !== mID.join()) {
+            throw new Error(`Expected merchant id to be ${ merchantID }, got ${ mID.join() || 'undefined' } from ${ url }`);
         }
     });
 
