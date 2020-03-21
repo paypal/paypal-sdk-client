@@ -27,13 +27,13 @@ type CardEligibility = {|
 type FundingEligibilityParams = {|
     clientID : string,
     merchantID : ?$ReadOnlyArray<string>,
-    buyerCountry : string,
+    buyerCountry : ?string,
     currency : $Values<typeof CURRENCY>,
     commit : boolean,
     vault : boolean,
     intent : string,
-    disableFunding : $ReadOnlyArray<string>,
-    disableCard : $ReadOnlyArray<string>
+    disableFunding : $ReadOnlyArray<?string>,
+    disableCard : $ReadOnlyArray<?string>
 |};
 
 const GRAPHQL_URI = '/graphql';
@@ -57,12 +57,12 @@ function buildFundingEligibilityVariables() : FundingEligibilityParams {
         commit,
         vault,
         intent:         intent ? intent.toUpperCase() : intent,
-        disableFunding: disableFunding ? disableFunding.map(f => f.toUpperCase()) : disableFunding,
-        disableCard:    disableCard ? disableCard.map(f => f.toUpperCase()) : disableCard
+        disableFunding: disableFunding ? disableFunding.map(f => f && f.toUpperCase()) : disableFunding,
+        disableCard:    disableCard ? disableCard.map(f => f && f.toUpperCase()) : disableCard
     };
 }
 
-export function callGraphQL<T>({ query, variables = {}, headers = {} } : { query : string, variables? : { [string] : mixed }, headers? : { [string] : string } }) : ZalgoPromise<T> {
+export function callGraphQL<T, V>({ query, variables = {}, headers = {} } : { query : string, variables : V, headers? : { [string] : string } }) : ZalgoPromise<T> {
     return request({
         url:     GRAPHQL_URI,
         method:  'POST',
