@@ -3,6 +3,7 @@
 import { ZalgoPromise } from 'zalgo-promise/src';
 import { request } from 'belter/src';
 import { CURRENCY } from '@paypal/sdk-constants/src';
+import { stringifyError } from 'belter/src';
 
 import { getLogger } from './logger';
 import {
@@ -122,7 +123,7 @@ export function getGraphQLFundingEligibility<T>(fields : string) : ZalgoPromise<
         }
         return gqlResult && gqlResult.fundingEligibility;
     }).catch(err => {
-        getLogger().error(`graphql_fundingeligibility_error`, { err: err.stack || err.toString() });
+        getLogger().error(`graphql_fundingeligibility_error`, { err: stringifyError(err) });
         return ZalgoPromise.reject(err);
     });
 }
