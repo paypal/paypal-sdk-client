@@ -17,13 +17,6 @@ import {
     getBuyerCountry
 } from './script';
 
-type CardEligibility = {|
-    card : {
-        eligible? : ?boolean,
-        branded? : ?boolean
-    }
-|};
-
 type FundingEligibilityParams = {|
     clientID : string,
     merchantID : ?$ReadOnlyArray<string>,
@@ -91,52 +84,46 @@ export function callGraphQL<T, V>({ query, variables = {}, headers = {} } : { qu
 }
 
 // call gql with multiple merchant ids to get fundingEligibility for card
-export function getCardEligibility() : ZalgoPromise<CardEligibility> {
+export function getGraphQLFundingEligibility<T>(fields : string) : ZalgoPromise<T> {
     const variables = buildFundingEligibilityVariables();
 
-    try {
-        return callGraphQL({
-            query: `
-                query GetFundingEligibility(
-                    $clientID:String,
-                    $merchantID:[ String ],
-                    $buyerCountry:CountryCodes,
-                    $currency:SupportedCountryCurrencies,
-                    $intent:FundingEligibilityIntent,
-                    $commit:Boolean,
-                    $vault:Boolean,
-                    $disableFunding:[ SupportedPaymentMethodsType ],
-                    $disableCard:[ SupportedCardsType ]
-                ) {
-                fundingEligibility(
-                    clientId:$clientID,
-                    buyerCountry:$buyerCountry,
-                    currency:$currency,
-                    intent:$intent,
-                    commit:$commit,
-                    vault:$vault,
-                    disableFunding:$disableFunding,
-                    disableCard:$disableCard,
-                    merchantId:$merchantID
-                ) {
-                    card {
-                        eligible 
-                        branded 
-                    }
-                }
-              }
-            `,
-            variables
-        }).then((gqlResult) => {
-            if (!gqlResult || !gqlResult.fundingEligibility) {
-                throw new Error(`GraphQL fundingEligibility returned no fundingEligibility object`);
+    return callGraphQL({
+        query: `
+            query GetFundingEligibility(
+                $clientID:String,
+                $merchantID:[ String ],
+                $buyerCountry:CountryCodes,
+                $currency:SupportedCountryCurrencies,
+                $intent:FundingEligibilityIntent,
+                $commit:Boolean,
+                $vault:Boolean,
+                $disableFunding:[ SupportedPaymentMethodsType ],
+                $disableCard:[ SupportedCardsType ]
+            ) {
+            fundingEligibility(
+                clientId:$clientID,
+                buyerCountry:$buyerCountry,
+                currency:$currency,
+                intent:$intent,
+                commit:$commit,
+                vault:$vault,
+                disableFunding:$disableFunding,
+                disableCard:$disableCard,
+                merchantId:$merchantID
+            ) {
+                ${ fields }
             }
-            return gqlResult && gqlResult.fundingEligibility;
-        });
-    }
-    catch (err) {
-        getLogger().error(`GraphQL fundingEligibility error`, err);
+          }
+        `,
+        variables
+    }).then((gqlResult) => {
+        if (!gqlResult || !gqlResult.fundingEligibility) {
+            throw new Error(`GraphQL fundingEligibility returned no fundingEligibility object`);
+        }
+        return gqlResult && gqlResult.fundingEligibility;
+    }).catch(err => {
+        getLogger().error(`graphql_fundingeligibility_error`, { err: err.stack || err.toString() });
         return ZalgoPromise.reject(err);
-    }
+    });
 }
 
