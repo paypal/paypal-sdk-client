@@ -1,9 +1,9 @@
 /* @flow */
 
 import { ZalgoPromise } from 'zalgo-promise/src';
-import { request } from 'belter/src';
+import { request, stringifyError } from 'belter/src';
 import { CURRENCY } from '@paypal/sdk-constants/src';
-import { stringifyError } from 'belter/src';
+
 
 import { getLogger } from './logger';
 import {
@@ -56,7 +56,7 @@ function buildFundingEligibilityVariables() : FundingEligibilityParams {
     };
 }
 
-export function callGraphQL<T, V>({ query, variables = {}, headers = {} } : { query : string, variables : V, headers? : { [string] : string } }) : ZalgoPromise<T> {
+export function callGraphQL<T, V>({ query, variables = {}, headers = {} } : {| query : string, variables : V, headers? : { [string] : string } |}) : ZalgoPromise<T> {
     return request({
         url:     GRAPHQL_URI,
         method:  'POST',
