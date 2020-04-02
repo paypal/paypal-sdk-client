@@ -158,13 +158,19 @@ export function getClientToken() : ?string {
     return getSDKAttribute(SDK_SETTINGS.CLIENT_TOKEN);
 }
 
-export function getClientAccessToken() : ?string {
-    const clientAccessToken = getSDKAttribute(SDK_SETTINGS.CLIENT_ACCESS_TOKEN);
-
-    if (clientAccessToken) {
-        return clientAccessToken;
+export function getAmount() : ?string {
+    const amount = getSDKAttribute(SDK_SETTINGS.AMOUNT);
+    if (amount && amount.match(/^\d+\.\d+$/)) {
+        throw new Error(`Invalid amount: ${ amount }`);
     }
+    return amount;
+}
 
+export function getUserIDToken() : ?string {
+    return getSDKAttribute(SDK_SETTINGS.USER_ID_TOKEN);
+}
+
+export function getClientAccessToken() : ?string {
     const clientToken = getClientToken();
 
     if (clientToken) {
@@ -226,11 +232,11 @@ export function getSDKIntegrationSource() : ?string {
 }
 
 export function getUserAccessToken() : ?string {
-    return getSDKAttribute(SDK_SETTINGS.USER_ACCESS_TOKEN);
+    // pass
 }
 
 export function getUserAuthCode() : ?string {
-    return getSDKAttribute(SDK_SETTINGS.USER_AUTH_CODE);
+    // pass
 }
 
 // Remove

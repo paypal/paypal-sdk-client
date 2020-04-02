@@ -1,8 +1,9 @@
 /* @flow */
 
+import { SDK_SETTINGS } from '@paypal/sdk-constants/src';
 import { getStorage, type Storage } from 'belter/src';
 
-import { getNamespace } from './script';
+import { getNamespace, getSDKAttribute } from './script';
 
 function getSDKStorage() : Storage {
     return getStorage({
@@ -24,4 +25,8 @@ export function getStorageID() : string {
 
 export function getSessionState<T>(handler : (state : Object) => T) : T {
     return getSDKStorage().getSessionState(handler);
+}
+
+export function getClientMetadataID() : string {
+    return getSDKAttribute(SDK_SETTINGS.CLIENT_METADATA_ID) || getSessionID();
 }
