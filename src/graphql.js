@@ -4,7 +4,6 @@ import { ZalgoPromise } from 'zalgo-promise/src';
 import { request, stringifyError } from 'belter/src';
 import { CURRENCY } from '@paypal/sdk-constants/src';
 
-
 import { getLogger } from './logger';
 import {
     getIntent,
@@ -17,6 +16,8 @@ import {
     getDisableCard,
     getBuyerCountry
 } from './script';
+import { buildPayPalUrl } from './config';
+
 
 type FundingEligibilityParams = {|
     clientID : string,
@@ -58,7 +59,7 @@ function buildFundingEligibilityVariables() : FundingEligibilityParams {
 
 export function callGraphQL<T, V>({ query, variables = {}, headers = {} } : {| query : string, variables : V, headers? : { [string] : string } |}) : ZalgoPromise<T> {
     return request({
-        url:     GRAPHQL_URI,
+        url:     buildPayPalUrl(GRAPHQL_URI),
         method:  'POST',
         json:    {
             query,
