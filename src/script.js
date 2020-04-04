@@ -97,6 +97,14 @@ export function getMerchantID() : $ReadOnlyArray<string> {
         if (merchantID.length <= 1) {
             throw new Error(`Must pass multiple merchant ids to ${ SDK_SETTINGS.MERCHANT_ID }. If passing a single id, pass ${ SDK_QUERY_KEYS.MERCHANT_ID }=XYZ in url`);
         }
+
+        // check duplicates
+        const hasDuplicate = merchantID.some((val, i) => merchantID && merchantID.indexOf(val) !== i);
+
+        if (hasDuplicate) {
+            throw new Error(`Duplicates ${ SDK_SETTINGS.MERCHANT_ID }. Must pass unique merchant ids to ${ SDK_SETTINGS.MERCHANT_ID }.`);
+        }
+        return merchantID;
     }
     
     if (merchantID) {
@@ -150,13 +158,19 @@ export function getClientToken() : ?string {
     return getSDKAttribute(SDK_SETTINGS.CLIENT_TOKEN);
 }
 
-export function getClientAccessToken() : ?string {
-    const clientAccessToken = getSDKAttribute(SDK_SETTINGS.CLIENT_ACCESS_TOKEN);
-
-    if (clientAccessToken) {
-        return clientAccessToken;
+export function getAmount() : ?string {
+    const amount = getSDKAttribute(SDK_SETTINGS.AMOUNT);
+    if (amount && amount.match(/^\d+\.\d+$/)) {
+        throw new Error(`Invalid amount: ${ amount }`);
     }
+    return amount;
+}
 
+export function getUserIDToken() : ?string {
+    return getSDKAttribute(SDK_SETTINGS.USER_ID_TOKEN);
+}
+
+export function getClientAccessToken() : ?string {
     const clientToken = getClientToken();
 
     if (clientToken) {
@@ -218,11 +232,11 @@ export function getSDKIntegrationSource() : ?string {
 }
 
 export function getUserAccessToken() : ?string {
-    return getSDKAttribute(SDK_SETTINGS.USER_ACCESS_TOKEN);
+    // pass
 }
 
 export function getUserAuthCode() : ?string {
-    return getSDKAttribute(SDK_SETTINGS.USER_AUTH_CODE);
+    // pass
 }
 
 // Remove

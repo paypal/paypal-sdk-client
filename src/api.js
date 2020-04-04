@@ -11,16 +11,16 @@ import { FPTI_CONTEXT_TYPE, FPTI_TRANSITION } from './constants';
 
 export type OrderCreateRequest = {|
     intent? : 'CAPTURE' | 'AUTHORIZE',
-    purchase_units : $ReadOnlyArray<{
-        amount : {
+    purchase_units : $ReadOnlyArray<{|
+        amount : {|
             currency_code : string,
             value : string
-        },
-        payee? : {
+        |},
+        payee? : {|
             merchant_id? : string,
             email_address? : string
-        }
-    }>
+        |}
+    |}>
 |};
 
 export type OrderCaptureResponse = {||};

@@ -92,6 +92,7 @@ export function setupLogger() {
     
         logger
             .info(`setup_${ getEnv() }`)
+            .info(`setup_${ getEnv() }_${ getVersion().replace(/\./g, '_') }`)
             .info(cache)
             .track({
                 [FPTI_KEY.TRANSITION]:    'process_js_sdk_init_client',
