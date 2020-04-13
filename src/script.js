@@ -160,7 +160,7 @@ export function getClientToken() : ?string {
 
 export function getAmount() : ?string {
     const amount = getSDKAttribute(SDK_SETTINGS.AMOUNT);
-    if (amount && amount.match(/^\d+\.\d+$/)) {
+    if (amount && !amount.match(/^\d+\.\d\d$/)) {
         throw new Error(`Invalid amount: ${ amount }`);
     }
     return amount;
