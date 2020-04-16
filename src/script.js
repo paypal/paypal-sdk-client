@@ -231,6 +231,11 @@ export function getSDKIntegrationSource() : ?string {
     return getSDKAttribute(SDK_SETTINGS.SDK_INTEGRATION_SOURCE);
 }
 
+// whether in zoid window
+export function isChildWindow() : boolean {
+    return Boolean(window.xprops);
+}
+
 export function getUserAccessToken() : ?string {
     // pass
 }
