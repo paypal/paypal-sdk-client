@@ -117,16 +117,8 @@ function validateHost(url) {
     }
 }
 
-function getSDKScriptAttributes(sdkUrl : ?string, stageHost : ?string, apiStageHost : ?string) : { [string] : string } {
+function getSDKScriptAttributes(sdkUrl : ?string, allAttrs : ?{ [string] : string }) : { [string] : string } {
     const attrs = {};
-
-    if (stageHost) {
-        attrs[SDK_SETTINGS.STAGE_HOST] = stageHost;
-    }
-
-    if (apiStageHost) {
-        attrs[SDK_SETTINGS.API_STAGE_HOST] = apiStageHost;
-    }
 
     if (sdkUrl) {
         const { hostname, pathname } = urlLib.parse(sdkUrl, true);
@@ -145,12 +137,19 @@ function getSDKScriptAttributes(sdkUrl : ?string, stageHost : ?string, apiStageH
         }
     }
 
+    // only those in SDK_SETTINGS
+    const validAttrs = Object.values(SDK_SETTINGS);
+    for (const key in allAttrs) {
+        if (validAttrs.includes(key)) {
+            attrs[key] = allAttrs[key];
+        }
+    }
     return attrs;
 }
 
 export function unpackSDKMeta(sdkMeta? : string) : SDKMeta {
 
-    const { url, stageHost, apiStageHost } = sdkMeta
+    const { url, attrs } = sdkMeta
         ? JSON.parse(Buffer.from(sdkMeta, 'base64').toString('utf8'))
         : DEFAULT_SDK_META;
 
@@ -158,20 +157,20 @@ export function unpackSDKMeta(sdkMeta? : string) : SDKMeta {
         validateSDKUrl(url);
     }
 
-    if (stageHost) {
-        validateHost(stageHost);
+    if (attrs && attrs[SDK_SETTINGS.STAGE_HOST]) {
+        validateHost(attrs[SDK_SETTINGS.STAGE_HOST]);
     }
 
-    if (apiStageHost) {
-        validateHost(apiStageHost);
+    if (attrs && attrs[SDK_SETTINGS.API_STAGE_HOST]) {
+        validateHost(attrs[SDK_SETTINGS.API_STAGE_HOST]);
     }
 
     const getSDKLoader = ({ baseURL = DEFAULT_LEGACY_SDK_BASE_URL, nonce = '' } = {}) => {
         if (url) {
-            const attrs = getSDKScriptAttributes(url, stageHost, apiStageHost);
+            const validAttrs = getSDKScriptAttributes(url, attrs);
 
             return (
-                <script nonce={ nonce } src={ url } { ...attrs } />
+                <script nonce={ nonce } src={ url } { ...validAttrs } />
             ).render(html());
         }
 
