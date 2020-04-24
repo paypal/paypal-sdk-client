@@ -41,7 +41,7 @@ describe(`meta cases`, () => {
             throw new Error(`Expected meta string to be returned`);
         }
 
-        const { stageHost } = JSON.parse(window.atob(meta));
+        const { 'data-stage-host': stageHost } = JSON.parse(window.atob(meta));
 
         if (stageHost !== expectedStageHost) {
             throw new Error(`Expected sdk stage host to be ${ expectedStageHost }, got ${ stageHost }`);
@@ -66,10 +66,36 @@ describe(`meta cases`, () => {
             throw new Error(`Expected meta string to be returned`);
         }
 
-        const { apiStageHost } = JSON.parse(window.atob(meta));
+        const { 'data-api-stage-host': apiStageHost } = JSON.parse(window.atob(meta));
 
         if (apiStageHost !== expectedApiStageHost) {
             throw new Error(`Expected sdk api stage host to be ${ expectedApiStageHost }, got ${ apiStageHost }`);
+        }
+    });
+
+    it('should successfully create a meta payload with merchant id', () => {
+        const expectedMerchantIds = 'abcd1234, abcd5678';
+
+        insertMockSDKScript({
+            query: {
+                'client-id':    'foobar',
+                'merchant-id':  '*'
+            },
+            attributes: {
+                'data-merchant-id': expectedMerchantIds
+            }
+        });
+
+        const meta = getSDKMeta();
+
+        if (!meta) {
+            throw new Error(`Expected meta string to be returned`);
+        }
+
+        const { 'data-merchant-id': merchantIds } = JSON.parse(window.atob(meta));
+
+        if (merchantIds !== expectedMerchantIds) {
+            throw new Error(`Expected sdk merchant ids to be ${ expectedMerchantIds }, got ${ merchantIds }`);
         }
     });
 });

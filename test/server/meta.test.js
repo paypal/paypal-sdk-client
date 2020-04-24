@@ -180,8 +180,8 @@ test('should consruct a valid script url with a custom stage host', () => {
     const stageHost = 'www.msfoo.qa.paypal.com';
 
     const { getSDKLoader } = unpackSDKMeta(Buffer.from(JSON.stringify({
-        url: sdkUrl,
-        stageHost
+        'url':              sdkUrl,
+        'data-stage-host':  stageHost
     })).toString('base64'));
 
     const $ = cheerio.load(getSDKLoader());
@@ -203,8 +203,8 @@ test('should consruct a valid script url with a custom api stage host', () => {
     const apiStageHost = 'api.msbar.qa.paypal.com';
 
     const { getSDKLoader } = unpackSDKMeta(Buffer.from(JSON.stringify({
-        url: sdkUrl,
-        apiStageHost
+        'url':                  sdkUrl,
+        'data-api-stage-host':  apiStageHost
     })).toString('base64'));
 
     const $ = cheerio.load(getSDKLoader());
@@ -227,9 +227,9 @@ test('should consruct a valid script url with both a custom stage host and custo
     const apiStageHost = 'api.msbar.qa.paypal.com';
 
     const { getSDKLoader } = unpackSDKMeta(Buffer.from(JSON.stringify({
-        url: sdkUrl,
-        stageHost,
-        apiStageHost
+        'url':                  sdkUrl,
+        'data-stage-host':      stageHost,
+        'data-api-stage-host':  apiStageHost
     })).toString('base64'));
 
     const $ = cheerio.load(getSDKLoader());
@@ -250,6 +250,51 @@ test('should consruct a valid script url with both a custom stage host and custo
     }
 });
 
+test('should consruct a valid script url with multiple merchant ids', () => {
+
+    const sdkUrl = 'https://www.paypal.com/sdk/js?client-id=foo';
+    const merchantId = 'abcd1234, abcd5678';
+
+    const { getSDKLoader } = unpackSDKMeta(Buffer.from(JSON.stringify({
+        'url':              sdkUrl,
+        'data-merchant-id':  merchantId
+    })).toString('base64'));
+
+    const $ = cheerio.load(getSDKLoader());
+    const src = $('script').attr('src');
+    const dataMerchantId = $('script').attr('data-merchant-id');
+
+    if (src !== sdkUrl) {
+        throw new Error(`Expected script url to be ${ sdkUrl } - got ${ src }`);
+    }
+
+    if (dataMerchantId !== merchantId) {
+        throw new Error(`Expected data-merchant-id to be ${ merchantId } - got ${ dataMerchantId }`);
+    }
+});
+
+test('should consruct a valid script url without invalid attributes', () => {
+
+    const sdkUrl = 'https://www.paypal.com/sdk/js?client-id=foo';
+
+    const { getSDKLoader } = unpackSDKMeta(Buffer.from(JSON.stringify({
+        'url':             sdkUrl,
+        'data-dummy-id':  'abcd'
+    })).toString('base64'));
+
+    const $ = cheerio.load(getSDKLoader());
+    const src = $('script').attr('src');
+    const result = $('script').attr('data-dummy-id');
+
+    if (src !== sdkUrl) {
+        throw new Error(`Expected script url to be ${ sdkUrl } - got ${ src }`);
+    }
+
+    if (result !== undefined) {
+        throw new Error(`Expected invalid attribute to be undefined - got ${ result }`);
+    }
+});
+
 test('should error out with an unsecure protocol', () => {
 
     const sdkUrl = 'http://www.paypal.com/sdk/js?client-id=foo&';
@@ -267,7 +312,6 @@ test('should error out with an unsecure protocol', () => {
         throw new Error(`Expected error to be thrown`);
     }
 });
-
 
 test('should error out with an invalid protocol', () => {
 
@@ -684,8 +728,8 @@ test('should error out if the custom stage host is not a paypal domain', () => {
 
     try {
         unpackSDKMeta(Buffer.from(JSON.stringify({
-            url: sdkUrl,
-            stageHost
+            'url':              sdkUrl,
+            'data-stage-host':  stageHost
         })).toString('base64'));
     } catch (err) {
         error = err;
@@ -705,8 +749,8 @@ test('should error out if the custom stage host has a path', () => {
 
     try {
         unpackSDKMeta(Buffer.from(JSON.stringify({
-            url: sdkUrl,
-            stageHost
+            'url':              sdkUrl,
+            'data-stage-host':  stageHost
         })).toString('base64'));
     } catch (err) {
         error = err;
@@ -726,8 +770,8 @@ test('should error out if the custom api stage host is not a paypal domain', () 
 
     try {
         unpackSDKMeta(Buffer.from(JSON.stringify({
-            url: sdkUrl,
-            apiStageHost
+            'url':                  sdkUrl,
+            'data-api-stage-host':  apiStageHost
         })).toString('base64'));
     } catch (err) {
         error = err;
@@ -747,8 +791,8 @@ test('should error out if the custom api stage host has a path', () => {
 
     try {
         unpackSDKMeta(Buffer.from(JSON.stringify({
-            url: sdkUrl,
-            apiStageHost
+            'url':                  sdkUrl,
+            'data-api-stage-host':  apiStageHost
         })).toString('base64'));
     } catch (err) {
         error = err;
