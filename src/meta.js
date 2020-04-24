@@ -6,7 +6,7 @@ import { getScriptUrl, getSDKAttributes } from './script';
 
 export function getSDKMeta() : string {
     const attrs = getSDKAttributes();
-
-    attrs.url = getScriptUrl();
-    return base64encode(JSON.stringify(attrs)).replace(/\=+$/, ''); // eslint-disable-line no-useless-escape
+    const url = getScriptUrl();
+    
+    return base64encode(JSON.stringify({ url, attrs })).replace(/\=+$/, ''); // eslint-disable-line no-useless-escape
 }

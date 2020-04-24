@@ -41,7 +41,7 @@ describe(`meta cases`, () => {
             throw new Error(`Expected meta string to be returned`);
         }
 
-        const { 'data-stage-host': stageHost } = JSON.parse(window.atob(meta));
+        const { attrs: { 'data-stage-host': stageHost } } = JSON.parse(window.atob(meta));
 
         if (stageHost !== expectedStageHost) {
             throw new Error(`Expected sdk stage host to be ${ expectedStageHost }, got ${ stageHost }`);
@@ -66,7 +66,7 @@ describe(`meta cases`, () => {
             throw new Error(`Expected meta string to be returned`);
         }
 
-        const { 'data-api-stage-host': apiStageHost } = JSON.parse(window.atob(meta));
+        const { attrs: { 'data-api-stage-host': apiStageHost } } = JSON.parse(window.atob(meta));
 
         if (apiStageHost !== expectedApiStageHost) {
             throw new Error(`Expected sdk api stage host to be ${ expectedApiStageHost }, got ${ apiStageHost }`);
@@ -92,7 +92,7 @@ describe(`meta cases`, () => {
             throw new Error(`Expected meta string to be returned`);
         }
 
-        const { 'data-merchant-id': merchantIds } = JSON.parse(window.atob(meta));
+        const { attrs: { 'data-merchant-id': merchantIds } } = JSON.parse(window.atob(meta));
 
         if (merchantIds !== expectedMerchantIds) {
             throw new Error(`Expected sdk merchant ids to be ${ expectedMerchantIds }, got ${ merchantIds }`);

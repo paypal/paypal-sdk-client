@@ -117,10 +117,8 @@ function validateHost(url) {
     }
 }
 
-function getSDKScriptAttributes(allAttrs : ?{ [string] : string }) : { [string] : string } {
+function getSDKScriptAttributes(sdkUrl : ?string, allAttrs : ?{ [string] : string }) : { [string] : string } {
     const attrs = {};
-
-    const sdkUrl = allAttrs && allAttrs.url;
 
     if (sdkUrl) {
         const { hostname, pathname } = urlLib.parse(sdkUrl, true);
@@ -151,30 +149,28 @@ function getSDKScriptAttributes(allAttrs : ?{ [string] : string }) : { [string] 
 
 export function unpackSDKMeta(sdkMeta? : string) : SDKMeta {
 
-    const allAttrs = sdkMeta
+    const { url, attrs } = sdkMeta
         ? JSON.parse(Buffer.from(sdkMeta, 'base64').toString('utf8'))
         : DEFAULT_SDK_META;
-
-    const url = allAttrs.url;
 
     if (url) {
         validateSDKUrl(url);
     }
 
-    if (allAttrs[SDK_SETTINGS.STAGE_HOST]) {
-        validateHost(allAttrs[SDK_SETTINGS.STAGE_HOST]);
+    if (attrs && attrs[SDK_SETTINGS.STAGE_HOST]) {
+        validateHost(attrs[SDK_SETTINGS.STAGE_HOST]);
     }
 
-    if (allAttrs[SDK_SETTINGS.API_STAGE_HOST]) {
-        validateHost(allAttrs[SDK_SETTINGS.API_STAGE_HOST]);
+    if (attrs && attrs[SDK_SETTINGS.API_STAGE_HOST]) {
+        validateHost(attrs[SDK_SETTINGS.API_STAGE_HOST]);
     }
 
     const getSDKLoader = ({ baseURL = DEFAULT_LEGACY_SDK_BASE_URL, nonce = '' } = {}) => {
         if (url) {
-            const attrs = getSDKScriptAttributes(allAttrs);
+            const validAttrs = getSDKScriptAttributes(url, attrs);
 
             return (
-                <script nonce={ nonce } src={ url } { ...attrs } />
+                <script nonce={ nonce } src={ url } { ...validAttrs } />
             ).render(html());
         }
 

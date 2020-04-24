@@ -179,8 +179,10 @@ test('should construct a valid script url with a custom stage host', () => {
     const stageHost = 'www.msfoo.qa.paypal.com';
 
     const { getSDKLoader } = unpackSDKMeta(Buffer.from(JSON.stringify({
-        'url':              sdkUrl,
-        'data-stage-host':  stageHost
+        url:   sdkUrl,
+        attrs: {
+            'data-stage-host':  stageHost
+        }
     })).toString('base64'));
 
     const $ = cheerio.load(getSDKLoader());
@@ -202,8 +204,10 @@ test('should construct a valid script url with a custom api stage host', () => {
     const apiStageHost = 'api.msbar.qa.paypal.com';
 
     const { getSDKLoader } = unpackSDKMeta(Buffer.from(JSON.stringify({
-        'url':                  sdkUrl,
-        'data-api-stage-host':  apiStageHost
+        url:   sdkUrl,
+        attrs: {
+            'data-api-stage-host':  apiStageHost
+        }
     })).toString('base64'));
 
     const $ = cheerio.load(getSDKLoader());
@@ -226,9 +230,11 @@ test('should construct a valid script url with both a custom stage host and cust
     const apiStageHost = 'api.msbar.qa.paypal.com';
 
     const { getSDKLoader } = unpackSDKMeta(Buffer.from(JSON.stringify({
-        'url':                  sdkUrl,
-        'data-stage-host':      stageHost,
-        'data-api-stage-host':  apiStageHost
+        url:   sdkUrl,
+        attrs: {
+            'data-stage-host':      stageHost,
+            'data-api-stage-host':  apiStageHost
+        }
     })).toString('base64'));
 
     const $ = cheerio.load(getSDKLoader());
@@ -255,8 +261,10 @@ test('should construct a valid script url with multiple merchant ids', () => {
     const merchantId = 'abcd1234, abcd5678';
 
     const { getSDKLoader } = unpackSDKMeta(Buffer.from(JSON.stringify({
-        'url':              sdkUrl,
-        'data-merchant-id':  merchantId
+        url:   sdkUrl,
+        attrs: {
+            'data-merchant-id':  merchantId
+        }
     })).toString('base64'));
 
     const $ = cheerio.load(getSDKLoader());
@@ -277,8 +285,10 @@ test('should construct a valid script url without invalid attributes', () => {
     const sdkUrl = 'https://www.paypal.com/sdk/js?client-id=foo';
 
     const { getSDKLoader } = unpackSDKMeta(Buffer.from(JSON.stringify({
-        'url':             sdkUrl,
-        'data-dummy-id':  'abcd'
+        url:   sdkUrl,
+        attrs: {
+            'data-dummy-id':  'abcd'
+        }
     })).toString('base64'));
 
     const $ = cheerio.load(getSDKLoader());
@@ -727,8 +737,10 @@ test('should error out if the custom stage host is not a paypal domain', () => {
 
     try {
         unpackSDKMeta(Buffer.from(JSON.stringify({
-            'url':              sdkUrl,
-            'data-stage-host':  stageHost
+            url:   sdkUrl,
+            attrs: {
+                'data-stage-host':  stageHost
+            }
         })).toString('base64'));
     } catch (err) {
         error = err;
@@ -748,8 +760,10 @@ test('should error out if the custom stage host has a path', () => {
 
     try {
         unpackSDKMeta(Buffer.from(JSON.stringify({
-            'url':              sdkUrl,
-            'data-stage-host':  stageHost
+            url:   sdkUrl,
+            attrs: {
+                'data-stage-host':  stageHost
+            }
         })).toString('base64'));
     } catch (err) {
         error = err;
@@ -769,8 +783,10 @@ test('should error out if the custom api stage host is not a paypal domain', () 
 
     try {
         unpackSDKMeta(Buffer.from(JSON.stringify({
-            'url':                  sdkUrl,
-            'data-api-stage-host':  apiStageHost
+            url:   sdkUrl,
+            attrs: {
+                'data-api-stage-host':  apiStageHost
+            }
         })).toString('base64'));
     } catch (err) {
         error = err;
@@ -790,8 +806,10 @@ test('should error out if the custom api stage host has a path', () => {
 
     try {
         unpackSDKMeta(Buffer.from(JSON.stringify({
-            'url':                  sdkUrl,
-            'data-api-stage-host':  apiStageHost
+            url:   sdkUrl,
+            attrs: {
+                'data-api-stage-host':  apiStageHost
+            }
         })).toString('base64'));
     } catch (err) {
         error = err;

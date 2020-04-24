@@ -16,8 +16,10 @@ export const LEGACY_SDK_PATH = /^(\/[a-zA-Z0-9_-]+)*\/checkout(\.4\.0\.\d{1,3})?
 
 export const DEFAULT_SDK_META = {
     url:          '',
-    stageHost:    '',
-    apiStageHost: ''
+    attrs:        {
+        'data-stage-host':      '',
+        'data-api-stage-host':  ''
+    }
 };
 
 export const DEFAULT_LEGACY_SDK_BASE_URL = 'https://www.paypalobjects.com/api/';
