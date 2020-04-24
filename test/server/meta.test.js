@@ -5,7 +5,7 @@ import cheerio from 'cheerio';
 
 import { unpackSDKMeta } from '../../server';
 
-test('should consruct a valid script url', () => {
+test('should construct a valid script url', () => {
 
     const sdkUrl = 'https://www.paypal.com/sdk/js?client-id=foo';
 
@@ -21,7 +21,7 @@ test('should consruct a valid script url', () => {
     }
 });
 
-test('should consruct a valid script url with paypalobjects', () => {
+test('should construct a valid script url with paypalobjects', () => {
 
     const sdkUrl = 'https://www.paypalobjects.com/api/checkout.js';
 
@@ -38,7 +38,7 @@ test('should consruct a valid script url with paypalobjects', () => {
     }
 });
 
-test('should consruct a valid script url with checkout.js on localhost', () => {
+test('should construct a valid script url with checkout.js on localhost', () => {
 
     const sdkUrl = 'http://localhost.paypal.com:8000/api/checkout.js';
 
@@ -55,7 +55,7 @@ test('should consruct a valid script url with checkout.js on localhost', () => {
     }
 });
 
-test('should fail to consruct a script url with checkout.js on localhost without a paypal.com domain', () => {
+test('should fail to construct a script url with checkout.js on localhost without a paypal.com domain', () => {
 
     const sdkUrl = 'http://localhost:8000/api/checkout.js';
 
@@ -74,8 +74,7 @@ test('should fail to consruct a script url with checkout.js on localhost without
     }
 });
 
-
-test('should consruct a valid minified script url with paypalobjects', () => {
+test('should construct a valid minified script url with paypalobjects', () => {
 
     const sdkUrl = 'https://www.paypalobjects.com/api/checkout.min.js';
 
@@ -92,7 +91,7 @@ test('should consruct a valid minified script url with paypalobjects', () => {
     }
 });
 
-test('should consruct a valid versioned script url with paypalobjects', () => {
+test('should construct a valid versioned script url with paypalobjects', () => {
 
     const sdkUrl = 'https://www.paypalobjects.com/api/checkout.4.0.125.js';
 
@@ -109,7 +108,7 @@ test('should consruct a valid versioned script url with paypalobjects', () => {
     }
 });
 
-test('should consruct a valid versioned minified script url with paypalobjects', () => {
+test('should construct a valid versioned minified script url with paypalobjects', () => {
 
     const sdkUrl = 'https://www.paypalobjects.com/api/checkout.4.0.125.min.js';
 
@@ -126,7 +125,7 @@ test('should consruct a valid versioned minified script url with paypalobjects',
     }
 });
 
-test('should consruct a valid localhost script url', () => {
+test('should construct a valid localhost script url', () => {
 
     const sdkUrl = 'http://localhost.paypal.com:8000/sdk/js?client-id=foo';
 
@@ -174,7 +173,7 @@ test('should unpack a valid sdk meta bundle with multiple components', () => {
     }
 });
 
-test('should consruct a valid script url with a custom stage host', () => {
+test('should construct a valid script url with a custom stage host', () => {
 
     const sdkUrl = 'https://www.paypal.com/sdk/js?client-id=foo';
     const stageHost = 'www.msfoo.qa.paypal.com';
@@ -197,7 +196,7 @@ test('should consruct a valid script url with a custom stage host', () => {
     }
 });
 
-test('should consruct a valid script url with a custom api stage host', () => {
+test('should construct a valid script url with a custom api stage host', () => {
 
     const sdkUrl = 'https://www.paypal.com/sdk/js?client-id=foo';
     const apiStageHost = 'api.msbar.qa.paypal.com';
@@ -220,7 +219,7 @@ test('should consruct a valid script url with a custom api stage host', () => {
     }
 });
 
-test('should consruct a valid script url with both a custom stage host and custom api stage host', () => {
+test('should construct a valid script url with both a custom stage host and custom api stage host', () => {
 
     const sdkUrl = 'https://www.paypal.com/sdk/js?client-id=foo';
     const stageHost = 'www.msfoo.qa.paypal.com';
@@ -250,7 +249,7 @@ test('should consruct a valid script url with both a custom stage host and custo
     }
 });
 
-test('should consruct a valid script url with multiple merchant ids', () => {
+test('should construct a valid script url with multiple merchant ids', () => {
 
     const sdkUrl = 'https://www.paypal.com/sdk/js?client-id=foo';
     const merchantId = 'abcd1234, abcd5678';
@@ -273,7 +272,7 @@ test('should consruct a valid script url with multiple merchant ids', () => {
     }
 });
 
-test('should consruct a valid script url without invalid attributes', () => {
+test('should construct a valid script url without invalid attributes', () => {
 
     const sdkUrl = 'https://www.paypal.com/sdk/js?client-id=foo';
 
@@ -493,7 +492,7 @@ test('should error out with a hash', () => {
     }
 });
 
-test('should consruct a valid loader even when no url passed', () => {
+test('should construct a valid loader even when no url passed', () => {
     const sdkUrl = 'https://www.paypalobjects.com/api/checkout.js';
 
     const { getSDKLoader } = unpackSDKMeta();
@@ -527,7 +526,7 @@ test('should consruct a valid loader even when no url passed', () => {
     }
 });
 
-test('should consruct a valid minified loader even when no url passed', () => {
+test('should construct a valid minified loader even when no url passed', () => {
     const sdkUrl = 'https://www.paypalobjects.com/api/checkout.min.js';
 
     const { getSDKLoader } = unpackSDKMeta();
@@ -560,7 +559,7 @@ test('should consruct a valid minified loader even when no url passed', () => {
     }
 });
 
-test('should consruct a valid version loader even when no url passed', () => {
+test('should construct a valid version loader even when no url passed', () => {
     const sdkUrl = 'https://www.paypalobjects.com/api/checkout.4.0.435.js';
 
     const { getSDKLoader } = unpackSDKMeta();
@@ -593,7 +592,7 @@ test('should consruct a valid version loader even when no url passed', () => {
     }
 });
 
-test('should consruct a valid loader even when no url passed with version 4', () => {
+test('should construct a valid loader even when no url passed with version 4', () => {
     const sdkUrl = 'https://www.paypalobjects.com/api/checkout.js';
 
     const { getSDKLoader } = unpackSDKMeta();
@@ -627,7 +626,7 @@ test('should consruct a valid loader even when no url passed with version 4', ()
     }
 });
 
-test('should consruct a valid loader even when no url passed with version 5 in a popup', () => {
+test('should construct a valid loader even when no url passed with version 5 in a popup', () => {
     const sdkUrl = 'https://www.paypal.com/sdk/js?client-id=foobarbaz';
 
     const { getSDKLoader } = unpackSDKMeta();
@@ -673,7 +672,7 @@ test('should consruct a valid loader even when no url passed with version 5 in a
     }
 });
 
-test('should consruct a valid loader even when no url passed with version 5 in an iframe', () => {
+test('should construct a valid loader even when no url passed with version 5 in an iframe', () => {
     const sdkUrl = 'https://www.paypal.com/sdk/js?client-id=foobarbaz';
 
     const { getSDKLoader } = unpackSDKMeta();
@@ -898,7 +897,7 @@ test('should error out if sdk url ends with &', () => {
     }
 });
 
-test('should consruct a valid script url with paypalobjects on http', () => {
+test('should construct a valid script url with paypalobjects on http', () => {
 
     const sdkUrl = 'http://www.paypalobjects.com/api/checkout.js';
 
@@ -915,7 +914,7 @@ test('should consruct a valid script url with paypalobjects on http', () => {
     }
 });
 
-test('should consruct a valid min script url with paypalobjects on http', () => {
+test('should construct a valid min script url with paypalobjects on http', () => {
 
     const sdkUrl = 'http://www.paypalobjects.com/api/checkout.min.js';
 
@@ -931,4 +930,3 @@ test('should consruct a valid min script url with paypalobjects on http', () => 
         throw new Error(`Expected script url to be ${ sdkUrl } - got ${ src }`);
     }
 });
-
