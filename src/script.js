@@ -166,8 +166,13 @@ export function getAmount() : ?string {
     return amount;
 }
 
+let idTokenAccessed = false;
+
 export function getUserIDToken() : ?string {
-    return getSDKAttribute(SDK_SETTINGS.USER_ID_TOKEN);
+    if (!idTokenAccessed) {
+        idTokenAccessed = true;
+        return getSDKAttribute(SDK_SETTINGS.USER_ID_TOKEN);
+    }
 }
 
 export function getClientAccessToken() : ?string {
