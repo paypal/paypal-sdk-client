@@ -27,6 +27,6 @@ export function getSessionState<T>(handler : (state : Object) => T) : T {
     return getSDKStorage().getSessionState(handler);
 }
 
-export function getClientMetadataID() : string {
-    return getSDKAttribute(SDK_SETTINGS.CLIENT_METADATA_ID) || getSessionID();
+export function getClientMetadataID() : ?string {
+    return getSDKAttribute(SDK_SETTINGS.CLIENT_METADATA_ID);
 }
