@@ -56,6 +56,7 @@ export function checkForCommonErrors() {
             logger.warn(`function_bind_arrity_overwritten`);
         }
 
+        // eslint-disable-next-line compat/compat
         if (window.opener && window.parent !== window) {
             logger.warn(`window_has_opener_and_parent`);
         }
