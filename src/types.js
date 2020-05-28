@@ -52,6 +52,7 @@ export type FundingEligibilityType = {|
     card : CardEligibility,
     venmo? : BasicEligibility,
     credit? : BasicEligibility,
+    flex? : BasicEligibility,
     sepa? : BasicEligibility,
     bancontact? : BasicEligibility,
     eps? : BasicEligibility,
