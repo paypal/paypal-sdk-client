@@ -56,7 +56,6 @@ export function checkForCommonErrors() {
             logger.warn(`function_bind_arrity_overwritten`);
         }
 
-        // eslint-disable-next-line compat/compat
         if (window.opener && window.parent !== window) {
             logger.warn(`window_has_opener_and_parent`);
         }
@@ -79,8 +78,7 @@ export function checkForCommonErrors() {
             logger.warn(`window_constructor_does_not_match_window`);
         }
 
-        // $FlowFixMe
-        if (Object.assign && JSON.stringify({ a: 1, b: 2, c: 3 }) !== JSON.stringify({ a: 1, b: 2, c: 3 })) { // eslint-disable-line no-self-compare, compat/compat
+        if (Object.assign && JSON.stringify({ a: 1, b: 2, c: 3 }) !== JSON.stringify({ a: 1, b: 2, c: 3 })) { // eslint-disable-line no-self-compare
             logger.warn(`object_assign_broken`);
         }
     }
