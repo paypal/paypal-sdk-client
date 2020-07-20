@@ -1,6 +1,10 @@
 PayPal SDK Client
 -----------------
 
+[![npm version](https://img.shields.io/npm/v/@paypal/sdk-client.svg?style=flat-square)](https://www.npmjs.com/package/@paypal/sdk-client) [![build status](https://img.shields.io/travis/paypal/paypal-sdk-client/master.svg?style=flat-square)](https://travis-ci.org/paypal/paypal-sdk-client)
+
+[![dependencies Status](https://david-dm.org/paypal/paypal-sdk-client/status.svg)](https://david-dm.org/paypal/paypal-sdk-client) [![devDependencies Status](https://david-dm.org/paypal/paypal-sdk-client/dev-status.svg)](https://david-dm.org/paypal/paypal-sdk-client?type=dev)
+
 A shared client for PayPal/Braintree client sdk modules. Has both client-side and server-side bindings to help you build and integrate an sdk component.
 
 ## Client
