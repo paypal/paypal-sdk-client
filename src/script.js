@@ -182,6 +182,10 @@ export function getPartnerAttributionID() : ?string {
     return getSDKAttribute(SDK_SETTINGS.PARTNER_ATTRIBUTION_ID);
 }
 
+export function getPageType() : ?string {
+    return getSDKAttribute(SDK_SETTINGS.PAGE_TYPE);
+}
+
 export function getStageHost() : string {
     return getSDKAttribute(SDK_SETTINGS.STAGE_HOST, getDefaultStageHost());
 }
