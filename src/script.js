@@ -6,6 +6,8 @@ import { COUNTRY, SDK_SETTINGS, SDK_QUERY_KEYS, INTENT, COMMIT, VAULT, CURRENCY,
 
 import { getHost, getPath, getDefaultStageHost, getDefaultAPIStageHost, getEnv, getDefaultNamespace } from './globals';
 
+const PAGE_TYPES = [ 'home', 'product-list', 'product-detail', 'cart', 'payment' ];
+
 export const CLIENT_ID_ALIAS = {
     sb: 'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R'
 };
@@ -183,7 +185,10 @@ export function getPartnerAttributionID() : ?string {
 }
 
 export function getPageType() : ?string {
-    return getSDKAttribute(SDK_SETTINGS.PAGE_TYPE);
+    const pageType = getSDKAttribute(SDK_SETTINGS.PAGE_TYPE);
+    const validPageType = PAGE_TYPES.includes(pageType);
+
+    return validPageType ? pageType : '';
 }
 
 export function getStageHost() : string {
