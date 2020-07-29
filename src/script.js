@@ -186,9 +186,9 @@ export function getPartnerAttributionID() : ?string {
 
 export function getPageType() : ?string {
     const pageType = getSDKAttribute(SDK_SETTINGS.PAGE_TYPE);
-    const validPageType = pageType ? PAGE_TYPES[pageType.toUpperCase()] : false;
-
-    return validPageType ? pageType : '';
+    const validPageType = pageType && pageType.length && PAGE_TYPES[pageType.toUpperCase()] !== undefined;
+    
+    return validPageType ? PAGE_TYPES[pageType.toUpperCase()] : '';
 }
 
 export function getStageHost() : string {
