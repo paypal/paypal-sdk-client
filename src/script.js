@@ -186,9 +186,12 @@ export function getPartnerAttributionID() : ?string {
 
 export function getPageType() : ?string {
     const pageType = getSDKAttribute(SDK_SETTINGS.PAGE_TYPE, '');
-    const validPageType = values(PAGE_TYPES).indexOf(pageType.toUpperCase()) !== -1;
+    const validPageType = values(PAGE_TYPES).indexOf(pageType.toLowerCase()) !== -1;
     
-    return validPageType ? PAGE_TYPES[pageType.toUpperCase()] : '';
+    if (!validPageType && pageType.length) {
+        throw new Error(`Invalid page type, '${ pageType }'`);
+    }
+    return pageType.toLowerCase();
 }
   
 export function getStageHost() : string {

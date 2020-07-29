@@ -334,16 +334,17 @@ describe(`script cases`, () => {
         }
     });
 
-    it('should set empty page type if invalid', () => {
-        const pageType = 'abc';
-        const url = insertMockSDKScript({
-            attributes: {
-                'data-page-type': pageType
-            }
-        });
-
-        if (getPageType() !== '') {
-            throw new Error(`Expected page type to be ${ pageType }, got ${ getPageType() || 'undefined' } from ${ url }`);
+    it('should throw error if invalid page type', () => {
+        try {
+            const pageType = 'abc';
+            insertMockSDKScript({
+                attributes: {
+                    'data-page-type': pageType
+                }
+            });
+            throw new Error(`Invalid page type should have thrown an Error.`);
+        } catch (error) {
+            // pass
         }
     });
 
