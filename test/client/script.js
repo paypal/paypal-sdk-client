@@ -346,4 +346,12 @@ describe(`script cases`, () => {
             throw new Error(`Expected page type to be ${ pageType }, got ${ getPageType() || 'undefined' } from ${ url }`);
         }
     });
+
+    it('should set empty page type if not set', () => {
+        const url = insertMockSDKScript({});
+
+        if (getPageType() !== '') {
+            throw new Error(`Expected page type to be empty, got ${ getPageType() || 'undefined' } from ${ url }`);
+        }
+    });
 });
