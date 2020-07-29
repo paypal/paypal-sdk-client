@@ -334,6 +334,19 @@ describe(`script cases`, () => {
         }
     });
 
+    it('should successfully get the page type if not same case', () => {
+        try {
+            const pageType = 'Home';
+            insertMockSDKScript({
+                attributes: {
+                    'data-page-type': pageType
+                }
+            });
+        } catch (error) {
+            throw new Error(`Passing in different case but correct value should pass.`);
+        }
+    });
+
     it('should throw error if invalid page type', () => {
         try {
             const pageType = 'abc';
