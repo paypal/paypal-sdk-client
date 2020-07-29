@@ -1,6 +1,6 @@
 /* @flow */
 
-import { getScript, inlineMemoize, parseQuery, getBrowserLocales, base64decode } from 'belter/src';
+import { getScript, inlineMemoize, parseQuery, getBrowserLocales, base64decode, values } from 'belter/src';
 import { COUNTRY, SDK_SETTINGS, SDK_QUERY_KEYS, INTENT, COMMIT, VAULT, CURRENCY,
     FUNDING, CARD, COUNTRY_LANGS, DEFAULT_INTENT, DEFAULT_CURRENCY, DEFAULT_VAULT,
     QUERY_BOOL, LANG, type LocaleType, DEFAULT_SALE_COMMIT, DEFAULT_NONSALE_COMMIT,
@@ -186,11 +186,11 @@ export function getPartnerAttributionID() : ?string {
 
 export function getPageType() : ?string {
     const pageType = getSDKAttribute(SDK_SETTINGS.PAGE_TYPE, '');
-    const validPageType = pageType.length && PAGE_TYPES[pageType.toUpperCase()] !== undefined;
+    const validPageType = values(PAGE_TYPES).indexOf(pageType.toUpperCase()) !== -1;
     
     return validPageType ? PAGE_TYPES[pageType.toUpperCase()] : '';
 }
-
+  
 export function getStageHost() : string {
     return getSDKAttribute(SDK_SETTINGS.STAGE_HOST, getDefaultStageHost());
 }
