@@ -1,12 +1,12 @@
 /* @flow */
 
 import { getScript, inlineMemoize, parseQuery, getBrowserLocales, base64decode } from 'belter/src';
-import { COUNTRY, SDK_SETTINGS, SDK_QUERY_KEYS, INTENT, COMMIT, VAULT, CURRENCY, FUNDING, CARD, COUNTRY_LANGS,
-    DEFAULT_INTENT, DEFAULT_CURRENCY, DEFAULT_VAULT, QUERY_BOOL, LANG, type LocaleType, DEFAULT_SALE_COMMIT, DEFAULT_NONSALE_COMMIT, ENV } from '@paypal/sdk-constants/src';
+import { COUNTRY, SDK_SETTINGS, SDK_QUERY_KEYS, INTENT, COMMIT, VAULT, CURRENCY,
+    FUNDING, CARD, COUNTRY_LANGS, DEFAULT_INTENT, DEFAULT_CURRENCY, DEFAULT_VAULT,
+    QUERY_BOOL, LANG, type LocaleType, DEFAULT_SALE_COMMIT, DEFAULT_NONSALE_COMMIT,
+    ENV, PAGE_TYPES } from '@paypal/sdk-constants/src';
 
 import { getHost, getPath, getDefaultStageHost, getDefaultAPIStageHost, getEnv, getDefaultNamespace } from './globals';
-
-const PAGE_TYPES = [ 'home', 'product-list', 'product-detail', 'cart', 'payment' ];
 
 export const CLIENT_ID_ALIAS = {
     sb: 'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R'
@@ -186,7 +186,7 @@ export function getPartnerAttributionID() : ?string {
 
 export function getPageType() : ?string {
     const pageType = getSDKAttribute(SDK_SETTINGS.PAGE_TYPE);
-    const validPageType = PAGE_TYPES.includes(pageType);
+    const validPageType = pageType ? PAGE_TYPES[pageType.toUpperCase()] : false;
 
     return validPageType ? pageType : '';
 }
