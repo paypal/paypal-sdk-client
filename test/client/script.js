@@ -3,7 +3,7 @@
 import { base64encode } from 'belter/src';
 
 import { getClientID, getIntent, getCurrency, getVault, getCommit, getClientToken, getPartnerAttributionID,
-    getMerchantID, getStageHost, getAPIStageHost, getClientAccessToken, getSDKIntegrationSource, insertMockSDKScript } from '../../src';
+    getMerchantID, getStageHost, getAPIStageHost, getClientAccessToken, getSDKIntegrationSource, insertMockSDKScript, getPageType } from '../../src';
 
 describe(`script cases`, () => {
     it('should successfully get a client id', () => {
@@ -318,6 +318,54 @@ describe(`script cases`, () => {
 
         if (SDKIntegrationSource !== getSDKIntegrationSource()) {
             throw new Error(`Expected client token to be ${ SDKIntegrationSource }, got ${ getAPIStageHost() || 'undefined' } from ${ url }`);
+        }
+    });
+
+    it('should successfully get the page type', () => {
+        const pageType = 'home';
+        const url = insertMockSDKScript({
+            attributes: {
+                'data-page-type': pageType
+            }
+        });
+
+        if (pageType !== getPageType()) {
+            throw new Error(`Expected page type to be ${ pageType }, got ${ getPageType() || 'undefined' } from ${ url }`);
+        }
+    });
+
+    it('should successfully get the page type if not same case', () => {
+        try {
+            const pageType = 'Home';
+            insertMockSDKScript({
+                attributes: {
+                    'data-page-type': pageType
+                }
+            });
+        } catch (error) {
+            throw new Error(`Passing in different case but correct value should pass.`);
+        }
+    });
+
+    it('should throw error if invalid page type', () => {
+        try {
+            const pageType = 'abc';
+            insertMockSDKScript({
+                attributes: {
+                    'data-page-type': pageType
+                }
+            });
+            throw new Error(`Invalid page type should have thrown an Error.`);
+        } catch (error) {
+            // pass
+        }
+    });
+
+    it('should set empty page type if not set', () => {
+        const url = insertMockSDKScript({});
+
+        if (getPageType() !== '') {
+            throw new Error(`Expected page type to be empty, got ${ getPageType() || 'undefined' } from ${ url }`);
         }
     });
 });

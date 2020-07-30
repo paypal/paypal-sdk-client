@@ -1,8 +1,10 @@
 /* @flow */
 
-import { getScript, inlineMemoize, parseQuery, getBrowserLocales, base64decode } from 'belter/src';
-import { COUNTRY, SDK_SETTINGS, SDK_QUERY_KEYS, INTENT, COMMIT, VAULT, CURRENCY, FUNDING, CARD, COUNTRY_LANGS,
-    DEFAULT_INTENT, DEFAULT_CURRENCY, DEFAULT_VAULT, QUERY_BOOL, LANG, type LocaleType, DEFAULT_SALE_COMMIT, DEFAULT_NONSALE_COMMIT, ENV } from '@paypal/sdk-constants/src';
+import { getScript, inlineMemoize, parseQuery, getBrowserLocales, base64decode, values } from 'belter/src';
+import { COUNTRY, SDK_SETTINGS, SDK_QUERY_KEYS, INTENT, COMMIT, VAULT, CURRENCY,
+    FUNDING, CARD, COUNTRY_LANGS, DEFAULT_INTENT, DEFAULT_CURRENCY, DEFAULT_VAULT,
+    QUERY_BOOL, LANG, type LocaleType, DEFAULT_SALE_COMMIT, DEFAULT_NONSALE_COMMIT,
+    ENV, PAGE_TYPES } from '@paypal/sdk-constants/src';
 
 import { getHost, getPath, getDefaultStageHost, getDefaultAPIStageHost, getEnv, getDefaultNamespace } from './globals';
 
@@ -182,6 +184,16 @@ export function getPartnerAttributionID() : ?string {
     return getSDKAttribute(SDK_SETTINGS.PARTNER_ATTRIBUTION_ID);
 }
 
+export function getPageType() : ?string {
+    const pageType = getSDKAttribute(SDK_SETTINGS.PAGE_TYPE, '');
+    const validPageType = values(PAGE_TYPES).indexOf(pageType.toLowerCase()) !== -1;
+    
+    if (!validPageType && pageType.length) {
+        throw new Error(`Invalid page type, '${ pageType }'`);
+    }
+    return pageType.toLowerCase();
+}
+  
 export function getStageHost() : string {
     return getSDKAttribute(SDK_SETTINGS.STAGE_HOST, getDefaultStageHost());
 }
