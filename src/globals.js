@@ -1,9 +1,7 @@
 /* @flow */
 
-import { ENV, PROTOCOL, COMPONENTS, PLATFORM } from '@paypal/sdk-constants/src';
+import { ENV, PROTOCOL, COMPONENTS, PLATFORM, type FundingEligibilityType } from '@paypal/sdk-constants/src';
 import { isDevice } from 'belter/src';
-
-import type { FundingEligibilityType } from './types';
 
 export function getSDKHost() : string {
     return __SDK_HOST__;
