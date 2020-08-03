@@ -15,13 +15,16 @@ export function createExperiment(name : string, sample : number) : Experiment {
         sample,
 
         logTreatment({ treatment, payload }) {
-            logger.track({
+            // $FlowFixMe
+            const fullPayload = {
                 [FPTI_KEY.STATE]:           FPTI_STATE.PXP,
                 [FPTI_KEY.TRANSITION]:      FPTI_TRANSITION.PXP,
                 [FPTI_KEY.EXPERIMENT_NAME]: name,
                 [FPTI_KEY.TREATMENT_NAME]:  treatment,
                 ...payload
-            });
+            };
+
+            logger.track(fullPayload);
             logger.flush();
         },
 

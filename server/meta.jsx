@@ -11,7 +11,7 @@ import { HOST, PROTOCOL, LEGACY_SDK_PATH, DEFAULT_SDK_META, DEFAULT_LEGACY_SDK_B
 import { constHas, entries } from './util';
 
 type SDKMeta = {|
-    getSDKLoader : (options? : { baseURL? : string, nonce? : string }) => string
+    getSDKLoader : (options? : {| baseURL? : string, nonce? : string |}) => string
 |};
 
 function validatePaymentsSDKUrl({ pathname, query, hash }) {
@@ -117,8 +117,17 @@ function validateHost(url) {
     }
 }
 
-function getSDKScriptAttributes(sdkUrl : ?string, allAttrs : ?{ [string] : string }) : { [string] : string } {
-    const attrs = {};
+type SDKAttributes = {|
+    [string] : string | boolean
+|};
+
+const getDefaultSDKAttributes = () : SDKAttributes => {
+    // $FlowFixMe
+    return {};
+};
+
+function getSDKScriptAttributes(sdkUrl : ?string, allAttrs : ?{ [string] : string }) : SDKAttributes {
+    const attrs = getDefaultSDKAttributes();
 
     if (sdkUrl) {
         const { hostname, pathname } = urlLib.parse(sdkUrl, true);
@@ -169,8 +178,15 @@ export function unpackSDKMeta(sdkMeta? : string) : SDKMeta {
         if (url) {
             const validAttrs = getSDKScriptAttributes(url, attrs);
 
+            // $FlowFixMe
+            const allAttrs = {
+                nonce,
+                src: url,
+                ...validAttrs
+            };
+
             return (
-                <script nonce={ nonce } src={ url } { ...validAttrs } />
+                <script { ...allAttrs } />
             ).render(html());
         }
 

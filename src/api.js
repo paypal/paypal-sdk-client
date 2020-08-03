@@ -9,8 +9,11 @@ import { getLogger } from './logger';
 import { getIntent, getCurrency, getPartnerAttributionID, getMerchantID } from './script';
 import { FPTI_CONTEXT_TYPE, FPTI_TRANSITION } from './constants';
 
+type ApplicationContext = {||};
+
 export type OrderCreateRequest = {|
     intent? : 'CAPTURE' | 'AUTHORIZE',
+    application_context? : ApplicationContext,
     purchase_units : $ReadOnlyArray<{|
         amount : {|
             currency_code : string,
@@ -64,6 +67,11 @@ type OrderCreateOptions = {|
     fptiState? : string
 |};
 
+const getDefaultApplicationContext = () : ApplicationContext => {
+    // $FlowFixMe
+    return {};
+};
+
 export function createOrder(clientID : string, order : OrderCreateRequest, { fptiState = '' } : OrderCreateOptions = {}) : ZalgoPromise<string> {
     getLogger().info(`rest_api_create_order_token`);
 
@@ -103,7 +111,7 @@ export function createOrder(clientID : string, order : OrderCreateRequest, { fpt
         return { ...unit, payee, amount: { ...unit.amount, currency_code: currency } };
     });
 
-    order.application_context = order.application_context || {};
+    order.application_context = order.application_context || getDefaultApplicationContext();
 
     return createAccessToken(clientID).then((accessToken) : ZalgoPromise<Object> => {
 
