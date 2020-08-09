@@ -22,7 +22,7 @@
     "test": "npm run lint && npm run flow-typed && npm run flow && npm run jest && npm run karma",
     "webpack": "babel-node --plugins=transform-es2015-modules-commonjs ./node_modules/.bin/webpack --progress",
     "jest": "jest test/server --env=node --no-cache --collectCoverageFrom='server/' --coverage --verbose --runInBand --silent=false",
-    "prepublish": "in-publish && npm run babel || not-in-publish",
+    "prepublishOnly": "npm run babel",
     "postpublish": "rm -rf ./server && git checkout ./server"
   },
   "files": [
