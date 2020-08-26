@@ -21,7 +21,7 @@ export function getSDKScript() : HTMLScriptElement {
         const script = getScript({ host, path });
 
         if (!script) {
-            throw new Error(`PayPal Payments SDK script not present on page! Excected to find <script src="https://${ host }${ path }">`);
+            throw new Error(`PayPal Payments SDK script not present on page! Expected to find <script src="https://${ host }${ path }">`);
         }
 
         return script;
