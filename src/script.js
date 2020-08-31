@@ -199,7 +199,7 @@ export function getStageHost() : string {
 }
 
 export function getAPIStageHost() : string {
-    return getSDKAttribute(SDK_SETTINGS.API_STAGE_HOST, getDefaultAPIStageHost());
+    return getSDKAttribute(SDK_SETTINGS.API_STAGE_HOST, `${ getDefaultAPIStageHost() }:12326`);
 }
 
 export function getLocale() : LocaleType {
