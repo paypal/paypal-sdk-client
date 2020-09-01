@@ -38,6 +38,11 @@ describe('logger tests', () => {
             }
         });
 
+        // eslint-disable-next-line compat/compat
+        window.navigator.sendBeacon = (url, data) => {
+            logData = JSON.parse(data);
+        };
+
         logger.info('foo', { bar: 'baz' });
         logger.track({ 'hello': 'world' });
 
@@ -117,6 +122,11 @@ describe('logger tests', () => {
                 return {};
             }
         });
+
+        // eslint-disable-next-line compat/compat
+        window.navigator.sendBeacon = (url, data) => {
+            logData = JSON.parse(data);
+        };
 
         ZalgoPromise.try(() => {
             throw new Error(`meep`);
