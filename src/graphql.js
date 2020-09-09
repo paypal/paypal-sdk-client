@@ -12,6 +12,7 @@ import {
     getMerchantID,
     getCommit,
     getVault,
+    getEnableFunding,
     getDisableFunding,
     getDisableCard,
     getBuyerCountry
@@ -27,6 +28,7 @@ type FundingEligibilityParams = {|
     commit : boolean,
     vault : boolean,
     intent : string,
+    enableFunding : $ReadOnlyArray<?string>,
     disableFunding : $ReadOnlyArray<?string>,
     disableCard : $ReadOnlyArray<?string>
 |};
@@ -41,6 +43,7 @@ function buildFundingEligibilityVariables() : FundingEligibilityParams {
     const commit = getCommit();
     const vault = getVault();
     const intent = getIntent();
+    const enableFunding = getEnableFunding();
     const disableFunding = getDisableFunding();
     const disableCard = getDisableCard();
 
@@ -52,6 +55,7 @@ function buildFundingEligibilityVariables() : FundingEligibilityParams {
         commit,
         vault,
         intent:         intent ? intent.toUpperCase() : intent,
+        enableFunding:  enableFunding ? enableFunding.map(f => f && f.toUpperCase()) : enableFunding,
         disableFunding: disableFunding ? disableFunding.map(f => f && f.toUpperCase()) : disableFunding,
         disableCard:    disableCard ? disableCard.map(f => f && f.toUpperCase()) : disableCard
     };
@@ -99,6 +103,7 @@ export function getGraphQLFundingEligibility<T>(fields : string) : ZalgoPromise<
                 $intent:FundingEligibilityIntent,
                 $commit:Boolean,
                 $vault:Boolean,
+                $enableFunding:[ SupportedPaymentMethodsType ],
                 $disableFunding:[ SupportedPaymentMethodsType ],
                 $disableCard:[ SupportedCardsType ]
             ) {
@@ -109,6 +114,7 @@ export function getGraphQLFundingEligibility<T>(fields : string) : ZalgoPromise<
                 intent:$intent,
                 commit:$commit,
                 vault:$vault,
+                enableFunding:$enableFunding,
                 disableFunding:$disableFunding,
                 disableCard:$disableCard,
                 merchantId:$merchantID
