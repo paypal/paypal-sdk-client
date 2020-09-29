@@ -257,7 +257,7 @@ export function isChildWindow() : boolean {
 }
 
 export function getUserAccessToken() : ?string {
-    // pass
+    return window.xprops.buyerAccessToken;
 }
 
 export function getUserAuthCode() : ?string {
