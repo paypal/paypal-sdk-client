@@ -1,7 +1,5 @@
 /* @flow */
 
-import { inlineMemoize, eventEmitter, type EventEmitterType } from 'belter/src';
+import { memoize, eventEmitter } from 'belter/src';
 
-export function getEventEmitter() : EventEmitterType {
-    return inlineMemoize(getEventEmitter, () => eventEmitter());
-}
+export const getEventEmitter = memoize(eventEmitter);

@@ -1,7 +1,7 @@
 /* @flow */
 
-import { setupLogger } from './logger';
-import { getSDKScript } from './script';
+import { setupLogger } from './tracking';
+import { getSDKScript, checkSDKScript } from './script';
 import { checkForCommonErrors } from './errors';
 
 export { FUNDING } from '@paypal/sdk-constants/src';
@@ -11,4 +11,5 @@ export function setup() {
     checkForCommonErrors();
     getSDKScript();
     setupLogger();
+    checkSDKScript();
 }

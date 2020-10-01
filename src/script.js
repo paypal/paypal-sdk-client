@@ -1,45 +1,91 @@
 /* @flow */
 
-import { getScript, inlineMemoize, parseQuery, getBrowserLocales, base64decode, values } from 'belter/src';
+import { getScript, getCurrentScriptUID, ATTRIBUTES, parseQuery, getBrowserLocales, base64decode, values, getCurrentScript, memoize } from 'belter/src';
 import { COUNTRY, SDK_SETTINGS, SDK_QUERY_KEYS, INTENT, COMMIT, VAULT, CURRENCY,
     FUNDING, CARD, COUNTRY_LANGS, DEFAULT_INTENT, DEFAULT_CURRENCY, DEFAULT_VAULT,
     QUERY_BOOL, LANG, type LocaleType, DEFAULT_SALE_COMMIT, DEFAULT_NONSALE_COMMIT,
     ENV, PAGE_TYPES } from '@paypal/sdk-constants/src';
 
-import { getHost, getPath, getDefaultStageHost, getDefaultAPIStageHost, getEnv, getDefaultNamespace } from './globals';
+import { getHost, getPath, getEnv, getDefaultNamespace, getSDKHost } from './globals';
+import { CLIENT_ID_ALIAS } from './config';
+import { getLogger } from './logger';
 
-export const CLIENT_ID_ALIAS = {
-    sb: 'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R'
-};
+export const getSDKScript = memoize(() : HTMLScriptElement => {
+    let currentScript;
 
-export function getSDKScript() : HTMLScriptElement {
-    return inlineMemoize(getSDKScript, () => {
-        // Add new __SDK_HOST__ global instead of determining this on the client side
-        const host = (getEnv() === ENV.SANDBOX) ? 'www.paypal.com' : getHost();
-        const path = getPath();
+    try {
+        currentScript = getCurrentScript();
+    } catch (err) {
+        // pass
+    }
 
-        const script = getScript({ host, path });
+    // Add new __SDK_HOST__ global instead of determining this on the client side
+    const host = (getEnv() === ENV.SANDBOX) ? 'www.paypal.com' : getHost();
 
-        if (!script) {
-            throw new Error(`PayPal Payments SDK script not present on page! Expected to find <script src="https://${ host }${ path }">`);
+    const path = getPath();
+    const inferredScript = getScript({ host, path, reverse: true });
+
+    let script;
+
+    if (currentScript) {
+        if (currentScript === inferredScript) {
+            script = currentScript;
+        } else {
+            script = inferredScript;
         }
+    } else {
+        script = inferredScript;
+    }
 
-        return script;
-    });
+    if (!script) {
+        throw new Error(`PayPal Payments SDK script not present on page! Expected to find <script src="https://${ host }${ path }">`);
+    }
+
+    return script;
+});
+
+export function checkSDKScript() {
+    let currentScript;
+
+    try {
+        currentScript = getCurrentScript();
+    } catch (err) {
+        // pass
+    }
+
+    const inferredScript = getSDKScript();
+    
+    if (currentScript) {
+        if (currentScript === inferredScript) {
+            getLogger().info('current_script_inferred_script_match').flush();
+        } else {
+            getLogger().info('current_script_inferred_script_no_match').flush();
+        }
+    } else {
+        getLogger().info('no_current_script_found').flush();
+    }
+    
+    const host = (getEnv() === ENV.SANDBOX) ? 'www.paypal.com' : getHost();
+    const sdkHost = getSDKHost();
+
+    if (host === sdkHost) {
+        getLogger().info('host_sdk_host_match').flush();
+    } else {
+        getLogger().info('host_sdk_host_no_match').flush();
+    }
 }
 
-export function getSDKAttributes() : { [string] : string } {
-    return inlineMemoize(getSDKAttributes, () => {
-        const sdkScript = getSDKScript();
-        const result = {};
-        for (const attr of sdkScript.attributes) {
-            if (attr.name.indexOf('data-') === 0) {
-                result[attr.name] = attr.value;
-            }
+export const getSDKAttributes = memoize(() : { [string] : string } => {
+    const sdkScript = getSDKScript();
+    const result = {};
+    for (const attr of sdkScript.attributes) {
+        if (attr.name.indexOf('data-') === 0) {
+            result[attr.name] = attr.value;
         }
-        return result;
-    });
-}
+    }
+    result[ATTRIBUTES.UID] = getCurrentScriptUID();
+    return result;
+});
 
 export function getSDKAttribute<T : string | void>(name : $Values<typeof SDK_SETTINGS>, def : T) : T {
     // $FlowFixMe
@@ -200,14 +246,6 @@ export function getPageType() : ?string {
         throw new Error(`Invalid page type, '${ pageType }'`);
     }
     return pageType.toLowerCase();
-}
-  
-export function getStageHost() : string {
-    return getSDKAttribute(SDK_SETTINGS.STAGE_HOST, getDefaultStageHost());
-}
-
-export function getAPIStageHost() : string {
-    return getSDKAttribute(SDK_SETTINGS.API_STAGE_HOST, `${ getDefaultAPIStageHost() }:12326`);
 }
 
 export function getLocale() : LocaleType {

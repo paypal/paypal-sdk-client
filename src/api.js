@@ -1,10 +1,10 @@
 /* @flow */
 
 import { ZalgoPromise } from 'zalgo-promise/src';
-import { inlineMemoize, request, base64encode } from 'belter/src';
+import { memoize, request, base64encode } from 'belter/src';
 import { FPTI_KEY, SDK_QUERY_KEYS, UNKNOWN } from '@paypal/sdk-constants/src';
 
-import { getOrderAPIUrl, getAuthAPIUrl } from './config';
+import { getOrderAPIUrl, getAuthAPIUrl } from './domains';
 import { getLogger } from './logger';
 import { getIntent, getCurrency, getPartnerAttributionID, getMerchantID } from './script';
 import { FPTI_CONTEXT_TYPE, FPTI_TRANSITION } from './constants';
@@ -30,38 +30,35 @@ export type OrderCaptureResponse = {||};
 export type OrderGetResponse = {||};
 export type OrderAuthorizeResponse = {||};
 
-export function createAccessToken (clientID : string) : ZalgoPromise<string> {
-    return inlineMemoize(createAccessToken, () => {
+export const createAccessToken = memoize((clientID : string) : ZalgoPromise<string> => {
+    getLogger().info(`rest_api_create_access_token`);
 
-        getLogger().info(`rest_api_create_access_token`);
+    const basicAuth = base64encode(`${ clientID }:`);
 
-        const basicAuth = base64encode(`${ clientID }:`);
+    return request({
 
-        return request({
+        method:  `post`,
+        url:     getAuthAPIUrl(),
+        headers: {
+            Authorization: `Basic ${ basicAuth }`
+        },
+        data: {
+            grant_type: `client_credentials`
+        }
 
-            method:  `post`,
-            url:     getAuthAPIUrl(),
-            headers: {
-                Authorization: `Basic ${ basicAuth }`
-            },
-            data: {
-                grant_type: `client_credentials`
-            }
+    }).then(({ body }) => {
 
-        }).then(({ body }) => {
+        if (body && body.error === 'invalid_client') {
+            throw new Error(`Auth Api invalid client id: ${ clientID }:\n\n${ JSON.stringify(body, null, 4) }`);
+        }
 
-            if (body && body.error === 'invalid_client') {
-                throw new Error(`Auth Api invalid client id: ${ clientID }:\n\n${ JSON.stringify(body, null, 4) }`);
-            }
+        if (!body || !body.access_token) {
+            throw new Error(`Auth Api response error:\n\n${ JSON.stringify(body, null, 4) }`);
+        }
 
-            if (!body || !body.access_token) {
-                throw new Error(`Auth Api response error:\n\n${ JSON.stringify(body, null, 4) }`);
-            }
-
-            return body.access_token;
-        });
-    }, [ clientID ]);
-}
+        return body.access_token;
+    });
+});
 
 type OrderCreateOptions = {|
     fptiState? : string

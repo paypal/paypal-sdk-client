@@ -1,10 +1,5 @@
 /* @flow */
 
-import { getDomain, getActualDomain, isCurrentDomain } from 'cross-domain-utils/src';
-
-import { getProtocol, getHost } from './globals';
-import { getStageHost, getAPIStageHost } from './script';
-
 export const SUPPORTED_BROWSERS = {
     msie:           '11',
     firefox:        '30',
@@ -18,75 +13,12 @@ export const SUPPORTED_BROWSERS = {
     vivaldi:        '1.91'
 };
 
+export const CLIENT_ID_ALIAS = {
+    sb: 'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R'
+};
+
 export const URI = {
     LOGGER: `/xoplatform/logger/api/logger`,
     AUTH:   `/v1/oauth2/token`,
     ORDER:  `/v2/checkout/orders`
 };
-
-export function getPayPalDomain() : string {
-    return {
-        local:      `${ getProtocol() }://${ getHost() }`,
-        stage:      `${ getProtocol() }://${ getStageHost() }`,
-        sandbox:    `${ getProtocol() }://www.sandbox.paypal.com`,
-        production: `${ getProtocol() }://www.paypal.com`,
-        test:       `mock://www.paypal.com`
-    }[__ENV__];
-}
-
-export function getPayPalAPIDomain() : string {
-    return {
-        local:      `${ getProtocol() }://${ getAPIStageHost() }`,
-        stage:      `${ getProtocol() }://${ getAPIStageHost() }`,
-        sandbox:    `${ getProtocol() }://cors.api.sandbox.paypal.com`,
-        production: `${ getProtocol() }://cors.api.paypal.com`,
-        test:       `mock://api.paypal.com`
-    }[__ENV__];
-}
-
-export function getPayPalLoggerDomain() : string {
-    return {
-        local:      `${ getProtocol() }://${ getStageHost() }`,
-        stage:      getPayPalDomain(),
-        sandbox:    getPayPalDomain(),
-        production: getPayPalDomain(),
-        test:       getPayPalDomain()
-    }[__ENV__];
-}
-
-export function buildPayPalUrl(path : string = '') : string {
-    return (__TEST__ && __WEB__)
-        ? `${ getActualDomain() }${ path }`
-        : `${ getPayPalDomain() }${ path }`;
-}
-
-export function buildPayPalAPIUrl(path : string = '') : string {
-    const paypalAPIDomain = isCurrentDomain(getPayPalDomain())
-        ? getPayPalDomain()
-        : getPayPalAPIDomain();
-
-    return (__TEST__ && __WEB__)
-        ? `${ getActualDomain() }${ path }`
-        : `${ paypalAPIDomain }${ path }`;
-}
-
-export function getPayPalLoggerUrl() : string {
-    return buildPayPalUrl(URI.LOGGER);
-}
-
-export function getAuthAPIUrl() : string {
-    return buildPayPalAPIUrl(URI.AUTH);
-}
-
-export function getOrderAPIUrl() : string {
-    return buildPayPalAPIUrl(URI.ORDER);
-}
-
-export function getPayPalDomainRegex() : RegExp {
-    // eslint-disable-next-line security/detect-unsafe-regex
-    return /\.paypal\.com(:\d+)?$/;
-}
-
-export function isPayPalDomain() : boolean {
-    return Boolean(getDomain().match(getPayPalDomainRegex()));
-}

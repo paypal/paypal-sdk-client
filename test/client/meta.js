@@ -23,58 +23,8 @@ describe(`meta cases`, () => {
         }
     });
 
-    it('should successfully create a meta payload with a custom stage host', () => {
-        const expectedStageHost = 'foo.qa.paypal.com';
-
-        insertMockSDKScript({
-            query: {
-                'client-id': 'foobar'
-            },
-            attributes: {
-                'data-stage-host': expectedStageHost
-            }
-        });
-
-        const meta = getSDKMeta();
-
-        if (!meta) {
-            throw new Error(`Expected meta string to be returned`);
-        }
-
-        const { attrs: { 'data-stage-host': stageHost } } = JSON.parse(window.atob(meta));
-
-        if (stageHost !== expectedStageHost) {
-            throw new Error(`Expected sdk stage host to be ${ expectedStageHost }, got ${ stageHost }`);
-        }
-    });
-
-    it('should successfully create a meta payload with a custom api stage host', () => {
-        const expectedApiStageHost = 'api.bar.qa.paypal.com';
-
-        insertMockSDKScript({
-            query: {
-                'client-id': 'foobar'
-            },
-            attributes: {
-                'data-api-stage-host': expectedApiStageHost
-            }
-        });
-
-        const meta = getSDKMeta();
-
-        if (!meta) {
-            throw new Error(`Expected meta string to be returned`);
-        }
-
-        const { attrs: { 'data-api-stage-host': apiStageHost } } = JSON.parse(window.atob(meta));
-
-        if (apiStageHost !== expectedApiStageHost) {
-            throw new Error(`Expected sdk api stage host to be ${ expectedApiStageHost }, got ${ apiStageHost }`);
-        }
-    });
-
     it('should successfully create a meta payload with merchant id', () => {
-        const expectedMerchantIds = 'abcd1234, abcd5678';
+        const expectedMerchantIds = 'abcd1234,abcd5678';
 
         insertMockSDKScript({
             query: {

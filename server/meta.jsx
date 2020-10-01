@@ -6,6 +6,7 @@ import urlLib from 'url';
 
 import { SDK_PATH, SDK_QUERY_KEYS, SDK_SETTINGS } from '@paypal/sdk-constants';
 import { node, html } from 'jsx-pragmatic';
+import { ATTRIBUTES } from 'belter';
 
 import { HOST, PROTOCOL, LEGACY_SDK_PATH, DEFAULT_SDK_META, DEFAULT_LEGACY_SDK_BASE_URL, DATA_ATTRIBUTES } from './constants';
 import { constHas, entries } from './util';
@@ -105,18 +106,6 @@ function validateSDKUrl(sdkUrl : string) {
     }
 }
 
-function validateHost(url) {
-    const { host, hostname } = urlLib.parse(`https://${ url }`, true);
-
-    if (url !== host) {
-        throw new Error(`Expected only host to be passed, got ${ url }`);
-    }
-
-    if (!hostname || !hostname.endsWith(HOST.PAYPAL)) {
-        throw new Error(`Expected a paypal host`);
-    }
-}
-
 type SDKAttributes = {|
     [string] : string | boolean
 |};
@@ -125,6 +114,17 @@ const getDefaultSDKAttributes = () : SDKAttributes => {
     // $FlowFixMe
     return {};
 };
+
+const ALLOWED_ATTRS = [
+    SDK_SETTINGS.AMOUNT,
+    SDK_SETTINGS.CLIENT_TOKEN,
+    SDK_SETTINGS.MERCHANT_ID,
+    SDK_SETTINGS.PARTNER_ATTRIBUTION_ID,
+    SDK_SETTINGS.ENABLE_3DS,
+    SDK_SETTINGS.SDK_INTEGRATION_SOURCE,
+    SDK_SETTINGS.CLIENT_METADATA_ID,
+    ATTRIBUTES.UID
+];
 
 function getSDKScriptAttributes(sdkUrl : ?string, allAttrs : ?{ [string] : string }) : SDKAttributes {
     const attrs = getDefaultSDKAttributes();
@@ -146,10 +146,8 @@ function getSDKScriptAttributes(sdkUrl : ?string, allAttrs : ?{ [string] : strin
         }
     }
 
-    // only those in SDK_SETTINGS
-    const validAttrs = Object.values(SDK_SETTINGS);
     for (const key in allAttrs) {
-        if (validAttrs.includes(key)) {
+        if (ALLOWED_ATTRS.includes(key)) {
             attrs[key] = allAttrs[key];
         }
     }
@@ -164,14 +162,6 @@ export function unpackSDKMeta(sdkMeta? : string) : SDKMeta {
 
     if (url) {
         validateSDKUrl(url);
-    }
-
-    if (attrs && attrs[SDK_SETTINGS.STAGE_HOST]) {
-        validateHost(attrs[SDK_SETTINGS.STAGE_HOST]);
-    }
-
-    if (attrs && attrs[SDK_SETTINGS.API_STAGE_HOST]) {
-        validateHost(attrs[SDK_SETTINGS.API_STAGE_HOST]);
     }
 
     const getSDKLoader = ({ baseURL = DEFAULT_LEGACY_SDK_BASE_URL, nonce = '' } = {}) => {

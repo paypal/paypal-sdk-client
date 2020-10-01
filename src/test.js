@@ -1,10 +1,11 @@
 /* @flow */
 
-import { extendUrl, getScript } from 'belter/src';
+import { extendUrl, getScript, memoize } from 'belter/src';
 import { SDK_QUERY_KEYS } from '@paypal/sdk-constants/src';
 
 import { getHost, getPath } from './globals';
 import { getSDKScript, getSDKAttributes } from './script';
+import { setupLogger } from './tracking';
 
 type ScriptSettings = {|
     query? : {
@@ -22,10 +23,12 @@ const DEFAULT_QUERY = {
 const DEFAULT_ATTRIBUTES = {};
 
 export function insertMockSDKScript({ query = DEFAULT_QUERY, attributes = DEFAULT_ATTRIBUTES } : ScriptSettings = {}) : string {
-    let script = document.querySelector('script[type="test/javascript"]');
+    const scripts = document.querySelectorAll('script[type="test/javascript"]');
 
-    if (script && script.parentNode) {
-        script.parentNode.removeChild(script);
+    for (const script of scripts) {
+        if (script && script.parentNode) {
+            script.parentNode.removeChild(script);
+        }
     }
 
     // $FlowFixMe
@@ -35,13 +38,13 @@ export function insertMockSDKScript({ query = DEFAULT_QUERY, attributes = DEFAUL
     // $FlowFixMe
     delete getSDKAttributes.__inline_memoize_cache__;
 
-    script = document.createElement('script');
+    const script = document.createElement('script');
     script.setAttribute('type', 'test/javascript');
     script.setAttribute('id', 'test-sdk-script');
 
     const url = extendUrl(`https://${ getHost() }${ getPath() }`, {
         query: {
-            [ SDK_QUERY_KEYS.CLIENT_ID ]: 'abcxyz123',
+            ...DEFAULT_QUERY,
             ...query
         }
     });
@@ -57,6 +60,8 @@ export function insertMockSDKScript({ query = DEFAULT_QUERY, attributes = DEFAUL
     }
 
     document.body.appendChild(script);
+    memoize.clear();
+    setupLogger();
 
     return url;
 }

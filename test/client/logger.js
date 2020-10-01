@@ -3,13 +3,12 @@
 import { $mockEndpoint, patchXmlHttpRequest } from 'sync-browser-mocks/dist/sync-browser-mocks';
 import { ZalgoPromise } from 'zalgo-promise/src';
 
-import { setupLogger, getLogger, insertMockSDKScript } from '../../src';
+import { getLogger, insertMockSDKScript } from '../../src';
 
 describe('logger tests', () => {
 
     before(() => {
         patchXmlHttpRequest();
-        setupLogger();
     });
 
     it('should log and flush with all expected keys', () => {

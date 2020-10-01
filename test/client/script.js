@@ -3,7 +3,7 @@
 import { base64encode } from 'belter/src';
 
 import { getClientID, getIntent, getCurrency, getVault, getCommit, getClientToken, getPartnerAttributionID,
-    getMerchantID, getStageHost, getAPIStageHost, getClientAccessToken, getSDKIntegrationSource, insertMockSDKScript, getPageType } from '../../src';
+    getMerchantID, getClientAccessToken, getSDKIntegrationSource, insertMockSDKScript, getPageType } from '../../src';
 
 describe(`script cases`, () => {
     it('should successfully get a client id', () => {
@@ -279,34 +279,6 @@ describe(`script cases`, () => {
         }
     });
 
-    it('should successfully get stage host', () => {
-        const stageHost = 'foo.qa.paypal.com';
-
-        const url = insertMockSDKScript({
-            attributes: {
-                'data-stage-host': stageHost
-            }
-        });
-
-        if (stageHost !== getStageHost()) {
-            throw new Error(`Expected client token to be ${ stageHost }, got ${ getStageHost() || 'undefined' } from ${ url }`);
-        }
-    });
-
-    it('should successfully get api stage host', () => {
-        const apiStageHost = 'bar.qa.paypal.com';
-
-        const url = insertMockSDKScript({
-            attributes: {
-                'data-api-stage-host': apiStageHost
-            }
-        });
-
-        if (apiStageHost !== getAPIStageHost()) {
-            throw new Error(`Expected client token to be ${ apiStageHost }, got ${ getAPIStageHost() || 'undefined' } from ${ url }`);
-        }
-    });
-
     it('should successfully get sdk integration source', () => {
         const SDKIntegrationSource = 'spbf';
 
@@ -317,7 +289,7 @@ describe(`script cases`, () => {
         });
 
         if (SDKIntegrationSource !== getSDKIntegrationSource()) {
-            throw new Error(`Expected client token to be ${ SDKIntegrationSource }, got ${ getAPIStageHost() || 'undefined' } from ${ url }`);
+            throw new Error(`Expected client token to be ${ SDKIntegrationSource }, got ${ getSDKIntegrationSource() || 'undefined' } from ${ url }`);
         }
     });
 

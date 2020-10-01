@@ -17,7 +17,7 @@ import {
     getDisableCard,
     getBuyerCountry
 } from './script';
-import { buildPayPalUrl } from './config';
+import { buildPayPalUrl } from './domains';
 
 
 type FundingEligibilityParams = {|

@@ -41,6 +41,14 @@ export function getDefaultAPIStageHost() : string {
         : __STAGE_HOST__.replace('www.', '');
 }
 
+export function getStageHost() : string {
+    return getDefaultStageHost();
+}
+
+export function getAPIStageHost() : string {
+    return `${ getDefaultAPIStageHost() }:12326`;
+}
+
 export function getVersion() : string {
     return __VERSION__;
 }
