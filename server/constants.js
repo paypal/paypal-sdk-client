@@ -12,7 +12,7 @@ export const PROTOCOL = {
 };
 
 // eslint-disable-next-line security/detect-unsafe-regex
-export const LEGACY_SDK_PATH = /^(\/[a-zA-Z0-9_-]+)*\/checkout(\.4\.0\.\d{1,3})?(\.min)?\.js$/;
+export const LEGACY_SDK_PATH : RegExp = /^(\/[a-zA-Z0-9_-]+)*\/checkout(\.4\.0\.\d{1,3})?(\.min)?\.js$/;
 
 export const DEFAULT_SDK_META = {
     url:          '',

@@ -30,7 +30,9 @@ export type OrderCaptureResponse = {||};
 export type OrderGetResponse = {||};
 export type OrderAuthorizeResponse = {||};
 
-export const createAccessToken = memoize((clientID : string) : ZalgoPromise<string> => {
+type CreateAccessToken = (string) => ZalgoPromise<string>;
+
+export const createAccessToken : CreateAccessToken = memoize(clientID => {
     getLogger().info(`rest_api_create_access_token`);
 
     const basicAuth = base64encode(`${ clientID }:`);

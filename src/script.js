@@ -10,7 +10,9 @@ import { getHost, getPath, getEnv, getDefaultNamespace, getSDKHost } from './glo
 import { CLIENT_ID_ALIAS } from './config';
 import { getLogger } from './logger';
 
-export const getSDKScript = memoize(() : HTMLScriptElement => {
+type GetSDKScript = () => HTMLScriptElement;
+
+export const getSDKScript : GetSDKScript = memoize(() => {
     let currentScript;
 
     try {
@@ -75,7 +77,9 @@ export function checkSDKScript() {
     }
 }
 
-export const getSDKAttributes = memoize(() : { [string] : string } => {
+type GetSDKAttributes = () => { [string] : string };
+
+export const getSDKAttributes : GetSDKAttributes = memoize(() => {
     const sdkScript = getSDKScript();
     const result = {};
     for (const attr of sdkScript.attributes) {
@@ -97,10 +101,16 @@ export function getSDKQueryParams() : { [string] : string } {
     return parseQuery(script.src.split('?')[1] || '');
 }
 
-export function getSDKQueryParam<T : string | void>(name : $Values<typeof SDK_QUERY_KEYS>, def : T) : T {
+type GetSDKQueryParam =
+    // eslint-disable-next-line no-undef
+    (<T : string>($Values<typeof SDK_QUERY_KEYS>) => T | void) &
+    // eslint-disable-next-line no-undef
+    (<T : string>($Values<typeof SDK_QUERY_KEYS>, T) => T);
+
+export const getSDKQueryParam : GetSDKQueryParam = (name, def) => {
     // $FlowFixMe
     return getSDKQueryParams()[name] || def;
-}
+};
 
 export function getScriptUrl() : string {
     const src = getSDKScript().getAttribute('src');
@@ -130,17 +140,17 @@ export function getClientID() : string {
 }
 
 export function getMerchantID() : $ReadOnlyArray<string> {
-    let merchantID = getSDKQueryParam(SDK_QUERY_KEYS.MERCHANT_ID);
+    const merchantIDString = getSDKQueryParam(SDK_QUERY_KEYS.MERCHANT_ID);
 
-    if (merchantID === '*') {
+    if (merchantIDString === '*') {
         // get multiple merchant ids or emails from data-merchant-id
-        merchantID = getSDKAttribute(SDK_SETTINGS.MERCHANT_ID);
+        const merchantIDAttribute = getSDKAttribute(SDK_SETTINGS.MERCHANT_ID);
 
-        if (!merchantID) {
+        if (!merchantIDAttribute) {
             throw new Error(`Must pass ${ SDK_SETTINGS.MERCHANT_ID } when ${ SDK_QUERY_KEYS.MERCHANT_ID }=* passed in url`);
         }
         
-        merchantID = merchantID.split(',');
+        const merchantID = merchantIDAttribute.split(',');
 
         if (merchantID.length <= 1) {
             throw new Error(`Must pass multiple merchant ids to ${ SDK_SETTINGS.MERCHANT_ID }. If passing a single id, pass ${ SDK_QUERY_KEYS.MERCHANT_ID }=XYZ in url`);
@@ -155,8 +165,8 @@ export function getMerchantID() : $ReadOnlyArray<string> {
         return merchantID;
     }
     
-    if (merchantID) {
-        return merchantID.split(',');
+    if (merchantIDString) {
+        return merchantIDString.split(',');
     }
 
     return [];

@@ -5,7 +5,9 @@ import { memoize } from 'belter/src';
 
 import { getPayPalLoggerUrl } from './domains';
 
-export const getLogger = memoize(() : LoggerType => {
+type GetLogger = () => LoggerType;
+
+export const getLogger : GetLogger = memoize(() => {
     return Logger({
         url: getPayPalLoggerUrl()
     });
