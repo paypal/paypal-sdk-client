@@ -1,81 +1,32 @@
 /* @flow */
 
-import { getScript, getCurrentScriptUID, ATTRIBUTES, parseQuery, getBrowserLocales, base64decode, values, getCurrentScript, memoize } from 'belter/src';
+import { getCurrentScriptUID, ATTRIBUTES, parseQuery, getBrowserLocales, base64decode,
+    values, getCurrentScript, memoize, stringifyError, getScript } from 'belter/src';
 import { COUNTRY, SDK_SETTINGS, SDK_QUERY_KEYS, INTENT, COMMIT, VAULT, CURRENCY,
     FUNDING, CARD, COUNTRY_LANGS, DEFAULT_INTENT, DEFAULT_CURRENCY, DEFAULT_VAULT,
     QUERY_BOOL, LANG, type LocaleType, DEFAULT_SALE_COMMIT, DEFAULT_NONSALE_COMMIT,
-    ENV, PAGE_TYPES } from '@paypal/sdk-constants/src';
+    PAGE_TYPES } from '@paypal/sdk-constants/src';
 
-import { getHost, getPath, getEnv, getDefaultNamespace, getSDKHost } from './globals';
+import { getPath, getDefaultNamespace, getSDKHost } from './globals';
 import { CLIENT_ID_ALIAS } from './config';
-import { getLogger } from './logger';
 
 type GetSDKScript = () => HTMLScriptElement;
 
 export const getSDKScript : GetSDKScript = memoize(() => {
-    let currentScript;
+    if (__TEST__) {
+        const script = getScript({ host: getSDKHost(), path: getPath(), reverse: true });
+        if (!script) {
+            throw new Error(`Can not find SDK test script`);
+        }
+        return script;
+    }
 
     try {
-        currentScript = getCurrentScript();
+        return getCurrentScript();
     } catch (err) {
-        // pass
+        throw new Error(`PayPal Payments SDK script not fiund on page! Expected to find <script src="https://${ getSDKHost() }${  getPath() }">\n\n${ stringifyError(err) }`);
     }
-
-    // Add new __SDK_HOST__ global instead of determining this on the client side
-    const host = (getEnv() === ENV.SANDBOX) ? 'www.paypal.com' : getHost();
-
-    const path = getPath();
-    const inferredScript = getScript({ host, path, reverse: true });
-
-    let script;
-
-    if (currentScript) {
-        if (currentScript === inferredScript) {
-            script = currentScript;
-        } else {
-            script = inferredScript;
-        }
-    } else {
-        script = inferredScript;
-    }
-
-    if (!script) {
-        throw new Error(`PayPal Payments SDK script not present on page! Expected to find <script src="https://${ host }${ path }">`);
-    }
-
-    return script;
 });
-
-export function checkSDKScript() {
-    let currentScript;
-
-    try {
-        currentScript = getCurrentScript();
-    } catch (err) {
-        // pass
-    }
-
-    const inferredScript = getSDKScript();
-    
-    if (currentScript) {
-        if (currentScript === inferredScript) {
-            getLogger().info('current_script_inferred_script_match').flush();
-        } else {
-            getLogger().info('current_script_inferred_script_no_match').flush();
-        }
-    } else {
-        getLogger().info('no_current_script_found').flush();
-    }
-    
-    const host = (getEnv() === ENV.SANDBOX) ? 'www.paypal.com' : getHost();
-    const sdkHost = getSDKHost();
-
-    if (host === sdkHost) {
-        getLogger().info('host_sdk_host_match').flush();
-    } else {
-        getLogger().info('host_sdk_host_no_match').flush();
-    }
-}
 
 type GetSDKAttributes = () => { [string] : string };
 
