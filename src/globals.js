@@ -46,7 +46,7 @@ export function getStageHost() : string {
 }
 
 export function getAPIStageHost() : string {
-    return `${ getDefaultAPIStageHost() }:12326`;
+    return getDefaultAPIStageHost().replace('www.', 'api.');
 }
 
 export function getVersion() : string {
