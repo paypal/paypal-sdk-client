@@ -3,7 +3,7 @@
 import { extendUrl, getScript, memoize } from 'belter/src';
 import { SDK_QUERY_KEYS } from '@paypal/sdk-constants/src';
 
-import { getHost, getPath } from './globals';
+import { getHost, getPath } from './global';
 import { getSDKScript, getSDKAttributes } from './script';
 import { setupLogger } from './tracking';
 

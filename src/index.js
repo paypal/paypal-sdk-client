@@ -4,7 +4,7 @@ export * from './setup';
 export * from './config';
 export * from './logger';
 export * from './types';
-export * from './globals';
+export * from './global';
 export * from './script';
 export * from './meta';
 export * from './api';

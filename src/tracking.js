@@ -4,7 +4,7 @@ import { noop, stringifyError, stringifyErrorMessage, isIEIntranet, getResourceL
 import { ZalgoPromise } from 'zalgo-promise/src';
 import { FPTI_KEY, FPTI_FEED, FPTI_DATA_SOURCE, FPTI_SDK_NAME, FPTI_USER_ACTION } from '@paypal/sdk-constants/src';
 
-import { getEnv, getVersion, getCorrelationID } from './globals';
+import { getEnv, getVersion, getCorrelationID } from './global';
 import { getPartnerAttributionID, getClientID, getMerchantID, getCommit, getLocale, getSDKScript, getSDKIntegrationSource, getPageType } from './script';
 import { getSessionID } from './session';
 import { getLogger } from './logger';

@@ -1,6 +1,6 @@
 /* @flow */
 
-export const testGlobals = {
+export const sdkClientTestGlobals = {
     __PORT__:       8000,
     __STAGE_HOST__: 'msmaster.qa.paypal.com',
     __HOST__:       'test.paypal.com',

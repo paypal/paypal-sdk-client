@@ -2,7 +2,7 @@
 
 import { getDomain, getActualDomain, isCurrentDomain } from 'cross-domain-utils/src';
 
-import { getProtocol, getHost, getStageHost, getAPIStageHost } from './globals';
+import { getProtocol, getHost, getStageHost, getAPIStageHost } from './global';
 import { URI } from './config';
 
 export function getPayPalDomain() : string {

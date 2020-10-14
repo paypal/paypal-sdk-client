@@ -7,7 +7,7 @@ import { COUNTRY, SDK_SETTINGS, SDK_QUERY_KEYS, INTENT, COMMIT, VAULT, CURRENCY,
     QUERY_BOOL, LANG, type LocaleType, DEFAULT_SALE_COMMIT, DEFAULT_NONSALE_COMMIT,
     PAGE_TYPES } from '@paypal/sdk-constants/src';
 
-import { getPath, getDefaultNamespace, getSDKHost } from './globals';
+import { getPath, getDefaultNamespace, getSDKHost } from './global';
 import { CLIENT_ID_ALIAS } from './config';
 
 type GetSDKScript = () => HTMLScriptElement;

@@ -29,7 +29,8 @@
     "dist/",
     "src/",
     "server/",
-    "__sdk__.js"
+    "__sdk__.js",
+    "test/globals.js"
   ],
   "browserslist": [
     "IE >= 11",
