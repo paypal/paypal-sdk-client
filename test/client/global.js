@@ -54,7 +54,7 @@ describe(`globals cases`, () => {
         const result = getDefaultStageHost();
 
         if (expectedResult !== result) {
-            throw new Error(`Expected default stage host to be ${ expectedResult }, got ${ result }`);
+            throw new Error(`Expected default stage host to be ${ expectedResult }, got ${ result || 'undefined' }`);
         }
     });
 
