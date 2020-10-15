@@ -31,14 +31,27 @@ export function getEnv() : $Values<typeof ENV> {
     return __ENV__;
 }
 
+export function getDefaultServiceStageHost() : ?string {
+    if (typeof __SERVICE_STAGE_HOST__ !== 'undefined' && __SERVICE_STAGE_HOST__ !== null) {
+        return __SERVICE_STAGE_HOST__;
+    }
+}
+
 export function getDefaultStageHost() : ?string {
-    return __STAGE_HOST__;
+    if (typeof __STAGE_HOST__ !== 'undefined' && __STAGE_HOST__ !== null) {
+        return __STAGE_HOST__;
+    }
 }
 
 export function getDefaultAPIStageHost() : ?string {
-    return (typeof __SERVICE_STAGE_HOST__ !== 'undefined')
-        ? __SERVICE_STAGE_HOST__
-        : __STAGE_HOST__.replace('www.', '');
+    const serviceStageHost = getDefaultServiceStageHost();
+    const stageHost = getDefaultStageHost();
+
+    if (serviceStageHost) {
+        return serviceStageHost;
+    } else if (stageHost) {
+        return stageHost;
+    }
 }
 
 export function getStageHost() : ?string {

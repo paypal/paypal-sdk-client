@@ -9,9 +9,9 @@ declare var __HOST__ : string;
 declare var __HOSTNAME__ : string;
 declare var __PORT__ : number;
 declare var __PATH__ : string;
-declare var __STAGE_HOST__ : string;
 declare var __SDK_HOST__ : string;
-declare var __SERVICE_STAGE_HOST__ : string;
+declare var __STAGE_HOST__ : ?string;
+declare var __SERVICE_STAGE_HOST__ : ?string;
 
 declare var __TEST__ : boolean;
 declare var __ENV__ : $Values<typeof ENV>;
