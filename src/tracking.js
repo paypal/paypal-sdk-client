@@ -24,7 +24,7 @@ export function setupLogger() {
     const logger = getLogger();
 
     sdkInitTime = Date.now();
-    
+
     logger.addPayloadBuilder(() => {
         return {
             referer: window.location.host,
@@ -76,7 +76,7 @@ export function setupLogger() {
         const sdkScript = getSDKScript();
         const loadTime = getResourceLoadTime(sdkScript.src);
         let cache;
-    
+
         if (loadTime === 0) {
             cache = 'sdk_client_cache_hit';
         } else if (typeof loadTime === 'number') {
@@ -84,11 +84,13 @@ export function setupLogger() {
         } else {
             cache = 'sdk_client_cache_unknown';
         }
-    
+
+        const hasAttributeUID = sdkScript.hasAttribute(ATTRIBUTES.UID) || sdkScript.hasAttribute(`${ ATTRIBUTES.UID }-auto`);
+
         logger
             .info(`setup_${ getEnv() }`)
             .info(`setup_${ getEnv() }_${ getVersion().replace(/\./g, '_') }`)
-            .info(`sdk_${ isPayPalDomain() ? 'paypal' : 'non_paypal' }_domain_script_uid_${ sdkScript.hasAttribute(ATTRIBUTES.UID) ? 'present' : 'missing' }`)
+            .info(`sdk_${ isPayPalDomain() ? 'paypal' : 'non_paypal' }_domain_script_uid_${ hasAttributeUID ? 'present' : 'missing' }`)
             .info(cache)
             .track({
                 [FPTI_KEY.TRANSITION]:    'process_js_sdk_init_client',
