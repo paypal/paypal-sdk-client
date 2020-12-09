@@ -1,9 +1,19 @@
 PayPal SDK Client
 -----------------
 
-[![npm version](https://img.shields.io/npm/v/@paypal/sdk-client.svg?style=flat-square)](https://www.npmjs.com/package/@paypal/sdk-client) [![build status](https://img.shields.io/travis/paypal/paypal-sdk-client/master.svg?style=flat-square)](https://travis-ci.org/paypal/paypal-sdk-client)
+[![build status][build-badge]][build]
+[![code coverage][coverage-badge]][coverage]
+[![npm version][version-badge]][package]
+[![apache license][license-badge]][license]
 
-[![dependencies Status](https://david-dm.org/paypal/paypal-sdk-client/status.svg)](https://david-dm.org/paypal/paypal-sdk-client) [![devDependencies Status](https://david-dm.org/paypal/paypal-sdk-client/dev-status.svg)](https://david-dm.org/paypal/paypal-sdk-client?type=dev)
+[build-badge]: https://img.shields.io/github/workflow/status/paypal/paypal-sdk-client/build?logo=github&style=flat-square
+[build]: https://github.com/paypal/paypal-sdk-client/actions?query=workflow%3Abuild
+[coverage-badge]: https://img.shields.io/codecov/c/github/paypal/paypal-sdk-client.svg?style=flat-square
+[coverage]: https://codecov.io/github/paypal/paypal-sdk-client/
+[version-badge]: https://img.shields.io/npm/v/@paypal/sdk-client.svg?style=flat-square
+[package]: https://www.npmjs.com/package/@paypal/sdk-client
+[license-badge]: https://img.shields.io/npm/l/@paypal/sdk-client.svg?style=flat-square
+[license]: https://github.com/paypal/paypal-sdk-client/blob/master/LICENSE
 
 A shared client for PayPal/Braintree client sdk modules. Has both client-side and server-side bindings to help you build and integrate an sdk component.
 
