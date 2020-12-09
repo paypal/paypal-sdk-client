@@ -22,7 +22,7 @@ export function setupSDK(components : $ReadOnlyArray<SetupComponent<mixed>>) {
 
     if (existingNamespace) {
         if (existingNamespace[INTERNAL_DESTROY_KEY]) {
-            existingNamespace[INTERNAL_DESTROY_KEY]();
+            existingNamespace[INTERNAL_DESTROY_KEY](new Error(`New SDK instance loaded, existing instance destroyed (${ namespace } / ${ version })`));
             delete window[namespace];
         } else if (version) {
             throw new Error(`Attempted to load sdk version ${ version } on page, but window.${ namespace } at version ${ existingVersion } already loaded.\n\nTo load this sdk alongside the existing version, please specify a different namespace in the script tag, e.g. <script src="https://www.paypal.com/sdk/js?client-id=CLIENT_ID" data-namespace="paypal_sdk"></script>, then use the paypal_sdk namespace in place of paypal in your code.`);
@@ -70,8 +70,8 @@ export function setupSDK(components : $ReadOnlyArray<SetupComponent<mixed>>) {
 
     Object.defineProperty(window[namespace], INTERNAL_DESTROY_KEY, {
         enumerable: false,
-        value:      () => {
-            destroyers.forEach(destroy => destroy());
+        value:      (err? : mixed = new Error(`SDK instance destroyed (${ namespace } / ${ version })`)) => {
+            destroyers.forEach(destroy => destroy(err));
             destroyElement(getSDKScript());
             delete window[namespace];
         }
