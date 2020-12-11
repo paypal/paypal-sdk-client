@@ -22,7 +22,9 @@ jobs:
           node-version: ${{ matrix.node }}
 
       - name: 📥 Download deps
-        run: npm install
+        uses: bahmutov/npm-install@v1
+        with:
+          useLockFile: false
 
       - name: ▶️ Run flow-typed script
         run: npm run flow-typed
