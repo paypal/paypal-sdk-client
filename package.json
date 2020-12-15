@@ -51,7 +51,7 @@
   "dependencies": {
     "@paypal/sdk-constants": "^1.0.61",
     "beaver-logger": "^4.0.0",
-    "belter": "^1.0.16",
+    "belter": "^1.0.146",
     "bowser": "^2.0.0",
     "jsx-pragmatic": "^2",
     "zalgo-promise": "^1.0.22"
