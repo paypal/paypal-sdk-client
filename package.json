@@ -49,12 +49,12 @@
   "license": "Apache-2.0",
   "readmeFilename": "README.md",
   "dependencies": {
-    "@paypal/sdk-constants": "^1.0.61",
+    "@paypal/sdk-constants": "^1.0.78",
     "beaver-logger": "^4.0.0",
     "belter": "^1.0.146",
     "bowser": "^2.0.0",
     "jsx-pragmatic": "^2",
-    "zalgo-promise": "^1.0.22"
+    "zalgo-promise": "^1.0.46"
   },
   "devDependencies": {
     "babel-core": "7.0.0-bridge.0",
