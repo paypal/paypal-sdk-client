@@ -67,11 +67,8 @@ function isLegacySDKUrl(hostname : string, pathname : string) : boolean {
 }
 
 function isSDKUrl(hostname : string) : boolean {
-    if (hostname.endsWith(HOST.PAYPAL)) {
-        return true;
-    }
-
-    return false;
+    const localUrls = ['localhost', 'ngrok', 'loca'];
+    return localUrls.some(url => hostname.includes(url));
 }
 
 function validateSDKUrl(sdkUrl : string) {
@@ -101,6 +98,8 @@ function validateSDKUrl(sdkUrl : string) {
         }
 
         validatePaymentsSDKUrl({ protocol, hostname, pathname, query, hash });
+    } else if (isLocalUrl(hostname)) {
+
     } else {
         throw new Error(`Expected host to be a subdomain of ${ HOST.PAYPAL } or ${ HOST.PAYPALOBJECTS }`);
     }
