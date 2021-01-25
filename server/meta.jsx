@@ -74,13 +74,13 @@ function isSDKUrl(hostname : string) : boolean {
     return false;
 }
 
-function isLocalUrl(hostname : string) : boolean {
-    const localUrls = ['localhost', 'ngrok', 'loca'];
-    return localUrls.some(url => hostname.includes(url));
+function isLocalUrl(host : string) : boolean {
+    const localUrls = [HOST.LOCALHOST_8000, HOST.LOCALHOST_8443, HOST.LOCALTUNNEL];
+    return localUrls.some(url => host === url);
 }
 
 function validateSDKUrl(sdkUrl : string) {
-    const { protocol, hostname, pathname, query, hash } = urlLib.parse(sdkUrl, true);
+    const { protocol, host, hostname, pathname, query, hash } = urlLib.parse(sdkUrl, true);
 
     if (!hostname) {
         throw new Error(`Expected host to be passed for sdk url`);
@@ -106,7 +106,7 @@ function validateSDKUrl(sdkUrl : string) {
         }
 
         validatePaymentsSDKUrl({ protocol, hostname, pathname, query, hash });
-    } else if (!isLocalUrl(hostname)) {
+    } else if (host && !isLocalUrl(host)) {
         throw new Error(`Expected host to be a subdomain of ${ HOST.PAYPAL } or ${ HOST.PAYPALOBJECTS }`);
     }
 }
