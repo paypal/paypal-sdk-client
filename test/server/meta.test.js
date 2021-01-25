@@ -74,6 +74,25 @@ test('should construct a script url with checkout.js on localhost without a payp
     }
 });
 
+test('should not construct a script url with checkout.js for non-supported local urls', () => {
+
+    const sdkUrl = 'http://not.a.supported.url:8000/api/checkout.js';
+
+    let error;
+
+    try {
+        unpackSDKMeta(Buffer.from(JSON.stringify({
+            url: sdkUrl
+        })).toString('base64'));
+    } catch (err) {
+        error = err;
+    }
+
+    if (!error) {
+        throw new Error(`Should construct script with supported local urls: (localhost, ngrok, loca)`);
+    }
+});
+
 test('should construct a valid minified script url with paypalobjects', () => {
 
     const sdkUrl = 'https://www.paypalobjects.com/api/checkout.min.js';
