@@ -55,7 +55,7 @@ test('should construct a valid script url with checkout.js on localhost', () => 
     }
 });
 
-test('should fail to construct a script url with checkout.js on localhost without a paypal.com domain', () => {
+test('should construct a script url with checkout.js on localhost without a paypal.com domain', () => {
 
     const sdkUrl = 'http://localhost:8000/api/checkout.js';
 
@@ -69,8 +69,8 @@ test('should fail to construct a script url with checkout.js on localhost withou
         error = err;
     }
 
-    if (!error) {
-        throw new Error(`Expected error to be thrown`);
+    if (error) {
+        throw new Error(`Should construct script with localhost url`);
     }
 });
 
