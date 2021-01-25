@@ -67,6 +67,14 @@ function isLegacySDKUrl(hostname : string, pathname : string) : boolean {
 }
 
 function isSDKUrl(hostname : string) : boolean {
+    if (hostname.endsWith(HOST.PAYPAL)) {
+        return true;
+    }
+
+    return false;
+}
+
+function isLocalUrl(hostname : string) : boolean {
     const localUrls = ['localhost', 'ngrok', 'loca'];
     return localUrls.some(url => hostname.includes(url));
 }
