@@ -106,9 +106,7 @@ function validateSDKUrl(sdkUrl : string) {
         }
 
         validatePaymentsSDKUrl({ protocol, hostname, pathname, query, hash });
-    } else if (isLocalUrl(hostname)) {
-
-    } else {
+    } else if (!isLocalUrl(hostname)) {
         throw new Error(`Expected host to be a subdomain of ${ HOST.PAYPAL } or ${ HOST.PAYPALOBJECTS }`);
     }
 }
