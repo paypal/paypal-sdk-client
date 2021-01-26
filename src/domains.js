@@ -106,7 +106,6 @@ export function getOrderAPIUrl() : string {
 
 export function getPayPalDomainRegex() : RegExp {
     if (__ENV__ === ENV.LOCAL) {
-        // eslint-disable-next-line security/detect-unsafe-regex
         return /.*loca.*|.*ngrok.*/;
     }
     // eslint-disable-next-line security/detect-unsafe-regex
