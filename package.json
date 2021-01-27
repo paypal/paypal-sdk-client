@@ -21,7 +21,7 @@
     "setup": "npm install && npm run flow-typed",
     "test": "npm run lint && npm run flow-typed && npm run flow && npm run jest && npm run karma",
     "webpack": "babel-node --plugins=transform-es2015-modules-commonjs ./node_modules/.bin/webpack --progress",
-    "jest": "jest test/server --env=node --no-cache --collectCoverageFrom='server/' --coverage --verbose --runInBand --silent=false",
+    "jest": "NODE_ENV=local jest test/server --env=node --no-cache --collectCoverageFrom='server/' --coverage --verbose --runInBand --silent=false",
     "prepublishOnly": "npm run babel",
     "postpublish": "rm -rf ./server && git checkout ./server"
   },
