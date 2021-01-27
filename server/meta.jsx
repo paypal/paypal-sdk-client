@@ -76,7 +76,9 @@ function isSDKUrl(hostname : string) : boolean {
 
 function isLocalUrl(host : string) : boolean {
     const localUrls = [ HOST.LOCALHOST_8000, HOST.LOCALHOST_8443, HOST.LOCALTUNNEL ];
-    return localUrls.some(url => host === url);
+    
+    // eslint-disable-next-line no-process-env
+    return process.env.NODE_ENV === 'local' && localUrls.some(url => host === url);
 }
 
 function validateSDKUrl(sdkUrl : string) {
