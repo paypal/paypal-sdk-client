@@ -74,7 +74,7 @@ function isSDKUrl(hostname : string) : boolean {
     return false;
 }
 
-function isLocalUrl(env : string, host : string) : boolean {
+function isLocalUrl(host : string) : boolean {
     const localUrls = [ HOST.LOCALHOST_8000, HOST.LOCALHOST_8443, HOST.LOCALTUNNEL ];
     return localUrls.some(url => host === url);
 }
