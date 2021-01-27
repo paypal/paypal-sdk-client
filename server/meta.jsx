@@ -4,7 +4,7 @@
 // eslint-disable-next-line import/no-nodejs-modules
 import urlLib from 'url';
 
-import { SDK_PATH, SDK_QUERY_KEYS, SDK_SETTINGS } from '@paypal/sdk-constants';
+import { ENV, SDK_PATH, SDK_QUERY_KEYS, SDK_SETTINGS } from '@paypal/sdk-constants';
 import { node, html } from 'jsx-pragmatic';
 import { ATTRIBUTES } from 'belter';
 
@@ -78,7 +78,7 @@ function isLocalUrl(host : string) : boolean {
     const localUrls = [ HOST.LOCALHOST_8000, HOST.LOCALHOST_8443, HOST.LOCALTUNNEL ];
     
     // eslint-disable-next-line no-process-env
-    return process.env.NODE_ENV === 'local' && localUrls.some(url => host === url);
+    return process.env.NODE_ENV === ENV.LOCAL && localUrls.some(url => host === url);
 }
 
 function validateSDKUrl(sdkUrl : string) {
