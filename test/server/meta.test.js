@@ -67,7 +67,6 @@ test('should construct a script url with checkout.js on localhost without a payp
         })).toString('base64'));
     } catch (err) {
         error = err;
-        console.log(error);
     }
 
     if (error) {
