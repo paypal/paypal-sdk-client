@@ -4,7 +4,7 @@
 // eslint-disable-next-line import/no-nodejs-modules
 import urlLib from 'url';
 
-import { SDK_PATH, SDK_QUERY_KEYS, SDK_SETTINGS } from '@paypal/sdk-constants';
+import { ENV, SDK_PATH, SDK_QUERY_KEYS, SDK_SETTINGS } from '@paypal/sdk-constants';
 import { node, html } from 'jsx-pragmatic';
 import { ATTRIBUTES } from 'belter';
 
@@ -74,8 +74,15 @@ function isSDKUrl(hostname : string) : boolean {
     return false;
 }
 
+function isLocalUrl(host : string) : boolean {
+    const localUrls = [ HOST.LOCALHOST_8000, HOST.LOCALHOST_8443, HOST.LOCALTUNNEL ];
+    
+    // eslint-disable-next-line no-process-env
+    return process.env.NODE_ENV === ENV.LOCAL && localUrls.some(url => host === url);
+}
+
 function validateSDKUrl(sdkUrl : string) {
-    const { protocol, hostname, pathname, query, hash } = urlLib.parse(sdkUrl, true);
+    const { protocol, host, hostname, pathname, query, hash } = urlLib.parse(sdkUrl, true);
 
     if (!hostname) {
         throw new Error(`Expected host to be passed for sdk url`);
@@ -101,7 +108,7 @@ function validateSDKUrl(sdkUrl : string) {
         }
 
         validatePaymentsSDKUrl({ protocol, hostname, pathname, query, hash });
-    } else {
+    } else if (host && !isLocalUrl(host)) {
         throw new Error(`Expected host to be a subdomain of ${ HOST.PAYPAL } or ${ HOST.PAYPALOBJECTS }`);
     }
 }

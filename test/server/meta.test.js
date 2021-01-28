@@ -5,6 +5,11 @@ import cheerio from 'cheerio';
 
 import { unpackSDKMeta } from '../../server';
 
+afterEach(() => {
+    // eslint-disable-next-line no-process-env
+    process.env.NODE_ENV = 'test';
+});
+
 test('should construct a valid script url', () => {
 
     const sdkUrl = 'https://www.paypal.com/sdk/js?client-id=foo';
@@ -55,7 +60,9 @@ test('should construct a valid script url with checkout.js on localhost', () => 
     }
 });
 
-test('should fail to construct a script url with checkout.js on localhost without a paypal.com domain', () => {
+test('should construct a script url with checkout.js on localhost without a paypal.com domain', () => {
+    // eslint-disable-next-line no-process-env
+    process.env.NODE_ENV = 'local';
 
     const sdkUrl = 'http://localhost:8000/api/checkout.js';
 
@@ -69,8 +76,29 @@ test('should fail to construct a script url with checkout.js on localhost withou
         error = err;
     }
 
+    if (error) {
+        throw new Error(`Should construct script with localhost url`);
+    }
+});
+
+test('should not construct a script url with checkout.js for non-supported local urls', () => {
+    // eslint-disable-next-line no-process-env
+    process.env.NODE_ENV = 'local';
+    
+    const sdkUrl = 'http://not.a.supported.url:8000/api/checkout.js';
+
+    let error;
+
+    try {
+        unpackSDKMeta(Buffer.from(JSON.stringify({
+            url: sdkUrl
+        })).toString('base64'));
+    } catch (err) {
+        error = err;
+    }
+
     if (!error) {
-        throw new Error(`Expected error to be thrown`);
+        throw new Error(`Should construct script with supported local urls: (localhost, loca.lt)`);
     }
 });
 
