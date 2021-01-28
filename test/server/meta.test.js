@@ -5,6 +5,11 @@ import cheerio from 'cheerio';
 
 import { unpackSDKMeta } from '../../server';
 
+afterEach(() => {
+    // eslint-disable-next-line no-process-env
+    process.env.NODE_ENV = 'test';
+});
+
 test('should construct a valid script url', () => {
 
     const sdkUrl = 'https://www.paypal.com/sdk/js?client-id=foo';
@@ -58,7 +63,7 @@ test('should construct a valid script url with checkout.js on localhost', () => 
 test('should construct a script url with checkout.js on localhost without a paypal.com domain', () => {
     // eslint-disable-next-line no-process-env
     process.env.NODE_ENV = 'local';
-    
+
     const sdkUrl = 'http://localhost:8000/api/checkout.js';
 
     let error;
