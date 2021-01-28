@@ -89,7 +89,7 @@ test('should not construct a script url with checkout.js for non-supported local
     }
 
     if (!error) {
-        throw new Error(`Should construct script with supported local urls: (localhost, ngrok, loca)`);
+        throw new Error(`Should construct script with supported local urls: (localhost, loca.lt)`);
     }
 });
 
