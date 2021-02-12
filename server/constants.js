@@ -4,7 +4,7 @@ export const HOST = {
     LOCALHOST:      'localhost.paypal.com',
     PAYPAL:         '.paypal.com',
     PAYPALOBJECTS:  'www.paypalobjects.com',
-    LOCALTUNNEL:    'paypal.loca.lt',
+    LOCALTUNNEL:    'loca.lt',
     LOCALHOST_8000: 'localhost:8000',
     LOCALHOST_8443: 'localhost:8443'
 };
