@@ -62,7 +62,7 @@ test('should construct a valid script url with checkout.js on localhost', () => 
 
 test('should construct a script url with checkout.js on localhost without a paypal.com domain', () => {
     // eslint-disable-next-line no-process-env
-    process.env.NODE_ENV = 'local';
+    process.env.NODE_ENV = 'development';
 
     const sdkUrl = 'http://localhost:8000/api/checkout.js';
 
