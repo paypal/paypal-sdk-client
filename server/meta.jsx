@@ -78,7 +78,7 @@ function isLocalUrl(host : string) : boolean {
     const localUrls = [ HOST.LOCALHOST_8000, HOST.LOCALHOST_8443, HOST.LOCALTUNNEL ];
     
     // eslint-disable-next-line no-process-env
-    return process.env.NODE_ENV !== ENV.PRODUCTION && localUrls.some(url => host.includes(url));
+    return process.env.NODE_ENV === 'development' && localUrls.some(url => host.includes(url));
 }
 
 function validateSDKUrl(sdkUrl : string) {
