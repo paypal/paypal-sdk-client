@@ -250,6 +250,10 @@ export function getSDKIntegrationSource() : ?string {
     return getSDKAttribute(SDK_SETTINGS.SDK_INTEGRATION_SOURCE);
 }
 
+export function getUserExperienceFlow() : ?string {
+    return getSDKAttribute(SDK_SETTINGS.USER_EXPERIENCE_FLOW);
+}
+
 // whether in zoid window
 export function isChildWindow() : boolean {
     return Boolean(window.xprops);
