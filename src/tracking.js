@@ -84,11 +84,16 @@ export function setupLogger() {
         } else {
             cache = 'sdk_client_cache_unknown';
         }
-    
+
+        // Exclude apps that use the JS SDK and are hosted directly on www.paypal.com. Ex:
+        // https://www.paypal.com/buttons/smart
+        // https://www.paypal.com/us/gifts/
+        const isLoadedInFrame = isPayPalDomain() && window.xprops;
+
         logger
             .info(`setup_${ getEnv() }`)
             .info(`setup_${ getEnv() }_${ getVersion().replace(/\./g, '_') }`)
-            .info(`sdk_${ isPayPalDomain() ? 'paypal' : 'non_paypal' }_domain_script_uid_${ sdkScript.hasAttribute(ATTRIBUTES.UID) ? 'present' : 'missing' }`)
+            .info(`sdk_${ isLoadedInFrame ? 'paypal' : 'non_paypal' }_domain_script_uid_${ sdkScript.hasAttribute(ATTRIBUTES.UID) ? 'present' : 'missing' }`)
             .info(cache)
             .track({
                 [FPTI_KEY.TRANSITION]:    'process_js_sdk_init_client',
