@@ -24,7 +24,7 @@ export const getSDKScript : GetSDKScript = memoize(() => {
     try {
         return getCurrentScript();
     } catch (err) {
-        throw new Error(`PayPal Payments SDK script not fiund on page! Expected to find <script src="https://${ getSDKHost() }${  getPath() }">\n\n${ stringifyError(err) }`);
+        throw new Error(`PayPal Payments SDK script not found on page! Expected to find <script src="https://${ getSDKHost() }${  getPath() }">\n\n${ stringifyError(err) }`);
     }
 });
 
@@ -100,7 +100,7 @@ export function getMerchantID() : $ReadOnlyArray<string> {
         if (!merchantIDAttribute) {
             throw new Error(`Must pass ${ SDK_SETTINGS.MERCHANT_ID } when ${ SDK_QUERY_KEYS.MERCHANT_ID }=* passed in url`);
         }
-        
+
         const merchantID = merchantIDAttribute.split(',');
 
         if (merchantID.length <= 1) {
@@ -115,7 +115,7 @@ export function getMerchantID() : $ReadOnlyArray<string> {
         }
         return merchantID;
     }
-    
+
     if (merchantIDString) {
         return merchantIDString.split(',');
     }
@@ -202,7 +202,7 @@ export function getPartnerAttributionID() : ?string {
 export function getPageType() : ?string {
     const pageType = getSDKAttribute(SDK_SETTINGS.PAGE_TYPE, '');
     const validPageType = values(PAGE_TYPES).indexOf(pageType.toLowerCase()) !== -1;
-    
+
     if (!validPageType && pageType.length) {
         throw new Error(`Invalid page type, '${ pageType }'`);
     }
@@ -216,7 +216,7 @@ export function getLocale() : LocaleType {
         const [ lang, country ] = locale.split('_');
         return { lang, country };
     }
-    
+
     for (const { country, lang } of getBrowserLocales()) {
         // $FlowFixMe
         if (COUNTRY_LANGS.hasOwnProperty(country) && COUNTRY_LANGS[country].indexOf(lang) !== -1) {
