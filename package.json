@@ -13,6 +13,7 @@
     "flow-typed": "rm -rf ./flow-typed && flow-typed install",
     "karma": "cross-env NODE_ENV=test babel-node --plugins=transform-es2015-modules-commonjs ./node_modules/.bin/karma start",
     "lint": "eslint src/ server/ test/ *.js",
+    "lint:fix": "eslint --fix src/ server/ test/ *.js",
     "reinstall": "rimraf flow-typed && rimraf node_modules && npm install && flow-typed install",
     "release": "./publish.sh",
     "release:major": "./publish.sh major",
