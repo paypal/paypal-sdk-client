@@ -8,6 +8,7 @@
 .*/node_modules/npm
 .*/node_modules/jsonlint
 .*/dist/module
+.*\.test\.js
 [include]
 [libs]
 flow-typed

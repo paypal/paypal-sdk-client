@@ -1,4 +1,5 @@
 /* @flow */
+/* eslint no-undef: off */
 import {
     getPayPalDomain,
     getPayPalAPIDomain,
