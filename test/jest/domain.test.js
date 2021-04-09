@@ -6,6 +6,8 @@ import {
     insertMockSDKScript
 } from '../../src';
 
+const { describe, expect } = global;
+
 beforeEach(() => {
     __ENV__ = 'test';
 });
