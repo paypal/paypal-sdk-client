@@ -47,7 +47,7 @@ describe(`config cases`, () => {
         insertMockSDKScript({
             query: {
                 'client-id': 'sb',
-                'env':         'sandbox_v2'
+                'env':       'sandbox_v2'
             }
         });
 
@@ -98,7 +98,7 @@ describe(`config cases`, () => {
         insertMockSDKScript({
             query: {
                 'client-id': 'sb',
-                'env':         'sandbox_v2'
+                'env':       'sandbox_v2'
             }
         });
 
