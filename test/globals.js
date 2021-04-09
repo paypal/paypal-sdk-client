@@ -13,6 +13,6 @@ export const sdkClientTestGlobals : TestGlobals = {
     __PATH__:       '/sdk/js',
 
     __VERSION__:        '1.0.45',
-    __CORRELATION_ID__: () => 'window.__CORRELATION_ID__ || "abc123"',
+    __CORRELATION_ID__: 'abc123',
     __NAMESPACE__:      'paypaltest'
 };
