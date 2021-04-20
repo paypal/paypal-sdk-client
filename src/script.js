@@ -238,8 +238,8 @@ export function getLocale() : LocaleType {
     };
 }
 
-export function getCSPNonce() : ?string {
-    return getSDKAttribute(SDK_SETTINGS.CSP_NONCE);
+export function getCSPNonce() : string {
+    return getSDKAttribute(SDK_SETTINGS.CSP_NONCE) || '';
 }
 
 export function getEnableThreeDomainSecure() : boolean {
