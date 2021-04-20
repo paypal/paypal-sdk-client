@@ -222,6 +222,30 @@ export function getLocale() : LocaleType {
         if (COUNTRY_LANGS.hasOwnProperty(country) && COUNTRY_LANGS[country].indexOf(lang) !== -1) {
             // $FlowFixMe
             return { country, lang };
+        } else {
+            // We will infer country from language if there is only one possible country match
+            // $FlowFixMe
+            const possibleCountries = [];
+            // $FlowFixMe
+            for (const possibleCountry in COUNTRY_LANGS) {
+                if (COUNTRY_LANGS.hasOwnProperty(possibleCountry)) {
+                    if (possibleCountries.length > 1) {
+                        break;
+                    }
+
+                    // $FlowFixMe
+                    const languages = COUNTRY_LANGS[possibleCountry];
+
+                    if (languages.length && languages.some(language => language === lang)) {
+                        possibleCountries.push(possibleCountry);
+                    }
+                }
+            }
+
+            if (possibleCountries.length === 1) {
+                // $FlowFixMe
+                return { country: possibleCountries[0], lang };
+            }
         }
     }
 

@@ -3,7 +3,7 @@
 import { base64encode } from 'belter/src';
 
 import { getClientID, getIntent, getCurrency, getVault, getCommit, getClientToken, getPartnerAttributionID,
-    getMerchantID, getClientAccessToken, getSDKIntegrationSource, insertMockSDKScript, getPageType } from '../../src';
+    getMerchantID, getClientAccessToken, getSDKIntegrationSource, insertMockSDKScript, getPageType, getLocale } from '../../src';
 
 describe(`script cases`, () => {
     it('should successfully get a client id', () => {
@@ -338,6 +338,79 @@ describe(`script cases`, () => {
 
         if (getPageType() !== '') {
             throw new Error(`Expected page type to be empty, got ${ getPageType() || 'undefined' } from ${ url }`);
+        }
+    });
+
+    it('should successfully get locale from script', () => {
+        const expectedLocale = 'en_US';
+
+        const url = insertMockSDKScript({
+            query: {
+                'locale': expectedLocale
+            }
+        });
+
+        const localeObject = getLocale();
+        const receivedLocal = `${ localeObject.lang }_${ localeObject.country }`;
+        if (expectedLocale !== receivedLocal) {
+            throw new Error(`Expected client id to be ${ expectedLocale }, got ${ receivedLocal } from ${ url }`);
+        }
+    });
+
+    it('should successfully get locale from browser settings', () => {
+        const expectedLocale = 'en_US';
+
+        // $FlowFixMe
+        Object.defineProperty(navigator, 'languages', {
+            get:          () => [ expectedLocale ],
+            configurable: true
+        });
+
+        const localeObject = getLocale();
+        const receivedLocale = `${ localeObject.lang }_${ localeObject.country }`;
+
+        if (expectedLocale !== receivedLocale) {
+            throw new Error(`Expected client id to be ${ expectedLocale }, got ${ receivedLocale }`);
+        }
+    });
+
+    it('should infer locale country from language', () => {
+        const expectedLocale = 'ja_JP';
+
+        // $FlowFixMe
+        Object.defineProperty(navigator, 'languages', {
+            get:          () => [ 'ja' ],
+            configurable: true
+        });
+
+        const localeObject = getLocale();
+        const receivedLocale = `${ localeObject.lang }_${ localeObject.country }`;
+
+        if (expectedLocale !== receivedLocale) {
+            throw new Error(`Expected client id to be ${ expectedLocale }, got ${ receivedLocale }`);
+        }
+    });
+
+    it('should return default locale if none detected', () => {
+        const expectedLocale = 'en_US';
+
+        // $FlowFixMe
+        Object.defineProperty(navigator, 'languages', {
+            get:          () => [],
+            configurable: true
+        });
+
+        // $FlowFixMe
+        Object.defineProperty(navigator, 'language', {
+            get:          () => '',
+            configurable: true
+        });
+
+        const localeObject = getLocale();
+        const receivedLocale = `${ localeObject.lang }_${ localeObject.country }`;
+
+        if (expectedLocale !== receivedLocale) {
+            throw new Error(`Expected client id to be ${ expectedLocale }, got ${ receivedLocale }`);
         }
     });
 });
