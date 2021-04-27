@@ -6,6 +6,12 @@ import { getClientID, getIntent, getCurrency, getVault, getCommit, getClientToke
     getMerchantID, getClientAccessToken, getSDKIntegrationSource, insertMockSDKScript, getPageType, getLocale } from '../../src';
 
 describe(`script cases`, () => {
+    beforeEach(() => {
+        Object.defineProperty(window.navigator, 'languages', { value: [], writable: true });
+        Object.defineProperty(window.navigator, 'language', { value: '', writable: true });
+
+    });
+
     it('should successfully get a client id', () => {
         const clientID = 'foobar123';
 
@@ -342,7 +348,7 @@ describe(`script cases`, () => {
     });
 
     it('should successfully get locale from script', () => {
-        const expectedLocale = 'en_US';
+        const expectedLocale = 'es_ES';
 
         const url = insertMockSDKScript({
             query: {
@@ -358,13 +364,8 @@ describe(`script cases`, () => {
     });
 
     it('should successfully get locale from browser settings', () => {
-        const expectedLocale = 'en_US';
-        const defineProp = Object.defineProperty;
-
-        defineProp(navigator, 'languages', {
-            get:          () => [ expectedLocale ],
-            configurable: true
-        });
+        const expectedLocale = 'fr_FR';
+        window.navigator.languages = [ expectedLocale ];
 
         const localeObject = getLocale();
         const receivedLocale = `${ localeObject.lang }_${ localeObject.country }`;
@@ -376,12 +377,7 @@ describe(`script cases`, () => {
 
     it('should infer locale country from language', () => {
         const expectedLocale = 'ja_JP';
-        const defineProp = Object.defineProperty;
-
-        defineProp(navigator, 'languages', {
-            get:          () => [ 'ja' ],
-            configurable: true
-        });
+        window.navigator.languages = [ 'ja' ];
 
         const localeObject = getLocale();
         const receivedLocale = `${ localeObject.lang }_${ localeObject.country }`;
@@ -393,17 +389,6 @@ describe(`script cases`, () => {
 
     it('should return default locale if none detected', () => {
         const expectedLocale = 'en_US';
-        const defineProp = Object.defineProperty;
-
-        defineProp(navigator, 'languages', {
-            get:          () => [],
-            configurable: true
-        });
-
-        defineProp(navigator, 'language', {
-            get:          () => '',
-            configurable: true
-        });
 
         const localeObject = getLocale();
         const receivedLocale = `${ localeObject.lang }_${ localeObject.country }`;
