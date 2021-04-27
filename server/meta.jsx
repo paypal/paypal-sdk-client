@@ -59,7 +59,9 @@ function isLegacySDKUrl(hostname : string, pathname : string) : boolean {
         return true;
     }
 
-    if (hostname.endsWith(HOST.PAYPAL) && pathname.match(LEGACY_SDK_PATH)) {
+    const isValidHostName = hostname.endsWith(HOST.PAYPAL) || hostname.endsWith(HOST.PAYPALOBJECTS_QA);
+
+    if (isValidHostName && pathname.match(LEGACY_SDK_PATH)) {
         return true;
     }
 
