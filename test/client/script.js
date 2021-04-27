@@ -359,9 +359,9 @@ describe(`script cases`, () => {
 
     it('should successfully get locale from browser settings', () => {
         const expectedLocale = 'en_US';
+        const defineProp = Object.defineProperty;
 
-        // $FlowFixMe
-        Object.defineProperty(navigator, 'languages', {
+        defineProp(navigator, 'languages', {
             get:          () => [ expectedLocale ],
             configurable: true
         });
@@ -376,9 +376,9 @@ describe(`script cases`, () => {
 
     it('should infer locale country from language', () => {
         const expectedLocale = 'ja_JP';
+        const defineProp = Object.defineProperty;
 
-        // $FlowFixMe
-        Object.defineProperty(navigator, 'languages', {
+        defineProp(navigator, 'languages', {
             get:          () => [ 'ja' ],
             configurable: true
         });
@@ -393,15 +393,14 @@ describe(`script cases`, () => {
 
     it('should return default locale if none detected', () => {
         const expectedLocale = 'en_US';
+        const defineProp = Object.defineProperty;
 
-        // $FlowFixMe
-        Object.defineProperty(navigator, 'languages', {
+        defineProp(navigator, 'languages', {
             get:          () => [],
             configurable: true
         });
 
-        // $FlowFixMe
-        Object.defineProperty(navigator, 'language', {
+        defineProp(navigator, 'language', {
             get:          () => '',
             configurable: true
         });

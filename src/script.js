@@ -224,27 +224,21 @@ export function getLocale() : LocaleType {
             return { country, lang };
         } else {
             // We will infer country from language if there is only one possible country match
-            // $FlowFixMe
-            const possibleCountries = [];
-            // $FlowFixMe
-            for (const possibleCountry in COUNTRY_LANGS) {
-                if (COUNTRY_LANGS.hasOwnProperty(possibleCountry)) {
-                    if (possibleCountries.length > 1) {
-                        break;
-                    }
+            const possibleCountries = Object.keys(COUNTRY_LANGS).filter((possibleCountry) => {
+                const languages = COUNTRY_LANGS[possibleCountry];
 
-                    // $FlowFixMe
-                    const languages = COUNTRY_LANGS[possibleCountry];
-
-                    if (languages.length && languages.some(language => language === lang)) {
-                        possibleCountries.push(possibleCountry);
-                    }
+                if (languages.length && languages.some(language => language === lang)) {
+                    return true;
                 }
-            }
 
-            if (possibleCountries.length === 1) {
-                // $FlowFixMe
-                return { country: possibleCountries[0], lang };
+                return false;
+            });
+
+            const inferredCountry = COUNTRY[possibleCountries[0]];
+            const languageKey = Object.keys(LANG).filter(possibleLanguage => LANG[possibleLanguage] === lang)[0];
+            const language = LANG[languageKey];
+            if (possibleCountries.length === 1 && inferredCountry && language) {
+                return { country: inferredCountry, lang: language };
             }
         }
     }
