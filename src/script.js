@@ -234,11 +234,10 @@ export function getLocale() : LocaleType {
                 return false;
             });
 
-            const inferredCountry = COUNTRY[possibleCountries[0]];
             const languageKey = Object.keys(LANG).filter(possibleLanguage => LANG[possibleLanguage] === lang)[0];
             const language = LANG[languageKey];
-            if (possibleCountries.length === 1 && inferredCountry && language) {
-                return { country: inferredCountry, lang: language };
+            if (possibleCountries.length === 1 && COUNTRY[possibleCountries[0]] && language) {
+                return { country: possibleCountries[0], lang: language };
             }
         }
     }
