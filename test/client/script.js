@@ -7,8 +7,10 @@ import { getClientID, getIntent, getCurrency, getVault, getCommit, getClientToke
 
 describe(`script cases`, () => {
     beforeEach(() => {
+        /* eslint-disable compat/compat */
         Object.defineProperty(window.navigator, 'languages', { value: [], writable: true });
         Object.defineProperty(window.navigator, 'language', { value: '', writable: true });
+        /* eslint-enable compat/compat */
 
     });
 
@@ -365,7 +367,7 @@ describe(`script cases`, () => {
 
     it('should successfully get locale from browser settings', () => {
         const expectedLocale = 'fr_FR';
-        window.navigator.languages = [ expectedLocale ];
+        window.navigator.languages = [ expectedLocale ]; // eslint-disable-line compat/compat
 
         const localeObject = getLocale();
         const receivedLocale = `${ localeObject.lang }_${ localeObject.country }`;
@@ -377,7 +379,7 @@ describe(`script cases`, () => {
 
     it('should infer locale country from language', () => {
         const expectedLocale = 'ja_JP';
-        window.navigator.languages = [ 'ja' ];
+        window.navigator.languages = [ 'ja' ]; // eslint-disable-line compat/compat
 
         const localeObject = getLocale();
         const receivedLocale = `${ localeObject.lang }_${ localeObject.country }`;
