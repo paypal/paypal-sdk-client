@@ -224,16 +224,13 @@ export function getLocale() : LocaleType {
             return { country, lang };
         } else {
             // We will infer country from language if there is only one possible country match
-            let possibleLocales = [];
-            for(let possibleCountry of Object.keys(COUNTRY_LANGS)) {
+            const possibleLocales = [];
+            for (const possibleCountry of Object.keys(COUNTRY_LANGS)) {
                 const languages = COUNTRY_LANGS[possibleCountry];
+                const language = languages.find(x => x === lang);
 
-                console.log('possible country', possibleCountry);
-                // console.log('languages', languages);
-
-                if (languages.length && languages.some(language => language === lang)) {
-                    const language = languages.find(x => x === lang);
-                    possibleLocales.push({country: possibleCountry, lang: language});
+                if (language) {
+                    possibleLocales.push({ country: possibleCountry, lang: language });
                 }
 
                 if (possibleLocales.length > 1) {
@@ -241,7 +238,7 @@ export function getLocale() : LocaleType {
                 }
             }
 
-            if (possibleLocales.length === 1) {
+            if (possibleLocales.length === 1 && possibleLocales[0]) {
                 return possibleLocales[0];
             }
         }
