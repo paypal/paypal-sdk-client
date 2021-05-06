@@ -224,20 +224,25 @@ export function getLocale() : LocaleType {
             return { country, lang };
         } else {
             // We will infer country from language if there is only one possible country match
-            const possibleCountries = Object.keys(COUNTRY_LANGS).filter((possibleCountry) => {
+            let possibleLocales = [];
+            for(let possibleCountry of Object.keys(COUNTRY_LANGS)) {
                 const languages = COUNTRY_LANGS[possibleCountry];
 
+                console.log('possible country', possibleCountry);
+                // console.log('languages', languages);
+
                 if (languages.length && languages.some(language => language === lang)) {
-                    return true;
+                    const language = languages.find(x => x === lang);
+                    possibleLocales.push({country: possibleCountry, lang: language});
                 }
 
-                return false;
-            });
+                if (possibleLocales.length > 1) {
+                    break;
+                }
+            }
 
-            const languageKey = Object.keys(LANG).filter(possibleLanguage => LANG[possibleLanguage] === lang)[0];
-            const language = LANG[languageKey];
-            if (possibleCountries.length === 1 && COUNTRY[possibleCountries[0]] && language) {
-                return { country: possibleCountries[0], lang: language };
+            if (possibleLocales.length === 1) {
+                return possibleLocales[0];
             }
         }
     }
