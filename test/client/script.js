@@ -360,7 +360,7 @@ describe(`script cases`, () => {
         const localeObject = getLocale();
         const receivedLocal = `${ localeObject.lang }_${ localeObject.country }`;
         if (expectedLocale !== receivedLocal) {
-            throw new Error(`Expected client id to be ${ expectedLocale }, got ${ receivedLocal } from ${ url }`);
+            throw new Error(`Expected locale to be ${ expectedLocale }, got ${ receivedLocal } from ${ url }`);
         }
     });
 
@@ -372,7 +372,7 @@ describe(`script cases`, () => {
         const receivedLocale = `${ localeObject.lang }_${ localeObject.country }`;
 
         if (expectedLocale !== receivedLocale) {
-            throw new Error(`Expected client id to be ${ expectedLocale }, got ${ receivedLocale }`);
+            throw new Error(`Expected locale to be ${ expectedLocale }, got ${ receivedLocale }`);
         }
     });
 
@@ -384,7 +384,7 @@ describe(`script cases`, () => {
         const receivedLocale = `${ localeObject.lang }_${ localeObject.country }`;
 
         if (expectedLocale !== receivedLocale) {
-            throw new Error(`Expected client id to be ${ expectedLocale }, got ${ receivedLocale }`);
+            throw new Error(`Expected locale to be ${ expectedLocale }, got ${ receivedLocale }`);
         }
     });
 
@@ -396,7 +396,7 @@ describe(`script cases`, () => {
         const receivedLocale = `${ localeObject.lang }_${ localeObject.country }`;
 
         if (expectedLocale !== receivedLocale) {
-            throw new Error(`Expected client id to be ${ expectedLocale }, got ${ receivedLocale }`);
+            throw new Error(`Expected locale to be ${ expectedLocale }, got ${ receivedLocale }`);
         }
     });
 
@@ -407,7 +407,7 @@ describe(`script cases`, () => {
         const receivedLocale = `${ localeObject.lang }_${ localeObject.country }`;
 
         if (expectedLocale !== receivedLocale) {
-            throw new Error(`Expected client id to be ${ expectedLocale }, got ${ receivedLocale }`);
+            throw new Error(`Expected locale to be ${ expectedLocale }, got ${ receivedLocale }`);
         }
     });
 });
