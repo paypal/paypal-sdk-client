@@ -1,5 +1,4 @@
 /* @flow */
-/* eslint-disable compat/compat */
 
 import { base64encode } from 'belter/src';
 
@@ -8,8 +7,8 @@ import { getClientID, getIntent, getCurrency, getVault, getCommit, getClientToke
 
 describe(`script cases`, () => {
     beforeEach(() => {
-        Object.defineProperty(window.navigator, 'languages', { value: [], writable: true });
-        Object.defineProperty(window.navigator, 'language', { value: '', writable: true });
+        Object.defineProperty(window.navigator, 'languages', { value: [], writable: true }); // eslint-disable-line compat/compat
+        Object.defineProperty(window.navigator, 'language', { value: '', writable: true }); // eslint-disable-line compat/compat
 
     });
 
@@ -366,7 +365,7 @@ describe(`script cases`, () => {
 
     it('should successfully get locale from browser settings', () => {
         const expectedLocale = 'fr_FR';
-        window.navigator.languages = [ expectedLocale ];
+        window.navigator.languages = [ expectedLocale ]; // eslint-disable-line compat/compat
 
         const localeObject = getLocale();
         const receivedLocale = `${ localeObject.lang }_${ localeObject.country }`;
@@ -378,7 +377,7 @@ describe(`script cases`, () => {
 
     it('should infer locale country from language', () => {
         const expectedLocale = 'ja_JP';
-        window.navigator.languages = [ 'ja' ];
+        window.navigator.languages = [ 'ja' ]; // eslint-disable-line compat/compat
 
         const localeObject = getLocale();
         const receivedLocale = `${ localeObject.lang }_${ localeObject.country }`;
@@ -390,7 +389,7 @@ describe(`script cases`, () => {
 
     it('should return default if unable to infer locale country', () => {
         const expectedLocale = 'en_US';
-        window.navigator.languages = [ 'es' ];
+        window.navigator.languages = [ 'es' ]; // eslint-disable-line compat/compat
 
         const localeObject = getLocale();
         const receivedLocale = `${ localeObject.lang }_${ localeObject.country }`;
@@ -411,4 +410,3 @@ describe(`script cases`, () => {
         }
     });
 });
-/* eslint-enable compat/compat */
