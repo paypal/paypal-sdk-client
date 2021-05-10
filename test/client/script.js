@@ -388,6 +388,18 @@ describe(`script cases`, () => {
         }
     });
 
+    it('should return default if unable to infer locale country', () => {
+        const expectedLocale = 'en_US';
+        window.navigator.languages = [ 'es' ];
+
+        const localeObject = getLocale();
+        const receivedLocale = `${ localeObject.lang }_${ localeObject.country }`;
+
+        if (expectedLocale !== receivedLocale) {
+            throw new Error(`Expected client id to be ${ expectedLocale }, got ${ receivedLocale }`);
+        }
+    });
+
     it('should return default locale if none detected', () => {
         const expectedLocale = 'en_US';
 
