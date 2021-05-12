@@ -217,11 +217,20 @@ export function getLocale() : LocaleType {
         return { lang, country };
     }
 
-    for (const { country, lang } of getBrowserLocales()) {
-        // $FlowFixMe
-        if (COUNTRY_LANGS.hasOwnProperty(country) && COUNTRY_LANGS[country].indexOf(lang) !== -1) {
-            // $FlowFixMe
+    for (let { country, lang } of getBrowserLocales()) {
+        country = country && COUNTRY[country];
+        lang = lang && LANG[lang.toUpperCase()];
+
+        if (country && lang && COUNTRY_LANGS[country] && COUNTRY_LANGS[country].indexOf(lang) !== -1) {
             return { country, lang };
+        } else if (lang) {
+            // We infer country from language if there is only one possible country match
+            const possibleCountries = Object.keys(COUNTRY_LANGS).filter(c => COUNTRY_LANGS[c].some(l => l === lang));
+            
+            if (possibleCountries.length === 1) {
+                const possibleCountry = possibleCountries[0];
+                return { country: possibleCountry, lang };
+            }
         }
     }
 

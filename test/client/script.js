@@ -3,9 +3,15 @@
 import { base64encode } from 'belter/src';
 
 import { getClientID, getIntent, getCurrency, getVault, getCommit, getClientToken, getPartnerAttributionID,
-    getMerchantID, getClientAccessToken, getSDKIntegrationSource, insertMockSDKScript, getPageType } from '../../src';
+    getMerchantID, getClientAccessToken, getSDKIntegrationSource, insertMockSDKScript, getPageType, getLocale } from '../../src';
 
 describe(`script cases`, () => {
+    beforeEach(() => {
+        Object.defineProperty(window.navigator, 'languages', { value: [], writable: true }); // eslint-disable-line compat/compat
+        Object.defineProperty(window.navigator, 'language', { value: '', writable: true }); // eslint-disable-line compat/compat
+
+    });
+
     it('should successfully get a client id', () => {
         const clientID = 'foobar123';
 
@@ -338,6 +344,69 @@ describe(`script cases`, () => {
 
         if (getPageType() !== '') {
             throw new Error(`Expected page type to be empty, got ${ getPageType() || 'undefined' } from ${ url }`);
+        }
+    });
+
+    it('should successfully get locale from script', () => {
+        const expectedLocale = 'es_ES';
+
+        const url = insertMockSDKScript({
+            query: {
+                'locale': expectedLocale
+            }
+        });
+
+        const localeObject = getLocale();
+        const receivedLocal = `${ localeObject.lang }_${ localeObject.country }`;
+        if (expectedLocale !== receivedLocal) {
+            throw new Error(`Expected locale to be ${ expectedLocale }, got ${ receivedLocal } from ${ url }`);
+        }
+    });
+
+    it('should successfully get locale from browser settings', () => {
+        const expectedLocale = 'fr_FR';
+        window.navigator.languages = [ expectedLocale ]; // eslint-disable-line compat/compat
+
+        const localeObject = getLocale();
+        const receivedLocale = `${ localeObject.lang }_${ localeObject.country }`;
+
+        if (expectedLocale !== receivedLocale) {
+            throw new Error(`Expected locale to be ${ expectedLocale }, got ${ receivedLocale }`);
+        }
+    });
+
+    it('should infer locale country from language', () => {
+        const expectedLocale = 'ja_JP';
+        window.navigator.languages = [ 'ja' ]; // eslint-disable-line compat/compat
+
+        const localeObject = getLocale();
+        const receivedLocale = `${ localeObject.lang }_${ localeObject.country }`;
+
+        if (expectedLocale !== receivedLocale) {
+            throw new Error(`Expected locale to be ${ expectedLocale }, got ${ receivedLocale }`);
+        }
+    });
+
+    it('should return default if unable to infer locale country', () => {
+        const expectedLocale = 'en_US';
+        window.navigator.languages = [ 'es' ]; // eslint-disable-line compat/compat
+
+        const localeObject = getLocale();
+        const receivedLocale = `${ localeObject.lang }_${ localeObject.country }`;
+
+        if (expectedLocale !== receivedLocale) {
+            throw new Error(`Expected locale to be ${ expectedLocale }, got ${ receivedLocale }`);
+        }
+    });
+
+    it('should return default locale if none detected', () => {
+        const expectedLocale = 'en_US';
+
+        const localeObject = getLocale();
+        const receivedLocale = `${ localeObject.lang }_${ localeObject.country }`;
+
+        if (expectedLocale !== receivedLocale) {
+            throw new Error(`Expected locale to be ${ expectedLocale }, got ${ receivedLocale }`);
         }
     });
 });
