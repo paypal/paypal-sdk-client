@@ -1,6 +1,6 @@
 {
   "name": "@paypal/sdk-client",
-  "version": "4.0.153",
+  "version": "4.0.154",
   "description": "Shared config between PayPal/Braintree.",
   "main": "index.js",
   "scripts": {
