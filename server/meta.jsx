@@ -132,7 +132,8 @@ const ALLOWED_ATTRS = [
     SDK_SETTINGS.ENABLE_3DS,
     SDK_SETTINGS.SDK_INTEGRATION_SOURCE,
     SDK_SETTINGS.CLIENT_METADATA_ID,
-    ATTRIBUTES.UID
+    ATTRIBUTES.UID,
+    SDK_SETTINGS.CSP_NONCE
 ];
 
 function getSDKScriptAttributes(sdkUrl : ?string, allAttrs : ?{ [string] : string }) : SDKAttributes {
@@ -160,6 +161,7 @@ function getSDKScriptAttributes(sdkUrl : ?string, allAttrs : ?{ [string] : strin
             attrs[key] = allAttrs[key];
         }
     }
+
     return attrs;
 }
 
@@ -183,6 +185,7 @@ export function unpackSDKMeta(sdkMeta? : string) : SDKMeta {
                 src: url,
                 ...validAttrs
             };
+
 
             return (
                 <script { ...allAttrs } />
