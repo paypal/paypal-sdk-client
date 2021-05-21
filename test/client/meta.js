@@ -48,4 +48,29 @@ describe(`meta cases`, () => {
             throw new Error(`Expected sdk merchant ids to be ${ expectedMerchantIds }, got ${ merchantIds }`);
         }
     });
+
+    it('should successfully create a meta payload with data-csp-nonce', () => {
+        const dataCSPNonce = '12345';
+
+        insertMockSDKScript({
+            query: {
+                'client-id':    'foobar'
+            },
+            attributes: {
+                'data-csp-nonce': dataCSPNonce
+            }
+        });
+
+        const meta = getSDKMeta();
+
+        if (!meta) {
+            throw new Error(`Expected meta string to be returned`);
+        }
+
+        const { attrs: { 'data-csp-nonce': nonce } } = JSON.parse(window.atob(meta));
+
+        if (nonce !== dataCSPNonce) {
+            throw new Error(`Expected sdk data-csp-nonce to be ${ dataCSPNonce }, got ${ nonce }`);
+        }
+    });
 });
