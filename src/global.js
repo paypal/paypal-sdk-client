@@ -31,6 +31,14 @@ export function getEnv() : $Values<typeof ENV> {
     return __ENV__;
 }
 
+export function getPayPalDomain() : string {
+    return __PAYPAL_DOMAIN__;
+}
+
+export function getPayPalAPIDomain() : string {
+    return __PAYPAL_API_DOMAIN__;
+}
+
 export function getDefaultServiceStageHost() : ?string {
     if (typeof __SERVICE_STAGE_HOST__ !== 'undefined' && __SERVICE_STAGE_HOST__ !== null) {
         return __SERVICE_STAGE_HOST__;

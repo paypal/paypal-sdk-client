@@ -18,6 +18,8 @@ module.exports = {
         __CORRELATION_ID__: true,
         __NAMESPACE__: true,
         __COMPONENTS__: true,
-        __FUNDING_ELIGIBILITY__: true
+        __FUNDING_ELIGIBILITY__: true,
+        __PAYPAL_DOMAIN__: true,
+        __PAYPAL_API_DOMAIN__: true
     }
 };
