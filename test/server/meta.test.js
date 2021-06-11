@@ -101,7 +101,7 @@ test('should construct a script url with checkout.js on localhost without a payp
 test('should not construct a script url with checkout.js for non-supported local urls', () => {
     // eslint-disable-next-line no-process-env
     process.env.NODE_ENV = 'development';
-    
+
     const sdkUrl = 'http://not.a.supported.url:8000/api/checkout.js';
 
     let error;
@@ -306,6 +306,24 @@ test('should error out with an invalid protocol', () => {
 test('should error out with an invalid protocol in localhost', () => {
 
     const sdkUrl = 'meep://localhost.paypal.com:8000/sdk/js?client-id=foo';
+    let error;
+
+    try {
+        unpackSDKMeta(Buffer.from(JSON.stringify({
+            url: sdkUrl
+        })).toString('base64'));
+    } catch (err) {
+        error = err;
+    }
+
+    if (!error) {
+        throw new Error(`Expected error to be thrown`);
+    }
+});
+
+test('should error out with an invalid host', () => {
+
+    const sdkUrl = 'https://www.paypal.example.com/sdk/js?client-id=foo';
     let error;
 
     try {
@@ -814,6 +832,39 @@ test('should construct a valid min script url with paypalobjects on http', () =>
     const $ = cheerio.load(getSDKLoader());
     const script = $('script[data-paypal-checkout]');
     const src = script.attr('src');
+
+    if (src !== sdkUrl) {
+        throw new Error(`Expected script url to be ${ sdkUrl } - got ${ src }`);
+    }
+});
+
+test('should construct a valid script url hosted on objects.paypal.cn', () => {
+
+    const sdkUrl = 'http://www.objects.paypal.cn/api/checkout.js';
+
+    const { getSDKLoader } = unpackSDKMeta(Buffer.from(JSON.stringify({
+        url: sdkUrl
+    })).toString('base64'));
+
+    const $ = cheerio.load(getSDKLoader());
+    const script = $('script[data-paypal-checkout]');
+    const src = script.attr('src');
+
+    if (src !== sdkUrl) {
+        throw new Error(`Expected script url to be ${ sdkUrl } - got ${ src }`);
+    }
+});
+
+test('should construct a valid script url hosted on www.paypal.cn', () => {
+
+    const sdkUrl = 'https://www.paypal.cn/sdk/js?client-id=foo';
+
+    const { getSDKLoader } = unpackSDKMeta(Buffer.from(JSON.stringify({
+        url: sdkUrl
+    })).toString('base64'));
+
+    const $ = cheerio.load(getSDKLoader());
+    const src = $('script').attr('src');
 
     if (src !== sdkUrl) {
         throw new Error(`Expected script url to be ${ sdkUrl } - got ${ src }`);
