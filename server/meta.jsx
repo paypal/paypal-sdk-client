@@ -55,11 +55,22 @@ function validateLegacySDKUrl({ pathname }) {
 }
 
 function isLegacySDKUrl(hostname : string, pathname : string) : boolean {
-    if (hostname === HOST.PAYPALOBJECTS) {
+    const legacyHostnames = [
+        HOST.PAYPALOBJECTS,
+        HOST.PAYPALOBJECTS_CHINA
+    ];
+
+    if (legacyHostnames.includes(hostname)) {
         return true;
     }
 
-    const isValidHostname = hostname.endsWith(HOST.PAYPAL) || hostname.endsWith(HOST.PAYPALOBJECTS_QA);
+    const validHostnameEndings = [
+        HOST.PAYPAL,
+        HOST.PAYPAL_CHINA,
+        HOST.PAYPALOBJECTS_QA
+    ];
+
+    const isValidHostname = validHostnameEndings.some(validHostname => hostname.endsWith(validHostname));
 
     if (isValidHostname && pathname.match(LEGACY_SDK_PATH)) {
         return true;
@@ -69,7 +80,7 @@ function isLegacySDKUrl(hostname : string, pathname : string) : boolean {
 }
 
 function isSDKUrl(hostname : string) : boolean {
-    if (hostname.endsWith(HOST.PAYPAL)) {
+    if (hostname.endsWith(HOST.PAYPAL) || hostname.endsWith(HOST.PAYPAL_CHINA)) {
         return true;
     }
 
@@ -78,7 +89,7 @@ function isSDKUrl(hostname : string) : boolean {
 
 function isLocalUrl(host : string) : boolean {
     const localUrls = [ HOST.LOCALHOST_8000, HOST.LOCALHOST_8443, HOST.LOCALTUNNEL ];
-    
+
     // eslint-disable-next-line no-process-env
     return process.env.NODE_ENV === 'development' && localUrls.some(url => host.includes(url));
 }
@@ -104,7 +115,7 @@ function validateSDKUrl(sdkUrl : string) {
         if (hostname !== HOST.LOCALHOST && protocol !== PROTOCOL.HTTPS) {
             throw new Error(`Expected protocol for sdk url to be ${ PROTOCOL.HTTPS } for host: ${ hostname } - got ${ protocol || 'undefined' }`);
         }
-        
+
         if (sdkUrl.match(/&{2,}/) || sdkUrl.match(/&$/)) {
             throw new Error(`Expected sdk url to not contain double ampersand or end in ampersand`);
         }
@@ -145,7 +156,7 @@ function getSDKScriptAttributes(sdkUrl : ?string, allAttrs : ?{ [string] : strin
         if (!hostname) {
             throw new Error(`Expected host to be passed for sdk url`);
         }
-    
+
         if (!pathname) {
             throw new Error(`Expected pathname for sdk url`);
         }
@@ -256,7 +267,7 @@ export function unpackSDKMeta(sdkMeta? : string) : SDKMeta {
             />
         ).render(html());
     };
-    
+
     return {
         getSDKLoader
     };

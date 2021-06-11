@@ -1,13 +1,15 @@
 /* @flow */
 
 export const HOST = {
-    LOCALHOST:        'localhost.paypal.com',
-    PAYPAL:           '.paypal.com',
-    PAYPALOBJECTS:    'www.paypalobjects.com',
-    PAYPALOBJECTS_QA: '.paypalinc.com',
-    LOCALTUNNEL:      'loca.lt',
-    LOCALHOST_8000:   'localhost:8000',
-    LOCALHOST_8443:   'localhost:8443'
+    LOCALHOST:           'localhost.paypal.com',
+    PAYPAL:              '.paypal.com',
+    PAYPAL_CHINA:        '.paypal.cn',
+    PAYPALOBJECTS:       'www.paypalobjects.com',
+    PAYPALOBJECTS_CHINA: 'objects.paypal.cn',
+    PAYPALOBJECTS_QA:    '.paypalinc.com',
+    LOCALTUNNEL:         'loca.lt',
+    LOCALHOST_8000:      'localhost:8000',
+    LOCALHOST_8443:      'localhost:8443'
 };
 
 export const PROTOCOL = {
