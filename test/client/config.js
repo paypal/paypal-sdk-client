@@ -40,22 +40,6 @@ describe(`config cases`, () => {
         }
     });
 
-    it('should successfully get the sandbox v2 paypal domain', () => {
-        const expectedPayPalDomain = 'https://www-v2.sandbox.paypal.com';
-        window.__ENV__ = 'sandbox';
-
-        insertMockSDKScript({
-            query: {
-                'client-id': 'sb',
-                'env':       'sandbox_v2'
-            }
-        });
-
-        if (getPayPalDomain() !== expectedPayPalDomain) {
-            throw new Error(`Expected paypal domain to be ${ expectedPayPalDomain }, got ${ getPayPalDomain() }`);
-        }
-    });
-
     it('should thrown error if can\'t find the requested domain', () => {
         window.__ENV__ = 'foo';
 
@@ -83,22 +67,6 @@ describe(`config cases`, () => {
         insertMockSDKScript({
             query: {
                 'client-id': 'sb'
-            }
-        });
-
-        if (getPayPalAPIDomain() !== expectedPayPalAPIDomain) {
-            throw new Error(`Expected paypal domain to be ${ expectedPayPalAPIDomain }, got ${ getPayPalAPIDomain() }`);
-        }
-    });
-
-    it('should successfully get the sandbox v2 paypal API domain', () => {
-        const expectedPayPalAPIDomain = 'https://cors.api-v2.sandbox.paypal.com';
-        window.__ENV__ = 'sandbox';
-
-        insertMockSDKScript({
-            query: {
-                'client-id': 'sb',
-                'env':       'sandbox_v2'
             }
         });
 
