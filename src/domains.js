@@ -1,13 +1,10 @@
 /* @flow */
 
-import { ENV, SDK_QUERY_KEYS } from '@paypal/sdk-constants/src';
+import { ENV } from '@paypal/sdk-constants/src';
 import { getDomain, getActualDomain, isCurrentDomain } from 'cross-domain-utils/src';
 
 import { getProtocol, getHost, getStageHost, getAPIStageHost } from './global';
 import { URI } from './config';
-import { getSDKQueryParam } from './script';
-
-const SANDBOX_V2 = 'sandbox_v2';
 
 export function getPayPalDomain() : string {
     if (__ENV__ === ENV.LOCAL) {
@@ -16,7 +13,7 @@ export function getPayPalDomain() : string {
 
     if (__ENV__ === ENV.STAGE) {
         const stageHost = getStageHost();
-        
+
         if (!stageHost) {
             throw new Error(`No stage host found`);
         }
@@ -25,10 +22,6 @@ export function getPayPalDomain() : string {
     }
 
     if (__ENV__ === ENV.SANDBOX) {
-        if (SDK_QUERY_KEYS.ENV && getSDKQueryParam(SDK_QUERY_KEYS.ENV) === SANDBOX_V2) {
-            return `${ getProtocol() }://www-v2.sandbox.paypal.com`;
-        }
-
         return `${ getProtocol() }://www.sandbox.paypal.com`;
     }
 
@@ -46,7 +39,7 @@ export function getPayPalDomain() : string {
 export function getPayPalAPIDomain() : string {
     if (__ENV__ === ENV.LOCAL || __ENV__ === ENV.STAGE) {
         const apiStageHost = getAPIStageHost();
-        
+
         if (!apiStageHost) {
             throw new Error(`No api stage host found`);
         }
@@ -55,10 +48,6 @@ export function getPayPalAPIDomain() : string {
     }
 
     if (__ENV__ === ENV.SANDBOX) {
-        if (SDK_QUERY_KEYS.ENV && getSDKQueryParam(SDK_QUERY_KEYS.ENV) === SANDBOX_V2) {
-            return `${ getProtocol() }://cors.api-v2.sandbox.paypal.com`;
-        }
-
         return `${ getProtocol() }://cors.api.sandbox.paypal.com`;
     }
 
@@ -76,7 +65,7 @@ export function getPayPalAPIDomain() : string {
 export function getPayPalLoggerDomain() : string {
     if (__ENV__ === ENV.LOCAL) {
         const stageHost = getStageHost();
-        
+
         if (!stageHost) {
             throw new Error(`No stage host found`);
         }
