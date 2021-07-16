@@ -61,7 +61,12 @@ function buildFundingEligibilityVariables() : FundingEligibilityParams {
     };
 }
 
-export function callGraphQL<T, V>({ query, variables = {}, headers = {} } : {| query : string, variables : V, headers? : { [string] : string } |}) : ZalgoPromise<T> {
+function getDefaultVariables<V>() : V {
+    // $FlowFixMe[incompatible-return]
+    return {};
+}
+
+export function callGraphQL<T, V>({ query, variables = getDefaultVariables(), headers = {} } : {| query : string, variables : V, headers? : { [string] : string } |}) : ZalgoPromise<T> {
     return request({
         url:     buildPayPalUrl(GRAPHQL_URI),
         method:  'POST',

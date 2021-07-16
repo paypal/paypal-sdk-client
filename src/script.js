@@ -58,7 +58,7 @@ type GetSDKQueryParam =
     // eslint-disable-next-line no-undef
     (<T : string>($Values<typeof SDK_QUERY_KEYS>, T) => T);
 
-export const getSDKQueryParam : GetSDKQueryParam = (name, def) => {
+export const getSDKQueryParam : GetSDKQueryParam = <T>(name : string, def : T) => {
     // $FlowFixMe
     return getSDKQueryParams()[name] || def;
 };
