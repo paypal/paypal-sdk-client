@@ -2,7 +2,7 @@
 import type { LocaleType } from '@paypal/sdk-constants/src';
 
 const SPECIAL_COUNTRY_LANG_VARIANTS = {
-    'HK': 'zh_Hant'
+    'HK': 'zh_Hant',
     'TW': 'zh_Hant'
 };
 
