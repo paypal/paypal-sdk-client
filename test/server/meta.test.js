@@ -218,6 +218,56 @@ test('should unpack a valid sdk meta bundle with multiple components', () => {
     }
 });
 
+test('should unpack a valid sdk meta bundle with multiple merchant-id email addresses', () => {
+    const emails = [
+        'test@gmail.com',
+        'foo@bar.com',
+        'test@test.org.uk',
+        'test-test@test.com',
+        'test.test@test.com',
+        'test@test@test.com'
+    ];
+
+    const sdkUrl = `https://www.paypal.com/sdk/js?client-id=foo&merchant-id=${ emails.map(anEmail => encodeURIComponent(anEmail)).join(',') }`;
+
+    const { getSDKLoader } = unpackSDKMeta(Buffer.from(JSON.stringify({
+        url: sdkUrl
+    })).toString('base64'));
+
+    const $ = cheerio.load(getSDKLoader());
+    const src = $('script').attr('src');
+
+    if (src !== sdkUrl) {
+        throw new Error(`Expected script url to be ${ sdkUrl } - got ${ src }`);
+    }
+});
+
+test('should error out from invalid merchant-id email addresses', () => {
+    const emails = [
+        '@',
+        '@io',
+        '@test.com',
+        'verylongemail-verylongemail-verylongemail-verylongemail@alongdomain.com'
+    ];
+
+    emails.forEach(email => {
+        const sdkUrl = `https://www.paypal.com/sdk/js?client-id=foo&merchant-id=${ email }`;
+        let error;
+
+        try {
+            unpackSDKMeta(Buffer.from(JSON.stringify({
+                url: sdkUrl
+            })).toString('base64'));
+        } catch (err) {
+            error = err;
+        }
+
+        if (!error) {
+            throw new Error(`Expected error to be thrown for ${ sdkUrl }`);
+        }
+    });
+});
+
 test('should construct a valid script url with multiple merchant ids', () => {
 
     const sdkUrl = 'https://www.paypal.com/sdk/js?client-id=foo';
