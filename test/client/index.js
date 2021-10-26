@@ -6,3 +6,4 @@ import './script';
 import './config';
 import './global';
 import './logger';
+import './domains';
