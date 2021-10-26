@@ -59,7 +59,7 @@ export function insertMockSDKScript({ query = DEFAULT_QUERY, attributes = DEFAUL
         throw new Error(`No document body found`);
     }
 
-    document.body.appendChild(script); // eslint-disable-line compat/compat
+    document.body.appendChild(script);
     memoize.clear();
     setupLogger();
 

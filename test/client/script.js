@@ -7,8 +7,8 @@ import { getClientID, getIntent, getCurrency, getVault, getCommit, getClientToke
 
 describe(`script cases`, () => {
     beforeEach(() => {
-        Object.defineProperty(window.navigator, 'languages', { value: [], writable: true });
-        Object.defineProperty(window.navigator, 'language', { value: '', writable: true });
+        Object.defineProperty(window.navigator, 'languages', { value: [], writable: true }); // eslint-disable-line compat/compat
+        Object.defineProperty(window.navigator, 'language', { value: '', writable: true }); // eslint-disable-line compat/compat
 
     });
 
