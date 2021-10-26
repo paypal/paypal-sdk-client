@@ -83,7 +83,7 @@ describe('logger tests', () => {
                 bn_code:                'myattributionid',
                 sdk_name:               'payments_sdk',
                 sdk_version:            '1.0.45',
-                user_agent:             window.navigator.userAgent, // eslint-disable-line compat/compat
+                user_agent:             window.navigator.userAgent,
                 user_action:            'commit',
                 context_correlation_id: 'abc123',
                 sdk_integration_source: 'spbf'
