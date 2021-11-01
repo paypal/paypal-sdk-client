@@ -1,16 +1,18 @@
 /* @flow */
-import type { LocaleType } from '@paypal/sdk-constants/src';
+import type { LocaleType } from '@paypal/sdk-constants/src/';
+import { COUNTRY_LANGS } from '@paypal/sdk-constants/src';
 
-const SPECIAL_COUNTRY_LANG_VARIANTS = {
-    'HK': 'zh_Hant',
-    'TW': 'zh_Hant'
-};
 
 export function getComputedLocales(locale : string) : LocaleType {
     let [ lang, country ] = locale.split('_');
-    if (country in SPECIAL_COUNTRY_LANG_VARIANTS) {
-        lang = SPECIAL_COUNTRY_LANG_VARIANTS[country];
+    // $FlowFixMe
+    const countryLangs = COUNTRY_LANGS[country];
+
+    if (countryLangs.includes('zh_Hant')) {
+        lang = 'zh_Hant';
     }
+
+
     // $FlowFixMe
     return { lang, country };
 }
