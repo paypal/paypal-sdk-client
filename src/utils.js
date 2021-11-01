@@ -2,7 +2,6 @@
 import type { LocaleType } from '@paypal/sdk-constants/src/';
 import { COUNTRY_LANGS, LANG } from '@paypal/sdk-constants/src';
 
-
 export function getComputedLocales(locale : string) : LocaleType {
     let [ lang, country ] = locale.split('_');
     // $FlowFixMe
@@ -11,7 +10,6 @@ export function getComputedLocales(locale : string) : LocaleType {
     if (countryLangs.includes(LANG.ZH_HANT)) {
         lang = LANG.ZH_HANT;
     }
-
 
     // $FlowFixMe
     return { lang, country };
