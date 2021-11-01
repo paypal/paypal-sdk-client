@@ -409,4 +409,19 @@ describe(`script cases`, () => {
             throw new Error(`Expected locale to be ${ expectedLocale }, got ${ receivedLocale }`);
         }
     });
+
+    it('should return computed lang when locale is zh_Hant', () => {
+        const expectedLang = 'zh_Hant';
+
+        const url = insertMockSDKScript({
+            query: {
+                'locale': 'zh_HK'
+            }
+        });
+
+        const { lang: receivedLang } = getLocale();
+        if (expectedLang !== receivedLang) {
+            throw new Error(`Expected lag to be ${ expectedLang }, got ${ receivedLang } from ${ url }`);
+        }
+    });
 });
