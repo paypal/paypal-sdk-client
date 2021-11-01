@@ -3,10 +3,10 @@ import type { LocaleType } from '@paypal/sdk-constants/src/';
 import { COUNTRY_LANGS, LANG, COUNTRY } from '@paypal/sdk-constants/src';
 
 export function getComputedLocales(locale : string) : LocaleType {
-    const [ _lang, _country ] = locale.split('_');
+    let [ lang, country ] = locale.split('_');
     
-    let lang = LANG[_lang.toUpperCase()];
-    const country = COUNTRY[_country];
+    lang = LANG[lang.toUpperCase()];
+    country = COUNTRY[country];
     const countryLangs = COUNTRY_LANGS[country];
 
     if (countryLangs.includes(LANG.ZH_HANT)) {
