@@ -1,6 +1,6 @@
 /* @flow */
-import type { LocaleType } from '@paypal/sdk-constants/src/';
-import { COUNTRY_LANGS, LANG, COUNTRY } from '@paypal/sdk-constants/src';
+
+import { COUNTRY_LANGS, LANG, COUNTRY, type LocaleType } from '@paypal/sdk-constants/src';
 
 export function getComputedLocales(locale : string) : LocaleType {
     let [ lang, country ] = locale.split('_');
@@ -9,7 +9,7 @@ export function getComputedLocales(locale : string) : LocaleType {
     country = COUNTRY[country];
     const countryLangs = COUNTRY_LANGS[country];
 
-    if (countryLangs.includes(LANG.ZH_HANT)) {
+    if (countryLangs && countryLangs.includes(LANG.ZH_HANT)) {
         lang = LANG.ZH_HANT;
     }
 
