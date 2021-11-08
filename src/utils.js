@@ -9,7 +9,7 @@ export function getComputedLocales(locale : string) : LocaleType {
     country = COUNTRY[country];
     const countryLangs = COUNTRY_LANGS[country];
 
-    if (countryLangs && countryLangs.includes(LANG.ZH_HANT)) {
+    if (countryLangs && countryLangs.includes(LANG.ZH_HANT) && lang === LANG.ZH) {
         lang = LANG.ZH_HANT;
     }
 
