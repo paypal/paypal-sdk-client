@@ -430,7 +430,7 @@ describe(`script cases`, () => {
 
         const url = insertMockSDKScript({
             query: {
-                'locale': 'en_HK'
+                'locale': `${ expectedLang }_HK`
             }
         });
 
