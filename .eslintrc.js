@@ -2,7 +2,9 @@
 
 module.exports = {
     'extends': './node_modules/grumbler-scripts/config/.eslintrc-browser.js',
-
+    rules: {
+        'dont-use-includes': 'error',
+    },
     globals: {
         __STAGE__: true,
         __VERSION__: true,
