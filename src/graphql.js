@@ -20,6 +20,11 @@ import {
 import { buildPayPalUrl } from './domains';
 import type { MLContext, Experiment, Extra } from './personalization';
 
+export const LocationType = {
+    'BEFORE': ('before' : 'before'),
+    'AFTER':  ('after' : 'after'),
+    'INNER':  ('inner' : 'inner')
+};
 
 type FundingEligibilityParams = {|
     clientID : string,
@@ -215,7 +220,18 @@ function adaptPersonalizationToExperiments(personalization) : ?$ReadOnlyArray<Ex
             id:        experiment.id,
             name:      experiment,
             tracking:  experiment.tracking,
-            treatment: experiment.text
+            treatment: {
+                name:   experiment,
+                action: {
+                    html: {
+                        markup:   experiment.text,
+                        selector: '',
+                        location: LocationType.INNER
+                    },
+                    css: '',
+                    js:  ''
+                }
+            }
         });
     });
 
