@@ -53,6 +53,6 @@ export type Extra = {|
     buttonSize? : string
 |};
 
-export function fetchPersonalizations({ mlContext, eligibility, extra } : {| mlContext : MLContext, eligibility : FundingEligibilityType, extra : Extra |}) : ?ZalgoPromise<$ReadOnlyArray<Personalization>> {
+export function fetchPersonalizations({ mlContext, eligibility, extra } : {| mlContext : MLContext, eligibility : FundingEligibilityType, extra : Extra |}) : ZalgoPromise<$ReadOnlyArray<Personalization>> {
     return getPersonalizations({ mlContext, eligibility, extra });
 }
