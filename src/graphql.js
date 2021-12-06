@@ -2,7 +2,7 @@
 
 import { ZalgoPromise } from 'zalgo-promise/src';
 import { request, stringifyError } from 'belter/src';
-import { CURRENCY } from '@paypal/sdk-constants/src';
+import { CURRENCY, type FundingEligibilityType } from '@paypal/sdk-constants/src';
 
 import { getLogger } from './logger';
 import {
@@ -18,6 +18,7 @@ import {
     getBuyerCountry
 } from './script';
 import { buildPayPalUrl } from './domains';
+import type { MLContext, Experiment, Extra } from './personalization';
 
 
 type FundingEligibilityParams = {|
@@ -140,3 +141,128 @@ export function getGraphQLFundingEligibility<T>(fields : string) : ZalgoPromise<
     });
 }
 
+const PERSONALIZATION_QUERY = `
+    query GetPersonalization(
+        $clientId: String,
+        $buyerCountry: CountryCodes,
+        $ip: String,
+        $cookies: String,
+        $currency: SupportedCountryCurrencies,
+        $intent: FundingEligibilityIntent,
+        $commit: Boolean,
+        $vault: Boolean,
+        $merchantID: [String],
+        $buttonSessionID: String,
+        $userAgent: String,
+        $locale: LocaleInput!,
+        $label: ButtonLabels,
+        $period: String,
+        $taglineEnabled: Boolean,
+        $renderedButtons: [FundingButtonType]
+        $layout: ButtonLayouts
+        $buttonSize: ButtonSizes
+    ) {
+        checkoutCustomization(
+            clientId: $clientId,
+            merchantId: $merchantID,
+            currency: $currency,
+            commit: $commit,
+            intent: $intent,
+            vault: $vault,
+            buyerCountry: $buyerCountry,
+            ip: $ip,
+            cookies: $cookies,
+            buttonSessionId: $buttonSessionID,
+            userAgent: $userAgent,
+            locale: $locale,
+            buttonLabel: $label,
+            installmentPeriod: $period,
+            taglineEnabled: $taglineEnabled,
+            renderedButtons: $renderedButtons
+            layout: $layout
+            buttonSize: $buttonSize
+        ) {
+            tagline {
+                text
+                tracking {
+                    impression
+                    click
+                }
+            }
+            buttonText {
+                text
+                tracking {
+                    impression
+                    click
+                }
+            }
+            buttonAnimation {
+                id
+                text
+                tracking {
+                    impression
+                    click
+                }
+            }
+        }
+    }
+`;
+
+function adaptPersonalizationToExperiments(personalization) : ?$ReadOnlyArray<Experiment> {
+    const experiments = [];
+    Object.keys(personalization).forEach(experiment => {
+        experiments.push({
+            id:        experiment.id,
+            name:      experiment,
+            tracking:  experiment.tracking,
+            treatment: experiment.text
+        });
+    });
+
+    return experiments;
+}
+
+export function getPersonalization({ mlContext, eligibility, extra } : {| mlContext : MLContext, eligibility? : FundingEligibilityType, extra : Extra |}) : ZalgoPromise<$ReadOnlyArray<Experiment>> {
+    const { userAgent, buyerCountry, locale, clientId, buyerIp: ip, currency, cookies } = mlContext;
+    const { commit, intent, vault, buttonSessionID, renderedButtons, label, period, taglineEnabled, layout, buttonSize } = extra;
+    const variables = {
+        clientId,
+        locale,
+        buyerCountry,
+        currency,
+        intent,
+        commit,
+        vault,
+        ip,
+        cookies,
+        userAgent,
+        buttonSessionID,
+        renderedButtons,
+        label,
+        period,
+        taglineEnabled,
+        layout,
+        buttonSize,
+        eligibility
+    };
+
+    // Placeholder for future API changes
+    if (eligibility) {
+        variables.eligibility = eligibility;
+    } else {
+        delete variables.eligibility;
+    }
+
+    return callGraphQL({
+        query: PERSONALIZATION_QUERY,
+        variables
+    }).then((gqlResult) => {
+        if (!gqlResult || !gqlResult.checkoutCustomization) {
+            throw new Error(`GraphQL checkoutCustomization returned no checkoutCustomization object`);
+        }
+        return adaptPersonalizationToExperiments(gqlResult && gqlResult.checkoutCustomization);
+    }).catch(err => {
+        getLogger().error(`graphql_checkoutCustomization_error`, { err: stringifyError(err) });
+        return ZalgoPromise.reject(err);
+    });
+}
