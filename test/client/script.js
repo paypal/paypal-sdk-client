@@ -7,8 +7,8 @@ import { getClientID, getIntent, getCurrency, getVault, getCommit, getClientToke
 
 describe(`script cases`, () => {
     beforeEach(() => {
-        Object.defineProperty(window.navigator, 'languages', { value: [], writable: true }); // eslint-disable-line compat/compat
-        Object.defineProperty(window.navigator, 'language', { value: '', writable: true }); // eslint-disable-line compat/compat
+        Object.defineProperty(window.navigator, 'languages', { value: [], writable: true });
+        Object.defineProperty(window.navigator, 'language', { value: '', writable: true });
 
     });
 
@@ -407,6 +407,36 @@ describe(`script cases`, () => {
 
         if (expectedLocale !== receivedLocale) {
             throw new Error(`Expected locale to be ${ expectedLocale }, got ${ receivedLocale }`);
+        }
+    });
+
+    it('should return computed lang when locale is zh_HK', () => {
+        const expectedLang = 'zh_Hant';
+
+        const url = insertMockSDKScript({
+            query: {
+                'locale': 'zh_HK'
+            }
+        });
+
+        const { lang: receivedLang } = getLocale();
+        if (expectedLang !== receivedLang) {
+            throw new Error(`Expected lag to be ${ expectedLang }, got ${ receivedLang } from ${ url }`);
+        }
+    });
+
+    it('should return the right computed lang when locale is en_Hk', () => {
+        const expectedLang = 'en';
+
+        const url = insertMockSDKScript({
+            query: {
+                'locale': `${ expectedLang }_HK`
+            }
+        });
+
+        const { lang: receivedLang } = getLocale();
+        if (expectedLang !== receivedLang) {
+            throw new Error(`Expected lag to be ${ expectedLang }, got ${ receivedLang } from ${ url }`);
         }
     });
 });

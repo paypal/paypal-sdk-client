@@ -53,7 +53,7 @@ export function getPayPalDomainRegex() : RegExp {
         return /.*loca.*/;
     }
     // eslint-disable-next-line security/detect-unsafe-regex
-    return /\.paypal\.com(:\d+)?$/;
+    return /\.paypal\.(com|cn)(:\d+)?$/;
 }
 
 export function isPayPalDomain() : boolean {

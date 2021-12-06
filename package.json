@@ -1,6 +1,6 @@
 {
   "name": "@paypal/sdk-client",
-  "version": "4.0.158",
+  "version": "4.0.162",
   "description": "Shared config between PayPal/Braintree.",
   "main": "index.js",
   "scripts": {
@@ -63,7 +63,7 @@
     "esdoc-flow-type-plugin": "1.1.0",
     "esdoc-standard-plugin": "1.0.0",
     "flow-bin": "0.155.0",
-    "grumbler-scripts": "^3",
+    "grumbler-scripts": "^5.0.0",
     "mocha": "4.1.0",
     "sync-browser-mocks": "2.0.8"
   }
