@@ -1,7 +1,7 @@
 /* @flow */
 
 import { type ZalgoPromise } from 'zalgo-promise/src';
-import { COMMIT, COUNTRY, CURRENCY, INTENT, VAULT, type LocaleType, type FundingEligibilityType } from '@paypal/sdk-constants/src';
+import { COMMIT, COUNTRY, CURRENCY, INTENT, type LocaleType, type FundingEligibilityType } from '@paypal/sdk-constants/src';
 
 import { getPersonalizations, LocationType } from './graphql';
 
@@ -42,11 +42,11 @@ export type MLContext = {|
 export type Extra = {|
     intent? : $Values<typeof INTENT>,
     commit? : $Values<typeof COMMIT>,
-    vault? : $Values<typeof VAULT>,
+    vault? : boolean,
     merchantID? : $ReadOnlyArray<string>,
     buttonSessionID : string,
     label? : string,
-    period? : string,
+    period? : number,
     taglineEnabled : boolean,
     renderedButtons? : $ReadOnlyArray<string>,
     layout? : string,
