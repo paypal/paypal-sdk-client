@@ -3,7 +3,7 @@
 import { type ZalgoPromise } from 'zalgo-promise/src';
 import { COMMIT, COUNTRY, CURRENCY, INTENT, VAULT, type LocaleType, type FundingEligibilityType } from '@paypal/sdk-constants/src';
 
-import { getPersonalization, LocationType } from './graphql';
+import { getPersonalizations, LocationType } from './graphql';
 
 type Tracking = {|
     click : string,
@@ -12,18 +12,16 @@ type Tracking = {|
 
 type Treatment = {|
     name : string,
-    action : {|
-        html : {|
-            markup : string,
-            selector : string,
-            location : $Values<typeof LocationType>
-        |},
-        css : string,
-        js : string
-    |}
+    html : {|
+        markup : string,
+        selector : string,
+        location : $Values<typeof LocationType>
+    |},
+    css : string,
+    js : string
 |};
 
-export type Experiment = {|
+export type Personalization = {|
     id : string,
     name : string,
     tracking : Tracking,
@@ -55,6 +53,6 @@ export type Extra = {|
     buttonSize? : string
 |};
 
-export function fetchPersonalization({ mlContext, eligibility, extra } : {| mlContext : MLContext, eligibility : FundingEligibilityType, extra : Extra |}) : ?ZalgoPromise<$ReadOnlyArray<Experiment>> {
-    return getPersonalization({ mlContext, eligibility, extra });
+export function fetchPersonalizations({ mlContext, eligibility, extra } : {| mlContext : MLContext, eligibility : FundingEligibilityType, extra : Extra |}) : ?ZalgoPromise<$ReadOnlyArray<Personalization>> {
+    return getPersonalizations({ mlContext, eligibility, extra });
 }

@@ -18,7 +18,7 @@ import {
     getBuyerCountry
 } from './script';
 import { buildPayPalUrl } from './domains';
-import type { MLContext, Experiment, Extra } from './personalization';
+import type { MLContext, Personalization, Extra } from './personalization';
 
 export const LocationType = {
     'BEFORE': ('before' : 'before'),
@@ -213,32 +213,30 @@ const PERSONALIZATION_QUERY = `
     }
 `;
 
-function adaptPersonalizationToExperiments(personalization) : ?$ReadOnlyArray<Experiment> {
-    const experiments = [];
+function adaptPersonalizationToExperiments(personalization) : ?$ReadOnlyArray<Personalization> {
+    const personalizations = [];
     Object.keys(personalization).forEach(experiment => {
-        experiments.push({
+        personalizations.push({
             id:        experiment.id,
             name:      experiment,
             tracking:  experiment.tracking,
             treatment: {
                 name:   experiment,
-                action: {
-                    html: {
-                        markup:   experiment.text,
-                        selector: '',
-                        location: LocationType.INNER
-                    },
-                    css: '',
-                    js:  ''
-                }
+                html: {
+                    markup:   experiment.text,
+                    selector: '',
+                    location: LocationType.INNER
+                },
+                css: '',
+                js:  ''
             }
         });
     });
 
-    return experiments;
+    return personalizations;
 }
 
-export function getPersonalization({ mlContext, eligibility, extra } : {| mlContext : MLContext, eligibility? : FundingEligibilityType, extra : Extra |}) : ZalgoPromise<$ReadOnlyArray<Experiment>> {
+export function getPersonalizations({ mlContext, eligibility, extra } : {| mlContext : MLContext, eligibility? : FundingEligibilityType, extra : Extra |}) : ZalgoPromise<$ReadOnlyArray<Personalization>> {
     const { userAgent, buyerCountry, locale, clientId, buyerIp: ip, currency, cookies } = mlContext;
     const { commit, intent, vault, buttonSessionID, renderedButtons, label, period, taglineEnabled, layout, buttonSize } = extra;
     const variables = {
