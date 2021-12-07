@@ -1,5 +1,4 @@
 /* @flow */
-/* eslint-disable compat/compat */
 
 import { INTENT } from '@paypal/sdk-constants/src';
 
@@ -53,4 +52,3 @@ describe(`personalization cases`, () => {
 
     });
 });
-/* eslint-enable compat/compat */
