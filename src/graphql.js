@@ -215,22 +215,24 @@ const PERSONALIZATION_QUERY = `
 
 function adaptPersonalizationToExperiments(personalization) : ?$ReadOnlyArray<Personalization> {
     const personalizations = [];
+
     Object.keys(personalization).forEach(experiment => {
-        personalizations.push({
-            id:        experiment.id,
-            name:      experiment,
-            tracking:  experiment.tracking,
-            treatment: {
-                name:   experiment,
-                html: {
-                    markup:   experiment.text,
-                    selector: '',
-                    location: LocationType.INNER
-                },
-                css: '',
-                js:  ''
-            }
-        });
+        if (personalization[experiment]) {
+            personalizations.push({
+                name:      experiment,
+                tracking:  personalization[experiment] && personalization[experiment].tracking,
+                treatment: {
+                    name:   experiment,
+                    html: {
+                        markup:   '', // pull from personalization repo
+                        selector: '', // pull from personalization repo
+                        location: LocationType.INNER // pull from personalization repo
+                    },
+                    css: '',
+                    js:  ''
+                }
+            });
+        }
     });
 
     return personalizations;

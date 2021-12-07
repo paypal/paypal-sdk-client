@@ -22,7 +22,6 @@ type Treatment = {|
 |};
 
 export type Personalization = {|
-    id : string,
     name : string,
     tracking : Tracking,
     treatment : Treatment

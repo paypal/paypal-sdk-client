@@ -39,7 +39,7 @@ describe(`personalization cases`, () => {
             .then(experiments => {
                 let found = false;
                 experiments.forEach(experiment => {
-                    if (experiment.name === 'tagline') {
+                    if (experiment.name === 'tagline' && experiment.tracking !== null && experiment.treatment !== null) {
                         found = true;
                         graphQLMock.done();
                     }
