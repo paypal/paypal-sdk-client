@@ -44,7 +44,7 @@ export type Extra = {|
     commit? : $Values<typeof COMMIT>,
     vault? : boolean,
     merchantID? : $ReadOnlyArray<string>,
-    buttonSessionID : string,
+    buttonSessionID? : string,
     label? : string,
     period? : number,
     taglineEnabled : boolean,
