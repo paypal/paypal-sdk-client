@@ -50,7 +50,7 @@ function validatePaymentsSDKUrl({ pathname, query, hash }) {
                 if (!emailMaxLengthRegex.test(aMerchantValue)) {
                     throw new Error(`Email is too long: ${aMerchantValue}`)
                 }
-                if (aMerchantValue.includes("@") && !emailRegex.test(aMerchantValue)) {
+                if (!emailRegex.test(aMerchantValue)) {
                     throw new Error(`Malformed. merchant email: ${aMerchantValue}`);
                 }
             });
