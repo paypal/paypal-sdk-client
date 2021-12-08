@@ -16,7 +16,7 @@ type SDKMeta = {|
 |};
 
 const emailRegex = /^.+@.+$/;
-const emailMaxLengthRegex = /^.{1,64}$/
+const emailMaxLengthRegex = /^.{1,256}$/
 
 function validatePaymentsSDKUrl({ pathname, query, hash }) {
 
