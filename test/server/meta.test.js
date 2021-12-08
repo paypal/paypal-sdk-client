@@ -247,7 +247,7 @@ test('should error out from invalid merchant-id email addresses', () => {
         '@',
         '@io',
         '@test.com',
-        'a-very-long-email'.repeat(15) + '@a-very-long-domain.com'
+        `${ 'a-very-long-email'.repeat(15) }@a-very-long-domain.com`
     ];
 
     emails.forEach(email => {
