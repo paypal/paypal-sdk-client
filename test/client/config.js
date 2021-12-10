@@ -34,6 +34,7 @@ describe(`config cases`, () => {
     });
 
     it('should successfully build a paypal logger url', () => {
+        console.karma('@@@', __FORCE_PAYPAL_DOMAIN__);
         const expectedPayPalUrl = `${ window.location.protocol }//${ window.location.host }/xoplatform/logger/api/logger`;
         const result = getPayPalLoggerUrl();
 

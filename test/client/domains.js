@@ -1,11 +1,15 @@
 /* @flow */
 
-import { getPayPalDomainRegex } from '../../src';
+import { getPayPalDomainRegex, getPayPalLoggerUrl } from '../../src';
 
 beforeEach(() => {
     window.__ENV__ = 'test';
 });
 describe(`domains test`, () => {
+    before(() => {
+        window.__FORCE_PAYPAL_DOMAIN__ = true;
+    });
+
     it('should successfully match valid domain', () => {
 
         const validDomains = [
@@ -36,6 +40,15 @@ describe(`domains test`, () => {
             if (domain.match(getPayPalDomainRegex())) {
                 throw new Error(`${ domain } must not match the regex`);
             }
+        }
+    });
+
+    it('should successfully get logger url forced to paypal domain', () => {
+        const expectedPayPalUrl = `${ __PAYPAL_DOMAIN__ }/xoplatform/logger/api/logger`;
+        const result = getPayPalLoggerUrl();
+
+        if (result !== expectedPayPalUrl) {
+            throw new Error(`Expected paypal logger url to be ${ expectedPayPalUrl }, got ${ result }`);
         }
     });
 });

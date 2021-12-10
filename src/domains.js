@@ -37,7 +37,9 @@ export function buildPayPalAPIUrl(path : string = '') : string {
 }
 
 export function getPayPalLoggerUrl() : string {
-    return buildPayPalUrl(URI.LOGGER);
+    return __FORCE_PAYPAL_DOMAIN__ ?
+        `${ getPayPalDomain() }${ URI.LOGGER }` :
+        buildPayPalUrl(URI.LOGGER);
 }
 
 export function getAuthAPIUrl() : string {
