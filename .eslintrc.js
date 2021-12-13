@@ -20,7 +20,7 @@ module.exports = {
         __COMPONENTS__: true,
         __FUNDING_ELIGIBILITY__: true,
         __PAYPAL_DOMAIN__: true,
-        __FORCE_PAYPAL_DOMAIN__: true,
+        __FORCE_PAYPAL_DOMAIN_LOGGER__: true,
         __PAYPAL_API_DOMAIN__: true
     }
 };

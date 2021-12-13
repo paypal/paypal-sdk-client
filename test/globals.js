@@ -16,6 +16,6 @@ export const sdkClientTestGlobals : TestGlobals = {
     __CORRELATION_ID__:    'abc123',
     __NAMESPACE__:         'paypaltest',
     __PAYPAL_DOMAIN__:     'mock://www.paypal.com',
-    __FORCE_PAYPAL_DOMAIN__: false,
+    __FORCE_PAYPAL_DOMAIN_LOGGER__: false,
     __PAYPAL_API_DOMAIN__: 'mock://msmaster.qa.paypal.com'
 };

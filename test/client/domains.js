@@ -7,7 +7,7 @@ beforeEach(() => {
 });
 describe(`domains test`, () => {
     before(() => {
-        window.__FORCE_PAYPAL_DOMAIN__ = true;
+        window.__FORCE_PAYPAL_DOMAIN_LOGGER__ = true;
     });
 
     it('should successfully match valid domain', () => {
