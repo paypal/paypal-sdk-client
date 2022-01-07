@@ -46,12 +46,12 @@ function validatePaymentsSDKUrl({ pathname, query, hash }) {
 
         if (key === SDK_QUERY_KEYS.MERCHANT_ID) {
             const merchantValues = val.split(",");
-            Array.from(merchantValues).forEach(aMerchantValue => {
-                if (!emailMaxLengthRegex.test(aMerchantValue)) {
-                    throw new Error(`Email is too long: ${aMerchantValue}`)
+            merchantValues.forEach(merchantValue => {
+                if (!emailMaxLengthRegex.test(merchantValue)) {
+                    throw new Error(`Email is too long: ${merchantValue}`)
                 }
-                if (!emailRegex.test(aMerchantValue)) {
-                    throw new Error(`Malformed. merchant email: ${aMerchantValue}`);
+                if (!emailRegex.test(merchantValue)) {
+                    throw new Error(`Malformed. merchant email: ${merchantValue}`);
                 }
             });
         }
