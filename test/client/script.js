@@ -3,7 +3,7 @@
 import { base64encode } from 'belter/src';
 
 import { getClientID, getIntent, getCurrency, getVault, getCommit, getClientToken, getPartnerAttributionID,
-    getMerchantID, getClientAccessToken, getSDKIntegrationSource, insertMockSDKScript, getPageType, getLocale } from '../../src';
+    getMerchantID, getClientAccessToken, getSDKIntegrationSource, insertMockSDKScript, getPageType, getLocale, getMerchantRequestedPopupDisabled } from '../../src';
 
 describe(`script cases`, () => {
     beforeEach(() => {
@@ -296,6 +296,41 @@ describe(`script cases`, () => {
 
         if (SDKIntegrationSource !== getSDKIntegrationSource()) {
             throw new Error(`Expected client token to be ${ SDKIntegrationSource }, got ${ getSDKIntegrationSource() || 'undefined' } from ${ url }`);
+        }
+    });
+
+    it('should successfully get popup disabled attribute as true when set to true', () => {
+        const url = insertMockSDKScript({
+            attributes: {
+                'data-popups-disabled': 'true'
+            }
+        });
+        const value = getMerchantRequestedPopupDisabled();
+        if (value !== true) {
+            throw new Error(`Expected merchantRequestedPopupDisabled attribute to be true, got ${ String(value) } from ${ url }`);
+        }
+    });
+
+    it('should successfully get popup disabled attribute as false when set to false', () => {
+        const url = insertMockSDKScript({
+            attributes: {
+                'data-popups-disabled': 'false'
+            }
+        });
+        const value = getMerchantRequestedPopupDisabled();
+        if (value !== false) {
+            throw new Error(`Expected merchantRequestedPopupDisabled attribute to be false, got ${ String(value) } from ${ url }`);
+        }
+    });
+
+    it('should successfully get popup disabled attribute as false when not set', () => {
+        const url = insertMockSDKScript({
+            attributes: {
+            }
+        });
+        const value = getMerchantRequestedPopupDisabled();
+        if (value !== false) {
+            throw new Error(`Expected merchantRequestedPopupDisabled attribute to be false, got ${ String(value) } from ${ url }`);
         }
     });
 

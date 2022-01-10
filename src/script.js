@@ -200,6 +200,10 @@ export function getPartnerAttributionID() : ?string {
     return getSDKAttribute(SDK_SETTINGS.PARTNER_ATTRIBUTION_ID);
 }
 
+export function getMerchantRequestedPopupDisabled() : boolean {
+    return getSDKAttribute(SDK_SETTINGS.DATA_POPUPS_DISABLED) === 'true';
+}
+
 export function getPageType() : ?string {
     const pageType = getSDKAttribute(SDK_SETTINGS.PAGE_TYPE, '');
     const validPageType = values(PAGE_TYPES).indexOf(pageType.toLowerCase()) !== -1;
