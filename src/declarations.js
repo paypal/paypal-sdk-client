@@ -2,9 +2,10 @@
 
 // $FlowFixMe[toplevel-library-import]
 import { ENV, COMPONENTS, PROTOCOL } from '@paypal/sdk-constants/src';
+import type { Personalization } from '@paypal/personalization';
 
 // $FlowFixMe[toplevel-library-import]
-import type { FundingEligibilityType, Personalization } from './types';
+import type { FundingEligibilityType } from './types';
 
 declare var __PROTOCOL__ : $Values<typeof PROTOCOL>;
 declare var __HOST__ : string;
