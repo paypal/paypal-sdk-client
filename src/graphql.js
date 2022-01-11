@@ -19,6 +19,7 @@ import {
 } from './script';
 import { buildPayPalUrl } from './domains';
 
+
 type FundingEligibilityParams = {|
     clientID : string,
     merchantID : ?$ReadOnlyArray<string>,
