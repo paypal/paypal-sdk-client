@@ -7,4 +7,3 @@ import './config';
 import './global';
 import './logger';
 import './domains';
-import './personalization';

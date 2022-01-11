@@ -4,7 +4,7 @@
 import { ENV, COMPONENTS, PROTOCOL } from '@paypal/sdk-constants/src';
 
 // $FlowFixMe[toplevel-library-import]
-import type { FundingEligibilityType } from './types';
+import type { FundingEligibilityType, Personalization } from './types';
 
 declare var __PROTOCOL__ : $Values<typeof PROTOCOL>;
 declare var __HOST__ : string;
@@ -29,3 +29,4 @@ declare var __COMPONENTS__ : $ReadOnlyArray<$Values<typeof COMPONENTS>>;
 
 // $FlowFixMe[value-as-type]
 declare var __FUNDING_ELIGIBILITY__ : FundingEligibilityType;
+declare var __PERSONALIZATIONS__ : $ReadOnlyArray<Personalization>;

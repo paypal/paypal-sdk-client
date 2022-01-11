@@ -15,5 +15,4 @@ export * from './test';
 export * from './graphql';
 export * from './domains';
 export * from './tracking';
-export * from './personalization';
 export * from './utils';
