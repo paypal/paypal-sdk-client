@@ -31,4 +31,5 @@ declare var __COMPONENTS__ : $ReadOnlyArray<$Values<typeof COMPONENTS>>;
 
 // $FlowFixMe[value-as-type]
 declare var __FUNDING_ELIGIBILITY__ : FundingEligibilityType;
+// $FlowFixMe[value-as-type]
 declare var __PERSONALIZATIONS__ : $ReadOnlyArray<Personalization>;
