@@ -2,7 +2,7 @@
 
 // $FlowFixMe[toplevel-library-import]
 import { ENV, COMPONENTS, PROTOCOL } from '@paypal/sdk-constants/src';
-import type { Personalization } from '@paypal/personalization';
+import type { Personalization } from '@paypal/personalization/src';
 
 // $FlowFixMe[toplevel-library-import]
 import type { FundingEligibilityType } from './types';
