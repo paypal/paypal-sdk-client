@@ -247,7 +247,8 @@ test('should error out from invalid merchant-id email addresses', () => {
         '@',
         '@io',
         '@test.com',
-        `${ 'a-very-long-email'.repeat(15) }@a-very-long-domain.com`
+        'name@',
+        'no_at_sign'
     ];
 
     emails.forEach(email => {
@@ -266,6 +267,24 @@ test('should error out from invalid merchant-id email addresses', () => {
             throw new Error(`Expected error to be thrown for ${ sdkUrl }`);
         }
     });
+});
+
+test('should error from very long merchant-id email addresses', () => {
+    const longEmail = `${ 'a-very-long-email'.repeat(20) }@a-very-long-domain.com`;
+    const sdkUrl = `https://www.paypal.com/sdk/js?client-id=foo&merchant-id=${ longEmail }`;
+    let error;
+
+    try {
+        unpackSDKMeta(Buffer.from(JSON.stringify({
+            url: sdkUrl
+        })).toString('base64'));
+    } catch (err) {
+        error = err;
+    }
+
+    if (!error) {
+        throw new Error(`Expected error to be thrown for ${ sdkUrl }`);
+    }
 });
 
 test('should construct a valid script url with multiple merchant ids', () => {

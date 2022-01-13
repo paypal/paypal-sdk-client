@@ -16,7 +16,6 @@ type SDKMeta = {|
 |};
 
 const emailRegex = /^.+@.+$/;
-const emailMaxLengthRegex = /^.{1,256}$/
 
 function validatePaymentsSDKUrl({ pathname, query, hash }) {
 
@@ -47,7 +46,7 @@ function validatePaymentsSDKUrl({ pathname, query, hash }) {
         if (key === SDK_QUERY_KEYS.MERCHANT_ID) {
             const merchantValues = val.split(",");
             merchantValues.forEach(merchantValue => {
-                if (!emailMaxLengthRegex.test(merchantValue)) {
+                if (merchantValue.length > 320) {
                     throw new Error(`Email is too long: ${merchantValue}`)
                 }
                 if (!emailRegex.test(merchantValue)) {
