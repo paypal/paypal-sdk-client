@@ -3,14 +3,17 @@
 import { base64encode } from 'belter/src';
 
 import { getClientID, getIntent, getCurrency, getVault, getCommit, getClientToken, getPartnerAttributionID,
-    getMerchantID, getClientAccessToken, getSDKIntegrationSource, insertMockSDKScript, getPageType, getLocale } from '../../src';
+    getMerchantID, getClientAccessToken, getSDKIntegrationSource, insertMockSDKScript, getPageType, getLocale, getBuyerCountry } from '../../src';
 
 describe(`script cases`, () => {
     beforeEach(() => {
         Object.defineProperty(window.navigator, 'languages', { value: [], writable: true });
         Object.defineProperty(window.navigator, 'language', { value: '', writable: true });
-
     });
+
+    after(() => {
+        window.navigator.languages = ['en_US'];
+    })
 
     it('should successfully get a client id', () => {
         const clientID = 'foobar123';
@@ -29,7 +32,7 @@ describe(`script cases`, () => {
     it('should error out when client id not passed', () => {
 
         let error;
-        
+
         insertMockSDKScript({
             query: {
                 'client-id': ''
@@ -79,7 +82,7 @@ describe(`script cases`, () => {
     it('should error out when merchant-id is * but data-merchant-id not passed', () => {
         const merchantID = '*';
         let error;
-        
+
         insertMockSDKScript({
             query: {
                 'merchant-id': merchantID
@@ -101,7 +104,7 @@ describe(`script cases`, () => {
         const merchantID = '*';
         const dataMerchantIDs = 'abc123';
         let error;
-        
+
         insertMockSDKScript({
             query: {
                 'merchant-id': merchantID
@@ -126,7 +129,7 @@ describe(`script cases`, () => {
         const merchantID = '*';
         const dataMerchantIDs = 'abc123,abc456,abc123';
         let error;
-        
+
         insertMockSDKScript({
             query: {
                 'merchant-id': merchantID
@@ -150,7 +153,7 @@ describe(`script cases`, () => {
     it('should successfully get merchant ids', () => {
         const merchantID = '*';
         const dataMerchantIDs = 'abc123,abc345';
-        
+
         const url = insertMockSDKScript({
             query: {
                 'merchant-id': merchantID
@@ -437,6 +440,17 @@ describe(`script cases`, () => {
         const { lang: receivedLang } = getLocale();
         if (expectedLang !== receivedLang) {
             throw new Error(`Expected lag to be ${ expectedLang }, got ${ receivedLang } from ${ url }`);
+        }
+    });
+
+    it ('should infer buyerCountry from locale settings', () => {
+        const expectedBuyerCountry = 'JP';
+        window.navigator.languages = ['ja']; //eslint-disable-line compat/compat
+
+        const receivedBuyerCountry = getBuyerCountry();
+
+        if (expectedBuyerCountry !== receivedBuyerCountry) {
+            throw new Error(`Expected buyerCountry to be ${ expectedBuyerCountry }, got ${ receivedBuyerCountry }`);
         }
     });
 });

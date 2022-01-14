@@ -165,7 +165,30 @@ export function getDisableCard() : $ReadOnlyArray<?$Values<typeof CARD>> {
 }
 
 export function getBuyerCountry() : ?$Values<typeof COUNTRY> {
-    return getSDKQueryParam(SDK_QUERY_KEYS.BUYER_COUNTRY);
+    const buyerCountry = getSDKQueryParam(SDK_QUERY_KEYS.BUYER_COUNTRY);
+
+    if (buyerCountry) {
+        return buyerCountry;
+    }
+
+    for (let { country, lang } of getBrowserLocales()) {
+        country = country && COUNTRY[country];
+        lang = lang && LANG[lang.toUpperCase()];
+
+        if (country && lang && COUNTRY_LANGS[country] && COUNTRY_LANGS[country].indexOf(lang) !== -1) {
+          return country;
+        } else if (lang) {
+            // We infer country from language if there is only one possible country match
+            const possibleCountries = Object.keys(COUNTRY_LANGS).filter(c => COUNTRY_LANGS[c].some(l => l === lang));
+
+            if (possibleCountries.length === 1) {
+                const possibleCountry = possibleCountries[0];
+                return possibleCountry;
+            }
+        }
+    }
+
+    return buyerCountry;
 }
 
 export function getNamespace() : string {
@@ -227,7 +250,7 @@ export function getLocale() : LocaleType {
         } else if (lang) {
             // We infer country from language if there is only one possible country match
             const possibleCountries = Object.keys(COUNTRY_LANGS).filter(c => COUNTRY_LANGS[c].some(l => l === lang));
-            
+
             if (possibleCountries.length === 1) {
                 const possibleCountry = possibleCountries[0];
                 return { country: possibleCountry, lang };
