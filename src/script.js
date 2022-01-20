@@ -200,8 +200,8 @@ export function getPartnerAttributionID() : ?string {
     return getSDKAttribute(SDK_SETTINGS.PARTNER_ATTRIBUTION_ID);
 }
 
-export function getMerchantRequestedPopupDisabled() : boolean {
-    return getSDKAttribute(SDK_SETTINGS.DATA_POPUPS_DISABLED) === 'true';
+export function getMerchantRequestedPopupsDisabled() : boolean {
+    return getSDKAttribute(SDK_SETTINGS.POPUPS_DISABLED) === 'true';
 }
 
 export function getPageType() : ?string {
