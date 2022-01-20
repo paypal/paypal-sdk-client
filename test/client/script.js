@@ -3,7 +3,7 @@
 import { base64encode } from 'belter/src';
 
 import { getClientID, getIntent, getCurrency, getVault, getCommit, getClientToken, getPartnerAttributionID,
-    getMerchantID, getClientAccessToken, getSDKIntegrationSource, insertMockSDKScript, getPageType, getLocale, getMerchantRequestedPopupDisabled } from '../../src';
+    getMerchantID, getClientAccessToken, getSDKIntegrationSource, insertMockSDKScript, getPageType, getLocale, getMerchantRequestedPopupsDisabled } from '../../src';
 
 describe(`script cases`, () => {
     beforeEach(() => {
@@ -305,7 +305,7 @@ describe(`script cases`, () => {
                 'data-popups-disabled': 'true'
             }
         });
-        const value = getMerchantRequestedPopupDisabled();
+        const value = getMerchantRequestedPopupsDisabled();
         if (value !== true) {
             throw new Error(`Expected merchantRequestedPopupDisabled attribute to be true, got ${ String(value) } from ${ url }`);
         }
@@ -317,7 +317,7 @@ describe(`script cases`, () => {
                 'data-popups-disabled': 'false'
             }
         });
-        const value = getMerchantRequestedPopupDisabled();
+        const value = getMerchantRequestedPopupsDisabled();
         if (value !== false) {
             throw new Error(`Expected merchantRequestedPopupDisabled attribute to be false, got ${ String(value) } from ${ url }`);
         }
@@ -328,7 +328,7 @@ describe(`script cases`, () => {
             attributes: {
             }
         });
-        const value = getMerchantRequestedPopupDisabled();
+        const value = getMerchantRequestedPopupsDisabled();
         if (value !== false) {
             throw new Error(`Expected merchantRequestedPopupDisabled attribute to be false, got ${ String(value) } from ${ url }`);
         }
