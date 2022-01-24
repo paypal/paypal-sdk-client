@@ -80,6 +80,10 @@ function isLegacySDKUrl(hostname : string, pathname : string) : boolean {
 }
 
 function isSDKUrl(hostname : string) : boolean {
+    // if (hostname.match(/https:\/\/[a-z0-9\.]+.paypal.(com|cn)/)) {
+    //     return true;
+    // }
+
     if (hostname.endsWith(HOST.PAYPAL) || hostname.endsWith(HOST.PAYPAL_CHINA)) {
         return true;
     }

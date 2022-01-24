@@ -870,3 +870,39 @@ test('should construct a valid script url hosted on www.paypal.cn', () => {
         throw new Error(`Expected script url to be ${ sdkUrl } - got ${ src }`);
     }
 });
+
+test('should error when the script url does not start with "https://"', () => {
+    const sdkUrl = '\uFEFFhttps://www.paypal.com/sdk/js?client-id=foo';
+
+    let error;
+
+    try {
+        unpackSDKMeta(Buffer.from(JSON.stringify({
+            url: sdkUrl
+        })).toString('base64'));
+    } catch (err) {
+        error = err;
+    }
+
+    if (!error) {
+        throw new Error(`Expected error to be thrown`);
+    }
+});
+
+test('should error when the script subdomain contains a backslash', () => {
+    const sdkUrl = 'https://\uff3cU0022\uff3cU003E\uff3cU003C\uff3cU002Fscript\uff3cU003E\uff3cU003Ciframe\uff3cU0020srcdoc\uff3cU003D\uff3cU0027.www.paypal.com/sdk/js?client-id=foo';
+
+    let error;
+
+    try {
+        unpackSDKMeta(Buffer.from(JSON.stringify({
+            url: sdkUrl
+        })).toString('base64'));
+    } catch (err) {
+        error = err;
+    }
+
+    if (!error) {
+        throw new Error(`Expected error to be thrown`);
+    }
+});
