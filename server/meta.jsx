@@ -80,10 +80,6 @@ function isLegacySDKUrl(hostname : string, pathname : string) : boolean {
 }
 
 function isSDKUrl(hostname : string) : boolean {
-    // if (hostname.match(/https:\/\/[a-z0-9\.]+.paypal.(com|cn)/)) {
-    //     return true;
-    // }
-
     if (hostname.endsWith(HOST.PAYPAL) || hostname.endsWith(HOST.PAYPAL_CHINA)) {
         return true;
     }
@@ -111,6 +107,12 @@ function validateSDKUrl(sdkUrl : string) {
 
     if (!sdkUrl.startsWith(PROTOCOL.HTTP) && !sdkUrl.startsWith(PROTOCOL.HTTPS)) {
         throw new Error(`Expected protocol for sdk url to be ${ PROTOCOL.HTTP } or ${ PROTOCOL.HTTPS } for host: ${ hostname } - got ${ protocol || 'undefined' }`);
+    }
+
+    const hostnameMatchResults = hostname.match(/[a-z0-9\.\-]+/);
+
+    if (!hostnameMatchResults || hostnameMatchResults[0] !== hostname) {
+        throw new Error(`Expected a valid host: ${ hostname }`);
     }
 
     if (isLegacySDKUrl(hostname, pathname)) {
