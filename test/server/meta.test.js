@@ -871,8 +871,9 @@ test('should construct a valid script url hosted on www.paypal.cn', () => {
     }
 });
 
-test('should error when the script url does not start with "https://"', () => {
+test('should error when the script url does not start with "https://" or "http://"', () => {
     const sdkUrl = '\uFEFFhttps://www.paypal.com/sdk/js?client-id=foo';
+    const sdkUrlLegacy = '\uFEFFhttp://www.paypalobjects.com/api/checkout.js';
 
     let error;
 
@@ -887,9 +888,21 @@ test('should error when the script url does not start with "https://"', () => {
     if (!error) {
         throw new Error(`Expected error to be thrown`);
     }
+
+    try {
+        unpackSDKMeta(Buffer.from(JSON.stringify({
+            url: sdkUrlLegacy
+        })).toString('base64'));
+    } catch (err) {
+        error = err;
+    }
+
+    if (!error) {
+        throw new Error(`Expected error to be thrown`);
+    }
 });
 
-test('should error when the script subdomain contains a backslash', () => {
+test('should error when invalid characters are found in the subdomain - we allow letters, numbers, . and -', () => {
     const sdkUrl = 'https://\uff3cU0022\uff3cU003E\uff3cU003C\uff3cU002Fscript\uff3cU003E\uff3cU003Ciframe\uff3cU0020srcdoc\uff3cU003D\uff3cU0027.www.paypal.com/sdk/js?client-id=foo';
 
     let error;
