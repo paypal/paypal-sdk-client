@@ -26,6 +26,23 @@ test('should construct a valid script url', () => {
     }
 });
 
+test('should construct a valid script url with data-popups-disabled attribute', () => {
+
+    const sdkUrl = 'https://www.paypal.com/sdk/js?client-id=foo';
+
+    const { getSDKLoader } = unpackSDKMeta(Buffer.from(JSON.stringify({
+        url:   sdkUrl,
+        attrs: { 'data-popups-disabled': 'true' }
+    })).toString('base64'));
+
+    const $ = cheerio.load(getSDKLoader());
+    const dataPopUsDisabled = $('script').attr('data-popups-disabled');
+
+    if (dataPopUsDisabled !== 'true') {
+        throw new Error(`Expected dataPopUsDisabled to be true  - got ${ dataPopUsDisabled }`);
+    }
+});
+
 test('should construct a valid script url with paypalobjects', () => {
 
     const sdkUrl = 'https://www.paypalobjects.com/api/checkout.js';

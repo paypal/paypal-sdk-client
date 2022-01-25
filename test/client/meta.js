@@ -49,6 +49,30 @@ describe(`meta cases`, () => {
         }
     });
 
+    it('should construct a valid script url with data-popups-disabled attribute', () => {
+
+        insertMockSDKScript({
+            query: {
+                'client-id':    'foobar'
+            },
+            attributes: {
+                'data-popups-disabled': 'true'
+            }
+        });
+
+        const meta = getSDKMeta();
+
+        if (!meta) {
+            throw new Error(`Expected meta string to be returned`);
+        }
+
+        const { attrs: { 'data-popups-disabled': dataPopupDisabled } } = JSON.parse(window.atob(meta));
+
+        if (dataPopupDisabled !== 'true') {
+            throw new Error(`Expected sdk dataPopupDisabled to be true , got ${ dataPopupDisabled }`);
+        }
+    });
+
     it('should successfully create a meta payload with data-csp-nonce', () => {
         const dataCSPNonce = '12345';
 
