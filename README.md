@@ -13,7 +13,7 @@ PayPal SDK Client
 [version-badge]: https://img.shields.io/npm/v/@paypal/sdk-client.svg?style=flat-square
 [package]: https://www.npmjs.com/package/@paypal/sdk-client
 [license-badge]: https://img.shields.io/npm/l/@paypal/sdk-client.svg?style=flat-square
-[license]: https://github.com/paypal/paypal-sdk-client/blob/master/LICENSE
+[license]: https://github.com/paypal/paypal-sdk-client/blob/main/LICENSE
 
 A shared client for PayPal/Braintree client sdk modules. Has both client-side and server-side bindings to help you build and integrate an sdk component.
 
