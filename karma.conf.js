@@ -12,5 +12,15 @@ export default function configKarma(karma : Object) {
         webpack:  WEBPACK_CONFIG_TEST
     });
 
-    karma.set(karmaConfig);
+    karma.set({
+        ...karmaConfig,
+        coverageReporter: {
+            reporters: [
+                {
+                    type: 'lcov',
+                    dir:  'coverage/karma'
+                }
+            ]
+        }
+    });
 }
