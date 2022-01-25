@@ -105,8 +105,14 @@ function validateSDKUrl(sdkUrl : string) {
         throw new Error(`Expected pathname for sdk url`);
     }
 
-    if (protocol !== PROTOCOL.HTTP && protocol !== PROTOCOL.HTTPS) {
+    if (!sdkUrl.startsWith(PROTOCOL.HTTP) && !sdkUrl.startsWith(PROTOCOL.HTTPS)) {
         throw new Error(`Expected protocol for sdk url to be ${ PROTOCOL.HTTP } or ${ PROTOCOL.HTTPS } for host: ${ hostname } - got ${ protocol || 'undefined' }`);
+    }
+
+    const hostnameMatchResults = hostname.match(/[a-z0-9\.\-]+/);
+
+    if (!hostnameMatchResults || hostnameMatchResults[0] !== hostname) {
+        throw new Error(`Expected a valid host: ${ hostname }`);
     }
 
     if (isLegacySDKUrl(hostname, pathname)) {
