@@ -208,6 +208,20 @@ export function unpackSDKMeta(sdkMeta? : string) : SDKMeta {
         validateSDKUrl(url);
     }
 
+    
+    const buffDecode = new Buffer(sdkMeta, 'base64');
+    const sdkDecoded = buffDecode.toString('ascii');
+    const jsonObject = JSON.parse(sdkDecoded);
+    let dataSdkIntegration = jsonObject.attrs['data-sdk-integration-source'].toString()
+
+    dataSdkIntegration= dataSdkIntegration.replace('{{','{');
+    dataSdkIntegration= dataSdkIntegration.replace('}}','}');
+    jsonObject.attrs['data-sdk-integration-source'] = dataSdkIntegration;
+    sdkMetaBase64 = JSON.stringify(jsonObject);
+
+    const buffEncode = new Buffer(sdkMetaBase64);
+    sdkMeta = buffEncode.toString('base64');
+
     const getSDKLoader = ({ baseURL = DEFAULT_LEGACY_SDK_BASE_URL, nonce = '' } = {}) => {
         if (url) {
             const validAttrs = getSDKScriptAttributes(url, attrs);
