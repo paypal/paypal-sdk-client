@@ -20,6 +20,7 @@ module.exports = {
         __COMPONENTS__: true,
         __FUNDING_ELIGIBILITY__: true,
         __PAYPAL_DOMAIN__: true,
-        __PAYPAL_API_DOMAIN__: true
+        __PAYPAL_API_DOMAIN__: true,
+        __MERCHANT_ID_FROM_CLIENT_ID__: true
     }
 };

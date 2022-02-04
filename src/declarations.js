@@ -26,6 +26,7 @@ declare var __VERSION__ : string;
 declare var __CORRELATION_ID__ : string;
 declare var __NAMESPACE__ : string;
 declare var __COMPONENTS__ : $ReadOnlyArray<$Values<typeof COMPONENTS>>;
+declare var __MERCHANT_ID_FROM_CLIENT_ID__ : string;
 
 // $FlowFixMe[value-as-type]
 declare var __FUNDING_ELIGIBILITY__ : FundingEligibilityType;

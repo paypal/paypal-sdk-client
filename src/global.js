@@ -101,3 +101,7 @@ export function getFundingEligibility() : FundingEligibilityType {
 export function getPlatform() : $Values<typeof PLATFORM> {
     return isDevice() ? PLATFORM.MOBILE : PLATFORM.DESKTOP;
 }
+
+export function getMerchantIdFromClientId() : $ReadOnlyArray<string> {
+    return [ __MERCHANT_ID_FROM_CLIENT_ID__ ];
+}
