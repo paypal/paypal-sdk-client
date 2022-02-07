@@ -264,8 +264,7 @@ test('should error out from invalid merchant-id email addresses', () => {
         '@',
         '@io',
         '@test.com',
-        'name@',
-        'no_at_sign'
+        'name@'
     ];
 
     emails.forEach(email => {
@@ -326,6 +325,23 @@ test('should construct a valid script url with multiple merchant ids', () => {
 
     if (dataMerchantId !== merchantId) {
         throw new Error(`Expected data-merchant-id to be ${ merchantId } - got ${ dataMerchantId }`);
+    }
+});
+
+test('should construct a valid script url with a single merchant id in the url', () => {
+
+    const merchantId = 'UYEGJNV75RAJQ';
+    const sdkUrl = `https://www.paypal.com/sdk/js?client-id=foo&merchant-id=${ merchantId }`;
+
+    const { getSDKLoader } = unpackSDKMeta(Buffer.from(JSON.stringify({
+        url:   sdkUrl
+    })).toString('base64'));
+
+    const $ = cheerio.load(getSDKLoader());
+    const src = $('script').attr('src');
+
+    if (src !== sdkUrl) {
+        throw new Error(`Expected script url to be ${ sdkUrl } - got ${ src }`);
     }
 });
 
