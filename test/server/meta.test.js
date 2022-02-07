@@ -329,6 +329,28 @@ test('should construct a valid script url with multiple merchant ids', () => {
     }
 });
 
+test('should construct a valid script url with a single merchant id in the url', () => {
+
+    const merchantId = 'UYEGJNV75RAJQ';
+    const sdkUrl = `https://www.paypal.com/sdk/js?client-id=foo&merchant-id=${ merchantId }`;
+
+    const { getSDKLoader } = unpackSDKMeta(Buffer.from(JSON.stringify({
+        url:   sdkUrl
+    })).toString('base64'));
+
+    const $ = cheerio.load(getSDKLoader());
+    const src = $('script').attr('src');
+    const dataMerchantId = $('script').attr('data-merchant-id');
+
+    if (src !== sdkUrl) {
+        throw new Error(`Expected script url to be ${ sdkUrl } - got ${ src }`);
+    }
+
+    if (dataMerchantId !== merchantId) {
+        throw new Error(`Expected data-merchant-id to be ${ merchantId } - got ${ dataMerchantId }`);
+    }
+});
+
 test('should construct a valid script url without invalid attributes', () => {
 
     const sdkUrl = 'https://www.paypal.com/sdk/js?client-id=foo';
