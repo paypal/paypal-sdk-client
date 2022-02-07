@@ -264,8 +264,7 @@ test('should error out from invalid merchant-id email addresses', () => {
         '@',
         '@io',
         '@test.com',
-        'name@',
-        'no_at_sign'
+        'name@'
     ];
 
     emails.forEach(email => {

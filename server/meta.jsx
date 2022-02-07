@@ -43,7 +43,8 @@ function validatePaymentsSDKUrl({ pathname, query, hash }) {
             throw new Error(`Unexpected characters in query key for sdk url: ${ key }=${ val }`);
         }
 
-        if (key === SDK_QUERY_KEYS.MERCHANT_ID) {
+        // assume merchant-id values with an @ character are email addresses
+        if (key === SDK_QUERY_KEYS.MERCHANT_ID && val.includes('@')) {
             const merchantValues = val.split(",");
             merchantValues.forEach(merchantValue => {
                 if (merchantValue.length > 320) {
