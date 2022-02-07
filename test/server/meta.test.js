@@ -340,14 +340,9 @@ test('should construct a valid script url with a single merchant id in the url',
 
     const $ = cheerio.load(getSDKLoader());
     const src = $('script').attr('src');
-    const dataMerchantId = $('script').attr('data-merchant-id');
 
     if (src !== sdkUrl) {
         throw new Error(`Expected script url to be ${ sdkUrl } - got ${ src }`);
-    }
-
-    if (dataMerchantId !== merchantId) {
-        throw new Error(`Expected data-merchant-id to be ${ merchantId } - got ${ dataMerchantId }`);
     }
 });
 
