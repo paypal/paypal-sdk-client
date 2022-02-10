@@ -1,0 +1,26 @@
+coverage:
+  status:
+    project:
+      default:
+        target: 50%
+      client: 
+        target: 50%
+        threshold: 1%
+        flags:
+          - client
+      server:
+        target: 100%
+        threshold: 1%
+        flags:
+          - server
+
+comment:
+  layout: "diff, flags, files"
+
+flags: 
+  client:
+    paths:
+      - src
+  server:
+    paths:
+      - server
