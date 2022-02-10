@@ -1,0 +1,32 @@
+coverage:
+  status:
+    projects:
+      default:
+        target: 50%
+    patch:
+      client: 
+        target: 50%
+        threshold: 0.01%
+        flags:
+          - client
+      server:
+        target: 50%
+        threshold: 0.01%
+        flags:
+          - server
+
+comments:
+  layout: "diff, flags, files"
+
+flags: 
+  client:
+    carryforward: false
+    paths:
+      - src
+  server:
+    carryforward: false
+    paths:
+      - server
+
+github_checks:
+  annotations: true
