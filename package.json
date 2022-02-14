@@ -23,7 +23,8 @@
     "webpack": "babel-node --plugins=transform-es2015-modules-commonjs ./node_modules/.bin/webpack --progress",
     "jest": "jest test/server --env=node --no-cache --collectCoverageFrom='server/' --coverageDirectory='coverage/jest' --coverage --verbose --runInBand --silent=false",
     "prepublishOnly": "npm run babel",
-    "postpublish": "rm -rf ./server && git checkout ./server"
+    "postpublish": "rm -rf ./server && git checkout ./server",
+    "validate-codecov": "curl --data-binary @.github/codecov.yml https://codecov.io/validate"
   },
   "files": [
     "dist/",
