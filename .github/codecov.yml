@@ -1,0 +1,13 @@
+coverage:
+  status:
+    project:
+      default:
+        target: 50%
+      client: 
+        target: 50%
+        flags:
+          - client
+      server:
+        target: 100%
+        flags:
+          - server
