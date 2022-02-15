@@ -110,16 +110,16 @@ function isLocalUrl(host : string) : boolean {
     return process.env.NODE_ENV === 'development' && localUrls.some(url => host.includes(url));
 }
 
+function validateHostAndPath(hostname : string | null, pathname : string | null) : { hostname : string, pathname : string } {
+    if (!pathname || !hostname) {
+        throw new Error(`Expected host and pathname to be passed for sdk url`);
+    }
+    return { hostname, pathname };
+}
+
 function validateSDKUrl(sdkUrl : string) {
-    const { protocol, host, hostname, pathname, query, hash } = urlLib.parse(sdkUrl, true);
-
-    if (!hostname) {
-        throw new Error(`Expected host to be passed for sdk url`);
-    }
-
-    if (!pathname) {
-        throw new Error(`Expected pathname for sdk url`);
-    }
+    const { protocol, host, hostname: sourceHostname, pathname : sourcePathname, query, hash } = urlLib.parse(sdkUrl, true);
+    const { hostname, pathname } = validateHostAndPath(sourceHostname, sourcePathname);
 
     if (!sdkUrl.startsWith(PROTOCOL.HTTP) && !sdkUrl.startsWith(PROTOCOL.HTTPS)) {
         throw new Error(`Expected protocol for sdk url to be ${ PROTOCOL.HTTP } or ${ PROTOCOL.HTTPS } for host: ${ hostname } - got ${ protocol || 'undefined' }`);
@@ -174,15 +174,8 @@ function getSDKScriptAttributes(sdkUrl : ?string, allAttrs : ?{ [string] : strin
     const attrs = getDefaultSDKAttributes();
 
     if (sdkUrl) {
-        const { hostname, pathname } = urlLib.parse(sdkUrl, true);
-
-        if (!hostname) {
-            throw new Error(`Expected host to be passed for sdk url`);
-        }
-
-        if (!pathname) {
-            throw new Error(`Expected pathname for sdk url`);
-        }
+        const { hostname: sourceHostname, pathname: sourcePathname } = urlLib.parse(sdkUrl, true);
+        const { hostname, pathname } = validateHostAndPath(sourceHostname, sourcePathname);
 
         if (isLegacySDKUrl(hostname, pathname)) {
             attrs[DATA_ATTRIBUTES.PAYPAL_CHECKOUT] = true;

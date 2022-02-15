@@ -425,7 +425,7 @@ test('should error out with an invalid protocol in localhost', () => {
 
 test('should error out with an invalid host', () => {
 
-    const sdkUrl = 'https://www.paypal.example.com/sdk/js?client-id=foo';
+    const sdkUrl = 'https://?client-id=foo';
     let error;
 
     try {
