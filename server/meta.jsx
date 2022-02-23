@@ -170,6 +170,12 @@ const ALLOWED_ATTRS = [
     SDK_SETTINGS.CSP_NONCE
 ];
 
+function sanitizeAttribute(attrib : string) : string {
+    // remove angular expressions
+    attrib = attrib.replace(/{{/g,'').replace(/}}/g,'')
+    return attrib;
+}
+
 function getSDKScriptAttributes(sdkUrl : ?string, allAttrs : ?{ [string] : string }) : SDKAttributes {
     const attrs = getDefaultSDKAttributes();
 
@@ -185,7 +191,7 @@ function getSDKScriptAttributes(sdkUrl : ?string, allAttrs : ?{ [string] : strin
 
     for (const key in allAttrs) {
         if (ALLOWED_ATTRS.includes(key)) {
-            attrs[key] = allAttrs[key];
+            attrs[key] = sanitizeAttribute(allAttrs[key]);
         }
     }
 

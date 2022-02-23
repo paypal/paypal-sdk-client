@@ -25,6 +25,30 @@ test('should construct a valid script url', () => {
         throw new Error(`Expected script url to be ${ sdkUrl } - got ${ src }`);
     }
 });
+test('should construct a valid script url with no angular expressions', () => {
+
+    const sdkUrl = 'https://www.paypal.com/sdk/js?client-id=foo';
+
+    const { getSDKLoader } = unpackSDKMeta(Buffer.from(JSON.stringify({
+        url:   sdkUrl,
+        attrs: {
+            'data-sdk-integration-source': `injection_here{{constructor.constructor('alert(document.domain)')()}}`
+        }
+    })).toString('base64'));
+
+    const $ = cheerio.load(getSDKLoader());
+    const src = $('script').attr('src');
+    const integrationSrc = $('script').attr('data-sdk-integration-source');
+
+    if (src !== sdkUrl) {
+        throw new Error(`Expected script url to be ${ sdkUrl } - got ${ src }`);
+    }
+
+    if (integrationSrc.includes('{{') || integrationSrc.includes('}}')) {
+        throw new Error(`Expected script attribute ${ integrationSrc } to contain no unsafe angular expressions`);
+    }
+
+});
 
 test('should construct a valid script url with data-popups-disabled attribute', () => {
 
