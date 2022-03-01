@@ -1,7 +1,7 @@
 /* @flow */
 
 import { $mockEndpoint, patchXmlHttpRequest } from 'sync-browser-mocks/dist/sync-browser-mocks';
-import { ZalgoPromise } from 'zalgo-promise/src';
+import { ZalgoPromise } from '@krakenjs/zalgo-promise/src';
 
 import { getLogger, insertMockSDKScript } from '../../src';
 

@@ -1,7 +1,7 @@
 /* @flow */
 
 
-import { experiment, type Experiment } from 'belter/src';
+import { experiment, type Experiment } from '@krakenjs/belter/src';
 import { FPTI_KEY } from '@paypal/sdk-constants/src';
 
 import { FPTI_STATE, FPTI_TRANSITION } from './constants';

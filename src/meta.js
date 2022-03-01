@@ -1,7 +1,7 @@
 /* @flow */
 
 import { SDK_SETTINGS } from '@paypal/sdk-constants/src';
-import { base64encode, ATTRIBUTES } from 'belter/src';
+import { base64encode, ATTRIBUTES } from '@krakenjs/belter/src';
 
 import { getScriptUrl, getSDKAttributes } from './script';
 

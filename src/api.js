@@ -1,7 +1,7 @@
 /* @flow */
 
-import { ZalgoPromise } from 'zalgo-promise/src';
-import { memoize, request, base64encode } from 'belter/src';
+import { ZalgoPromise } from '@krakenjs/zalgo-promise/src';
+import { memoize, request, base64encode } from '@krakenjs/belter/src';
 import { FPTI_KEY, SDK_QUERY_KEYS, UNKNOWN } from '@paypal/sdk-constants/src';
 
 import { getOrderAPIUrl, getAuthAPIUrl } from './domains';

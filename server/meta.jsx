@@ -5,8 +5,8 @@
 import urlLib from 'url';
 
 import { ENV, SDK_PATH, SDK_QUERY_KEYS, SDK_SETTINGS } from '@paypal/sdk-constants';
-import { node, html } from 'jsx-pragmatic';
-import { ATTRIBUTES } from 'belter';
+import { node, html } from '@krakenjs/jsx-pragmatic';
+import { ATTRIBUTES } from '@krakenjs/belter';
 
 import { HOST, PROTOCOL, LEGACY_SDK_PATH, DEFAULT_SDK_META, DEFAULT_LEGACY_SDK_BASE_URL, DATA_ATTRIBUTES } from './constants';
 import { constHas, entries } from './util';

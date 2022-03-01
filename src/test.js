@@ -1,6 +1,6 @@
 /* @flow */
 
-import { extendUrl, getScript, memoize } from 'belter/src';
+import { extendUrl, getScript, memoize } from '@krakenjs/belter/src';
 import { SDK_QUERY_KEYS } from '@paypal/sdk-constants/src';
 
 import { getHost, getPath } from './global';

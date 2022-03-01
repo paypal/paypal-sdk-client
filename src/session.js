@@ -1,7 +1,7 @@
 /* @flow */
 
 import { SDK_SETTINGS } from '@paypal/sdk-constants/src';
-import { getStorage, type Storage } from 'belter/src';
+import { getStorage, type Storage } from '@krakenjs/belter/src';
 
 import { getNamespace, getSDKAttribute } from './script';
 
