@@ -273,20 +273,24 @@ export function isChildWindow() : boolean {
     return Boolean(window.xprops);
 }
 
+// istanbul ignore next
 export function getUserAccessToken() : ?string {
     // pass
 }
 
+// istanbul ignore next
 export function getUserAuthCode() : ?string {
     // pass
 }
 
 // Remove
+// istanbul ignore next
 export function getCountry() : $Values<typeof COUNTRY> {
     return getLocale().country;
 }
 
 // Remove
+// istanbul ignore next
 export function getLang() : $Values<typeof LANG> {
     return getLocale().lang;
 }
