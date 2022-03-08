@@ -8,3 +8,4 @@ import './global';
 import './logger';
 import './domains';
 import './session';
+import './api';
