@@ -11,3 +11,4 @@ import './domains';
 import './session';
 import './api';
 import './tracking';
+import './graphql';
