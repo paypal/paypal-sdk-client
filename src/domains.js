@@ -1,7 +1,7 @@
 /* @flow */
 
 import { ENV } from '@paypal/sdk-constants/src';
-import { getDomain, getActualDomain, isCurrentDomain } from 'cross-domain-utils/src';
+import { getDomain, getActualDomain, isCurrentDomain } from '@krakenjs/cross-domain-utils/src';
 
 import { getProtocol, getStageHost, getPayPalDomain, getPayPalAPIDomain } from './global';
 import { URI } from './config';
