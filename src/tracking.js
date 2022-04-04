@@ -1,7 +1,7 @@
 /* @flow */
 
-import { noop, stringifyError, stringifyErrorMessage, isIEIntranet, getResourceLoadTime, waitForWindowReady, ATTRIBUTES } from 'belter/src';
-import { ZalgoPromise } from 'zalgo-promise/src';
+import { noop, stringifyError, stringifyErrorMessage, isIEIntranet, getResourceLoadTime, waitForWindowReady, ATTRIBUTES } from '@krakenjs/belter/src';
+import { ZalgoPromise } from '@krakenjs/zalgo-promise/src';
 import { FPTI_KEY, FPTI_FEED, FPTI_DATA_SOURCE, FPTI_SDK_NAME, FPTI_USER_ACTION } from '@paypal/sdk-constants/src';
 
 import { getEnv, getVersion, getCorrelationID } from './global';

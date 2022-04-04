@@ -1,6 +1,6 @@
 /* @flow */
 
-import { base64encode } from 'belter/src';
+import { base64encode } from '@krakenjs/belter/src';
 
 import { getClientID, getIntent, getCurrency, getVault, getCommit, getClientToken, getPartnerAttributionID,
     getMerchantID, getClientAccessToken, getSDKIntegrationSource, insertMockSDKScript, getPageType, getLocale, getMerchantRequestedPopupsDisabled } from '../../src';

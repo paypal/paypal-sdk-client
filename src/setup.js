@@ -1,6 +1,6 @@
 /* @flow */
 
-import { destroyElement } from 'belter/src';
+import { destroyElement } from '@krakenjs/belter/src';
 
 import { getVersion } from './global';
 import { getSDKScript, getNamespace } from './script';

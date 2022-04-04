@@ -1,7 +1,7 @@
 /* @flow */
 
-import { ZalgoPromise } from 'zalgo-promise/src';
-import { request, stringifyError } from 'belter/src';
+import { ZalgoPromise } from '@krakenjs/zalgo-promise/src';
+import { request, stringifyError } from '@krakenjs/belter/src';
 import { CURRENCY } from '@paypal/sdk-constants/src';
 
 import { getLogger } from './logger';

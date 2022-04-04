@@ -1,6 +1,6 @@
 /* @flow */
 
-import { noop } from 'belter/src';
+import { noop } from '@krakenjs/belter/src';
 
 import { insertMockSDKScript } from '../../src';
 

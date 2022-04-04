@@ -1,7 +1,7 @@
 /* @flow */
 
 import { ENV, PROTOCOL, COMPONENTS, PLATFORM, type FundingEligibilityType } from '@paypal/sdk-constants/src';
-import { isDevice } from 'belter/src';
+import { isDevice } from '@krakenjs/belter/src';
 
 export function getSDKHost() : string {
     return __SDK_HOST__;

@@ -1,6 +1,6 @@
 /* @flow */
 
-import { isIE, isIEIntranet, isIECompHeader } from 'belter/src';
+import { isIE, isIEIntranet, isIECompHeader } from '@krakenjs/belter/src';
 
 import { getLogger } from './logger';
 

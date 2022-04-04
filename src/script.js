@@ -1,7 +1,7 @@
 /* @flow */
 
 import { getCurrentScriptUID, ATTRIBUTES, parseQuery, getBrowserLocales, base64decode,
-    values, getCurrentScript, memoize, stringifyError, getScript } from 'belter/src';
+    values, getCurrentScript, memoize, stringifyError, getScript } from '@krakenjs/belter/src';
 import { COUNTRY, SDK_SETTINGS, SDK_QUERY_KEYS, INTENT, COMMIT, VAULT, CURRENCY,
     FUNDING, CARD, COUNTRY_LANGS, DEFAULT_INTENT, DEFAULT_CURRENCY, DEFAULT_VAULT,
     QUERY_BOOL, LANG, type LocaleType, DEFAULT_SALE_COMMIT, DEFAULT_NONSALE_COMMIT,
