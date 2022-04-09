@@ -30,13 +30,13 @@ jobs:
         run: npm run build
 
       - name: ⬆️ Upload client coverage report
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v3
         with:
           directory: ./coverage/karma
           flags: client
 
       - name: ⬆️ Upload server coverage report
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v3
         with:
           directory: ./coverage/jest
           flags: server
