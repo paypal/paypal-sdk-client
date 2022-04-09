@@ -1,6 +1,6 @@
 /* @flow */
 
-import { $mockEndpoint } from 'sync-browser-mocks/dist/sync-browser-mocks';
+import { $mockEndpoint } from '@krakenjs/sync-browser-mocks/dist/sync-browser-mocks';
 
 import { createAccessToken, createOrder } from '../../src/api';
 
@@ -55,7 +55,7 @@ describe('api cases', () => {
         mockAuthEndpoint({
             'error': 'invalid_client'
         });
-        
+
         try {
             await createAccessToken('testClient');
         } catch (err) {
@@ -67,7 +67,7 @@ describe('api cases', () => {
 
     it('createAccessToken should return an error message when response is an empty object', async () => {
         mockAuthEndpoint({ });
-        
+
         try {
             await createAccessToken('testClient');
         } catch (err) {
