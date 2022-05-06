@@ -153,6 +153,29 @@ test('should construct a valid minified script url with paypalobjects', () => {
     }
 });
 
+test('should prevent query string parameters with checkout.js', () => {
+
+    const sdkUrl = 'https://www.sandbox.paypal.com/cgi-bin/webscr/checkout.js?cmd=_flow&CONTEXT=wtgSziM4oze46J3pBRQ';
+
+    const { getSDKLoader } = unpackSDKMeta(Buffer.from(JSON.stringify({
+        url: sdkUrl
+    })).toString('base64'));
+
+    const $ = cheerio.load(getSDKLoader());
+    const script = $('script[data-paypal-checkout]');
+    const src = script.attr('src');
+
+    // eslint-disable-next-line compat/compat
+    const urlObject = new URL(sdkUrl);
+    // we expect the query string params to be stripped out for v4
+    urlObject.search = '';
+    const expectedUrl = urlObject.toString();
+
+    if (src !== expectedUrl) {
+        throw new Error(`Expected script url to be ${ expectedUrl } - got ${ src }`);
+    }
+});
+
 test('should construct a valid versioned script url with paypalobjects', () => {
 
     const sdkUrl = 'https://www.paypalobjects.com/api/checkout.4.0.125.js';

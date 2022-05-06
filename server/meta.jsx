@@ -192,6 +192,24 @@ function getSDKScriptAttributes(sdkUrl : ?string, allAttrs : ?{ [string] : strin
     return attrs;
 }
 
+/**
+ * Check if the URL is legacy and clear the QueryString params to avoid XSS attack.
+ * Otherwise return the exact same URl.
+ *
+ * @param {string} sdkUrl - the source URL
+ * @return {string} the processed URL
+ */
+function clearQueryFromLegacySDKUrl(sdkUrl : string ) : string {
+    const { protocol, hostname, port, pathname } = urlLib.parse(sdkUrl);
+
+    return isLegacySDKUrl(String(hostname), String(pathname)) ? urlLib.format({
+        protocol,
+        hostname,
+        port,
+        pathname
+    }) : sdkUrl;
+}
+
 export function unpackSDKMeta(sdkMeta? : string) : SDKMeta {
 
     const { url, attrs } = sdkMeta
@@ -209,7 +227,7 @@ export function unpackSDKMeta(sdkMeta? : string) : SDKMeta {
             // $FlowFixMe
             const allAttrs = {
                 nonce,
-                src: url,
+                src: clearQueryFromLegacySDKUrl(url),
                 ...validAttrs
             };
 
