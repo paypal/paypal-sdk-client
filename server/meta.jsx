@@ -192,6 +192,21 @@ function getSDKScriptAttributes(sdkUrl : ?string, allAttrs : ?{ [string] : strin
     return attrs;
 }
 
+function sanitizeSDKUrl(sdkUrl : string ) : string {
+    // eslint-disable-next-line compat/compat
+    const url = new URL(sdkUrl);
+    
+    // remove query string params for checkout.js
+    if (isLegacySDKUrl(url.hostname, url.pathname)) {
+        url.search = '';
+        url.hash = '';
+
+        return url.toString();
+    }
+
+    return sdkUrl;
+}
+
 export function unpackSDKMeta(sdkMeta? : string) : SDKMeta {
 
     const { url, attrs } = sdkMeta
@@ -209,7 +224,7 @@ export function unpackSDKMeta(sdkMeta? : string) : SDKMeta {
             // $FlowFixMe
             const allAttrs = {
                 nonce,
-                src: url,
+                src: sanitizeSDKUrl(url),
                 ...validAttrs
             };
 
