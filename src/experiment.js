@@ -2,13 +2,14 @@
 
 
 import { experiment, type Experiment } from '@krakenjs/belter/src';
+import { type LoggerType } from '@krakenjs/beaver-logger/src';
 import { FPTI_KEY } from '@paypal/sdk-constants/src';
 
 import { FPTI_STATE, FPTI_TRANSITION } from './constants';
 import { getLogger } from './logger';
 
-export function createExperiment(name : string, sample : number) : Experiment {
-    const logger = getLogger();
+export function createExperiment(name : string, sample : number, logger? : LoggerType) : Experiment {
+    const log = logger || getLogger();
 
     return experiment({
         name,
@@ -24,13 +25,18 @@ export function createExperiment(name : string, sample : number) : Experiment {
                 ...payload
             };
 
-            logger.track(fullPayload);
-            logger.flush();
+            log.track(fullPayload);
+            log.flush();
         },
 
         logCheckpoint({ treatment, checkpoint, payload }) {
-            logger.info(`${ name }_${ treatment }_${ checkpoint }`, payload);
-            logger.flush();
+            if (treatment.indexOf(name) !== -1) {
+                log.info(`${ treatment }_${ checkpoint }`, payload);
+            } else {
+                log.info(`${ name }_${ treatment }_${ checkpoint }`, payload);
+            }
+
+            log.flush();
         }
     });
 }
