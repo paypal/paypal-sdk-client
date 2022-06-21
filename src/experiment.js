@@ -29,7 +29,12 @@ export function createExperiment(name : string, sample : number) : Experiment {
         },
 
         logCheckpoint({ treatment, checkpoint, payload }) {
-            logger.info(`${ name }_${ treatment }_${ checkpoint }`, payload);
+            if (treatment.indexOf(name) !== -1) {
+                logger.info(`${ treatment }_${ checkpoint }`, payload);
+            } else {
+                logger.info(`${ name }_${ treatment }_${ checkpoint }`, payload);
+            }
+            
             logger.flush();
         }
     });
