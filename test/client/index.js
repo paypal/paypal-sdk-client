@@ -9,3 +9,4 @@ import './logger';
 import './domains';
 import './session';
 import './api';
+import './tracking';
