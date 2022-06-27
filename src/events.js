@@ -1,5 +1,9 @@
 /* @flow */
 
-import { memoize, eventEmitter, type EventEmitterType } from '@krakenjs/belter/src';
+import {
+  memoize,
+  eventEmitter,
+  type EventEmitterType,
+} from "@krakenjs/belter/src";
 
-export const getEventEmitter : () => EventEmitterType = memoize(eventEmitter);
+export const getEventEmitter: () => EventEmitterType = memoize(eventEmitter);

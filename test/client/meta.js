@@ -1,100 +1,111 @@
 /* @flow */
 
-import { getSDKMeta, insertMockSDKScript } from '../../src';
+import { getSDKMeta, insertMockSDKScript } from "../../src";
 
 describe(`meta cases`, () => {
-    it('should successfully create a meta payload', () => {
-        const expectedUrl = insertMockSDKScript({
-            query: {
-                'client-id': 'foobar'
-            }
-        });
-
-        const meta = getSDKMeta();
-
-        if (!meta) {
-            throw new Error(`Expected meta string to be returned`);
-        }
-
-        const { url } = JSON.parse(window.atob(meta));
-
-        if (url !== expectedUrl) {
-            throw new Error(`Expected sdk url to be ${ expectedUrl }, got ${ url }`);
-        }
+  it("should successfully create a meta payload", () => {
+    const expectedUrl = insertMockSDKScript({
+      query: {
+        "client-id": "foobar",
+      },
     });
 
-    it('should successfully create a meta payload with merchant id', () => {
-        const expectedMerchantIds = 'abcd1234,abcd5678';
+    const meta = getSDKMeta();
 
-        insertMockSDKScript({
-            query: {
-                'client-id':    'foobar',
-                'merchant-id':  '*'
-            },
-            attributes: {
-                'data-merchant-id': expectedMerchantIds
-            }
-        });
+    if (!meta) {
+      throw new Error(`Expected meta string to be returned`);
+    }
 
-        const meta = getSDKMeta();
+    const { url } = JSON.parse(window.atob(meta));
 
-        if (!meta) {
-            throw new Error(`Expected meta string to be returned`);
-        }
+    if (url !== expectedUrl) {
+      throw new Error(`Expected sdk url to be ${expectedUrl}, got ${url}`);
+    }
+  });
 
-        const { attrs: { 'data-merchant-id': merchantIds } } = JSON.parse(window.atob(meta));
+  it("should successfully create a meta payload with merchant id", () => {
+    const expectedMerchantIds = "abcd1234,abcd5678";
 
-        if (merchantIds !== expectedMerchantIds) {
-            throw new Error(`Expected sdk merchant ids to be ${ expectedMerchantIds }, got ${ merchantIds }`);
-        }
+    insertMockSDKScript({
+      query: {
+        "client-id": "foobar",
+        "merchant-id": "*",
+      },
+      attributes: {
+        "data-merchant-id": expectedMerchantIds,
+      },
     });
 
-    it('should construct a valid script url with data-popups-disabled attribute', () => {
+    const meta = getSDKMeta();
 
-        insertMockSDKScript({
-            query: {
-                'client-id':    'foobar'
-            },
-            attributes: {
-                'data-popups-disabled': 'true'
-            }
-        });
+    if (!meta) {
+      throw new Error(`Expected meta string to be returned`);
+    }
 
-        const meta = getSDKMeta();
+    const {
+      attrs: { "data-merchant-id": merchantIds },
+    } = JSON.parse(window.atob(meta));
 
-        if (!meta) {
-            throw new Error(`Expected meta string to be returned`);
-        }
+    if (merchantIds !== expectedMerchantIds) {
+      throw new Error(
+        `Expected sdk merchant ids to be ${expectedMerchantIds}, got ${merchantIds}`
+      );
+    }
+  });
 
-        const { attrs: { 'data-popups-disabled': dataPopupDisabled } } = JSON.parse(window.atob(meta));
-
-        if (dataPopupDisabled !== 'true') {
-            throw new Error(`Expected sdk dataPopupDisabled to be true , got ${ dataPopupDisabled }`);
-        }
+  it("should construct a valid script url with data-popups-disabled attribute", () => {
+    insertMockSDKScript({
+      query: {
+        "client-id": "foobar",
+      },
+      attributes: {
+        "data-popups-disabled": "true",
+      },
     });
 
-    it('should successfully create a meta payload with data-csp-nonce', () => {
-        const dataCSPNonce = '12345';
+    const meta = getSDKMeta();
 
-        insertMockSDKScript({
-            query: {
-                'client-id':    'foobar'
-            },
-            attributes: {
-                'data-csp-nonce': dataCSPNonce
-            }
-        });
+    if (!meta) {
+      throw new Error(`Expected meta string to be returned`);
+    }
 
-        const meta = getSDKMeta();
+    const {
+      attrs: { "data-popups-disabled": dataPopupDisabled },
+    } = JSON.parse(window.atob(meta));
 
-        if (!meta) {
-            throw new Error(`Expected meta string to be returned`);
-        }
+    if (dataPopupDisabled !== "true") {
+      throw new Error(
+        `Expected sdk dataPopupDisabled to be true , got ${dataPopupDisabled}`
+      );
+    }
+  });
 
-        const { attrs: { 'data-csp-nonce': nonce } } = JSON.parse(window.atob(meta));
+  it("should successfully create a meta payload with data-csp-nonce", () => {
+    const dataCSPNonce = "12345";
 
-        if (nonce !== dataCSPNonce) {
-            throw new Error(`Expected sdk data-csp-nonce to be ${ dataCSPNonce }, got ${ nonce }`);
-        }
+    insertMockSDKScript({
+      query: {
+        "client-id": "foobar",
+      },
+      attributes: {
+        "data-csp-nonce": dataCSPNonce,
+      },
     });
+
+    const meta = getSDKMeta();
+
+    if (!meta) {
+      throw new Error(`Expected meta string to be returned`);
+    }
+
+    const {
+      attrs: { "data-csp-nonce": nonce },
+    } = JSON.parse(window.atob(meta));
+
+    if (nonce !== dataCSPNonce) {
+      throw new Error(
+        `Expected sdk data-csp-nonce to be ${dataCSPNonce}, got ${nonce}`
+      );
+    }
+  });
 });

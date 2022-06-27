@@ -1,3 +1,3 @@
 /* @flow */
 
-import './client';
+import "./client";

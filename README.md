@@ -1,5 +1,4 @@
-PayPal SDK Client
------------------
+## PayPal SDK Client
 
 [![build status][build-badge]][build]
 [![code coverage][coverage-badge]][coverage]
@@ -26,12 +25,12 @@ Your client-side sdk component can take advantage of any common utilities or fun
 - Running experiments.
 
 ```javascript
-import { getClientID } from '@paypal/sdk-client/src';
+import { getClientID } from "@paypal/sdk-client/src";
 
-fetch('https://api.paypal.com/v1/foo', {
-  headers: {
-    'client-id': getClientID()
-  }
+fetch("https://api.paypal.com/v1/foo", {
+	headers: {
+		"client-id": getClientID(),
+	},
 });
 ```
 
@@ -57,47 +56,46 @@ This module helps with that.
 1. Import `unpackSDKMeta`:
 
 ```javascript
-import { unpackSDKMeta } from '@paypal/sdk-client';
+import { unpackSDKMeta } from "@paypal/sdk-client";
 ```
 
 2. Call `unpackSDKMeta` with `req.query.sdkMeta`, passed from the client in the query string, and pass the script tag in the page render.
 
 ```javascript
 // Listen for requests to your app
-app.get('/my-app', (req, res) => {
+app.get("/my-app", (req, res) => {
+	// Unpack the sdk meta payload from the client
+	const { getSDKLoader } = unpackSDKMeta(req.query.sdkMeta);
 
-    // Unpack the sdk meta payload from the client
-    const { getSDKLoader } = unpackSDKMeta(req.query.sdkMeta);
+	// Call getSDKLoader to build a script tag, passing in csp nonce, if applicable
+	const sdkScriptTag = getSDKLoader({ nonce });
 
-    // Call getSDKLoader to build a script tag, passing in csp nonce, if applicable
-    const sdkScriptTag = getSDKLoader({ nonce });
-
-    // Insert script tag into response
-    res.send(`
+	// Insert script tag into response
+	res.send(`
         <body>
             <h1>My App</h1>
-            ${ sdkScriptTag }
+            ${sdkScriptTag}
         </body>
     `);
-})
+});
 ```
 
 3. Ensure the `sdkMeta` payload is passed to the child window from the parent. If you are using [zoid](https://github.com/krakenjs/zoid) to construct your component, please add the following:
 
 ```javascript
-import { getSdkMeta } from '@paypal/sdk-client/src';
+import { getSdkMeta } from "@paypal/sdk-client/src";
 
 let MyComponent = zoid.create({
-    tag: 'my-component',
-    url: 'https://www.paypal.com/my-component',
-    props: {
-        sdkMeta: {
-            type: 'string',
-            value: getSdkMeta,
-            queryParam: true
-        }
-    }
-})
+	tag: "my-component",
+	url: "https://www.paypal.com/my-component",
+	props: {
+		sdkMeta: {
+			type: "string",
+			value: getSdkMeta,
+			queryParam: true,
+		},
+	},
+});
 ```
 
 If you are not using zoid, please use `getSdkMeta()` to construct the `sdkMeta` payload, and pass it to your child-window or frame in a different way.
@@ -109,8 +107,7 @@ If you are not using zoid, please use `getSdkMeta()` to construct the `sdkMeta` 
 - `unpackSDKMeta` will throw an error if `req.query.sdkMeta` does not validate. This should be handled and translated into a 500 server error, indicating that the payload has been tampered with.
 - `unpackSDKMeta` may be passed `undefined` if `req.query.sdkMeta` is not present. This is necessary for some legacy integrations where the sdk metadata is passed via `window.name` entirely on the client-side.
 
-Quick Start
------------
+## Quick Start
 
 #### Installing
 
