@@ -2,8 +2,12 @@
 
 import { base64encode } from '@krakenjs/belter/src';
 
-import { getClientID, getIntent, getCurrency, getVault, getCommit, getClientToken, getPartnerAttributionID,
-    getMerchantID, getClientAccessToken, getSDKIntegrationSource, insertMockSDKScript, getPageType, getLocale, getMerchantRequestedPopupsDisabled } from '../../src';
+import { getClientID, getIntent, getCurrency, getVault,
+    getCommit, getClientToken, getPartnerAttributionID,
+    getMerchantID, getClientAccessToken, getSDKIntegrationSource,
+    insertMockSDKScript, getPageType, getLocale,
+    getMerchantRequestedPopupsDisabled
+} from '../../src';
 
 describe(`script cases`, () => {
     beforeEach(() => {
@@ -443,6 +447,24 @@ describe(`script cases`, () => {
         if (expectedLocale !== receivedLocale) {
             throw new Error(`Expected locale to be ${ expectedLocale }, got ${ receivedLocale }`);
         }
+    });
+
+    it('should return default locale from country when only country was detected', () => {
+        const previousLanguages = window.navigator.languages; // eslint-disable-line compat/compat
+        const previousLanguage = window.navigator.language;
+        
+        window.navigator.languages = [ 'zz_US' ]; // eslint-disable-line compat/compat
+        window.navigator.language = undefined;
+        const expectedLocale = 'en_US';
+
+        const localeObject = getLocale();
+        const receivedLocale = `${ localeObject.lang }_${ localeObject.country }`;
+
+        if (expectedLocale !== receivedLocale) {
+            throw new Error(`Expected locale to be ${ expectedLocale }, got ${ receivedLocale }`);
+        }
+        window.navigator.languages = previousLanguages; // eslint-disable-line compat/compat
+        window.navigator.language = previousLanguage;
     });
 
     it('should return computed lang when locale is zh_HK', () => {
