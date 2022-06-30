@@ -2,7 +2,6 @@
 
 import { ZalgoPromise } from '@krakenjs/zalgo-promise/src';
 import { request, stringifyError } from '@krakenjs/belter/src';
-import { CURRENCY } from '@paypal/sdk-constants/src';
 
 import { getLogger } from './logger';
 import {
@@ -19,23 +18,9 @@ import {
 } from './script';
 import { buildPayPalUrl } from './domains';
 
-
-type FundingEligibilityParams = {|
-    clientID : string,
-    merchantID : ?$ReadOnlyArray<string>,
-    buyerCountry : ?string,
-    currency : $Values<typeof CURRENCY>,
-    commit : boolean,
-    vault : boolean,
-    intent : string,
-    enableFunding : $ReadOnlyArray<?string>,
-    disableFunding : $ReadOnlyArray<?string>,
-    disableCard : $ReadOnlyArray<?string>
-|};
-
 const GRAPHQL_URI = '/graphql';
 
-function buildFundingEligibilityVariables() : FundingEligibilityParams {
+function buildFundingEligibilityVariables() : { [string] : mixed } {
     const clientID = getClientID();
     const merchantID = getMerchantID();
     const buyerCountry = getBuyerCountry();
@@ -61,12 +46,7 @@ function buildFundingEligibilityVariables() : FundingEligibilityParams {
     };
 }
 
-function getDefaultVariables<V>() : V {
-    // $FlowFixMe[incompatible-return]
-    return {};
-}
-
-export function callGraphQL<T, V>({ query, variables = getDefaultVariables(), headers = {} } : {| query : string, variables : V, headers? : { [string] : string } |}) : ZalgoPromise<T> {
+export function callGraphQL<T>({ query, variables = {}, headers = {} } : {| query : string, variables? : { [string] : mixed }, headers? : { [string] : string } |}) : ZalgoPromise<T> {
     return request({
         url:     buildPayPalUrl(GRAPHQL_URI),
         method:  'POST',
