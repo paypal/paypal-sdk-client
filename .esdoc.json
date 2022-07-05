@@ -1,12 +1,15 @@
 {
   "source": "./src",
   "destination": "./dist/docs",
-  "plugins": [{
-    "name": "esdoc-standard-plugin"
-  },{
-    "name": "esdoc-flow-type-plugin", 
-    "option": {
-      "enable": true
+  "plugins": [
+    {
+      "name": "esdoc-standard-plugin"
+    },
+    {
+      "name": "esdoc-flow-type-plugin",
+      "option": {
+        "enable": true
+      }
     }
-  }]
+  ]
 }

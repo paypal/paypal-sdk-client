@@ -3,7 +3,7 @@ coverage:
     project:
       default:
         target: 50%
-      client: 
+      client:
         target: 50%
         flags:
           - client
