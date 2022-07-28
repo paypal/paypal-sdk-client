@@ -10,7 +10,7 @@ import {
   getCurrentScript,
   memoize,
   stringifyError,
-  getScript,
+  getScript
 } from "@krakenjs/belter/src";
 import {
   COUNTRY,
@@ -31,7 +31,7 @@ import {
   type LocaleType,
   DEFAULT_SALE_COMMIT,
   DEFAULT_NONSALE_COMMIT,
-  PAGE_TYPES,
+  PAGE_TYPES
 } from "@paypal/sdk-constants/src";
 
 import { getPath, getDefaultNamespace, getSDKHost } from "./global";
@@ -40,27 +40,30 @@ import { getComputedLocales } from "./utils";
 
 type GetSDKScript = () => HTMLScriptElement;
 
+const buildScriptNotFoundError = (host, path, error = "") =>
+  new Error(
+    `PayPal Payments SDK script not found on page! Expected to find <script src="https://${host}${path}">\n\n${stringifyError(
+      error
+    )}`
+  );
+
 export const getSDKScript: GetSDKScript = memoize(() => {
   if (__TEST__) {
     const script = getScript({
       host: getSDKHost(),
       path: getPath(),
-      reverse: true,
+      reverse: true
     });
     if (!script) {
-      throw new Error(`Can not find SDK test script`);
+      throw buildScriptNotFoundError(getSDKHost(), getPath());
     }
     return script;
   }
 
   try {
     return getCurrentScript();
-  } catch (err) {
-    throw new Error(
-      `PayPal Payments SDK script not found on page! Expected to find <script src="https://${getSDKHost()}${getPath()}">\n\n${stringifyError(
-        err
-      )}`
-    );
+  } catch (error) {
+    throw buildScriptNotFoundError(getSDKHost(), getPath(), error);
   }
 });
 
@@ -294,8 +297,8 @@ export function getLocale(): LocaleType {
       return { country, lang };
     } else if (lang) {
       // We infer country from language if there is only one possible country match
-      const possibleCountries = Object.keys(COUNTRY_LANGS).filter((c) =>
-        COUNTRY_LANGS[c].some((l) => l === lang)
+      const possibleCountries = Object.keys(COUNTRY_LANGS).filter(c =>
+        COUNTRY_LANGS[c].some(l => l === lang)
       );
 
       if (possibleCountries.length === 1) {
@@ -314,7 +317,7 @@ export function getLocale(): LocaleType {
 
   return {
     lang: LANG.EN,
-    country: COUNTRY.US,
+    country: COUNTRY.US
   };
 }
 
