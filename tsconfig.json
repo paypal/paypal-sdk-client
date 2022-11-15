@@ -1,0 +1,28 @@
+{
+  "exclude": ["dist/**/*", "node_modules"],
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "noEmit": true,
+    "declaration": false,
+    "emitDeclarationOnly": false,
+    "isolatedModules": false,
+    "strict": true,
+    "esModuleInterop": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "jsx": "react",
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    // When the suppressImplicitAnyIndexErrors option is set to true, no implicit any errors are reported when indexing into objects or arrays.
+    "suppressImplicitAnyIndexErrors": true,
+    // to import package.json/
+    "resolveJsonModule": true,
+    // for some of the spreads
+    "downlevelIteration": true
+  },
+  "ts-node": {
+    // parse the *.d.ts before running
+    "files": true
+  }
+}

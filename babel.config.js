@@ -1,6 +1,4 @@
-/* @flow */
-/* eslint import/no-commonjs: off */
-
 module.exports = {
-  extends: "@krakenjs/grumbler-scripts/config/.babelrc-node",
+  extends: "@krakenjs/grumbler-scripts/config/.babelrc-browser",
+  presets: ["@krakenjs/grumbler-scripts/config/flow-ts-babel-preset"],
 };
