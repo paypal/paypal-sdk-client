@@ -13,4 +13,5 @@ export const WEBPACK_CONFIG_TEST: WebpackConfig = getWebpackConfig({
   },
 });
 
+// eslint-disable-next-line import/no-default-export
 export default [WEBPACK_CONFIG_TEST];
