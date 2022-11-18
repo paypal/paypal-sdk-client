@@ -62,7 +62,7 @@
     "bowser": "^2.0.0"
   },
   "devDependencies": {
-    "@krakenjs/grumbler-scripts": "^8.0.1",
+    "@krakenjs/grumbler-scripts": "^8.0.4",
     "@krakenjs/sync-browser-mocks": "^3.0.0",
     "babel-core": "7.0.0-bridge.0",
     "cheerio": "1.0.0-rc.9",

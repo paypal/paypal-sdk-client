@@ -12,3 +12,5 @@ export const WEBPACK_CONFIG_TEST: WebpackConfig = getWebpackConfig({
     ...sdkClientTestGlobals,
   },
 });
+
+export default [WEBPACK_CONFIG_TEST];
