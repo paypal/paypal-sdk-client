@@ -62,15 +62,18 @@
     "bowser": "^2.0.0"
   },
   "devDependencies": {
-    "@krakenjs/grumbler-scripts": "^7.0.0",
+    "@krakenjs/grumbler-scripts": "^8.0.4",
     "@krakenjs/sync-browser-mocks": "^3.0.0",
     "babel-core": "7.0.0-bridge.0",
     "cheerio": "1.0.0-rc.9",
+    "cross-env": "^7.0.3",
     "esdoc": "1.1.0",
     "esdoc-flow-type-plugin": "1.1.0",
     "esdoc-standard-plugin": "1.0.0",
     "flow-bin": "0.155.0",
+    "flow-typed": "^3.8.0",
     "husky": "^8.0.1",
+    "jest": "^29.3.1",
     "lint-staged": "^13.0.3",
     "mocha": "^4.1.0",
     "prettier": "2.7.1"
