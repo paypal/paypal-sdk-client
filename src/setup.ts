@@ -1,4 +1,4 @@
-import { destroyElement } from "@krakenjs/belter/src";
+import { destroyElement } from "@krakenjs/belter/dist/esm";
 
 import { getVersion } from "./global";
 import { getSDKScript, getNamespace } from "./script";
@@ -12,7 +12,7 @@ export function setupSDK(components: ReadonlyArray<SetupComponent<unknown>>) {
   const namespace = getNamespace();
   const version = getVersion();
   const INTERNAL_DESTROY_KEY = `__internal_destroy__`;
-  const existingNamespace = window[namespace];
+  const existingNamespace = (<any>window)[namespace];
   const existingVersion = existingNamespace && existingNamespace.version;
 
   if (existingNamespace) {
@@ -22,7 +22,7 @@ export function setupSDK(components: ReadonlyArray<SetupComponent<unknown>>) {
           `New SDK instance loaded, existing instance destroyed (${namespace} / ${version})`
         )
       );
-      delete window[namespace];
+      delete (<any>window)[namespace];
     } else if (version) {
       throw new Error(
         `Attempted to load sdk version ${version} on page, but window.${namespace} at version ${existingVersion} already loaded.\n\nTo load this sdk alongside the existing version, please specify a different namespace in the script tag, e.g. <script src="https://www.paypal.com/sdk/js?client-id=CLIENT_ID" data-namespace="paypal_sdk"></script>, then use the paypal_sdk namespace in place of paypal in your code.`
@@ -34,9 +34,9 @@ export function setupSDK(components: ReadonlyArray<SetupComponent<unknown>>) {
     }
   }
 
-  window[namespace] = window[namespace] || {};
-  window[namespace].version = version;
-  const destroyers: Array<any> = [];
+  (<any>window)[namespace] = (<any>window)[namespace] || {};
+  (<any>window)[namespace].version = version;
+  const destroyers: any[] = [];
 
   for (const { name, requirer, setupHandler } of components) {
     try {
@@ -69,7 +69,7 @@ export function setupSDK(components: ReadonlyArray<SetupComponent<unknown>>) {
         }
 
         if (xport) {
-          window[namespace][key] = xport;
+          (<any>window)[namespace][key] = xport;
         }
       }
     } catch (err) {
@@ -84,7 +84,7 @@ export function setupSDK(components: ReadonlyArray<SetupComponent<unknown>>) {
     }
   }
 
-  Object.defineProperty(window[namespace], INTERNAL_DESTROY_KEY, {
+  Object.defineProperty((<any>window)[namespace], INTERNAL_DESTROY_KEY, {
     enumerable: false,
     value: (
       err: unknown = new Error(
@@ -93,7 +93,7 @@ export function setupSDK(components: ReadonlyArray<SetupComponent<unknown>>) {
     ) => {
       destroyers.forEach((destroy) => destroy(err));
       destroyElement(getSDKScript());
-      delete window[namespace];
+      delete (<any>window)[namespace];
     },
   });
 }

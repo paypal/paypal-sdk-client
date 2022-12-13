@@ -6,8 +6,8 @@ import {
   SDK_PATH,
   SDK_QUERY_KEYS,
   SDK_SETTINGS,
-} from "@paypal/sdk-constants";
-import { node, html } from "@krakenjs/jsx-pragmatic";
+} from "@paypal/sdk-constants/dist/esm";
+import { node, html } from "@krakenjs/jsx-pragmatic/src";
 import { ATTRIBUTES } from "@krakenjs/belter";
 import {
   HOST,

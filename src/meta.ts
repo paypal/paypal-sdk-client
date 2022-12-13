@@ -1,5 +1,5 @@
-import { SDK_SETTINGS } from "@paypal/sdk-constants/src";
-import { base64encode, ATTRIBUTES } from "@krakenjs/belter/src";
+import { SDK_SETTINGS } from "@paypal/sdk-constants/dist/esm";
+import { base64encode, ATTRIBUTES } from "@krakenjs/belter/dist/esm";
 
 import { getScriptUrl, getSDKAttributes } from "./script";
 
@@ -20,8 +20,9 @@ export function getSDKMeta(): string {
   const attrs = {};
 
   for (const attr of Object.keys(scriptAttrs)) {
-    if (ALLOWED_ATTRS.indexOf(attr) !== -1) {
-      attrs[attr] = scriptAttrs[attr];
+    if (ALLOWED_ATTRS.includes(attr)) {
+      // @ts-ignore
+      attrs[attr] = scriptAttrs[attr as keyof typeof scriptAttrs];
     }
   }
 

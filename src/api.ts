@@ -1,6 +1,6 @@
 import type { ZalgoPromise } from "@krakenjs/zalgo-promise";
-import { memoize, request, base64encode } from "@krakenjs/belter/src";
-import { FPTI_KEY, SDK_QUERY_KEYS, UNKNOWN } from "@paypal/sdk-constants/src";
+import { memoize, request, base64encode } from "@krakenjs/belter/dist/esm";
+import { FPTI_KEY, SDK_QUERY_KEYS, UNKNOWN } from "@paypal/sdk-constants/dist/esm";
 
 import { getOrderAPIUrl, getAuthAPIUrl } from "./domains";
 import { getLogger } from "./logger";
@@ -12,7 +12,7 @@ import {
 } from "./script";
 import { FPTI_CONTEXT_TYPE, FPTI_TRANSITION } from "./constants";
 
-type ApplicationContext = {};
+type ApplicationContext = Record<string, unknown>;
 export type OrderCreateRequest = {
   intent?: "CAPTURE" | "AUTHORIZE";
   application_context?: ApplicationContext;
@@ -27,9 +27,9 @@ export type OrderCreateRequest = {
     };
   }>;
 };
-export type OrderCaptureResponse = {};
-export type OrderGetResponse = {};
-export type OrderAuthorizeResponse = {};
+export type OrderCaptureResponse = Record<string, unknown>;
+export type OrderGetResponse = Record<string, unknown>;
+export type OrderAuthorizeResponse = Record<string, unknown>;
 type CreateAccessToken = (arg0: string) => ZalgoPromise<string>;
 export const createAccessToken: CreateAccessToken = memoize(
   (clientID: string) => {

@@ -9,7 +9,7 @@ import {
   memoize,
   stringifyError,
   getScript,
-} from "@krakenjs/belter/src";
+} from "@krakenjs/belter/dist/esm";
 import type {
   LocaleType,
   COMMIT,
@@ -17,7 +17,7 @@ import type {
   CURRENCY,
   FUNDING,
   CARD,
-} from "@paypal/sdk-constants/src";
+} from "@paypal/sdk-constants/dist/esm";
 import {
   COUNTRY,
   SDK_SETTINGS,
@@ -32,7 +32,7 @@ import {
   DEFAULT_SALE_COMMIT,
   DEFAULT_NONSALE_COMMIT,
   PAGE_TYPES,
-} from "@paypal/sdk-constants/src";
+} from "@paypal/sdk-constants/dist/esm";
 
 import { __TEST__ } from "./declarations";
 import { getPath, getDefaultNamespace, getSDKHost } from "./global";
@@ -71,11 +71,13 @@ export const getSDKAttributes: GetSDKAttributes = memoize(() => {
   const result = {};
 
   for (const [name, value] of Object.entries(sdkScript.attributes)) {
-    if (name.indexOf("data-") === 0) {
+    if (name.startsWith("data-")) {
+      // @ts-ignore
       result[name] = value;
     }
   }
 
+  // @ts-ignore
   result[ATTRIBUTES.UID] = getCurrentScriptUID();
   return result;
 });
@@ -86,10 +88,12 @@ export function getSDKAttribute<T extends string | void>(
   // $FlowFixMe
   return getSDKAttributes()[name] || def;
 }
+
 export function getSDKQueryParams(): Record<string, string> {
   const script = getSDKScript();
   return parseQuery(script.src.split("?")[1] || "");
 }
+
 type GetSDKQueryParam = (<T extends string>(
   arg0: typeof SDK_QUERY_KEYS[typeof SDK_QUERY_KEYS]
 ) => T | void) &
@@ -97,11 +101,12 @@ type GetSDKQueryParam = (<T extends string>(
     arg0: typeof SDK_QUERY_KEYS[keyof typeof SDK_QUERY_KEYS],
     arg1: T
   ) => T);
-// @ts-ignore
+// @ts-expect-error
 export const getSDKQueryParam: GetSDKQueryParam = <T>(name: string, def: T) => {
   // $FlowFixMe
   return getSDKQueryParams()[name] || def;
 };
+
 export function getScriptUrl(): string {
   const src = getSDKScript().getAttribute("src");
 
@@ -111,6 +116,7 @@ export function getScriptUrl(): string {
 
   return src;
 }
+
 export function getSDKQueryParamBool<T extends boolean>(
   name: typeof SDK_QUERY_KEYS[typeof SDK_QUERY_KEYS],
   def?: T
@@ -121,6 +127,7 @@ export function getSDKQueryParamBool<T extends boolean>(
     QUERY_BOOL.TRUE
   );
 }
+
 export function getClientID(): string {
   const clientID = getSDKQueryParam(SDK_QUERY_KEYS.CLIENT_ID);
 
@@ -130,13 +137,14 @@ export function getClientID(): string {
     );
   }
 
-  if (CLIENT_ID_ALIAS[clientID]) {
-    return CLIENT_ID_ALIAS[clientID];
+  if (CLIENT_ID_ALIAS[clientID as keyof typeof CLIENT_ID_ALIAS]) {
+    return CLIENT_ID_ALIAS[clientID as keyof typeof CLIENT_ID_ALIAS];
   }
 
   return clientID;
 }
-export function getMerchantID(): ReadonlyArray<string> {
+
+export function getMerchantID(): readonly string[] {
   const merchantIDString = getSDKQueryParam(SDK_QUERY_KEYS.MERCHANT_ID);
 
   if (merchantIDString === "*") {
@@ -180,9 +188,11 @@ export function getMerchantID(): ReadonlyArray<string> {
 
   return [];
 }
+
 export function getIntent(): typeof INTENT[typeof INTENT] {
   return getSDKQueryParam(SDK_QUERY_KEYS.INTENT, DEFAULT_INTENT);
 }
+
 export function getCommit(): typeof COMMIT[keyof typeof COMMIT] {
   return getSDKQueryParamBool(
     SDK_QUERY_KEYS.COMMIT,
@@ -191,12 +201,15 @@ export function getCommit(): typeof COMMIT[keyof typeof COMMIT] {
       : DEFAULT_NONSALE_COMMIT
   );
 }
+
 export function getVault(): typeof VAULT[keyof typeof VAULT] {
   return getSDKQueryParamBool(SDK_QUERY_KEYS.VAULT, DEFAULT_VAULT);
 }
+
 export function getCurrency(): typeof CURRENCY[keyof typeof CURRENCY] {
   return getSDKQueryParam(SDK_QUERY_KEYS.CURRENCY, DEFAULT_CURRENCY);
 }
+
 export function getEnableFunding(): ReadonlyArray<
   typeof FUNDING[keyof typeof FUNDING] | null | undefined
 > {
@@ -208,6 +221,7 @@ export function getEnableFunding(): ReadonlyArray<
 
   return [];
 }
+
 export function getDisableFunding(): ReadonlyArray<
   typeof FUNDING[keyof typeof FUNDING] | null | undefined
 > {
@@ -219,6 +233,7 @@ export function getDisableFunding(): ReadonlyArray<
 
   return [];
 }
+
 export function getDisableCard(): ReadonlyArray<
   typeof CARD[keyof typeof CARD] | null | undefined
 > {
@@ -230,30 +245,36 @@ export function getDisableCard(): ReadonlyArray<
 
   return [];
 }
+
 export function getBuyerCountry():
   | typeof COUNTRY[typeof COUNTRY]
-  | null
+  | undefined
   | undefined {
   return getSDKQueryParam(SDK_QUERY_KEYS.BUYER_COUNTRY);
 }
+
 export function getNamespace(): string {
   return getSDKAttribute(SDK_SETTINGS.NAMESPACE) || getDefaultNamespace();
 }
+
 export function getClientToken(): string | void {
   return getSDKAttribute(SDK_SETTINGS.CLIENT_TOKEN);
 }
+
 export function getAmount(): string | null | undefined | void {
   const amount = getSDKAttribute(SDK_SETTINGS.AMOUNT);
 
-  if (amount && !amount.match(/^\d+\.\d\d$/)) {
+  if (amount && !/^\d+\.\d\d$/.exec(amount)) {
     throw new Error(`Invalid amount: ${amount}`);
   }
 
   return amount;
 }
+
 export function getUserIDToken(): string | void {
   return getSDKAttribute(SDK_SETTINGS.USER_ID_TOKEN);
 }
+
 export function getClientAccessToken(): string | null | undefined {
   const clientToken = getClientToken();
 
@@ -261,12 +282,15 @@ export function getClientAccessToken(): string | null | undefined {
     return JSON.parse(base64decode(clientToken)).paypal.accessToken;
   }
 }
+
 export function getPartnerAttributionID(): string | null | undefined {
   return getSDKAttribute(SDK_SETTINGS.PARTNER_ATTRIBUTION_ID, undefined);
 }
+
 export function getMerchantRequestedPopupsDisabled(): boolean {
   return getSDKAttribute(SDK_SETTINGS.POPUPS_DISABLED, undefined) === "true";
 }
+
 export function getPageType(): string | null | undefined {
   const pageType = getSDKAttribute(SDK_SETTINGS.PAGE_TYPE, "");
   const validPageType =
@@ -278,6 +302,7 @@ export function getPageType(): string | null | undefined {
 
   return pageType?.toLowerCase();
 }
+
 export function getLocale(): typeof LocaleType {
   const locale = getSDKQueryParam(SDK_QUERY_KEYS.LOCALE);
 
@@ -330,35 +355,44 @@ export function getLocale(): typeof LocaleType {
     country: COUNTRY.US,
   };
 }
+
 export function getCSPNonce(): string {
   return getSDKAttribute(SDK_SETTINGS.CSP_NONCE, undefined) || "";
 }
+
 export function getEnableThreeDomainSecure(): boolean {
   return getSDKAttributes().hasOwnProperty(SDK_SETTINGS.ENABLE_3DS);
 }
+
 export function getSDKIntegrationSource(): string | null | undefined {
   return getSDKAttribute(SDK_SETTINGS.SDK_INTEGRATION_SOURCE, undefined);
 }
+
 export function getUserExperienceFlow(): string | null | undefined {
   return getSDKAttribute(SDK_SETTINGS.USER_EXPERIENCE_FLOW, undefined);
 }
+
 // whether in zoid window
 export function isChildWindow(): boolean {
   return Boolean((<any>window).xprops);
 }
+
 // istanbul ignore next
 export function getUserAccessToken(): string | void {
   // pass
 }
+
 // istanbul ignore next
 export function getUserAuthCode(): string | void {
   // pass
 }
+
 // Remove
 // istanbul ignore next
 export function getCountry(): typeof COUNTRY[keyof typeof COUNTRY] {
   return getLocale().country;
 }
+
 // Remove
 // istanbul ignore next
 export function getLang(): typeof LANG[keyof typeof LANG] {

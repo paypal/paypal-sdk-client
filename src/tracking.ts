@@ -14,7 +14,7 @@ import {
   FPTI_DATA_SOURCE,
   FPTI_SDK_NAME,
   FPTI_USER_ACTION,
-} from "@paypal/sdk-constants";
+} from "@paypal/sdk-constants/dist/esm/types";
 
 import { getEnv, getVersion, getCorrelationID } from "./global";
 import {
@@ -39,9 +39,11 @@ export function getSDKInitTime(): number {
 
   return sdkInitTime;
 }
+
 export function setupLogger() {
   const logger = getLogger();
   sdkInitTime = Date.now();
+  // @ts-ignore
   logger.addPayloadBuilder(() => {
     return {
       referer: window.location.host,
@@ -78,9 +80,7 @@ export function setupLogger() {
       [FPTI_KEY.ERROR_CODE]: "payments_sdk_error",
       [FPTI_KEY.ERROR_DESC]: stringifyErrorMessage(err),
     });
-    logger.error("unhandled_error", {
-      err: stringifyError(err),
-    });
+    logger.error("unhandled_error", {error: stringifyError(err),});
     // eslint-disable-next-line promise/no-promise-in-callback
     logger.flush().catch(noop);
   });

@@ -1,5 +1,5 @@
-import { COUNTRY_LANGS, LANG, COUNTRY } from "@paypal/sdk-constants/src";
-import type { LocaleType } from "@paypal/sdk-constants/src";
+import { COUNTRY_LANGS, LANG, COUNTRY } from "@paypal/sdk-constants/dist/esm";
+import type { LocaleType } from "@paypal/sdk-constants/dist/esm";
 
 export function getComputedLocales(locale: string): typeof LocaleType {
   let [lang, country] = locale.split("_");

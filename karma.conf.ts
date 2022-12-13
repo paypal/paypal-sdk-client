@@ -1,6 +1,6 @@
 /* eslint import/no-default-export: off */
 // @ts-ignore
-import { getKarmaConfig } from "@krakenjs/grumbler-scripts/config/karma.conf";
+import { getKarmaConfig } from "@krakenjs/karma-config-grumbler";
 import { WEBPACK_CONFIG_TEST } from "./webpack.config";
 export default function configKarma(karma: Record<string, any>) {
   const karmaConfig = getKarmaConfig(karma, {

@@ -117,10 +117,10 @@ const sdkMetaList = [
     },
   ],
 ];
-// @ts-ignore[prop-missing] missing each property for test
+
 test.each(sdkMetaList)(
   "should unpack `sdkMeta` and load the script",
-  // @ts-ignore
+  // @ts-expect-error
   (queryParamsSource: { [x: string]: any; url: any }, attributes: any) => {
     const { url, ...queryParams } = queryParamsSource;
 

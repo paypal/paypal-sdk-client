@@ -1,4 +1,4 @@
-import { PLATFORM, PROTOCOL } from "@paypal/sdk-constants/src";
+import { PLATFORM, PROTOCOL } from "@paypal/sdk-constants/dist/esm";
 import { describe, afterEach, it } from "vitest";
 
 import {

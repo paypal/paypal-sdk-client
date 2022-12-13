@@ -25,7 +25,7 @@ Your client-side sdk component can take advantage of any common utilities or fun
 - Running experiments.
 
 ```javascript
-import { getClientID } from "@paypal/sdk-client/src";
+import { getClientID } from "@paypal/sdk-client/dist/esm";
 
 fetch("https://api.paypal.com/v1/foo", {
 	headers: {

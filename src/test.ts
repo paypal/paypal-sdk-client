@@ -1,7 +1,5 @@
-// @ts-ignore
-import { extendUrl, getScript, memoize } from "@krakenjs/belter/src";
-// @ts-ignore
-import { SDK_QUERY_KEYS } from "@paypal/sdk-constants/src";
+import { extendUrl, getScript, memoize } from "@krakenjs/belter/dist/esm";
+import { SDK_QUERY_KEYS } from "@paypal/sdk-constants/dist/esm";
 
 import { getHost, getPath } from "./global";
 import { getSDKScript, getSDKAttributes } from "./script";
@@ -32,10 +30,10 @@ export function insertMockSDKScript({
   // $FlowFixMe
   delete getScript.__inline_memoize_cache__;
   // $FlowFixMe
-  // @ts-ignore __inline_memoize_cache__ is not properties of Functions
+  // @ts-expect-error __inline_memoize_cache__ is not properties of Functions
   delete getSDKScript.__inline_memoize_cache__;
   // $FlowFixMe
-  // @ts-ignore __inline_memoize_cache__ is not properties of Functions
+  // @ts-expect-error __inline_memoize_cache__ is not properties of Functions
   delete getSDKAttributes.__inline_memoize_cache__;
   const script = document.createElement("script");
   script.setAttribute("type", "test/javascript");

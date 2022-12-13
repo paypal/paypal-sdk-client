@@ -1,5 +1,5 @@
 /* eslint no-self-compare: off */
-import { isIE, isIEIntranet, isIECompHeader } from "@krakenjs/belter/src";
+import { isIE, isIEIntranet, isIECompHeader } from "@krakenjs/belter/dist/esm";
 
 import { getLogger } from "./logger";
 import { __DEBUG__ } from "./declarations";
@@ -49,6 +49,7 @@ export function checkForCommonErrors() {
 
     if (isIE() && !isIECompHeader()) {
       logger.warn(`ie_meta_compatibility_header_missing`, {
+        // @ts-ignore
         message: `Drop tag: <meta http-equiv="X-UA-Compatible" content="IE=edge">`,
       });
     }
@@ -69,7 +70,7 @@ export function checkForCommonErrors() {
       logger.warn(`window_has_opener_and_parent`);
     }
 
-    if (window.name && window.name.indexOf("__prerender") === 0) {
+    if (window.name && window.name.startsWith("__prerender")) {
       logger.warn(`prerender_running_checkoutjs`);
     }
 

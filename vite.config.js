@@ -13,8 +13,8 @@ export default defineConfig({
   build: {
     lib: {
       entry: path.resolve(__dirname, "src/index.ts"),
-      name: "crossDomainUtil",
-      fileName: (format) => `cross-domain-utils.${format}.js`,
+      name: "sdkClient",
+      fileName: (format) => `sdk-client.${format}.js`,
       formats: ["es", "umd"],
     },
     sourcemap: true,
@@ -30,5 +30,9 @@ export default defineConfig({
   test: {
     /* for example, use global to avoid globals imports (describe, test, expect): */
     // globals: true,
+    environment: "jsdom",
+    coverage: {
+      reporter: ["text", "html"],
+    },
   },
 });

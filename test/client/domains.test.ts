@@ -1,4 +1,4 @@
-import { ENV } from "@paypal/sdk-constants/src";
+import { ENV } from "@paypal/sdk-constants/dist/esm";
 import { beforeEach, describe, it } from "vitest";
 
 import { getPayPalDomainRegex } from "../../src";
@@ -25,7 +25,7 @@ describe(`domains test`, () => {
     ];
 
     for (const domain of validDomains) {
-      if (!domain.match(getPayPalDomainRegex())) {
+      if (!getPayPalDomainRegex().exec(domain)) {
         throw new Error(`${domain} must match the regex`);
       }
     }
@@ -37,7 +37,7 @@ describe(`domains test`, () => {
     ];
 
     for (const domain of invalidDomains) {
-      if (domain.match(getPayPalDomainRegex())) {
+      if (getPayPalDomainRegex().exec(domain)) {
         throw new Error(`${domain} must not match the regex`);
       }
     }

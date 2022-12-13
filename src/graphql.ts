@@ -1,5 +1,5 @@
 import { ZalgoPromise } from "@krakenjs/zalgo-promise";
-import { request, stringifyError } from "@krakenjs/belter/src";
+import { request, stringifyError } from "@krakenjs/belter/dist/esm";
 
 import { getLogger } from "./logger";
 import {
@@ -84,6 +84,7 @@ export function callGraphQL<T>({
     return body.data;
   });
 }
+
 // call gql with multiple merchant ids to get fundingEligibility for card
 export function getGraphQLFundingEligibility<T>(
   fields: string
@@ -131,9 +132,7 @@ export function getGraphQLFundingEligibility<T>(
       return gqlResult && (<any>gqlResult).fundingEligibility;
     })
     .catch((err) => {
-      getLogger().error(`graphql_fundingeligibility_error`, {
-        err: stringifyError(err),
-      });
+      getLogger().error(`graphql_fundingeligibility_error`, {error: stringifyError(err),});
       return ZalgoPromise.reject(err);
     });
 }

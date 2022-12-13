@@ -1,5 +1,6 @@
 import { $mockEndpoint } from "@krakenjs/sync-browser-mocks/dist/sync-browser-mocks";
-import { describe, it } from "vitest";
+import { describe, it, beforeEach } from "vitest";
+import { setupWorker, rest } from "msw";
 
 import type { OrderCreateRequest } from "../../src/api";
 import { createAccessToken, createOrder } from "../../src/api";
@@ -17,25 +18,45 @@ describe("api cases", () => {
     error: null,
   };
 
-  const mockAuthEndpoint = function (data = defaultAuthResponse) {
-    $mockEndpoint
-      .register({
-        method: "POST",
-        uri: `${window.location.protocol}//${window.location.host}/v1/oauth2/token`,
-        data,
-      })
-      .listen();
-  };
+  // const mockAuthEndpoint = function (data = defaultAuthResponse) {
+  //   $mockEndpoint
+  //     .register({
+  //       method: "POST",
+  //       uri: `${window.location.protocol}//${window.location.host}/v1/oauth2/token`,
+  //       data,
+  //     })
+  //     .listen();
+  // };
 
-  const mockCreateOrder = function (data: Record<string, any>) {
-    $mockEndpoint
-      .register({
-        method: "POST",
-        uri: `${window.location.protocol}//${window.location.host}/v2/checkout/orders`,
-        data,
-      })
-      .listen();
-  };
+  const mockAuthEndpoint = (data = defaultAuthResponse) =>
+    setupWorker(
+      rest.post(
+        `${window.location.protocol}//${window.location.host}/v1/oauth2/token`,
+        (req, res, ctx) => {
+          return res(ctx.status(200), ctx.json(data));
+        }
+      )
+    );
+
+  // const mockCreateOrder = function (data: Record<string, any>) {
+  //   $mockEndpoint
+  //     .register({
+  //       method: "POST",
+  //       uri: `${window.location.protocol}//${window.location.host}/v2/checkout/orders`,
+  //       data,
+  //     })
+  //     .listen();
+  // };
+
+  const mockCreateOrder = (data: Record<string, any>) =>
+    setupWorker(
+      rest.post(
+        `${window.location.protocol}//${window.location.host}/v2/checkout/orders`,
+        (req, res, ctx) => {
+          return res(ctx.status(200), ctx.json(data));
+        }
+      )
+    );
 
   let order: OrderCreateRequest;
   beforeEach(() => {
@@ -64,7 +85,7 @@ describe("api cases", () => {
     }
   });
   it("createAccessToken should return invalid client argument", async () => {
-    // @ts-ignore, for error handling check
+    // @ts-expect-error, for error handling check
     mockAuthEndpoint({ error: "invalid_client" });
 
     try {
@@ -78,7 +99,7 @@ describe("api cases", () => {
     }
   });
   it("createAccessToken should return an error message when response is an empty object", async () => {
-    // @ts-ignore, for error handling check
+    // @ts-expect-error, for error handling check
     mockAuthEndpoint({});
 
     try {
@@ -95,7 +116,7 @@ describe("api cases", () => {
     const expectedErrorMessage = "Client ID not passed";
 
     try {
-      // @ts-ignore, for error handling check
+      // @ts-expect-error, for error handling check
       await createOrder(null, null);
     } catch (err) {
       if ((err as Error).message !== expectedErrorMessage) {
@@ -111,7 +132,7 @@ describe("api cases", () => {
     const expectedErrorMessage = "Expected order details to be passed";
 
     try {
-      // @ts-ignore, for error handling check
+      // @ts-expect-error, for error handling check
       await createOrder("testClient", null);
     } catch (err) {
       if ((err as Error).message !== expectedErrorMessage) {
@@ -126,7 +147,7 @@ describe("api cases", () => {
   it("createOrder should throw an error when order intent does not match with query parameters intent", async () => {
     const expectedErrorMessage =
       "Unexpected intent: authorize passed to order.create. Please ensure you are passing /sdk/js?intent=authorize in the paypal script tag.";
-    // @ts-ignore, for error handling check
+    // @ts-expect-error, for error handling check
     order.intent = "authorize";
 
     try {

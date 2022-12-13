@@ -1,6 +1,6 @@
 module.exports = {
   extends:
-    "./node_modules/@krakenjs/grumbler-scripts/config/.eslintrc-typescript.js",
+    "./node_modules/@krakenjs/eslint-config-grumbler/eslintrc-typescript.js",
 
   globals: {
     __TEST__: true,
@@ -19,5 +19,8 @@ module.exports = {
     "@typescript-eslint/no-unsafe-assignment": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/prefer-for-of": "off",
+
+    "@typescript-eslint/no-unsafe-call": "off",
+    "@typescript-eslint/no-unsafe-member-access": "off"
   },
 };

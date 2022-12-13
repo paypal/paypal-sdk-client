@@ -1,8 +1,8 @@
-import type { Experiment } from "@krakenjs/belter/src";
-import { experiment } from "@krakenjs/belter/src";
-import type { LoggerType } from "@krakenjs/beaver-logger/src";
-import "@krakenjs/beaver-logger/src";
-import { FPTI_KEY } from "@paypal/sdk-constants/src";
+import type { Experiment } from "@krakenjs/belter/dist/esm";
+import { experiment } from "@krakenjs/belter/dist/esm";
+import type { LoggerType } from "@krakenjs/beaver-logger/dist/esm";
+import "@krakenjs/beaver-logger/dist/esm";
+import { FPTI_KEY } from "@paypal/sdk-constants/dist/esm";
 
 import { FPTI_STATE, FPTI_TRANSITION } from "./constants";
 import { getLogger } from "./logger";

@@ -1,5 +1,5 @@
 /* eslint max-lines: off */
-import { base64encode } from "@krakenjs/belter/src";
+import { base64encode } from "@krakenjs/belter/dist/esm";
 import { beforeEach, describe, it } from "vitest";
 
 import {
