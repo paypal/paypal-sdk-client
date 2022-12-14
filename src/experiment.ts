@@ -18,7 +18,6 @@ export function createExperiment(
     sample,
 
     logTreatment({ treatment, payload }: { treatment: any; payload: any }) {
-      // $FlowFixMe
       const fullPayload = {
         [FPTI_KEY.STATE]: FPTI_STATE.PXP,
         [FPTI_KEY.TRANSITION]: FPTI_TRANSITION.PXP,
@@ -40,9 +39,12 @@ export function createExperiment(
       payload: any;
     }) {
       if (treatment.indexOf(name) !== -1) {
-        log.info(`${treatment}_${checkpoint}`, payload);
+        log.info(`${treatment as string}_${checkpoint as string}`, payload);
       } else {
-        log.info(`${name}_${treatment}_${checkpoint}`, payload);
+        log.info(
+          `${name}_${treatment as string}_${checkpoint as string}`,
+          payload
+        );
       }
 
       log.flush();

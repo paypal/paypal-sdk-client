@@ -43,7 +43,7 @@ export function getSDKInitTime(): number {
 export function setupLogger() {
   const logger = getLogger();
   sdkInitTime = Date.now();
-  // @ts-ignore
+
   logger.addPayloadBuilder(() => {
     return {
       referer: window.location.host,
@@ -58,16 +58,16 @@ export function setupLogger() {
       [FPTI_KEY.FEED]: FPTI_FEED.PAYMENTS_SDK,
       [FPTI_KEY.DATA_SOURCE]: FPTI_DATA_SOURCE.PAYMENTS_SDK,
       [FPTI_KEY.CLIENT_ID]: getClientID(),
-      [FPTI_KEY.SELLER_ID]: mID && mID.toString(),
+      [FPTI_KEY.SELLER_ID]: mID?.toString(),
       [FPTI_KEY.SESSION_UID]: getSessionID(),
       [FPTI_KEY.REFERER]: window.location.host,
-      [FPTI_KEY.LOCALE]: `${lang}_${country}`,
+      [FPTI_KEY.LOCALE]: `${lang as string}_${country as string}`,
       [FPTI_KEY.INTEGRATION_IDENTIFIER]: getClientID(),
       [FPTI_KEY.PARTNER_ATTRIBUTION_ID]: getPartnerAttributionID(),
       [FPTI_KEY.PAGE_TYPE]: getPageType(),
       [FPTI_KEY.SDK_NAME]: FPTI_SDK_NAME.PAYMENTS_SDK,
       [FPTI_KEY.SDK_VERSION]: getVersion(),
-      [FPTI_KEY.USER_AGENT]: window.navigator && window.navigator.userAgent,
+      [FPTI_KEY.USER_AGENT]: window?.navigator?.userAgent,
       [FPTI_KEY.USER_ACTION]: getCommit()
         ? FPTI_USER_ACTION.COMMIT
         : FPTI_USER_ACTION.CONTINUE,
@@ -80,8 +80,7 @@ export function setupLogger() {
       [FPTI_KEY.ERROR_CODE]: "payments_sdk_error",
       [FPTI_KEY.ERROR_DESC]: stringifyErrorMessage(err),
     });
-    logger.error("unhandled_error", {error: stringifyError(err),});
-    // eslint-disable-next-line promise/no-promise-in-callback
+    logger.error("unhandled_error", { error: stringifyError(err) });
     logger.flush().catch(noop);
   });
   waitForWindowReady().then(() => {
@@ -100,10 +99,10 @@ export function setupLogger() {
     // Exclude apps that use the JS SDK and are hosted directly on www.paypal.com. Ex:
     // https://www.paypal.com/buttons/smart
     // https://www.paypal.com/us/gifts/
-    const isLoadedInFrame = isPayPalDomain() && (<any>window).xprop;
+    const isLoadedInFrame = isPayPalDomain() && (window as any).xprop;
     logger
-      .info(`setup_${getEnv()}`)
-      .info(`setup_${getEnv()}_${getVersion().replace(/\./g, "_")}`)
+      .info(`setup_${getEnv() as string}`)
+      .info(`setup_${getEnv() as string}_${getVersion().replace(/\./g, "_")}`)
       .info(
         `sdk_${isLoadedInFrame ? "paypal" : "non_paypal"}_domain_script_uid_${
           sdkScript.hasAttribute(ATTRIBUTES.UID) ? "present" : "missing"

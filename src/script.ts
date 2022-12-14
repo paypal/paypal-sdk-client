@@ -59,9 +59,9 @@ export const getSDKScript: GetSDKScript = memoize(() => {
     return getCurrentScript();
   } catch (err) {
     throw new Error(
-      `PayPal Payments SDK script not found on page! Expected to find <script src="https://${getSDKHost()}${getPath()}">\n\n${stringifyError(
-        err
-      )}`
+      `PayPal Payments SDK script not found on page! Expected to find <script src="https://${getSDKHost()}${getPath()}">\n\n${
+        stringifyError(err) as string
+      }`
     );
   }
 });
@@ -72,12 +72,10 @@ export const getSDKAttributes: GetSDKAttributes = memoize(() => {
 
   for (const [name, value] of Object.entries(sdkScript.attributes)) {
     if (name.startsWith("data-")) {
-      // @ts-ignore
-      result[name] = value;
+      result[parseInt(name)] = value;
     }
   }
 
-  // @ts-ignore
   result[ATTRIBUTES.UID] = getCurrentScriptUID();
   return result;
 });
@@ -85,8 +83,7 @@ export function getSDKAttribute<T extends string | void>(
   name: typeof SDK_SETTINGS[keyof typeof SDK_SETTINGS],
   def?: T
 ): string | T | undefined {
-  // $FlowFixMe
-  return getSDKAttributes()[name] || def;
+  return getSDKAttributes()[parseInt(name)] || def;
 }
 
 export function getSDKQueryParams(): Record<string, string> {
@@ -101,10 +98,9 @@ type GetSDKQueryParam = (<T extends string>(
     arg0: typeof SDK_QUERY_KEYS[keyof typeof SDK_QUERY_KEYS],
     arg1: T
   ) => T);
-// @ts-expect-error
+// @ts-expect-error will fix later
 export const getSDKQueryParam: GetSDKQueryParam = <T>(name: string, def: T) => {
-  // $FlowFixMe
-  return getSDKQueryParams()[name] || def;
+  return getSDKQueryParams()[parseInt(name)] || def;
 };
 
 export function getScriptUrl(): string {
@@ -122,7 +118,6 @@ export function getSDKQueryParamBool<T extends boolean>(
   def?: T
 ): boolean | T {
   return (
-    // $FlowFixMe
     getSDKQueryParam(name, def ? def.toString() : QUERY_BOOL.FALSE) ===
     QUERY_BOOL.TRUE
   );
@@ -133,7 +128,7 @@ export function getClientID(): string {
 
   if (!clientID) {
     throw new Error(
-      `Expected ${SDK_QUERY_KEYS.CLIENT_ID} parameter in sdk url`
+      `Expected ${SDK_QUERY_KEYS.CLIENT_ID as string} parameter in sdk url`
     );
   }
 
@@ -156,7 +151,9 @@ export function getMerchantID(): readonly string[] {
 
     if (!merchantIDAttribute) {
       throw new Error(
-        `Must pass ${SDK_SETTINGS.MERCHANT_ID} when ${SDK_QUERY_KEYS.MERCHANT_ID}=* passed in url`
+        `Must pass ${SDK_SETTINGS.MERCHANT_ID as string} when ${
+          SDK_QUERY_KEYS.MERCHANT_ID as string
+        }=* passed in url`
       );
     }
 
@@ -164,7 +161,11 @@ export function getMerchantID(): readonly string[] {
 
     if (merchantID.length <= 1) {
       throw new Error(
-        `Must pass multiple merchant ids to ${SDK_SETTINGS.MERCHANT_ID}. If passing a single id, pass ${SDK_QUERY_KEYS.MERCHANT_ID}=XYZ in url`
+        `Must pass multiple merchant ids to ${
+          SDK_SETTINGS.MERCHANT_ID as string
+        }. If passing a single id, pass ${
+          SDK_QUERY_KEYS.MERCHANT_ID as string
+        }=XYZ in url`
       );
     }
 
@@ -175,7 +176,11 @@ export function getMerchantID(): readonly string[] {
 
     if (hasDuplicate) {
       throw new Error(
-        `Duplicates ${SDK_SETTINGS.MERCHANT_ID}. Must pass unique merchant ids to ${SDK_SETTINGS.MERCHANT_ID}.`
+        `Duplicates ${
+          SDK_SETTINGS.MERCHANT_ID as string
+        }. Must pass unique merchant ids to ${
+          SDK_SETTINGS.MERCHANT_ID as string
+        }.`
       );
     }
 
@@ -211,7 +216,7 @@ export function getCurrency(): typeof CURRENCY[keyof typeof CURRENCY] {
 }
 
 export function getEnableFunding(): ReadonlyArray<
-  typeof FUNDING[keyof typeof FUNDING] | null | undefined
+  typeof FUNDING[keyof typeof FUNDING]
 > {
   const funding = getSDKQueryParam(SDK_QUERY_KEYS.ENABLE_FUNDING);
 
@@ -223,7 +228,7 @@ export function getEnableFunding(): ReadonlyArray<
 }
 
 export function getDisableFunding(): ReadonlyArray<
-  typeof FUNDING[keyof typeof FUNDING] | null | undefined
+  typeof FUNDING[keyof typeof FUNDING]
 > {
   const funding = getSDKQueryParam(SDK_QUERY_KEYS.DISABLE_FUNDING);
 
@@ -235,7 +240,7 @@ export function getDisableFunding(): ReadonlyArray<
 }
 
 export function getDisableCard(): ReadonlyArray<
-  typeof CARD[keyof typeof CARD] | null | undefined
+  typeof CARD[keyof typeof CARD]
 > {
   const funding = getSDKQueryParam(SDK_QUERY_KEYS.DISABLE_CARD);
 
@@ -246,22 +251,19 @@ export function getDisableCard(): ReadonlyArray<
   return [];
 }
 
-export function getBuyerCountry():
-  | typeof COUNTRY[typeof COUNTRY]
-  | undefined
-  | undefined {
+export function getBuyerCountry(): typeof COUNTRY[typeof COUNTRY] {
   return getSDKQueryParam(SDK_QUERY_KEYS.BUYER_COUNTRY);
 }
 
 export function getNamespace(): string {
-  return getSDKAttribute(SDK_SETTINGS.NAMESPACE) || getDefaultNamespace();
+  return getSDKAttribute(SDK_SETTINGS.NAMESPACE) ?? getDefaultNamespace();
 }
 
 export function getClientToken(): string | void {
   return getSDKAttribute(SDK_SETTINGS.CLIENT_TOKEN);
 }
 
-export function getAmount(): string | null | undefined | void {
+export function getAmount(): string | undefined | void {
   const amount = getSDKAttribute(SDK_SETTINGS.AMOUNT);
 
   if (amount && !/^\d+\.\d\d$/.exec(amount)) {
@@ -275,7 +277,7 @@ export function getUserIDToken(): string | void {
   return getSDKAttribute(SDK_SETTINGS.USER_ID_TOKEN);
 }
 
-export function getClientAccessToken(): string | null | undefined {
+export function getClientAccessToken(): string | undefined {
   const clientToken = getClientToken();
 
   if (clientToken) {
@@ -283,7 +285,7 @@ export function getClientAccessToken(): string | null | undefined {
   }
 }
 
-export function getPartnerAttributionID(): string | null | undefined {
+export function getPartnerAttributionID(): string | undefined {
   return getSDKAttribute(SDK_SETTINGS.PARTNER_ATTRIBUTION_ID, undefined);
 }
 
@@ -291,7 +293,7 @@ export function getMerchantRequestedPopupsDisabled(): boolean {
   return getSDKAttribute(SDK_SETTINGS.POPUPS_DISABLED, undefined) === "true";
 }
 
-export function getPageType(): string | null | undefined {
+export function getPageType(): string | undefined {
   const pageType = getSDKAttribute(SDK_SETTINGS.PAGE_TYPE, "");
   const validPageType =
     values(PAGE_TYPES).indexOf(pageType?.toLowerCase()) !== -1;
@@ -311,14 +313,13 @@ export function getLocale(): typeof LocaleType {
   }
 
   for (let { country, lang } of getBrowserLocales()) {
-    country = country && COUNTRY[country];
+    country = country && COUNTRY[parseInt(country)];
     lang = lang && LANG[lang.toUpperCase()];
 
     if (
       country &&
       lang &&
-      COUNTRY_LANGS[country] &&
-      COUNTRY_LANGS[country].indexOf(lang) !== -1
+      COUNTRY_LANGS?.[parseInt(country)]?.indexOf(lang) !== -1
     ) {
       return {
         country,
@@ -327,7 +328,7 @@ export function getLocale(): typeof LocaleType {
     } else if (lang) {
       // We infer country from language if there is only one possible country match
       const possibleCountries = Object.keys(COUNTRY_LANGS).filter((c) =>
-        COUNTRY_LANGS[c].some((l: any) => l === lang)
+        COUNTRY_LANGS[parseInt(c)].some((l: any) => l === lang)
       );
 
       if (possibleCountries.length === 1) {
@@ -345,7 +346,7 @@ export function getLocale(): typeof LocaleType {
       // $FlowFixMe
       return {
         country,
-        lang: COUNTRY_LANGS[country][0],
+        lang: COUNTRY_LANGS[parseInt(country)][0],
       };
     }
   }
@@ -357,24 +358,24 @@ export function getLocale(): typeof LocaleType {
 }
 
 export function getCSPNonce(): string {
-  return getSDKAttribute(SDK_SETTINGS.CSP_NONCE, undefined) || "";
+  return getSDKAttribute(SDK_SETTINGS.CSP_NONCE, undefined) ?? "";
 }
 
 export function getEnableThreeDomainSecure(): boolean {
   return getSDKAttributes().hasOwnProperty(SDK_SETTINGS.ENABLE_3DS);
 }
 
-export function getSDKIntegrationSource(): string | null | undefined {
+export function getSDKIntegrationSource(): string | undefined {
   return getSDKAttribute(SDK_SETTINGS.SDK_INTEGRATION_SOURCE, undefined);
 }
 
-export function getUserExperienceFlow(): string | null | undefined {
+export function getUserExperienceFlow(): string | undefined {
   return getSDKAttribute(SDK_SETTINGS.USER_EXPERIENCE_FLOW, undefined);
 }
 
 // whether in zoid window
 export function isChildWindow(): boolean {
-  return Boolean((<any>window).xprops);
+  return Boolean((window as any).xprops);
 }
 
 // istanbul ignore next

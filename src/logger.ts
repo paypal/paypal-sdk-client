@@ -4,7 +4,7 @@ import { memoize } from "@krakenjs/belter/dist/esm";
 
 import { getPayPalLoggerUrl } from "./domains";
 
-type GetLogger = () => LoggerType;
+type GetLogger = () => typeof LoggerType;
 
 export const getLogger: GetLogger = memoize(() => {
   return Logger({

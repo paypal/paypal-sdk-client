@@ -21,8 +21,7 @@ export function insertMockSDKScript({
 
   // TODO: check if OK to change the code in order getting rid of ts error
   scripts.forEach((script) => {
-    // for (const script of scripts) {
-    if (script && script.parentNode) {
+    if (script?.parentNode) {
       script.parentNode.removeChild(script);
     }
   });
@@ -44,7 +43,7 @@ export function insertMockSDKScript({
   script.setAttribute("src", url);
 
   for (const key of Object.keys(attributes)) {
-    script.setAttribute(key, attributes[key]);
+    script.setAttribute(key, attributes[parseInt(key)]);
   }
 
   if (!document.body) {

@@ -83,10 +83,10 @@ describe(`script cases`, () => {
     });
     const mID = getMerchantID();
 
-    if (merchantID !== (mID && mID[0])) {
+    if (merchantID !== mID?.[0]) {
       throw new Error(
         `Expected merchant id to be ${merchantID}, got ${
-          (mID && mID[0]) || "undefined"
+          mID?.[0] ?? "undefined"
         } from ${url}`
       );
     }
@@ -187,7 +187,9 @@ describe(`script cases`, () => {
 
     if (intent !== getIntent()) {
       throw new Error(
-        `Expected intent to be ${intent}, got ${getIntent()} from ${url}`
+        `Expected intent to be ${intent}, got ${
+          getIntent() as string
+        } from ${url}`
       );
     }
   });
@@ -201,7 +203,9 @@ describe(`script cases`, () => {
 
     if (currency !== getCurrency()) {
       throw new Error(
-        `Expected currency to be ${currency}, got ${getCurrency()} from ${url}`
+        `Expected currency to be ${currency}, got ${
+          getCurrency() as string
+        } from ${url}`
       );
     }
   });
@@ -215,7 +219,9 @@ describe(`script cases`, () => {
 
     if (vault !== getVault()) {
       throw new Error(
-        `Expected vault to be ${vault.toString()}, got ${getVault().toString()} from ${url}`
+        `Expected vault to be ${vault.toString()}, got ${
+          getVault().toString() as string
+        } from ${url}`
       );
     }
   });
@@ -229,7 +235,9 @@ describe(`script cases`, () => {
 
     if (commit !== getCommit()) {
       throw new Error(
-        `Expected vault to be ${commit.toString()}, got ${getCommit().toString()} from ${url}`
+        `Expected vault to be ${commit.toString()}, got ${
+          getCommit().toString() as string
+        } from ${url}`
       );
     }
   });
@@ -280,7 +288,7 @@ describe(`script cases`, () => {
     if (clientAccessToken !== getClientAccessToken()) {
       throw new Error(
         `Expected client access token to be ${clientAccessToken}, got ${
-          getClientAccessToken() || "undefined"
+          getClientAccessToken() ?? "undefined"
         } from ${url}`
       );
     }
@@ -296,7 +304,7 @@ describe(`script cases`, () => {
     if (partnerAttributionID !== getPartnerAttributionID()) {
       throw new Error(
         `Expected client token to be ${partnerAttributionID}, got ${
-          getPartnerAttributionID() || "undefined"
+          getPartnerAttributionID() ?? "undefined"
         } from ${url}`
       );
     }
@@ -312,7 +320,7 @@ describe(`script cases`, () => {
     if (SDKIntegrationSource !== getSDKIntegrationSource()) {
       throw new Error(
         `Expected client token to be ${SDKIntegrationSource}, got ${
-          getSDKIntegrationSource() || "undefined"
+          getSDKIntegrationSource() ?? "undefined"
         } from ${url}`
       );
     }
@@ -374,7 +382,7 @@ describe(`script cases`, () => {
     if (pageType !== getPageType()) {
       throw new Error(
         `Expected page type to be ${pageType}, got ${
-          getPageType() || "undefined"
+          getPageType() ?? "undefined"
         } from ${url}`
       );
     }
@@ -412,7 +420,7 @@ describe(`script cases`, () => {
     if (getPageType() !== "") {
       throw new Error(
         `Expected page type to be empty, got ${
-          getPageType() || "undefined"
+          getPageType() ?? "undefined"
         } from ${url}`
       );
     }
@@ -425,7 +433,9 @@ describe(`script cases`, () => {
       },
     });
     const localeObject = getLocale();
-    const receivedLocal = `${localeObject.lang}_${localeObject.country}`;
+    const receivedLocal = `${localeObject.lang as string}_${
+      localeObject.country as string
+    }`;
 
     if (expectedLocale !== receivedLocal) {
       throw new Error(
@@ -435,10 +445,12 @@ describe(`script cases`, () => {
   });
   it("should successfully get locale from browser settings", () => {
     const expectedLocale = "fr_FR";
-    (<any>window.navigator).languages = [expectedLocale];
+    (window as any).navigator.languages = [expectedLocale];
 
     const localeObject = getLocale();
-    const receivedLocale = `${localeObject.lang}_${localeObject.country}`;
+    const receivedLocale = `${localeObject.lang as string}_${
+      localeObject.country as string
+    }`;
 
     if (expectedLocale !== receivedLocale) {
       throw new Error(
@@ -448,10 +460,12 @@ describe(`script cases`, () => {
   });
   it("should infer locale country from language", () => {
     const expectedLocale = "ja_JP";
-    (<any>window.navigator).languages = ["ja"];
+    (window as any).navigator.languages = ["ja"];
 
     const localeObject = getLocale();
-    const receivedLocale = `${localeObject.lang}_${localeObject.country}`;
+    const receivedLocale = `${localeObject.lang as string}_${
+      localeObject.country as string
+    }`;
 
     if (expectedLocale !== receivedLocale) {
       throw new Error(
@@ -461,10 +475,12 @@ describe(`script cases`, () => {
   });
   it("should return default if unable to infer locale country", () => {
     const expectedLocale = "en_US";
-    (<any>window.navigator).languages = ["es"];
+    (window as any).navigator.languages = ["es"];
 
     const localeObject = getLocale();
-    const receivedLocale = `${localeObject.lang}_${localeObject.country}`;
+    const receivedLocale = `${localeObject.lang as string}_${
+      localeObject.country as string
+    }`;
 
     if (expectedLocale !== receivedLocale) {
       throw new Error(
@@ -475,7 +491,9 @@ describe(`script cases`, () => {
   it("should return default locale if none detected", () => {
     const expectedLocale = "en_US";
     const localeObject = getLocale();
-    const receivedLocale = `${localeObject.lang}_${localeObject.country}`;
+    const receivedLocale = `${localeObject.lang as string}_${
+      localeObject.country as string
+    }`;
 
     if (expectedLocale !== receivedLocale) {
       throw new Error(
@@ -484,15 +502,17 @@ describe(`script cases`, () => {
     }
   });
   it("should return default locale from country when only country was detected", () => {
-    const previousLanguages = (<any>window.navigator).languages;
+    const previousLanguages = (window as any).navigator.languages;
 
-    const previousLanguage = (<any>window.navigator).language;
-    (<any>window.navigator).languages = ["zz_US"];
+    const previousLanguage = (window as any).navigator.language;
+    (window as any).navigator.languages = ["zz_US"];
 
-    (<any>window.navigator).language = undefined;
+    (window as any).navigator.language = undefined;
     const expectedLocale = "en_US";
     const localeObject = getLocale();
-    const receivedLocale = `${localeObject.lang}_${localeObject.country}`;
+    const receivedLocale = `${localeObject.lang as string}_${
+      localeObject.country as string
+    }`;
 
     if (expectedLocale !== receivedLocale) {
       throw new Error(
@@ -500,9 +520,9 @@ describe(`script cases`, () => {
       );
     }
 
-    (<any>window.navigator).languages = previousLanguages;
+    (window as any).navigator.languages = previousLanguages;
 
-    (<any>window.navigator).language = previousLanguage;
+    (window as any).navigator.language = previousLanguage;
   });
   it("should return computed lang when locale is zh_HK", () => {
     const expectedLang = "zh_Hant";
@@ -515,7 +535,9 @@ describe(`script cases`, () => {
 
     if (expectedLang !== receivedLang) {
       throw new Error(
-        `Expected lag to be ${expectedLang}, got ${receivedLang} from ${url}`
+        `Expected lag to be ${expectedLang}, got ${
+          receivedLang as string
+        } from ${url}`
       );
     }
   });
@@ -530,7 +552,9 @@ describe(`script cases`, () => {
 
     if (expectedLang !== receivedLang) {
       throw new Error(
-        `Expected lag to be ${expectedLang}, got ${receivedLang} from ${url}`
+        `Expected lag to be ${expectedLang}, got ${
+          receivedLang as string
+        } from ${url}`
       );
     }
   });

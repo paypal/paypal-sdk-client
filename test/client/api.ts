@@ -1,7 +1,4 @@
 import { $mockEndpoint } from "@krakenjs/sync-browser-mocks/dist/sync-browser-mocks";
-import { describe, it, beforeEach } from "vitest";
-import { setupWorker, rest } from "msw";
-
 import type { OrderCreateRequest } from "../../src/api";
 import { createAccessToken, createOrder } from "../../src/api";
 
@@ -18,47 +15,28 @@ describe("api cases", () => {
     error: null,
   };
 
-  // const mockAuthEndpoint = function (data = defaultAuthResponse) {
-  //   $mockEndpoint
-  //     .register({
-  //       method: "POST",
-  //       uri: `${window.location.protocol}//${window.location.host}/v1/oauth2/token`,
-  //       data,
-  //     })
-  //     .listen();
-  // };
+  const mockAuthEndpoint = function (data = defaultAuthResponse) {
+    $mockEndpoint
+      .register({
+        method: "POST",
+        uri: `${window.location.protocol}//${window.location.host}/v1/oauth2/token`,
+        data,
+      })
+      .listen();
+  };
 
-  const mockAuthEndpoint = (data = defaultAuthResponse) =>
-    setupWorker(
-      rest.post(
-        `${window.location.protocol}//${window.location.host}/v1/oauth2/token`,
-        (req, res, ctx) => {
-          return res(ctx.status(200), ctx.json(data));
-        }
-      )
-    );
-
-  // const mockCreateOrder = function (data: Record<string, any>) {
-  //   $mockEndpoint
-  //     .register({
-  //       method: "POST",
-  //       uri: `${window.location.protocol}//${window.location.host}/v2/checkout/orders`,
-  //       data,
-  //     })
-  //     .listen();
-  // };
-
-  const mockCreateOrder = (data: Record<string, any>) =>
-    setupWorker(
-      rest.post(
-        `${window.location.protocol}//${window.location.host}/v2/checkout/orders`,
-        (req, res, ctx) => {
-          return res(ctx.status(200), ctx.json(data));
-        }
-      )
-    );
+  const mockCreateOrder = function (data: Record<string, any>) {
+    $mockEndpoint
+      .register({
+        method: "POST",
+        uri: `${window.location.protocol}//${window.location.host}/v2/checkout/orders`,
+        data,
+      })
+      .listen();
+  };
 
   let order: OrderCreateRequest;
+
   beforeEach(() => {
     order = {
       intent: "CAPTURE",
@@ -93,7 +71,9 @@ describe("api cases", () => {
     } catch (err) {
       if (!(err as Error).message.startsWith("Auth Api invalid client id:")) {
         throw new Error(
-          `should throw an error message starting with 'Auth Api invalid client id:', but got: '${err}'`
+          `should throw an error message starting with 'Auth Api invalid client id:', but got: '${
+            (err as Error).message
+          }'`
         );
       }
     }
@@ -107,7 +87,9 @@ describe("api cases", () => {
     } catch (err) {
       if (!(err as Error).message.startsWith("Auth Api response error:")) {
         throw new Error(
-          `should throw an error message starting with 'Auth Api response error:', but got: '${err}'`
+          `should throw an error message starting with 'Auth Api response error:', but got: '${
+            (err as Error).message
+          }'`
         );
       }
     }

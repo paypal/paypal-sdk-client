@@ -21,8 +21,7 @@ export function getSDKMeta(): string {
 
   for (const attr of Object.keys(scriptAttrs)) {
     if (ALLOWED_ATTRS.includes(attr)) {
-      // @ts-ignore
-      attrs[attr] = scriptAttrs[attr as keyof typeof scriptAttrs];
+      attrs[parseInt(attr)] = scriptAttrs[parseInt(attr)];
     }
   }
 

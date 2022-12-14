@@ -9,7 +9,7 @@ import {
 } from "../../src/domains";
 
 beforeEach(() => {
-  (<any>window).__ENV__ = "test";
+  (window as any).__ENV__ = "test";
 });
 describe(`domains test`, () => {
   it("should successfully match valid domain", () => {
@@ -43,7 +43,7 @@ describe(`domains test`, () => {
     }
   });
   it("getPayPalLoggerDomain should return the logger domain when is a local environment", () => {
-    (<any>window).__ENV__ = ENV.LOCAL;
+    (window as any).__ENV__ = ENV.LOCAL;
     const result = getPayPalLoggerDomain();
 
     if (result !== "https://mock://msmaster.qa.paypal.com") {
@@ -53,8 +53,8 @@ describe(`domains test`, () => {
     }
   });
   it("getPayPalLoggerDomain should thrown an Error when is a local environment and the stage host is undefined", () => {
-    (<any>window).__ENV__ = ENV.LOCAL;
-    (<any>window).__STAGE_HOST__ = undefined;
+    (window as any).__ENV__ = ENV.LOCAL;
+    (window as any).__STAGE_HOST__ = undefined;
 
     try {
       getPayPalLoggerDomain();
@@ -68,7 +68,7 @@ describe(`domains test`, () => {
       }
     }
 
-    (<any>window).__STAGE_HOST__ = "mock://msmaster.qa.paypal.com";
+    (window as any).__STAGE_HOST__ = "mock://msmaster.qa.paypal.com";
   });
   it("getAuthAPIUrl should return a valid authentication string URL", () => {
     const url = new URL(getAuthAPIUrl());

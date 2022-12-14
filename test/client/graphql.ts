@@ -1,31 +1,11 @@
-// import { $mockEndpoint } from "@krakenjs/sync-browser-mocks/dist/sync-browser-mocks";
+import { $mockEndpoint } from "@krakenjs/sync-browser-mocks/dist/sync-browser-mocks";
 import { describe, it } from "vitest";
 
 import { callGraphQL, getGraphQLFundingEligibility } from "../../src/graphql";
 import { insertMockSDKScript } from "../../src";
-import { setupWorker, graphql, rest } from "msw";
 
 describe("graphql cases", () => {
-  // const mockGraphQl = function (
-  //   data: {
-  //     errors?: string[];
-  //     data?:
-  //       | { received: boolean }
-  //       | { fundingEligibility: Record<string, unknown> };
-  //   },
-  //   status = 200
-  // ) {
-  //   $mockEndpoint
-  //     .register({
-  //       method: "POST",
-  //       uri: `${window.location.protocol}//${window.location.host}/graphql`,
-  //       status,
-  //       data,
-  //     })
-  //     .listen();
-  // };
-
-  const mockGraphQl = (
+  const mockGraphQl = function (
     data: {
       errors?: string[];
       data?:
@@ -33,15 +13,16 @@ describe("graphql cases", () => {
         | { fundingEligibility: Record<string, unknown> };
     },
     status = 200
-  ) =>
-    setupWorker(
-      rest.post(
-        `${window.location.protocol}//${window.location.host}/graphql`,
-        (req, res, ctx) => {
-          return res(ctx.status(200), ctx.json(data));
-        }
-      )
-    );
+  ) {
+    $mockEndpoint
+      .register({
+        method: "POST",
+        uri: `${window.location.protocol}//${window.location.host}/graphql`,
+        status,
+        data,
+      })
+      .listen();
+  };
 
   it("callGraphQL should fail with status code 404 when the URL was not found", async () => {
     mockGraphQl({}, 404);
@@ -87,7 +68,7 @@ describe("graphql cases", () => {
       },
     };
     mockGraphQl(sourceData);
-    // @ts-ignore
+
     const { received } = await callGraphQL({
       query: "query {}",
     });
@@ -131,7 +112,9 @@ describe("graphql cases", () => {
 
     if (!result) {
       throw new Error(
-        `should return finding eligibility as "true", but got: ${result}`
+        `should return finding eligibility as "true", but got: ${
+          result as string
+        }`
       );
     }
   });

@@ -1,22 +1,15 @@
-// import {
-//   $mockEndpoint,
-//   patchXmlHttpRequest,
-// } from "@krakenjs/sync-browser-mocks/dist/sync-browser-mocks";
+import {
+  $mockEndpoint,
+  patchXmlHttpRequest,
+} from "@krakenjs/sync-browser-mocks/dist/sync-browser-mocks";
 import { ZalgoPromise } from "@krakenjs/zalgo-promise";
-import { describe, it, beforeEach } from "vitest";
-import { setupWorker, graphql, rest } from "msw";
-
 import { getLogger, insertMockSDKScript } from "../../src";
 
 describe.skip("logger tests", () => {
-  // beforeEach(() => {
-  //   patchXmlHttpRequest();
-  // });
-  // const mockLogEndpoint = () => setupWorker(
-  //   rest.post(`${window.location.protocol}//${window.location.host}/xoplatform/logger/api/logger`, (req, res, ctx) => {
-  //     return res(ctx.status(200), ctx.json(data))
-  //   }),
-  // )
+  beforeAll(() => {
+    patchXmlHttpRequest();
+  });
+
   it("should log and flush with all expected keys", () => {
     insertMockSDKScript({
       query: {
@@ -39,19 +32,14 @@ describe.skip("logger tests", () => {
       },
     });
 
-    //  mockLogEndpoint();
-
-    (<any>window.navigator).sendBeacon = (url: any, data: string) => {
+    (window as any).navigator.sendBeacon = (url: any, data: string) => {
       logData = JSON.parse(data);
     };
 
-    // @ts-ignore
     logger.info("foo", { bar: "baz" });
-    // @ts-ignore
     logger.track({ hello: "world" });
-    // logEndpoint.expectCalls();
-    logEndpoint();
-    // mockLogEndpoint();
+    logEndpoint.expectCalls();
+
     return logger.flush().then(() => {
       if (!logData) {
         throw new Error(`Expected log data to be populated`);
@@ -73,13 +61,13 @@ describe.skip("logger tests", () => {
 
       for (const key of Object.keys(expectedPayload)) {
         if (
-          event.payload[key] !==
+          event.payload[parseInt(key)] !==
           expectedPayload[key as keyof typeof expectedPayload]
         ) {
           throw new Error(
             `Expected logger payload value ${key} to be ${
               expectedPayload[key as keyof typeof expectedPayload]
-            } - got ${event.payload[key]}`
+            } - got ${event.payload[parseInt(key)] as string}`
           );
         }
       }
@@ -108,30 +96,30 @@ describe.skip("logger tests", () => {
       }
 
       for (const key of Object.keys(expectedTracking)) {
-        if (!tracking[key]) {
+        if (!tracking[parseInt(key)]) {
           throw new Error(`Expected logger tracking value ${key} to be passed`);
         } else if (
           expectedTracking[key as keyof typeof expectedTracking] instanceof
             RegExp &&
-          !tracking[key].match(
+          !tracking[parseInt(key)].match(
             expectedTracking[key as keyof typeof expectedTracking]
           )
         ) {
           throw new Error(
             `Expected logger tracking value ${key} to be ${expectedTracking[
               key as keyof typeof expectedTracking
-            ].toString()} - got ${tracking[key]}`
+            ].toString()} - got ${tracking[parseInt(key)] as string}`
           );
         } else if (
           typeof expectedTracking[key as keyof typeof expectedTracking] ===
             "string" &&
-          tracking[key] !==
+          tracking[parseInt(key)] !==
             expectedTracking[key as keyof typeof expectedTracking]
         ) {
           throw new Error(
             `Expected logger tracking value ${key} to be ${
-              expectedTracking[key as keyof typeof expectedTracking]
-            } - got ${tracking[key]}`
+              expectedTracking[parseInt(key)] as string
+            } - got ${tracking[parseInt(key)] as string}`
           );
         }
       }
@@ -149,13 +137,16 @@ describe.skip("logger tests", () => {
       },
     });
 
-    (<any>window.navigator).sendBeacon = (url: any, data: string) => {
+    (window as any).navigator.sendBeacon = (url: any, data: string) => {
       logData = JSON.parse(data);
     };
 
     ZalgoPromise.try(() => {
       throw new Error(`meep`);
+    }).catch((err) => {
+      throw new Error(err);
     });
+
     logEndpoint.expectCalls();
     return logger.flush().then(() => {
       if (!logData) {
@@ -173,30 +164,30 @@ describe.skip("logger tests", () => {
       };
 
       for (const key of Object.keys(expectedPayload)) {
-        if (!event.payload[key]) {
+        if (!event.payload[parseInt(key)]) {
           throw new Error(`Expected logger tracking value ${key} to be passed`);
         } else if (
           expectedPayload[key as keyof typeof expectedPayload] instanceof
             RegExp &&
-          !event.payload[key].match(
+          !event.payload[parseInt(key)].match(
             expectedPayload[key as keyof typeof expectedPayload]
           )
         ) {
           throw new Error(
             `Expected logger tracking value ${key} to be ${expectedPayload[
               key as keyof typeof expectedPayload
-            ].toString()} - got ${event.payload[key]}`
+            ].toString()} - got ${event.payload[parseInt(key)] as string}`
           );
         } else if (
           typeof expectedPayload[key as keyof typeof expectedPayload] ===
             "string" &&
-          event.payload[key] !==
+          event.payload[parseInt(key)] !==
             expectedPayload[key as keyof typeof expectedPayload]
         ) {
           throw new Error(
             `Expected logger tracking value ${key} to be ${expectedPayload[
               key as keyof typeof expectedPayload
-            ].toString()} - got ${event.payload[key]}`
+            ].toString()} - got ${event.payload[parseInt(key)] as string}`
           );
         }
       }
@@ -216,30 +207,30 @@ describe.skip("logger tests", () => {
       }
 
       for (const key of Object.keys(expectedTracking)) {
-        if (!tracking[key]) {
+        if (!tracking[parseInt(key)]) {
           throw new Error(`Expected logger tracking value ${key} to be passed`);
         } else if (
           expectedTracking[key as keyof typeof expectedTracking] instanceof
             RegExp &&
-          !tracking[key].match(
+          !tracking[parseInt(key)].match(
             expectedTracking[key as keyof typeof expectedTracking]
           )
         ) {
           throw new Error(
             `Expected logger tracking value ${key} to be ${expectedTracking[
               key as keyof typeof expectedTracking
-            ].toString()} - got ${tracking[key]}`
+            ].toString()} - got ${tracking[parseInt(key)] as string}`
           );
         } else if (
           typeof expectedTracking[key as keyof typeof expectedTracking] ===
             "string" &&
-          tracking[key] !==
+          tracking[parseInt(key)] !==
             expectedTracking[key as keyof typeof expectedTracking]
         ) {
           throw new Error(
             `Expected logger tracking value ${key} to be ${
-              expectedTracking[key as keyof typeof expectedTracking]
-            } - got ${tracking[key]}`
+              expectedTracking[parseInt(key)] as string
+            } - got ${tracking[parseInt(key)] as string}`
           );
         }
       }

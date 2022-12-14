@@ -13,21 +13,27 @@ describe("session cases", () => {
     const result = getStorageState((storage) => storage);
 
     if (!result.hasOwnProperty("id")) {
-      throw new Error(`should get storage state object, but got ${result}`);
+      throw new Error(
+        `should get storage state object, but got ${result.toString()}`
+      );
     }
   });
   it("getStorageID", () => {
     const result = getStorageID();
 
     if (typeof result !== "string") {
-      throw new TypeError(`should get the storage id, but got ${result}`);
+      throw new TypeError(
+        `should get the storage id, but got ${result as string}`
+      );
     }
   });
   it("getSessionState", () => {
     const result = getSessionState((state) => state);
 
     if (Object.entries(result).length > 0) {
-      throw new Error(`should get an empty state object, but got ${result}`);
+      throw new Error(
+        `should get an empty state object, but got ${result.toString()}`
+      );
     }
   });
   it("getClientMetadataID", () => {

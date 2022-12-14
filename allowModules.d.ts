@@ -7,6 +7,7 @@ declare module "@krakenjs/cross-domain-utils/dist/esm";
 declare module "@krakenjs/grabthar";
 declare module "@krakenjs/grumbler-scripts";
 declare module "@krakenjs/grumbler-scripts/config/webpack.config";
+declare module "@krakenjs/karma-config-grumbler";
 declare module "@krakenjs/jsx-pragmatic/src";
 declare module "@krakenjs/subprocess-robot";
 declare module "@krakenjs/sync-browser-mocks/dist/sync-browser-mocks";
@@ -37,7 +38,7 @@ declare module "shush" {
     | number
     | boolean
     | Record<string, JSONValue>
-    | Array<JSONValue>;
+    | JSONValue[];
 
   export default function shush(path: string): Record<string, JSONValue>;
 }

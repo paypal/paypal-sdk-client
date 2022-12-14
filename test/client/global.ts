@@ -29,11 +29,11 @@ import {
 
 describe(`globals cases`, () => {
   afterEach(() => {
-    (<any>window).__STAGE_HOST__ = "mock://msmaster.qa.paypal.com";
-    delete (<any>window).__PROTOCOL__;
-    delete (<any>window).__SERVICE_STAGE_HOST__;
-    delete (<any>window).__COMPONENTS__;
-    delete (<any>window).__FUNDING_ELIGIBILITY__;
+    (window as any).__STAGE_HOST__ = "mock://msmaster.qa.paypal.com";
+    delete (window as any).__PROTOCOL__;
+    delete (window as any).__SERVICE_STAGE_HOST__;
+    delete (window as any).__COMPONENTS__;
+    delete (window as any).__FUNDING_ELIGIBILITY__;
   });
   it("should successfully get the host", () => {
     const expectedResult = "test.paypal.com";
@@ -74,11 +74,13 @@ describe(`globals cases`, () => {
     const result = getEnv();
 
     if (expectedResult !== result) {
-      throw new Error(`Expected env to be ${expectedResult}, got ${result}`);
+      throw new Error(
+        `Expected env to be ${expectedResult}, got ${result as string}`
+      );
     }
   });
-  it('should get the default stage host when "(<any>window).__STAGE_HOST__" is undefined', () => {
-    (<any>window).__STAGE_HOST__ = undefined;
+  it('should get the default stage host when "(window as any).__STAGE_HOST__" is undefined', () => {
+    (window as any).__STAGE_HOST__ = undefined;
     const result = getDefaultStageHost();
 
     if (result !== undefined) {
@@ -119,7 +121,7 @@ describe(`globals cases`, () => {
       );
     }
 
-    (<any>window).__CORRELATION_ID__ = "def345";
+    (window as any).__CORRELATION_ID__ = "def345";
     const newExpectedResult = "def345";
     const newResult = getCorrelationID();
 
@@ -129,7 +131,7 @@ describe(`globals cases`, () => {
       );
     }
 
-    delete (<any>window).__CORRELATION_ID__;
+    delete (window as any).__CORRELATION_ID__;
   });
   it("should successfully get the SDK host", () => {
     const result = getSDKHost();
@@ -143,22 +145,26 @@ describe(`globals cases`, () => {
 
     if (PROTOCOL.HTTPS !== result) {
       throw new Error(
-        `Expected protocol to be ${PROTOCOL.HTTPS}, got ${result}`
+        `Expected protocol to be ${String(PROTOCOL.HTTPS)}, got ${String(
+          result
+        )}`
       );
     }
   });
   it("should successfully get the global protocol", () => {
-    (<any>window).__PROTOCOL__ = "http";
+    (window as any).__PROTOCOL__ = "http";
     const result = getProtocol();
 
     if (PROTOCOL.HTTP !== result) {
       throw new Error(
-        `Expected set protocol to be ${PROTOCOL.HTTP}, got ${result}`
+        `Expected set protocol to be ${String(PROTOCOL.HTTP)}, got ${String(
+          result
+        )}`
       );
     }
   });
   it("should get the default service stage host when undefined", () => {
-    (<any>window).__SERVICE_STAGE_HOST__ = undefined;
+    (window as any).__SERVICE_STAGE_HOST__ = undefined;
     const result = getDefaultServiceStageHost();
 
     if (result !== undefined) {
@@ -170,7 +176,7 @@ describe(`globals cases`, () => {
     }
   });
   it("should successfully get the default service stage host", () => {
-    (<any>window).__SERVICE_STAGE_HOST__ = "mock://msmaster.qa.paypal.com";
+    (window as any).__SERVICE_STAGE_HOST__ = "mock://msmaster.qa.paypal.com";
     const result = getDefaultServiceStageHost();
 
     if (__SERVICE_STAGE_HOST__ !== result) {
@@ -181,35 +187,35 @@ describe(`globals cases`, () => {
     const result = getPlatform();
 
     if (PLATFORM.DESKTOP !== result) {
-      throw new Error(`Expected to be desktop platform, got ${result}`);
+      throw new Error(`Expected to be desktop platform, got ${String(result)}`);
     }
   });
   it("should get the API stage from the default service stage host", () => {
-    (<any>window).__SERVICE_STAGE_HOST__ = "mock://msmaster.qa.paypal.com";
+    (window as any).__SERVICE_STAGE_HOST__ = "mock://msmaster.qa.paypal.com";
     const result = getDefaultAPIStageHost();
 
-    if ((<any>window).__SERVICE_STAGE_HOST__ !== result) {
+    if ((window as any).__SERVICE_STAGE_HOST__ !== result) {
       throw new Error(
         `Expected default API stage host to be ${
-          (<any>window).__SERVICE_STAGE_HOST__
-        }, got ${result || ""}`
+          (window as any).__SERVICE_STAGE_HOST__ as string
+        }, got ${result ?? ""}`
       );
     }
   });
   it("should get the API stage from the default stage host", () => {
-    (<any>window).__SERVICE_STAGE_HOST__ = undefined;
+    (window as any).__SERVICE_STAGE_HOST__ = undefined;
     const result = getDefaultAPIStageHost();
 
     if (__STAGE_HOST__ !== result) {
       throw new Error(
         `Expected default API stage host to be ${
-          (<any>window).__STAGE_HOST__
-        }, got ${result || ""}`
+          (window as any).__STAGE_HOST__ as string
+        }, got ${result ?? ""}`
       );
     }
   });
   it("should get the API stage when undefined", () => {
-    (<any>window).__STAGE_HOST__ = (<any>window).__SERVICE_STAGE_HOST__ =
+    (window as any).__STAGE_HOST__ = (window as any).__SERVICE_STAGE_HOST__ =
       undefined;
     const result = getDefaultAPIStageHost();
 
@@ -224,9 +230,9 @@ describe(`globals cases`, () => {
 
     if (__STAGE_HOST__ !== result) {
       throw new Error(
-        `Expected stage host to be ${(<any>window).__STAGE_HOST__}, got ${
-          result || ""
-        }`
+        `Expected stage host to be ${
+          (window as any).__STAGE_HOST__ as string
+        }, got ${result ?? ""}`
       );
     }
   });
@@ -235,14 +241,14 @@ describe(`globals cases`, () => {
 
     if (__STAGE_HOST__ !== result) {
       throw new Error(
-        `Expected API stage host to be ${(<any>window).__STAGE_HOST__}, got ${
-          result || ""
-        }`
+        `Expected API stage host to be ${
+          (window as any).__STAGE_HOST__ as string
+        }, got ${result ?? ""}`
       );
     }
   });
   it("should get the API stage host when undefined", () => {
-    (<any>window).__STAGE_HOST__ = (<any>window).__SERVICE_STAGE_HOST__ =
+    (window as any).__STAGE_HOST__ = (window as any).__SERVICE_STAGE_HOST__ =
       undefined;
     const result = getAPIStageHost();
 
@@ -253,38 +259,38 @@ describe(`globals cases`, () => {
     }
   });
   it("should successfully get the debug flag", () => {
-    (<any>window).__DEBUG__ = true;
+    (window as any).__DEBUG__ = true;
     const result = getDebug();
 
-    if ((<any>window).__DEBUG__ !== result) {
+    if ((window as any).__DEBUG__ !== result) {
       throw new Error(
         `Expected debug flag to be ${
-          (<any>window).__DEBUG__
+          (window as any).__DEBUG__ as string
         }, got ${result.toString()}`
       );
     }
   });
   it("should successfully get the components list", () => {
-    (<any>window).__COMPONENTS__ = ["buttons", "venmo"];
+    (window as any).__COMPONENTS__ = ["buttons", "venmo"];
     const result = getComponents();
 
     if (result[0] !== "buttons" || result[1] !== "venmo") {
       throw new Error(
         `Expected components to be ${
-          (<any>window).__COMPONENTS__
+          (window as any).__COMPONENTS__ as string
         }, got ${result.toString()}`
       );
     }
   });
   it("should successfully get the funding eligibility type", () => {
-    (<any>window).__FUNDING_ELIGIBILITY__ = "credit";
+    (window as any).__FUNDING_ELIGIBILITY__ = "credit";
     const result = getFundingEligibility();
 
-    if ((<any>window).__FUNDING_ELIGIBILITY__ !== result) {
+    if ((window as any).__FUNDING_ELIGIBILITY__ !== result) {
       throw new Error(
         `Expected funding eligibility type  to be ${
-          (<any>window).__FUNDING_ELIGIBILITY__
-        }, got ${result.toString()}`
+          (window as any).__FUNDING_ELIGIBILITY__ as string
+        }, got ${result.toString() as string}`
       );
     }
   });

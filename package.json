@@ -18,15 +18,14 @@
     "flow": "flow",
     "format": "prettier --write --ignore-unknown .",
     "format:check": "prettier --check .",
-    "test": "npm run format:check && npm run lint && npm run tsc --no-emit && npm run vitest",
+    "test": "npm run format:check && npm run lint && npm run tsc --no-emit && npm run jest && npm run karma",
     "clean": "rimraf dist coverage",
     "debug": "cross-env NODE_ENV=debug",
     "prepare": "husky install",
     "prerelease": "npm run clean && npm run build && git add dist && git commit -m 'ci: check in dist folder' || echo 'Nothing to distribute'",
     "release": "standard-version",
     "postrelease": "git push && git push --follow-tags && npm publish",
-    "vitest": "vitest run --dom --coverage",
-    "vitest:watch": "vitest watch --dom --coverage --ui"
+    "jest": "jest test/server --env=node --no-cache --collectCoverageFrom='server/' --coverageDirectory='coverage/jest' --coverage --verbose --runInBand --silent=false"
   },
   "files": [
     "dist/",
@@ -65,6 +64,7 @@
     "@commitlint/config-conventional": "^17.3.0",
     "@krakenjs/babel-config-grumbler": "^8.0.7",
     "@krakenjs/eslint-config-grumbler": "^8.0.7",
+    "@krakenjs/grumbler-scripts": "^8.0.5",
     "@krakenjs/sync-browser-mocks": "^3.0.0",
     "@krakenjs/typescript-config-grumbler": "^8.0.7",
     "@krakenjs/webpack-config-grumbler": "^8.1.0-alpha.1",
@@ -74,24 +74,21 @@
     "flowgen": "^1.20.1",
     "happy-dom": "^7.7.0",
     "husky": "^8.0.2",
+    "jest": "^29.3.1",
     "lint-staged": "^13.0.3",
     "mocha": "^4.1.0",
     "prettier": "2.7.1",
     "standard-version": "^9.5.0",
     "ts-node": "^10.9.1",
     "typescript": "4.9.3",
-    "vite": "^3.2.4",
-    "vitest": "0.25.3",
     "babel-core": "7.0.0-bridge.0",
     "cheerio": "1.0.0-rc.9",
-    "c8": "^7.11.0",
     "esdoc": "1.1.0",
     "esdoc-flow-type-plugin": "1.1.0",
     "esdoc-standard-plugin": "1.0.0",
     "flow-bin": "0.155.0"
   },
   "lint-staged": {
-    "vite.config.js": "prettier --write",
-    "test/**/*.test.{js,jsx,json,ts}": "prettier --write"
+    "vite.config.js": "prettier --write"
   }
 }

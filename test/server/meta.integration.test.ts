@@ -118,10 +118,11 @@ const sdkMetaList = [
   ],
 ];
 
+// @ts-ignore
 test.each(sdkMetaList)(
   "should unpack `sdkMeta` and load the script",
-  // @ts-expect-error
-  (queryParamsSource: { [x: string]: any; url: any }, attributes: any) => {
+  (queryParamsSource: { [x: string]: any; url: string }, attributes: any) => {
+    // (queryParamsSource: { [x: string]: any; url: string }, attributes: any) => {
     const { url, ...queryParams } = queryParamsSource;
 
     const encodeQueryParams = new URLSearchParams(queryParams).toString();

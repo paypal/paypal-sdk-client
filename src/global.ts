@@ -62,7 +62,7 @@ export function getPayPalAPIDomain(): string {
   return __PAYPAL_API_DOMAIN__;
 }
 
-export function getDefaultServiceStageHost(): string | null | undefined {
+export function getDefaultServiceStageHost(): string | undefined {
   if (
     typeof __SERVICE_STAGE_HOST__ !== "undefined" &&
     __SERVICE_STAGE_HOST__ !== null
@@ -71,13 +71,13 @@ export function getDefaultServiceStageHost(): string | null | undefined {
   }
 }
 
-export function getDefaultStageHost(): string | null | undefined {
+export function getDefaultStageHost(): string | undefined {
   if (typeof __STAGE_HOST__ !== "undefined" && __STAGE_HOST__ !== null) {
     return __STAGE_HOST__;
   }
 }
 
-export function getDefaultAPIStageHost(): string | null | undefined {
+export function getDefaultAPIStageHost(): string | undefined {
   const serviceStageHost = getDefaultServiceStageHost();
   const stageHost = getDefaultStageHost();
 
@@ -88,11 +88,11 @@ export function getDefaultAPIStageHost(): string | null | undefined {
   }
 }
 
-export function getStageHost(): string | null | undefined {
+export function getStageHost(): string | undefined {
   return getDefaultStageHost();
 }
 
-export function getAPIStageHost(): string | null | undefined {
+export function getAPIStageHost(): string | undefined {
   const defaultAPIStageHost = getDefaultAPIStageHost();
 
   if (defaultAPIStageHost) {

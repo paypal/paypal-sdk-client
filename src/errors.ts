@@ -22,8 +22,7 @@ export function checkForCommonErrors() {
     const logger = getLogger();
 
     if (JSON.stringify([]) !== "[]") {
-      // $FlowFixMe
-      if ((<any>Array.prototype).toJSON) {
+      if ((Array as any)?.prototype?.toJSON) {
         logWarn(
           `Custom Array.prototype.toJSON is causing incorrect json serialization of arrays. This is likely to cause issues. Probable cause is Prototype.js`
         );
@@ -49,12 +48,11 @@ export function checkForCommonErrors() {
 
     if (isIE() && !isIECompHeader()) {
       logger.warn(`ie_meta_compatibility_header_missing`, {
-        // @ts-ignore
         message: `Drop tag: <meta http-equiv="X-UA-Compatible" content="IE=edge">`,
       });
     }
 
-    const foo = function (bar: any, baz: any, zomg: any) {
+    const foo = function () {
       // pass;
     };
 
@@ -70,7 +68,7 @@ export function checkForCommonErrors() {
       logger.warn(`window_has_opener_and_parent`);
     }
 
-    if (window.name && window.name.startsWith("__prerender")) {
+    if (window?.name?.startsWith("__prerender")) {
       logger.warn(`prerender_running_checkoutjs`);
     }
 
@@ -93,7 +91,7 @@ export function checkForCommonErrors() {
     }
 
     if (
-      <any>Object.assign &&
+      (Object as any).assign &&
       JSON.stringify({
         a: 1,
         b: 2,

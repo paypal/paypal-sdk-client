@@ -30,6 +30,6 @@ export function getSessionState<T>(
   return getSDKStorage().getSessionState(handler);
 }
 
-export function getClientMetadataID(): string | null | undefined {
+export function getClientMetadataID(): string | undefined {
   return getSDKAttribute(SDK_SETTINGS.CLIENT_METADATA_ID, undefined);
 }

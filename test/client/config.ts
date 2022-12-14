@@ -8,7 +8,7 @@ import {
 } from "../../src";
 
 beforeEach(() => {
-  (<any>window).__ENV__ = "test";
+  (window as any).__ENV__ = "test";
 });
 describe(`config cases`, () => {
   it("should successfully get the paypal logger domain", () => {

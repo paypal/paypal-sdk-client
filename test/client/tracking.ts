@@ -37,7 +37,7 @@ describe(`tracking cases`, () => {
     }
   });
   it("setupLogger should setup logger with IEIntranet enabled", () => {
-    (<any>window.document).documentMode = true;
+    (window as any).document.documentMode = true;
     setupLogger();
   });
 });

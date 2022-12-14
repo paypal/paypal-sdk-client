@@ -4,8 +4,8 @@ import type { LocaleType } from "@paypal/sdk-constants/dist/esm";
 export function getComputedLocales(locale: string): typeof LocaleType {
   let [lang, country] = locale.split("_");
   lang = LANG[lang.toUpperCase()];
-  country = COUNTRY[country];
-  const countryLangs = COUNTRY_LANGS[country];
+  country = COUNTRY[parseInt(country)];
+  const countryLangs = COUNTRY_LANGS[parseInt(country)];
 
   if (
     countryLangs &&

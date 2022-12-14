@@ -18,7 +18,9 @@ describe(`meta cases`, () => {
     const { url } = JSON.parse(window.atob(meta));
 
     if (url !== expectedUrl) {
-      throw new Error(`Expected sdk url to be ${expectedUrl}, got ${url}`);
+      throw new Error(
+        `Expected sdk url to be ${expectedUrl}, got ${url as string}`
+      );
     }
   });
   it("should successfully create a meta payload with merchant id", () => {
@@ -44,7 +46,9 @@ describe(`meta cases`, () => {
 
     if (merchantIds !== expectedMerchantIds) {
       throw new Error(
-        `Expected sdk merchant ids to be ${expectedMerchantIds}, got ${merchantIds}`
+        `Expected sdk merchant ids to be ${expectedMerchantIds}, got ${
+          merchantIds as string
+        }`
       );
     }
   });
@@ -69,7 +73,9 @@ describe(`meta cases`, () => {
 
     if (dataPopupDisabled !== "true") {
       throw new Error(
-        `Expected sdk dataPopupDisabled to be true , got ${dataPopupDisabled}`
+        `Expected sdk dataPopupDisabled to be true , got ${
+          dataPopupDisabled as string
+        }`
       );
     }
   });
@@ -95,7 +101,9 @@ describe(`meta cases`, () => {
 
     if (nonce !== dataCSPNonce) {
       throw new Error(
-        `Expected sdk data-csp-nonce to be ${dataCSPNonce}, got ${nonce}`
+        `Expected sdk data-csp-nonce to be ${dataCSPNonce}, got ${
+          nonce as string
+        }`
       );
     }
   });

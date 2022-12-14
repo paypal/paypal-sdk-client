@@ -1,6 +1,10 @@
 import type { ZalgoPromise } from "@krakenjs/zalgo-promise";
 import { memoize, request, base64encode } from "@krakenjs/belter/dist/esm";
-import { FPTI_KEY, SDK_QUERY_KEYS, UNKNOWN } from "@paypal/sdk-constants/dist/esm";
+import {
+  FPTI_KEY,
+  SDK_QUERY_KEYS,
+  UNKNOWN,
+} from "@paypal/sdk-constants/dist/esm";
 
 import { getOrderAPIUrl, getAuthAPIUrl } from "./domains";
 import { getLogger } from "./logger";
@@ -39,7 +43,7 @@ export const createAccessToken: CreateAccessToken = memoize(
       method: `post`,
       url: getAuthAPIUrl(),
       headers: {
-        Authorization: `Basic ${basicAuth}`,
+        Authorization: `Basic ${basicAuth as string}`,
       },
       data: {
         grant_type: `client_credentials`,
@@ -55,7 +59,7 @@ export const createAccessToken: CreateAccessToken = memoize(
         );
       }
 
-      if (!body || !body.access_token) {
+      if (!body?.access_token) {
         throw new Error(
           `Auth Api response error:\n\n${JSON.stringify(body, null, 4)}`
         );
@@ -99,7 +103,7 @@ export function createOrder(
       `Unexpected intent: ${
         order.intent
       } passed to order.create. Please ensure you are passing /sdk/js?${
-        SDK_QUERY_KEYS.INTENT
+        SDK_QUERY_KEYS.INTENT as string
       }=${order.intent.toLowerCase()} in the paypal script tag.`
     );
   }
@@ -109,7 +113,11 @@ export function createOrder(
   order.purchase_units = order.purchase_units.map((unit) => {
     if (unit.amount.currency_code && unit.amount.currency_code !== currency) {
       throw new Error(
-        `Unexpected currency: ${unit.amount.currency_code} passed to order.create. Please ensure you are passing /sdk/js?${SDK_QUERY_KEYS.CURRENCY}=${unit.amount.currency_code} in the paypal script tag.`
+        `Unexpected currency: ${
+          unit.amount.currency_code
+        } passed to order.create. Please ensure you are passing /sdk/js?${
+          SDK_QUERY_KEYS.CURRENCY as string
+        }=${unit.amount.currency_code} in the paypal script tag.`
       );
     }
 
@@ -118,7 +126,11 @@ export function createOrder(
     if (payee) {
       if (!merchantID) {
         throw new Error(
-          `Pass ${SDK_QUERY_KEYS.MERCHANT_ID}=XYZ in the paypal script tag. Pass ${SDK_QUERY_KEYS.MERCHANT_ID}=${UNKNOWN} if you do not have access to the merchant id`
+          `Pass ${
+            SDK_QUERY_KEYS.MERCHANT_ID as string
+          }=XYZ in the paypal script tag. Pass ${
+            SDK_QUERY_KEYS.MERCHANT_ID as string
+          }=${UNKNOWN as string} if you do not have access to the merchant id`
         );
       }
     }
@@ -130,7 +142,7 @@ export function createOrder(
     };
   });
   order.application_context =
-    order.application_context || getDefaultApplicationContext();
+    order.application_context ?? getDefaultApplicationContext();
   return createAccessToken(clientID)
     .then((accessToken): ZalgoPromise<Record<string, any>> => {
       const headers: Record<string, any> = {
@@ -145,7 +157,7 @@ export function createOrder(
       });
     })
     .then(({ body }): string => {
-      if (!body || !body.id) {
+      if (!body?.id) {
         throw new Error(
           `Order Api response error:\n\n${JSON.stringify(body, null, 4)}`
         );

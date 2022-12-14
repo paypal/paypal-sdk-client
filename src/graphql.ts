@@ -38,13 +38,13 @@ function buildFundingEligibilityVariables(): Record<string, unknown> {
     vault,
     intent: intent ? intent.toUpperCase() : intent,
     enableFunding: enableFunding
-      ? enableFunding.map((f) => f && f.toUpperCase())
+      ? enableFunding.map((f) => f?.toUpperCase())
       : enableFunding,
     disableFunding: disableFunding
-      ? disableFunding.map((f) => f && f.toUpperCase())
+      ? disableFunding.map((f) => f?.toUpperCase())
       : disableFunding,
     disableCard: disableCard
-      ? disableCard.map((f) => f && f.toUpperCase())
+      ? disableCard.map((f) => f?.toUpperCase())
       : disableCard,
   };
 }
@@ -123,16 +123,18 @@ export function getGraphQLFundingEligibility<T>(
     variables,
   })
     .then((gqlResult) => {
-      if (!gqlResult || !(<any>gqlResult).fundingEligibility) {
+      if (!gqlResult || !(gqlResult as any).fundingEligibility) {
         throw new Error(
           `GraphQL fundingEligibility returned no fundingEligibility object`
         );
       }
 
-      return gqlResult && (<any>gqlResult).fundingEligibility;
+      return (gqlResult as any)?.fundingEligibility;
     })
     .catch((err) => {
-      getLogger().error(`graphql_fundingeligibility_error`, {error: stringifyError(err),});
+      getLogger().error(`graphql_fundingeligibility_error`, {
+        error: stringifyError(err),
+      });
       return ZalgoPromise.reject(err);
     });
 }

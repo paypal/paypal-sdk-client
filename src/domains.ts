@@ -22,7 +22,7 @@ export function getPayPalLoggerDomain(): string {
       throw new Error(`No stage host found`);
     }
 
-    return `${getProtocol()}://${stageHost}`;
+    return `${getProtocol() as string}://${stageHost}`;
   }
 
   return getPayPalDomain();
@@ -30,7 +30,7 @@ export function getPayPalLoggerDomain(): string {
 
 export function buildPayPalUrl(path = ""): string {
   return __TEST__ && __WEB__
-    ? `${getActualDomain()}${path}`
+    ? `${getActualDomain() as string}${path}`
     : `${getPayPalDomain()}${path}`;
 }
 
@@ -39,7 +39,7 @@ export function buildPayPalAPIUrl(path = ""): string {
     ? getPayPalDomain()
     : getPayPalAPIDomain();
   return __TEST__ && __WEB__
-    ? `${getActualDomain()}${path}`
+    ? `${getActualDomain() as string}${path}`
     : `${paypalAPIDomain}${path}`;
 }
 

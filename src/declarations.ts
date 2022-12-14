@@ -19,9 +19,9 @@ export declare let __PAYPAL_DOMAIN__: string;
 
 export declare let __PAYPAL_API_DOMAIN__: string;
 
-export declare let __STAGE_HOST__: string | null | undefined;
+export declare let __STAGE_HOST__: string | undefined;
 
-export declare let __SERVICE_STAGE_HOST__: string | null | undefined;
+export declare let __SERVICE_STAGE_HOST__: string | undefined;
 
 export declare let __TEST__: boolean;
 
