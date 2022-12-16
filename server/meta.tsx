@@ -1,8 +1,6 @@
 /** @jsx node */
-// eslint-disable-next-line import/no-nodejs-modules
 import urlLib from "url";
 import {
-  ENV,
   SDK_PATH,
   SDK_QUERY_KEYS,
   SDK_SETTINGS,
@@ -25,25 +23,21 @@ type SDKMeta = {
 const emailRegex = /^.+@.+$/;
 
 function validatePaymentsSDKUrl({
-  protocol,
-  hostname,
   pathname,
   query,
   hash,
 }: {
-  protocol: string | null;
+  protocol: string | undefined;
   hostname: string;
   pathname: string;
   query: Record<string, any>;
-  hash: string | null;
+  hash: string | undefined;
 }) {
   if (pathname !== SDK_PATH) {
     throw new Error(`Invalid path for sdk url: ${pathname || "undefined"}`);
   }
 
-  // $FlowFixMe
   for (const [key, val] of entries(query)) {
-    // $FlowFixMe
     if (!constHas(SDK_QUERY_KEYS, key)) {
       throw new Error(`Unexpected query key for sdk url: ${key}`);
     }
@@ -56,7 +50,7 @@ function validatePaymentsSDKUrl({
       throw new TypeError(`Unexpected non-string key for sdk url: ${key}`);
     }
 
-    if (!val.match(/^[a-zA-Z0-9+_,-@.]+$/) && !val.match(/^\*$/)) {
+    if (!/^[a-zA-Z0-9+_,-@.]+$/.exec(val) && !/^\*$/.exec(val)) {
       throw new Error(
         `Unexpected characters in query key for sdk url: ${key}=${val}`
       );
@@ -135,8 +129,8 @@ function isLocalUrl(host: string): boolean {
 }
 
 function validateHostAndPath(
-  hostname: string | null,
-  pathname: string | null
+  hostname: string | undefined,
+  pathname: string | undefined
 ): {
   hostname: string;
   pathname: string;
@@ -161,6 +155,8 @@ function validateSDKUrl(sdkUrl: string) {
     hash,
   } = urlLib.parse(sdkUrl, true);
   const { hostname, pathname } = validateHostAndPath(
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-expect-error
     sourceHostname,
     sourcePathname
   );
@@ -169,11 +165,11 @@ function validateSDKUrl(sdkUrl: string) {
     throw new Error(
       `Expected protocol for sdk url to be ${PROTOCOL.HTTP} or ${
         PROTOCOL.HTTPS
-      } for host: ${hostname} - got ${protocol || "undefined"}`
+      } for host: ${hostname} - got ${protocol ?? "undefined"}`
     );
   }
 
-  const hostnameMatchResults = hostname.match(/[a-z0-9\.\-]+/);
+  const hostnameMatchResults = /[a-z0-9\.\-]+/.exec(hostname);
 
   if (!hostnameMatchResults || hostnameMatchResults[0] !== hostname) {
     throw new Error(`Expected a valid host: ${hostname}`);
@@ -188,21 +184,25 @@ function validateSDKUrl(sdkUrl: string) {
       throw new Error(
         `Expected protocol for sdk url to be ${
           PROTOCOL.HTTPS
-        } for host: ${hostname} - got ${protocol || "undefined"}`
+        } for host: ${hostname} - got ${protocol ?? "undefined"}`
       );
     }
 
-    if (sdkUrl.match(/&{2,}/) || sdkUrl.match(/&$/)) {
+    if (/&{2,}/.exec(sdkUrl) ?? /&$/.exec(sdkUrl)) {
       throw new Error(
         `Expected sdk url to not contain double ampersand or end in ampersand`
       );
     }
 
     validatePaymentsSDKUrl({
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      //@ts-expect-error
       protocol,
       hostname,
       pathname,
       query,
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      //@ts-expect-error
       hash,
     });
   } else if (host && !isLocalUrl(host)) {
@@ -233,8 +233,8 @@ const ALLOWED_ATTRS = [
 ];
 
 function getSDKScriptAttributes(
-  sdkUrl: string | null | undefined,
-  allAttrs: Record<string, string> | null | undefined
+  sdkUrl: string | undefined,
+  allAttrs: Record<string, string> | undefined
 ): SDKAttributes {
   const attrs = getDefaultSDKAttributes();
 
@@ -244,6 +244,8 @@ function getSDKScriptAttributes(
       true
     );
     const { hostname, pathname } = validateHostAndPath(
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      //@ts-expect-error
       sourceHostname,
       sourcePathname
     );
@@ -256,7 +258,8 @@ function getSDKScriptAttributes(
 
   for (const key in allAttrs) {
     if (ALLOWED_ATTRS.includes(key)) {
-      attrs[key] = allAttrs[key];
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      attrs[parseInt(key)] = allAttrs[parseInt(key)];
     }
   }
 
@@ -264,7 +267,7 @@ function getSDKScriptAttributes(
 }
 
 function sanitizeSDKUrl(sdkUrl: string): string {
-  // eslint-disable-next-line compat/compat
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   const url = new URL(sdkUrl);
 
   // remove query string params for checkout.js
@@ -292,18 +295,17 @@ export function unpackSDKMeta(sdkMeta?: string): SDKMeta {
   } = {}) => {
     if (url) {
       const validAttrs = getSDKScriptAttributes(url, attrs);
-      // $FlowFixMe
       const allAttrs = {
         nonce,
         src: sanitizeSDKUrl(url),
         ...validAttrs,
       };
-      // @ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       return (<script {...allAttrs} />).render(html());
     }
 
     return (
-      // @ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       <script
         nonce={nonce}
         innerHTML={`

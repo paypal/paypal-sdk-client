@@ -21,6 +21,8 @@ export function getSDKMeta(): string {
 
   for (const attr of Object.keys(scriptAttrs)) {
     if (ALLOWED_ATTRS.includes(attr)) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      //@ts-expect-error
       attrs[parseInt(attr)] = scriptAttrs[parseInt(attr)];
     }
   }

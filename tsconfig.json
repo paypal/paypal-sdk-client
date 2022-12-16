@@ -1,4 +1,3 @@
 {
-  "extends": "@krakenjs/typescript-config-grumbler/tsconfig.json",
-  "typeAcquisition": { "include": ["jest"] }
+  "extends": "@krakenjs/typescript-config-grumbler/tsconfig.json"
 }

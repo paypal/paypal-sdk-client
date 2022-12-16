@@ -5,7 +5,7 @@ import {
 import { ZalgoPromise } from "@krakenjs/zalgo-promise";
 import { getLogger, insertMockSDKScript } from "../../src";
 
-describe.skip("logger tests", () => {
+describe("logger tests", () => {
   beforeAll(() => {
     patchXmlHttpRequest();
   });
@@ -118,6 +118,8 @@ describe.skip("logger tests", () => {
         ) {
           throw new Error(
             `Expected logger tracking value ${key} to be ${
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              //@ts-expect-error
               expectedTracking[parseInt(key)] as string
             } - got ${tracking[parseInt(key)] as string}`
           );
@@ -229,6 +231,8 @@ describe.skip("logger tests", () => {
         ) {
           throw new Error(
             `Expected logger tracking value ${key} to be ${
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              //@ts-expect-error
               expectedTracking[parseInt(key)] as string
             } - got ${tracking[parseInt(key)] as string}`
           );

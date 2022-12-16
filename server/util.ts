@@ -13,7 +13,7 @@ export function entries<T>(obj: Record<string, T>): ReadonlyArray<[string, T]> {
   const result: ReadonlyArray<[string, T]> = [];
 
   for (const key of Object.keys(obj)) {
-    (<any>result).push([key, obj[key]]);
+    (result as any).push([key, obj[parseInt(key)]]);
   }
 
   return result;

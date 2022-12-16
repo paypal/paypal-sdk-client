@@ -118,16 +118,18 @@ const sdkMetaList = [
   ],
 ];
 
-// @ts-ignore
 test.each(sdkMetaList)(
   "should unpack `sdkMeta` and load the script",
-  (queryParamsSource: { [x: string]: any; url: string }, attributes: any) => {
-    // (queryParamsSource: { [x: string]: any; url: string }, attributes: any) => {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //@ts-expect-error
+  (queryParamsSource, attributes) => {
     const { url, ...queryParams } = queryParamsSource;
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-expect-error
     const encodeQueryParams = new URLSearchParams(queryParams).toString();
     const sourceData = {
-      url: `${url}${encodeQueryParams}`,
+      url: url && `${url}${encodeQueryParams}`,
       ...attributes,
     };
     const { getSDKLoader } = unpackSDKMeta(

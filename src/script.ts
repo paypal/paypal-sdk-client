@@ -72,10 +72,14 @@ export const getSDKAttributes: GetSDKAttributes = memoize(() => {
 
   for (const [name, value] of Object.entries(sdkScript.attributes)) {
     if (name.startsWith("data-")) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      //@ts-expect-error
       result[parseInt(name)] = value;
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //@ts-expect-error
   result[ATTRIBUTES.UID] = getCurrentScriptUID();
   return result;
 });
@@ -92,7 +96,7 @@ export function getSDKQueryParams(): Record<string, string> {
 }
 
 type GetSDKQueryParam = (<T extends string>(
-  arg0: typeof SDK_QUERY_KEYS[typeof SDK_QUERY_KEYS]
+  arg0: typeof SDK_QUERY_KEYS[keyof typeof SDK_QUERY_KEYS]
 ) => T | void) &
   (<T extends string>(
     arg0: typeof SDK_QUERY_KEYS[keyof typeof SDK_QUERY_KEYS],
@@ -295,8 +299,7 @@ export function getMerchantRequestedPopupsDisabled(): boolean {
 
 export function getPageType(): string | undefined {
   const pageType = getSDKAttribute(SDK_SETTINGS.PAGE_TYPE, "");
-  const validPageType =
-    values(PAGE_TYPES).indexOf(pageType?.toLowerCase()) !== -1;
+  const validPageType = values(PAGE_TYPES).includes(pageType?.toLowerCase());
 
   if (!validPageType && pageType?.length) {
     throw new Error(`Invalid page type, '${pageType}'`);

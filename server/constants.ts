@@ -13,7 +13,7 @@ export const PROTOCOL = {
   HTTP: "http:",
   HTTPS: "https:",
 };
-export const LEGACY_SDK_PATH: RegExp = // eslint-disable-next-line security/detect-unsafe-regex
+export const LEGACY_SDK_PATH = // eslint-disable-next-line security/detect-unsafe-regex
   /^(\/[a-zA-Z0-9_-]+)*\/checkout(\.4\.0\.\d{1,3})?(\.min)?\.js$/;
 export const DEFAULT_SDK_META = {
   url: "",

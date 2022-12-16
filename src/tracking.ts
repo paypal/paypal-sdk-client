@@ -14,7 +14,7 @@ import {
   FPTI_DATA_SOURCE,
   FPTI_SDK_NAME,
   FPTI_USER_ACTION,
-} from "@paypal/sdk-constants/dist/esm/types";
+} from "@paypal/sdk-constants/src";
 
 import { getEnv, getVersion, getCorrelationID } from "./global";
 import {

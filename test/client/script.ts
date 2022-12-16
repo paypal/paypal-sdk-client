@@ -220,7 +220,7 @@ describe(`script cases`, () => {
     if (vault !== getVault()) {
       throw new Error(
         `Expected vault to be ${vault.toString()}, got ${
-          getVault().toString() as string
+          getVault() as string
         } from ${url}`
       );
     }
@@ -236,7 +236,7 @@ describe(`script cases`, () => {
     if (commit !== getCommit()) {
       throw new Error(
         `Expected vault to be ${commit.toString()}, got ${
-          getCommit().toString() as string
+          getCommit() as string
         } from ${url}`
       );
     }

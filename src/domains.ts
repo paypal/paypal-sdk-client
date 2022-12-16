@@ -65,5 +65,5 @@ export function getPayPalDomainRegex(): RegExp {
 }
 
 export function isPayPalDomain(): boolean {
-  return Boolean(getDomain().match(getPayPalDomainRegex()));
+  return Boolean(getPayPalDomainRegex().exec(getDomain()));
 }

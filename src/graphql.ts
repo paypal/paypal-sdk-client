@@ -122,14 +122,14 @@ export function getGraphQLFundingEligibility<T>(
         `,
     variables,
   })
-    .then((gqlResult) => {
-      if (!gqlResult || !(gqlResult as any).fundingEligibility) {
+    .then((gqlResult: any) => {
+      if (!gqlResult ?? !gqlResult.fundingEligibility) {
         throw new Error(
           `GraphQL fundingEligibility returned no fundingEligibility object`
         );
       }
 
-      return (gqlResult as any)?.fundingEligibility;
+      return gqlResult?.fundingEligibility;
     })
     .catch((err) => {
       getLogger().error(`graphql_fundingeligibility_error`, {

@@ -26,12 +26,9 @@ export function insertMockSDKScript({
     }
   });
 
-  // $FlowFixMe
   delete getScript.__inline_memoize_cache__;
-  // $FlowFixMe
   // @ts-expect-error __inline_memoize_cache__ is not properties of Functions
   delete getSDKScript.__inline_memoize_cache__;
-  // $FlowFixMe
   // @ts-expect-error __inline_memoize_cache__ is not properties of Functions
   delete getSDKAttributes.__inline_memoize_cache__;
   const script = document.createElement("script");
