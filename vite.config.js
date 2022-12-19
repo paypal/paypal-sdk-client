@@ -1,10 +1,12 @@
-import { defineConfig } from "vite";
+/* eslint-disable spaced-comment */
+// eslint-disable-next-line @typescript-eslint/triple-slash-reference
+/// <reference types="vitest" />
 
 // Configure Vitest (https://vitest.dev/config/)
-import path from "path";
-// import { defineConfig } from "vite";
 
-// import { sdkClientTestGlobals } from "./test/globals";
+import path from "path";
+
+import { defineConfig } from "vite";
 
 const define = {
   __DEBUG__: false,
@@ -38,33 +40,10 @@ const define = {
   // ...sdkClientTestGlobals,
 };
 
-// $FlowIssue
+// eslint-disable-next-line import/no-default-export
 export default defineConfig({
-  build: {
-    lib: {
-      entry: path.resolve(__dirname, "src/index.ts"),
-      name: "sdk-client",
-      fileName: (format) => `sdk-client.${format}.js`,
-      formats: ["es", "umd"],
-    },
-    sourcemap: true,
-    rollupOptions: {
-      ouput: {
-        preserveModules: true,
-      },
-    },
-  },
-  esbuild: {
-    define,
-  },
   define,
   test: {
-    // environment: "jsdom",
-    // setupFiles: ["vitestSetup.js"],
-    include: ["./test/**/*.test.ts"],
-    deps: {
-      inline: ["@krakenjs/post-robot"],
-    },
-    globals: true,
+    environment: "jsdom",
   },
 });

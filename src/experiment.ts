@@ -1,7 +1,6 @@
 import type { Experiment } from "@krakenjs/belter/dist/esm";
 import { experiment } from "@krakenjs/belter/dist/esm";
 import type { LoggerType } from "@krakenjs/beaver-logger/dist/esm";
-import "@krakenjs/beaver-logger/dist/esm";
 import { FPTI_KEY } from "@paypal/sdk-constants/dist/esm";
 
 import { FPTI_STATE, FPTI_TRANSITION } from "./constants";

@@ -1,6 +1,5 @@
 import type { ENV, COMPONENTS, PROTOCOL } from "@paypal/sdk-constants/dist/esm";
 
-// @ts-expect-error[toplevel-library-import]
 import type { FundingEligibilityType } from "./types";
 
 export declare let __PROTOCOL__: typeof PROTOCOL[keyof typeof PROTOCOL];

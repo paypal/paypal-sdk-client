@@ -30,7 +30,7 @@ export function getPayPalLoggerDomain(): string {
 
 export function buildPayPalUrl(path = ""): string {
   return __TEST__ && __WEB__
-    ? `${getActualDomain() as string}${path}`
+    ? `${getActualDomain()}${path}`
     : `${getPayPalDomain()}${path}`;
 }
 
@@ -39,7 +39,7 @@ export function buildPayPalAPIUrl(path = ""): string {
     ? getPayPalDomain()
     : getPayPalAPIDomain();
   return __TEST__ && __WEB__
-    ? `${getActualDomain() as string}${path}`
+    ? `${getActualDomain()}${path}`
     : `${paypalAPIDomain}${path}`;
 }
 

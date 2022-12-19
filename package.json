@@ -33,8 +33,8 @@
     "prerelease": "npm run clean && npm run build && git add dist && git commit -m 'ci: check in dist folder' || echo 'Nothing to distribute'",
     "release": "standard-version",
     "postrelease": "git push && git push --follow-tags && npm publish",
-    "vitest": "vitest run --dom --coverage",
-    "vitest:watch": "vitest watch --dom --coverage --ui"
+    "vitest": "vitest run --coverage",
+    "vitest:watch": "vitest watch --coverage --ui"
   },
   "files": [
     "dist/",
@@ -60,7 +60,7 @@
   "license": "Apache-2.0",
   "readmeFilename": "README.md",
   "dependencies": {
-    "@krakenjs/beaver-logger": "6.0.0-typescript.1",
+    "@krakenjs/beaver-logger": "6.0.0-typescript.2",
     "@krakenjs/belter": "3.0.0-typescript.1",
     "@krakenjs/cross-domain-utils": "4.0.0-typescript.1",
     "@krakenjs/jsx-pragmatic": "^3.0.0",
@@ -87,8 +87,8 @@
     "esdoc-standard-plugin": "1.0.0",
     "flow-bin": "0.196.0",
     "flowgen": "^1.20.1",
-    "happy-dom": "^8.1.0",
     "husky": "^8.0.2",
+    "jsdom": "^20.0.3",
     "lint-staged": "^13.1.0",
     "mocha": "^10.2.0",
     "msw": "^0.49.2",
