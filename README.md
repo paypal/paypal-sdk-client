@@ -5,7 +5,7 @@
 [![npm version][version-badge]][package]
 [![apache license][license-badge]][license]
 
-[build-badge]: https://img.shields.io/github/workflow/status/paypal/paypal-sdk-client/build?logo=github&style=flat-square
+[build-badge]: https://img.shields.io/github/actions/workflow/status/paypal/paypal-sdk-client/main.yml?branch=main&logo=github&style=flat-square
 [build]: https://github.com/paypal/paypal-sdk-client/actions?query=workflow%3Abuild
 [coverage-badge]: https://img.shields.io/codecov/c/github/paypal/paypal-sdk-client.svg?style=flat-square
 [coverage]: https://codecov.io/github/paypal/paypal-sdk-client/
