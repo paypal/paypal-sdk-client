@@ -1,4 +1,7 @@
-import { $mockEndpoint } from "@krakenjs/sync-browser-mocks/dist/sync-browser-mocks";
+import { describe, it, beforeEach } from "vitest";
+import { setupServer } from "msw/node";
+import { rest } from "msw";
+
 import type { OrderCreateRequest } from "../../src/api";
 import { createAccessToken, createOrder } from "../../src/api";
 
@@ -15,24 +18,50 @@ describe("api cases", () => {
     error: null,
   };
 
+  // const mockAuthEndpoint = function (data = defaultAuthResponse) {
+  //   $mockEndpoint
+  //     .register({
+  //       method: "POST",
+  //       uri: `${window.location.protocol}//${window.location.host}/v1/oauth2/token`,
+  //       data,
+  //     })
+  //     .listen();
+  // };
+
   const mockAuthEndpoint = function (data = defaultAuthResponse) {
-    $mockEndpoint
-      .register({
-        method: "POST",
-        uri: `${window.location.protocol}//${window.location.host}/v1/oauth2/token`,
-        data,
-      })
-      .listen();
+    setupServer(
+      rest.post(
+        `https://api.msmaster.qa.paypal.com/v1/oauth2/token`,
+        (req, res, ctx) => {
+          return res(ctx.json(data));
+        }
+      )
+    ).listen();
   };
 
-  const mockCreateOrder = function (data: Record<string, any>) {
-    $mockEndpoint
-      .register({
-        method: "POST",
-        uri: `${window.location.protocol}//${window.location.host}/v2/checkout/orders`,
-        data,
-      })
-      .listen();
+  // const mockCreateOrder = function (data: Record<string, any>) {
+  //   $mockEndpoint
+  //     .register({
+  //       method: "POST",
+  //       uri: `${window.location.protocol}//${window.location.host}/v2/checkout/orders`,
+  //       data,
+  //     })
+  //     .listen();
+  // };
+
+  const mockCreateOrder = function (data: {
+    id?: string;
+    status?: string;
+    links?: never[];
+  }) {
+    setupServer(
+      rest.post(
+        `https://api.msmaster.qa.paypal.com/v2/checkout/orders`,
+        (req, res, ctx) => {
+          return res(ctx.json(data));
+        }
+      )
+    ).listen();
   };
 
   let order: OrderCreateRequest;

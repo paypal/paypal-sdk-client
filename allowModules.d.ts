@@ -31,6 +31,8 @@ declare module "keymakerclientapi";
 declare module "servicecore";
 declare module "topos";
 declare module "webpack-dev-middleware";
+declare module "@krakenjs/jsx-pragmatic/dist/esm";
+// declare module "preact/jsx-runtime";
 
 declare module "shush" {
   type JSONValue =
@@ -69,4 +71,12 @@ declare module "strict-merge" {
       value: T
     ) => boolean
   ): TUnionToIntersection<T[number]>;
+}
+
+declare namespace JSX {
+  // eslint-disable-next-line
+  interface IntrinsicElements {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [elemName: string]: any;
+  }
 }

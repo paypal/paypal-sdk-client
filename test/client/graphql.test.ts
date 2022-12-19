@@ -1,5 +1,6 @@
-import { $mockEndpoint } from "@krakenjs/sync-browser-mocks/dist/sync-browser-mocks";
 import { describe, it } from "vitest";
+import { setupServer } from "msw/node";
+import { rest } from "msw";
 
 import { callGraphQL, getGraphQLFundingEligibility } from "../../src/graphql";
 import { insertMockSDKScript } from "../../src";
@@ -14,14 +15,23 @@ describe("graphql cases", () => {
     },
     status = 200
   ) {
-    $mockEndpoint
-      .register({
-        method: "POST",
-        uri: `${window.location.protocol}//${window.location.host}/graphql`,
-        status,
-        data,
-      })
-      .listen();
+    // $mockEndpoint
+    //   .register({
+    //     method: "POST",
+    //     uri: `${window.location.protocol}//${window.location.host}/graphql`,
+    //     status,
+    //     data,
+    //   })
+    //   .listen();
+
+    setupServer(
+      rest.post(
+        `${window.location.protocol}//${window.location.host}/graphql`,
+        (req, res, ctx) => {
+          return res(ctx.status(status), ctx.json(data));
+        }
+      )
+    ).listen();
   };
 
   it("callGraphQL should fail with status code 404 when the URL was not found", async () => {

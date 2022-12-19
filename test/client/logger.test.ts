@@ -1,14 +1,13 @@
-import {
-  $mockEndpoint,
-  patchXmlHttpRequest,
-} from "@krakenjs/sync-browser-mocks/dist/sync-browser-mocks";
+import { describe, it } from "vitest";
+import { rest } from "msw";
+import { setupServer } from "msw/node";
 import { ZalgoPromise } from "@krakenjs/zalgo-promise";
 import { getLogger, insertMockSDKScript } from "../../src";
 
 describe("logger tests", () => {
-  beforeAll(() => {
-    patchXmlHttpRequest();
-  });
+  // beforeAll(() => {
+  //   patchXmlHttpRequest();
+  // });
 
   it("should log and flush with all expected keys", () => {
     insertMockSDKScript({
@@ -22,23 +21,31 @@ describe("logger tests", () => {
       },
     });
     const logger = getLogger();
-    let logData: { events: any[]; tracking: any[] };
-    const logEndpoint = $mockEndpoint.register({
-      method: "POST",
-      uri: `${window.location.protocol}//${window.location.host}/xoplatform/logger/api/logger`,
-      handler: (req: { data: { events: any[]; tracking: any[] } }) => {
-        logData = req.data;
-        return {};
-      },
-    });
+    let logData: any;
+    // const logEndpoint = $mockEndpoint.register({
+    //   method: "POST",
+    //   uri: `${window.location.protocol}//${window.location.host}/xoplatform/logger/api/logger`,
+    //   handler: (req: { data: { events: any[]; tracking: any[] } }) => {
+    //     logData = req.data;
+    //     return {};
+    //   },
+    // });
 
-    (window as any).navigator.sendBeacon = (url: any, data: string) => {
-      logData = JSON.parse(data);
+    const logEndpoint = () => {
+      setupServer(
+        rest.post(
+          `${window.location.protocol}//${window.location.host}/xoplatform/logger/api/logger`,
+          (req, res, ctx) => {
+            logData = req.params;
+            return res(ctx.status(200));
+          }
+        )
+      ).listen();
     };
 
     logger.info("foo", { bar: "baz" });
     logger.track({ hello: "world" });
-    logEndpoint.expectCalls();
+    logEndpoint();
 
     return logger.flush().then(() => {
       if (!logData) {
@@ -89,7 +96,7 @@ describe("logger tests", () => {
         context_correlation_id: "abc123",
         sdk_integration_source: "spbf",
       };
-      const tracking = logData.tracking.find((e) => e.hello === "world");
+      const tracking = logData.tracking.find((e: any) => e.hello === "world");
 
       if (!tracking) {
         throw new Error(`Expected to find hello=world event`);
@@ -129,15 +136,26 @@ describe("logger tests", () => {
   });
   it("should auto-log on any unhandled errors", () => {
     const logger = getLogger();
-    let logData: { events: any[]; tracking: any[] };
-    const logEndpoint = $mockEndpoint.register({
-      method: "POST",
-      uri: `${window.location.protocol}//${window.location.host}/xoplatform/logger/api/logger`,
-      handler: (req: { data: { events: any[]; tracking: any[] } }) => {
-        logData = req.data;
-        return {};
-      },
-    });
+    let logData: any;
+    // const logEndpoint = $mockEndpoint.register({
+    //   method: "POST",
+    //   uri: `${window.location.protocol}//${window.location.host}/xoplatform/logger/api/logger`,
+    //   handler: (req: { data: { events: any[]; tracking: any[] } }) => {
+    //     logData = req.data;
+    //     return {};
+    //   },
+    // });
+
+    const logEndpoint = () =>
+      setupServer(
+        rest.post(
+          `${window.location.protocol}//${window.location.host}/xoplatform/logger/api/logger`,
+          (req, res, ctx) => {
+            logData = req.params;
+            return res(ctx.status(200));
+          }
+        )
+      );
 
     (window as any).navigator.sendBeacon = (url: any, data: string) => {
       logData = JSON.parse(data);
@@ -149,13 +167,15 @@ describe("logger tests", () => {
       throw new Error(err);
     });
 
-    logEndpoint.expectCalls();
+    logEndpoint();
     return logger.flush().then(() => {
       if (!logData) {
         throw new Error(`Expected log data to be populated`);
       }
 
-      const event = logData.events.find((e) => e.event === "unhandled_error");
+      const event = logData.events.find(
+        (e: any) => e.event === "unhandled_error"
+      );
 
       if (!event) {
         throw new Error(`Expected to find unhandled_error event`);
@@ -199,7 +219,7 @@ describe("logger tests", () => {
         ext_error_desc: /meep/,
       };
       const tracking = logData.tracking.find(
-        (e) => e.ext_error_code === "payments_sdk_error"
+        (e: any) => e.ext_error_code === "payments_sdk_error"
       );
 
       if (!tracking) {

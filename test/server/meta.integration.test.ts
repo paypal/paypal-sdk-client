@@ -1,4 +1,4 @@
-import cheerio from "cheerio";
+import { load } from "cheerio";
 import { test } from "vitest";
 
 import { unpackSDKMeta } from "../../server";
@@ -135,7 +135,7 @@ test.each(sdkMetaList)(
     const { getSDKLoader } = unpackSDKMeta(
       Buffer.from(JSON.stringify(sourceData)).toString("base64")
     );
-    const $ = cheerio.load(getSDKLoader());
+    const $ = load(getSDKLoader());
     const src = $("script").attr("src");
 
     if (sourceData.url !== src) {

@@ -1,4 +1,4 @@
-import { memoizedValues } from "@krakenjs/belter";
+import { memoizedValues } from "@krakenjs/belter/dist/esm";
 export const constHas = <
   X extends string | boolean | number,
   T extends Record<string, X>

@@ -1,3 +1,38 @@
 {
   "extends": "@krakenjs/typescript-config-grumbler/tsconfig.json"
 }
+
+// {
+//   "exclude": ["dist/**/*"],
+//   "compilerOptions": {
+//     "target": "es5",
+//     "module": "commonjs",
+//     "noEmit": true,
+//     "declaration": false,
+//     "emitDeclarationOnly": false,
+//     "isolatedModules": false,
+//     "strict": true,
+//     "esModuleInterop": true,
+
+//     "allowJs": true,
+//     "skipLibCheck": true,
+
+//     "experimentalDecorators": true,
+//     "emitDecoratorMetadata": true,
+
+//     "forceConsistentCasingInFileNames": true
+
+//     // "jsx": "preserve",
+//     // "jsxImportSource": "@krakenjs/jsx-pragmatic/dist/esm/"
+
+//     // "jsx": "preserve",
+//     // "jsxImportSource": "preact",
+//     // "jsxFactory": "h",
+//     // "jsxFragmentFactory": "Fragment",
+
+//     // "paths": {
+//     //   "react": ["./node_modules/preact/compat/"],
+//     //   "react-dom": ["./node_modules/preact/compat/"]
+//     // }
+//   }
+// }

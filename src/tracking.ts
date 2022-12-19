@@ -6,7 +6,7 @@ import {
   getResourceLoadTime,
   waitForWindowReady,
   ATTRIBUTES,
-} from "@krakenjs/belter";
+} from "@krakenjs/belter/dist/esm";
 import { ZalgoPromise } from "@krakenjs/zalgo-promise";
 import {
   FPTI_KEY,
@@ -14,7 +14,7 @@ import {
   FPTI_DATA_SOURCE,
   FPTI_SDK_NAME,
   FPTI_USER_ACTION,
-} from "@paypal/sdk-constants/src";
+} from "@paypal/sdk-constants/dist/esm";
 
 import { getEnv, getVersion, getCorrelationID } from "./global";
 import {

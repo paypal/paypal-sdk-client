@@ -1,5 +1,5 @@
 /* eslint max-lines: off */
-import cheerio from "cheerio";
+import { load } from "cheerio";
 import { afterEach, test } from "vitest";
 
 import { unpackSDKMeta } from "../../server";
@@ -16,7 +16,7 @@ test("should construct a valid script url", () => {
       })
     ).toString("base64")
   );
-  const $ = cheerio.load(getSDKLoader());
+  const $ = load(getSDKLoader());
   const src = $("script").attr("src");
 
   if (!src) {
@@ -37,7 +37,7 @@ test("should construct a valid script url with data-popups-disabled attribute", 
       })
     ).toString("base64")
   );
-  const $ = cheerio.load(getSDKLoader());
+  const $ = load(getSDKLoader());
   const dataPopUsDisabled = $("script").attr("data-popups-disabled");
 
   if (!dataPopUsDisabled) {
@@ -57,7 +57,7 @@ test("should construct a valid script url with paypalobjects", () => {
       })
     ).toString("base64")
   );
-  const $ = cheerio.load(getSDKLoader());
+  const $ = load(getSDKLoader());
   const script = $("script[data-paypal-checkout]");
   const src = script.attr("src");
 
@@ -77,7 +77,7 @@ test("should construct a valid script url with checkout.js using the qa cdn", ()
       })
     ).toString("base64")
   );
-  const $ = cheerio.load(getSDKLoader());
+  const $ = load(getSDKLoader());
   const script = $("script[data-paypal-checkout]");
   const src = script.attr("src");
 
@@ -96,7 +96,7 @@ test("should construct a valid script url with checkout.js on localhost", () => 
       })
     ).toString("base64")
   );
-  const $ = cheerio.load(getSDKLoader());
+  const $ = load(getSDKLoader());
   const script = $("script[data-paypal-checkout]");
   const src = script.attr("src");
 
@@ -159,7 +159,7 @@ test("should construct a valid minified script url with paypalobjects", () => {
       })
     ).toString("base64")
   );
-  const $ = cheerio.load(getSDKLoader());
+  const $ = load(getSDKLoader());
   const script = $("script[data-paypal-checkout]");
   const src = script.attr("src");
 
@@ -179,7 +179,7 @@ test("should prevent query string parameters with checkout.js", () => {
       })
     ).toString("base64")
   );
-  const $ = cheerio.load(getSDKLoader());
+  const $ = load(getSDKLoader());
   const script = $("script[data-paypal-checkout]");
   const src = script.attr("src");
 
@@ -203,7 +203,7 @@ test("should construct a valid versioned script url with paypalobjects", () => {
       })
     ).toString("base64")
   );
-  const $ = cheerio.load(getSDKLoader());
+  const $ = load(getSDKLoader());
   const script = $("script[data-paypal-checkout]");
   const src = script.attr("src");
 
@@ -222,7 +222,7 @@ test("should construct a valid versioned minified script url with paypalobjects"
       })
     ).toString("base64")
   );
-  const $ = cheerio.load(getSDKLoader());
+  const $ = load(getSDKLoader());
   const script = $("script[data-paypal-checkout]");
   const src = script.attr("src");
 
@@ -241,7 +241,7 @@ test("should construct a valid localhost script url", () => {
       })
     ).toString("base64")
   );
-  const $ = cheerio.load(getSDKLoader());
+  const $ = load(getSDKLoader());
   const src = $("script").attr("src");
 
   if (!src) {
@@ -260,7 +260,7 @@ test("should unpack a valid sdk meta bundle with a component", () => {
       })
     ).toString("base64")
   );
-  const $ = cheerio.load(getSDKLoader());
+  const $ = load(getSDKLoader());
   const src = $("script").attr("src");
 
   if (!src) {
@@ -279,7 +279,7 @@ test("should unpack a valid sdk meta bundle with multiple components", () => {
       })
     ).toString("base64")
   );
-  const $ = cheerio.load(getSDKLoader());
+  const $ = load(getSDKLoader());
   const src = $("script").attr("src");
 
   if (!src) {
@@ -307,7 +307,7 @@ test("should unpack a valid sdk meta bundle with multiple merchant-id email addr
       })
     ).toString("base64")
   );
-  const $ = cheerio.load(getSDKLoader());
+  const $ = load(getSDKLoader());
   const src = $("script").attr("src");
 
   if (!src) {
@@ -373,7 +373,7 @@ test("should construct a valid script url with multiple merchant ids", () => {
       })
     ).toString("base64")
   );
-  const $ = cheerio.load(getSDKLoader());
+  const $ = load(getSDKLoader());
   const src = $("script").attr("src");
   const dataMerchantId = $("script").attr("data-merchant-id");
 
@@ -403,7 +403,7 @@ test("should construct a valid script url with a single merchant id in the url",
       })
     ).toString("base64")
   );
-  const $ = cheerio.load(getSDKLoader());
+  const $ = load(getSDKLoader());
   const src = $("script").attr("src");
 
   if (!src) {
@@ -424,7 +424,7 @@ test("should construct a valid script url without invalid attributes", () => {
       })
     ).toString("base64")
   );
-  const $ = cheerio.load(getSDKLoader());
+  const $ = load(getSDKLoader());
   const src = $("script").attr("src");
   const result = $("script").attr("data-dummy-id");
 
@@ -683,13 +683,13 @@ test("should error out with a hash", () => {
 test("should construct a valid loader even when no url passed", () => {
   const sdkUrl = "https://www.paypalobjects.com/api/checkout.js";
   const { getSDKLoader } = unpackSDKMeta();
-  const $ = cheerio.load(getSDKLoader());
+  const $ = load(getSDKLoader());
   const script = $("script").html() ?? "";
   let scriptTag: any;
 
   // eslint-disable-next-line no-eval, security/detect-eval-with-expression
   eval(script);
-  const $$ = cheerio.load(scriptTag);
+  const $$ = load(scriptTag);
   const scriptz = $$("script[data-paypal-checkout]");
   const src = scriptz.attr("src");
 
@@ -702,13 +702,13 @@ test("should construct a valid loader even when no url passed", () => {
 test("should construct a valid minified loader even when no url passed", () => {
   const sdkUrl = "https://www.paypalobjects.com/api/checkout.min.js";
   const { getSDKLoader } = unpackSDKMeta();
-  const $ = cheerio.load(getSDKLoader());
+  const $ = load(getSDKLoader());
   const script = $("script").html() ?? "";
   let scriptTag: any;
 
   // eslint-disable-next-line no-eval, security/detect-eval-with-expression
   eval(script);
-  const $$ = cheerio.load(scriptTag);
+  const $$ = load(scriptTag);
   const src = $$("script").attr("src");
 
   if (!src) {
@@ -720,13 +720,13 @@ test("should construct a valid minified loader even when no url passed", () => {
 test("should construct a valid version loader even when no url passed", () => {
   const sdkUrl = "https://www.paypalobjects.com/api/checkout.4.0.435.js";
   const { getSDKLoader } = unpackSDKMeta();
-  const $ = cheerio.load(getSDKLoader());
+  const $ = load(getSDKLoader());
   const script = $("script").html() ?? "";
   let scriptTag: any;
 
   // eslint-disable-next-line no-eval, security/detect-eval-with-expression
   eval(script);
-  const $$ = cheerio.load(scriptTag);
+  const $$ = load(scriptTag);
   const src = $$("script").attr("src");
 
   if (!src) {
@@ -738,13 +738,13 @@ test("should construct a valid version loader even when no url passed", () => {
 test("should construct a valid loader even when no url passed with version 4", () => {
   const sdkUrl = "https://www.paypalobjects.com/api/checkout.js";
   const { getSDKLoader } = unpackSDKMeta();
-  const $ = cheerio.load(getSDKLoader());
+  const $ = load(getSDKLoader());
   const script = $("script").html() ?? "";
   let scriptTag: any;
 
   // eslint-disable-next-line no-eval, security/detect-eval-with-expression
   eval(script);
-  const $$ = cheerio.load(scriptTag);
+  const $$ = load(scriptTag);
   const scriptz = $$("script[data-paypal-checkout]");
   const src = scriptz.attr("src");
 
@@ -757,13 +757,13 @@ test("should construct a valid loader even when no url passed with version 4", (
 test("should construct a valid loader even when no url passed with version 5 in a popup", () => {
   const sdkUrl = "https://www.paypal.com/sdk/js?client-id=foobarbaz";
   const { getSDKLoader } = unpackSDKMeta();
-  const $ = cheerio.load(getSDKLoader());
+  const $ = load(getSDKLoader());
   const script = $("script").html() ?? "";
   let scriptTag: any;
 
   // eslint-disable-next-line no-eval, security/detect-eval-with-expression
   eval(script);
-  const $$ = cheerio.load(scriptTag);
+  const $$ = load(scriptTag);
   const scriptz = $$("script");
   const src = scriptz.attr("src");
 
@@ -776,13 +776,13 @@ test("should construct a valid loader even when no url passed with version 5 in 
 test("should construct a valid loader even when no url passed with version 5 in an iframe", () => {
   const sdkUrl = "https://www.paypal.com/sdk/js?client-id=foobarbaz";
   const { getSDKLoader } = unpackSDKMeta();
-  const $ = cheerio.load(getSDKLoader());
+  const $ = load(getSDKLoader());
   const script = $("script").html() ?? "";
   let scriptTag: any;
 
   // eslint-disable-next-line no-eval, security/detect-eval-with-expression
   eval(script);
-  const $$ = cheerio.load(scriptTag);
+  const $$ = load(scriptTag);
   const scriptz = $$("script");
   const src = scriptz.attr("src");
 
@@ -901,7 +901,7 @@ test("should construct a valid script url with paypalobjects on http", () => {
       })
     ).toString("base64")
   );
-  const $ = cheerio.load(getSDKLoader());
+  const $ = load(getSDKLoader());
   const script = $("script[data-paypal-checkout]");
   const src = script.attr("src");
 
@@ -920,7 +920,7 @@ test("should construct a valid min script url with paypalobjects on http", () =>
       })
     ).toString("base64")
   );
-  const $ = cheerio.load(getSDKLoader());
+  const $ = load(getSDKLoader());
   const script = $("script[data-paypal-checkout]");
   const src = script.attr("src");
 
@@ -939,7 +939,7 @@ test("should construct a valid script url hosted on objects.paypal.cn", () => {
       })
     ).toString("base64")
   );
-  const $ = cheerio.load(getSDKLoader());
+  const $ = load(getSDKLoader());
   const script = $("script[data-paypal-checkout]");
   const src = script.attr("src");
 
@@ -958,7 +958,7 @@ test("should construct a valid script url hosted on www.paypal.cn", () => {
       })
     ).toString("base64")
   );
-  const $ = cheerio.load(getSDKLoader());
+  const $ = load(getSDKLoader());
   const src = $("script").attr("src");
 
   if (!src) {

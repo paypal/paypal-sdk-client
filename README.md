@@ -83,7 +83,7 @@ app.get("/my-app", (req, res) => {
 3. Ensure the `sdkMeta` payload is passed to the child window from the parent. If you are using [zoid](https://github.com/krakenjs/zoid) to construct your component, please add the following:
 
 ```javascript
-import { getSdkMeta } from "@paypal/sdk-client/src";
+import { getSdkMeta } from "@paypal/sdk-client/dist/esm";
 
 let MyComponent = zoid.create({
 	tag: "my-component",
