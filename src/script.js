@@ -40,12 +40,13 @@ import { getComputedLocales } from "./utils";
 
 type GetSDKScript = () => HTMLScriptElement;
 
-const buildScriptNotFoundError = (host, path, error) =>
-  new Error(
-    `PayPal Payments SDK script not found on page! Expected to find <script src="https://${host}${path}">\n\n${
-      error && stringifyError(error)
-    }`
+const buildScriptNotFoundError = (host, path, error) => {
+  const errorString = error ? stringifyError(error) : "";
+
+  return new Error(
+    `PayPal Payments SDK script not found on page! Expected to find <script src="https://${host}${path}">\n\n${errorString}`
   );
+};
 
 export const getSDKScript: GetSDKScript = memoize(() => {
   if (__TEST__) {
