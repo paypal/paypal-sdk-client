@@ -13,7 +13,15 @@ beforeEach(() => {
 });
 
 describe(`domains test`, () => {
-  it("should successfully match valid domain", () => {
+  describe(`valid domains test`, () => {
+    function assertValidDomain(domain) {
+      it(`${domain} should successfully match as valid domain`, () => {
+        if (!domain.match(getPayPalDomainRegex())) {
+          throw new Error(`${domain} must match the regex`);
+        }
+      });
+    }
+
     const validDomains = [
       "master.qa.paypal.com",
       "test-env.qa.paypal.com:3000",
@@ -23,25 +31,43 @@ describe(`domains test`, () => {
       "www.paypal.cn:3000",
       "www.mschina.qa.paypal.cn",
       "www.paypal.com",
+      "www.venmo.com",
+      "www.venmo.com:8000",
+      "account.qa.venmo.com",
+      "www.account.qa.venmo.com",
     ];
 
     for (const domain of validDomains) {
-      if (!domain.match(getPayPalDomainRegex())) {
-        throw new Error(`${domain} must match the regex`);
-      }
+      assertValidDomain(domain);
     }
   });
 
-  it("should not match invalid domains", () => {
+  describe(`invalid domains test`, () => {
+    function assertInValidDomain(domain) {
+      it(`${domain} should not match as valid domain`, () => {
+        if (domain.match(getPayPalDomainRegex())) {
+          throw new Error(`${domain} must not match the regex`);
+        }
+      });
+    }
+
     const invalidDomains = [
       "www.paypal.com.example.com",
       "www.paypal.cn.example.com",
+      "www.example-paypal.com",
+      "www.example-venmo.com",
+      "example-venmo.com",
+      "www.venmo-paypal.com",
+      "venmo-paypal.com",
+      "www.example-paypal.cn",
+      "example-paypal.cn",
+      "www.venmo.com.example.com",
+      "venmo.com.example.com",
+      "www.venmo.cn",
+      "venmo.cn",
     ];
-
     for (const domain of invalidDomains) {
-      if (domain.match(getPayPalDomainRegex())) {
-        throw new Error(`${domain} must not match the regex`);
-      }
+      assertInValidDomain(domain);
     }
   });
 
