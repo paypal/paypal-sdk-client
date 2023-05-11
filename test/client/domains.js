@@ -35,6 +35,8 @@ describe(`domains test`, () => {
       "www.venmo.com:8000",
       "account.qa.venmo.com",
       "www.account.qa.venmo.com",
+      "venmo.com",
+      "id.venmo.com",
     ];
 
     for (const domain of validDomains) {
@@ -65,6 +67,8 @@ describe(`domains test`, () => {
       "venmo.com.example.com",
       "www.venmo.cn",
       "venmo.cn",
+      "examplevenmo.com",
+      "www.examplevenmo.com",
     ];
     for (const domain of invalidDomains) {
       assertInValidDomain(domain);
