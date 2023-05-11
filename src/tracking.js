@@ -113,6 +113,8 @@ export function setupLogger() {
     // https://www.paypal.com/buttons/smart
     // https://www.paypal.com/us/gifts/
     const isLoadedInFrame = isPayPalDomain() && window.xprops;
+    const sdkLoadTime =
+      typeof loadTime === "number" ? loadTime.toString() : undefined;
 
     logger
       .info(`setup_${getEnv()}`)
@@ -123,10 +125,10 @@ export function setupLogger() {
         }`
       )
       .info(cache)
+      .metric({ name: "sdk_load_time", dimensions: { ms: sdkLoadTime } })
       .track({
         [FPTI_KEY.TRANSITION]: "process_js_sdk_init_client",
-        [FPTI_KEY.SDK_LOAD_TIME]:
-          typeof loadTime === "number" ? loadTime.toString() : undefined,
+        [FPTI_KEY.SDK_LOAD_TIME]: sdkLoadTime,
         [FPTI_KEY.SDK_CACHE]: cache,
       })
       .flush();
