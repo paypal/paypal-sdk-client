@@ -113,7 +113,7 @@ export function setupLogger() {
     // https://www.paypal.com/buttons/smart
     // https://www.paypal.com/us/gifts/
     const isLoadedInFrame = isPayPalDomain() && window.xprops;
-    const sdkLoadTime = loadTime && String(loadTime.toString);
+    const sdkLoadTime =
       typeof loadTime === "number" ? loadTime.toString() : undefined;
 
     logger
@@ -124,7 +124,7 @@ export function setupLogger() {
           sdkScript.hasAttribute(ATTRIBUTES.UID) ? "present" : "missing"
         }`
       )
-      .info(cache)
+      .info(cache, { sdkLoadTime })
       .metric({
         name: "pp.app.sdk.paypal_js_v5.sdk_load_time",
         dimensions: { ms: sdkLoadTime },
