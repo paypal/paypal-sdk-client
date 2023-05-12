@@ -113,7 +113,7 @@ export function setupLogger() {
     // https://www.paypal.com/buttons/smart
     // https://www.paypal.com/us/gifts/
     const isLoadedInFrame = isPayPalDomain() && window.xprops;
-    const sdkLoadTime = loadTime && String(loadTime.toString);
+    const sdkLoadTime =
       typeof loadTime === "number" ? loadTime.toString() : undefined;
 
     logger
