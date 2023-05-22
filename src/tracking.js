@@ -18,7 +18,7 @@ import {
   FPTI_USER_ACTION,
 } from "@paypal/sdk-constants/src";
 
-import { getEnv, getVersion, getCorrelationID } from "./global";
+import { getEnv, getVersion, getCorrelationID, getComponents } from "./global";
 import {
   getPartnerAttributionID,
   getClientID,
@@ -125,9 +125,12 @@ export function setupLogger() {
         }`
       )
       .info(cache, { sdkLoadTime })
+      // $FlowFixMe beaver-logger types need to be updated
       .metric({
-        name: "pp.app.sdk.paypal_js_v5.sdk_load_time",
-        dimensions: { ms: sdkLoadTime },
+        metricNamespace: "pp.app.sdk.paypal_js_v5.sdk_load_time.gauge",
+        metricEventName: "unused",
+        metricValue: sdkLoadTime,
+        dimensions: { cacheType: cache, components: getComponents().join(",") },
       })
       .track({
         [FPTI_KEY.TRANSITION]: "process_js_sdk_init_client",

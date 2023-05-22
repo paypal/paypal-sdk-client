@@ -2,6 +2,7 @@
 
 type TestGlobals = {|
   [string]: string | number | (() => string | (() => number)),
+  __COMPONENTS__: $ReadOnlyArray<string>,
 |};
 
 export const sdkClientTestGlobals: TestGlobals = {
@@ -17,4 +18,5 @@ export const sdkClientTestGlobals: TestGlobals = {
   __NAMESPACE__: "paypaltest",
   __PAYPAL_DOMAIN__: "mock://www.paypal.com",
   __PAYPAL_API_DOMAIN__: "mock://msmaster.qa.paypal.com",
+  __COMPONENTS__: ["buttons"],
 };
