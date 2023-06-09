@@ -18,5 +18,6 @@ export const sdkClientTestGlobals: TestGlobals = {
   __NAMESPACE__: "paypaltest",
   __PAYPAL_DOMAIN__: "mock://www.paypal.com",
   __PAYPAL_API_DOMAIN__: "mock://msmaster.qa.paypal.com",
+  __PAYPAL_POPUP_DOMAIN__: "mock://history.paypal.com",
   __COMPONENTS__: ["buttons"],
 };

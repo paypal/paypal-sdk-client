@@ -45,6 +45,10 @@ export function getPayPalAPIDomain(): string {
   return __PAYPAL_API_DOMAIN__;
 }
 
+export function getPayPalPopupDomain(): string {
+  return __PAYPAL_POPUP_DOMAIN__;
+}
+
 export function getDefaultServiceStageHost(): ?string {
   if (
     typeof __SERVICE_STAGE_HOST__ !== "undefined" &&

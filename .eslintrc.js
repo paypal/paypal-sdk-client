@@ -21,5 +21,6 @@ module.exports = {
     __FUNDING_ELIGIBILITY__: true,
     __PAYPAL_DOMAIN__: true,
     __PAYPAL_API_DOMAIN__: true,
+    __PAYPAL_POPUP_DOMAIN__: true,
   },
 };
