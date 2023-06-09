@@ -21,5 +21,8 @@ module.exports = {
     __FUNDING_ELIGIBILITY__: true,
     __PAYPAL_DOMAIN__: true,
     __PAYPAL_API_DOMAIN__: true,
+
+    // Experiment Variable
+    __DISABLE_SET_COOKIE__: true,
   },
 };

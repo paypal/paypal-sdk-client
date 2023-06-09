@@ -110,3 +110,8 @@ export function getFundingEligibility(): FundingEligibilityType {
 export function getPlatform(): $Values<typeof PLATFORM> {
   return isDevice() ? PLATFORM.MOBILE : PLATFORM.DESKTOP;
 }
+
+// Experiment Variable
+export function getDisableSetCookie(): string {
+  return __DISABLE_SET_COOKIE__;
+}
