@@ -1,0 +1,3088 @@
+[
+  {
+    "__docId__": 1,
+    "kind": "external",
+    "name": "Infinity",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Infinity",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Infinity",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 2,
+    "kind": "external",
+    "name": "NaN",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~NaN",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 3,
+    "kind": "external",
+    "name": "undefined",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~undefined",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 4,
+    "kind": "external",
+    "name": "null",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~null",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 5,
+    "kind": "external",
+    "name": "Object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Object",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 6,
+    "kind": "external",
+    "name": "object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~object",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 7,
+    "kind": "external",
+    "name": "Function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Function",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 8,
+    "kind": "external",
+    "name": "function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~function",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 9,
+    "kind": "external",
+    "name": "Boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Boolean",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 10,
+    "kind": "external",
+    "name": "boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~boolean",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 11,
+    "kind": "external",
+    "name": "Symbol",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Symbol",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 12,
+    "kind": "external",
+    "name": "Error",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Error",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 13,
+    "kind": "external",
+    "name": "EvalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/EvalError",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~EvalError",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 14,
+    "kind": "external",
+    "name": "InternalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/InternalError",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~InternalError",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 15,
+    "kind": "external",
+    "name": "RangeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RangeError",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~RangeError",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 16,
+    "kind": "external",
+    "name": "ReferenceError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~ReferenceError",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 17,
+    "kind": "external",
+    "name": "SyntaxError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~SyntaxError",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 18,
+    "kind": "external",
+    "name": "TypeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~TypeError",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 19,
+    "kind": "external",
+    "name": "URIError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/URIError",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~URIError",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 20,
+    "kind": "external",
+    "name": "Number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Number",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 21,
+    "kind": "external",
+    "name": "number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~number",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 22,
+    "kind": "external",
+    "name": "Date",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Date",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 23,
+    "kind": "external",
+    "name": "String",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~String",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 24,
+    "kind": "external",
+    "name": "string",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~string",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 25,
+    "kind": "external",
+    "name": "RegExp",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~RegExp",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 26,
+    "kind": "external",
+    "name": "Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Array",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 27,
+    "kind": "external",
+    "name": "Int8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int8Array",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Int8Array",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 28,
+    "kind": "external",
+    "name": "Uint8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Uint8Array",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 29,
+    "kind": "external",
+    "name": "Uint8ClampedArray",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Uint8ClampedArray",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 30,
+    "kind": "external",
+    "name": "Int16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int16Array",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Int16Array",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 31,
+    "kind": "external",
+    "name": "Uint16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint16Array",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Uint16Array",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 32,
+    "kind": "external",
+    "name": "Int32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int32Array",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Int32Array",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 33,
+    "kind": "external",
+    "name": "Uint32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint32Array",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Uint32Array",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 34,
+    "kind": "external",
+    "name": "Float32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Float32Array",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 35,
+    "kind": "external",
+    "name": "Float64Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Float64Array",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 36,
+    "kind": "external",
+    "name": "Map",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Map",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 37,
+    "kind": "external",
+    "name": "Set",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Set",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 38,
+    "kind": "external",
+    "name": "WeakMap",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~WeakMap",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 39,
+    "kind": "external",
+    "name": "WeakSet",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~WeakSet",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 40,
+    "kind": "external",
+    "name": "ArrayBuffer",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~ArrayBuffer",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 41,
+    "kind": "external",
+    "name": "DataView",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~DataView",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 42,
+    "kind": "external",
+    "name": "JSON",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~JSON",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 43,
+    "kind": "external",
+    "name": "Promise",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Promise",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 44,
+    "kind": "external",
+    "name": "Generator",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Generator",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 45,
+    "kind": "external",
+    "name": "GeneratorFunction",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/GeneratorFunction",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~GeneratorFunction",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 46,
+    "kind": "external",
+    "name": "Reflect",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Reflect",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 47,
+    "kind": "external",
+    "name": "Proxy",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Proxy",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 48,
+    "kind": "file",
+    "name": "src/config.js",
+    "content": "/* @flow */\n\nexport const SUPPORTED_BROWSERS = {\n  msie: \"11\",\n  firefox: \"30\",\n  chrome: \"27\",\n  safari: \"7\",\n  opera: \"16\",\n  msedge: \"12\",\n  samsungBrowser: \"2.1\",\n  silk: \"59.3\",\n  ucbrowser: \"10.0.0.488\",\n  vivaldi: \"1.91\",\n};\n\nconst SANDBOX_ALIAS =\n  \"AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R\";\n\nexport const CLIENT_ID_ALIAS = {\n  sandbox: SANDBOX_ALIAS,\n  sb: SANDBOX_ALIAS,\n  test: SANDBOX_ALIAS,\n};\n\nexport const URI = {\n  LOGGER: `/xoplatform/logger/api/logger`,\n  AUTH: `/v1/oauth2/token`,\n  ORDER: `/v2/checkout/orders`,\n};\n",
+    "static": true,
+    "longname": "/Users/ssablan/PayPal/xo/public/paypal-sdk-client/src/config.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 49,
+    "kind": "variable",
+    "name": "SUPPORTED_BROWSERS",
+    "memberof": "src/config.js",
+    "static": true,
+    "longname": "src/config.js~SUPPORTED_BROWSERS",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/config.js",
+    "importStyle": "{SUPPORTED_BROWSERS}",
+    "description": null,
+    "lineNumber": 3,
+    "undocument": true,
+    "type": {
+      "types": [
+        "{\"msie\": string, \"firefox\": string, \"chrome\": string, \"safari\": string, \"opera\": string, \"msedge\": string, \"samsungBrowser\": string, \"silk\": string, \"ucbrowser\": string, \"vivaldi\": string}"
+      ]
+    }
+  },
+  {
+    "__docId__": 50,
+    "kind": "variable",
+    "name": "SANDBOX_ALIAS",
+    "memberof": "src/config.js",
+    "static": true,
+    "longname": "src/config.js~SANDBOX_ALIAS",
+    "access": "public",
+    "export": false,
+    "importPath": "@paypal/sdk-client/src/config.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 16,
+    "undocument": true,
+    "type": {
+      "types": [
+        "string"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 51,
+    "kind": "variable",
+    "name": "CLIENT_ID_ALIAS",
+    "memberof": "src/config.js",
+    "static": true,
+    "longname": "src/config.js~CLIENT_ID_ALIAS",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/config.js",
+    "importStyle": "{CLIENT_ID_ALIAS}",
+    "description": null,
+    "lineNumber": 19,
+    "undocument": true,
+    "type": {
+      "types": [
+        "{\"sandbox\": *, \"sb\": *, \"test\": *}"
+      ]
+    }
+  },
+  {
+    "__docId__": 52,
+    "kind": "variable",
+    "name": "URI",
+    "memberof": "src/config.js",
+    "static": true,
+    "longname": "src/config.js~URI",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/config.js",
+    "importStyle": "{URI}",
+    "description": null,
+    "lineNumber": 25,
+    "undocument": true,
+    "type": {
+      "types": [
+        "{\"LOGGER\": *, \"AUTH\": *, \"ORDER\": *}"
+      ]
+    }
+  },
+  {
+    "__docId__": 53,
+    "kind": "file",
+    "name": "src/constants.js",
+    "content": "/* @flow */\n\nexport const FPTI_CONTEXT_TYPE = {\n  ORDER_ID: (\"EC-Token\": \"EC-Token\"),\n};\n\nexport const FPTI_TRANSITION = {\n  CREATE_ORDER: (\"process_create_order\": \"process_create_order\"),\n  SCRIPT_LOAD: (\"process_script_load\": \"process_script_load\"),\n  PXP: (\"process_pxp_check\": \"process_pxp_check\"),\n};\n\nexport const FPTI_STATE = {\n  PXP: (\"PXP_CHECK\": \"PXP_CHECK\"),\n};\n",
+    "static": true,
+    "longname": "/Users/ssablan/PayPal/xo/public/paypal-sdk-client/src/constants.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 54,
+    "kind": "variable",
+    "name": "FPTI_CONTEXT_TYPE",
+    "memberof": "src/constants.js",
+    "static": true,
+    "longname": "src/constants.js~FPTI_CONTEXT_TYPE",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/constants.js",
+    "importStyle": "{FPTI_CONTEXT_TYPE}",
+    "description": null,
+    "lineNumber": 3,
+    "undocument": true,
+    "type": {
+      "types": [
+        "{\"ORDER_ID\": *}"
+      ]
+    }
+  },
+  {
+    "__docId__": 55,
+    "kind": "variable",
+    "name": "FPTI_TRANSITION",
+    "memberof": "src/constants.js",
+    "static": true,
+    "longname": "src/constants.js~FPTI_TRANSITION",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/constants.js",
+    "importStyle": "{FPTI_TRANSITION}",
+    "description": null,
+    "lineNumber": 7,
+    "undocument": true,
+    "type": {
+      "types": [
+        "{\"CREATE_ORDER\": *, \"SCRIPT_LOAD\": *, \"PXP\": *}"
+      ]
+    }
+  },
+  {
+    "__docId__": 56,
+    "kind": "variable",
+    "name": "FPTI_STATE",
+    "memberof": "src/constants.js",
+    "static": true,
+    "longname": "src/constants.js~FPTI_STATE",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/constants.js",
+    "importStyle": "{FPTI_STATE}",
+    "description": null,
+    "lineNumber": 13,
+    "undocument": true,
+    "type": {
+      "types": [
+        "{\"PXP\": *}"
+      ]
+    }
+  },
+  {
+    "__docId__": 57,
+    "kind": "file",
+    "name": "src/declarations.js",
+    "content": "/* @flow */\n\n// $FlowFixMe[toplevel-library-import]\nimport { ENV, COMPONENTS, PROTOCOL } from \"@paypal/sdk-constants/src\";\n\n// $FlowFixMe[toplevel-library-import]\nimport type { FundingEligibilityType } from \"./types\";\n\ndeclare var __PROTOCOL__: $Values<typeof PROTOCOL>;\ndeclare var __HOST__: string;\ndeclare var __HOSTNAME__: string;\ndeclare var __PORT__: number;\ndeclare var __PATH__: string;\ndeclare var __SDK_HOST__: string;\ndeclare var __PAYPAL_DOMAIN__: string;\ndeclare var __PAYPAL_API_DOMAIN__: string;\ndeclare var __STAGE_HOST__: ?string;\ndeclare var __SERVICE_STAGE_HOST__: ?string;\n\ndeclare var __TEST__: boolean;\ndeclare var __ENV__: $Values<typeof ENV>;\ndeclare var __DEBUG__: boolean;\ndeclare var __STAGE__: boolean;\ndeclare var __WEB__: boolean;\n\ndeclare var __VERSION__: string;\ndeclare var __CORRELATION_ID__: string;\ndeclare var __NAMESPACE__: string;\ndeclare var __COMPONENTS__: $ReadOnlyArray<$Values<typeof COMPONENTS>>;\n\n// $FlowFixMe[value-as-type]\ndeclare var __FUNDING_ELIGIBILITY__: FundingEligibilityType;\n\n// Experiment Variable\ndeclare var __DISABLE_SET_COOKIE__: boolean;\n",
+    "static": true,
+    "longname": "/Users/ssablan/PayPal/xo/public/paypal-sdk-client/src/declarations.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 58,
+    "kind": "file",
+    "name": "src/domains.js",
+    "content": "/* @flow */\n\nimport { ENV } from \"@paypal/sdk-constants/src\";\nimport {\n  getDomain,\n  getActualDomain,\n  isCurrentDomain,\n} from \"@krakenjs/cross-domain-utils/src\";\n\nimport {\n  getProtocol,\n  getStageHost,\n  getPayPalDomain,\n  getPayPalAPIDomain,\n} from \"./global\";\nimport { URI } from \"./config\";\n\nexport function getPayPalLoggerDomain(): string {\n  if (__ENV__ === ENV.LOCAL) {\n    const stageHost = getStageHost();\n\n    if (!stageHost) {\n      throw new Error(`No stage host found`);\n    }\n\n    return `${getProtocol()}://${stageHost}`;\n  }\n\n  return getPayPalDomain();\n}\n\nexport function buildPayPalUrl(path: string = \"\"): string {\n  return __TEST__ && __WEB__\n    ? `${getActualDomain()}${path}`\n    : `${getPayPalDomain()}${path}`;\n}\n\nexport function buildPayPalAPIUrl(path: string = \"\"): string {\n  const paypalAPIDomain = isCurrentDomain(getPayPalDomain())\n    ? getPayPalDomain()\n    : getPayPalAPIDomain();\n\n  return __TEST__ && __WEB__\n    ? `${getActualDomain()}${path}`\n    : `${paypalAPIDomain}${path}`;\n}\n\nexport function getPayPalLoggerUrl(): string {\n  return buildPayPalUrl(URI.LOGGER);\n}\n\nexport function getAuthAPIUrl(): string {\n  return buildPayPalAPIUrl(URI.AUTH);\n}\n\nexport function getOrderAPIUrl(): string {\n  return buildPayPalAPIUrl(URI.ORDER);\n}\n\nexport function getPayPalDomainRegex(): RegExp {\n  if (__ENV__ === ENV.LOCAL) {\n    return /.*loca.*/;\n  }\n  // eslint-disable-next-line security/detect-unsafe-regex\n  return /\\.paypal\\.(com|cn)(:\\d+)?$/;\n}\n\nexport function isPayPalDomain(): boolean {\n  return Boolean(getDomain().match(getPayPalDomainRegex()));\n}\n",
+    "static": true,
+    "longname": "/Users/ssablan/PayPal/xo/public/paypal-sdk-client/src/domains.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 59,
+    "kind": "function",
+    "name": "getPayPalLoggerDomain",
+    "memberof": "src/domains.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/domains.js~getPayPalLoggerDomain",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/domains.js",
+    "importStyle": "{getPayPalLoggerDomain}",
+    "description": " ",
+    "lineNumber": 18,
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 60,
+    "kind": "function",
+    "name": "buildPayPalUrl",
+    "memberof": "src/domains.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/domains.js~buildPayPalUrl",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/domains.js",
+    "importStyle": "{buildPayPalUrl}",
+    "description": " ",
+    "lineNumber": 32,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "undefined",
+        "defaultRaw": "undefined",
+        "name": "path",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 61,
+    "kind": "function",
+    "name": "buildPayPalAPIUrl",
+    "memberof": "src/domains.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/domains.js~buildPayPalAPIUrl",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/domains.js",
+    "importStyle": "{buildPayPalAPIUrl}",
+    "description": " ",
+    "lineNumber": 38,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "undefined",
+        "defaultRaw": "undefined",
+        "name": "path",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 62,
+    "kind": "function",
+    "name": "getPayPalLoggerUrl",
+    "memberof": "src/domains.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/domains.js~getPayPalLoggerUrl",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/domains.js",
+    "importStyle": "{getPayPalLoggerUrl}",
+    "description": " ",
+    "lineNumber": 48,
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 63,
+    "kind": "function",
+    "name": "getAuthAPIUrl",
+    "memberof": "src/domains.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/domains.js~getAuthAPIUrl",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/domains.js",
+    "importStyle": "{getAuthAPIUrl}",
+    "description": " ",
+    "lineNumber": 52,
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 64,
+    "kind": "function",
+    "name": "getOrderAPIUrl",
+    "memberof": "src/domains.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/domains.js~getOrderAPIUrl",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/domains.js",
+    "importStyle": "{getOrderAPIUrl}",
+    "description": " ",
+    "lineNumber": 56,
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 65,
+    "kind": "function",
+    "name": "getPayPalDomainRegex",
+    "memberof": "src/domains.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/domains.js~getPayPalDomainRegex",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/domains.js",
+    "importStyle": "{getPayPalDomainRegex}",
+    "description": " ",
+    "lineNumber": 60,
+    "return": {
+      "nullable": null,
+      "types": [
+        "RegExp"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 66,
+    "kind": "function",
+    "name": "isPayPalDomain",
+    "memberof": "src/domains.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/domains.js~isPayPalDomain",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/domains.js",
+    "importStyle": "{isPayPalDomain}",
+    "description": " ",
+    "lineNumber": 68,
+    "return": {
+      "nullable": null,
+      "types": [
+        "boolean"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 67,
+    "kind": "file",
+    "name": "src/errors.js",
+    "content": "/* @flow */\n/* eslint no-self-compare: off */\n\nimport { isIE, isIEIntranet, isIECompHeader } from \"@krakenjs/belter/src\";\n\nimport { getLogger } from \"./logger\";\n\nfunction logWarn(err): void {\n  if (window.console) {\n    if (window.console.warn) {\n      return window.console.warn(err);\n    }\n\n    if (window.console.log) {\n      return window.console.log(err);\n    }\n  }\n}\n\nexport function checkForCommonErrors() {\n  if (__DEBUG__) {\n    const logger = getLogger();\n\n    if (JSON.stringify([]) !== \"[]\") {\n      // $FlowFixMe\n      if (Array.prototype.toJSON) {\n        logWarn(\n          `Custom Array.prototype.toJSON is causing incorrect json serialization of arrays. This is likely to cause issues. Probable cause is Prototype.js`\n        );\n      } else {\n        logWarn(\n          `JSON.stringify is doing incorrect serialization of arrays. This is likely to cause issues.`\n        );\n      }\n\n      logger.warn(`json_stringify_array_broken`);\n    }\n\n    if (JSON.stringify({}) !== \"{}\") {\n      logWarn(\n        `JSON.stringify is doing incorrect serialization of objects. This is likely to cause issues.`\n      );\n\n      logger.warn(`json_stringify_object_broken`);\n    }\n\n    if (isIEIntranet()) {\n      logger.warn(`ie_intranet_mode`);\n    }\n\n    if (isIE() && !isIECompHeader()) {\n      logger.warn(`ie_meta_compatibility_header_missing`, {\n        message: `Drop tag: <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">`,\n      });\n    }\n\n    // eslint-disable-next-line no-unused-vars\n    const foo = function (bar, baz, zomg) {\n      // pass;\n    };\n\n    if (foo.bind({ a: 1 }).length !== 3) {\n      logger.warn(`function_bind_arrity_overwritten`);\n    }\n\n    if (window.opener && window.parent !== window) {\n      logger.warn(`window_has_opener_and_parent`);\n    }\n\n    if (window.name && window.name.indexOf(\"__prerender\") === 0) {\n      logger.warn(`prerender_running_checkoutjs`);\n    }\n\n    const context = {};\n\n    const returnContext = function (): typeof context {\n      return this;\n    };\n\n    if (returnContext.bind(context)() !== context) {\n      logger.warn(`function_bind_broken`);\n    }\n\n    if (\n      window.Window &&\n      window.constructor &&\n      window.Window !== window.constructor\n    ) {\n      logger.warn(`window_constructor_does_not_match_window`);\n    }\n\n    if (\n      Object.assign &&\n      JSON.stringify({ a: 1, b: 2, c: 3 }) !==\n        JSON.stringify({ a: 1, b: 2, c: 3 })\n    ) {\n      logger.warn(`object_assign_broken`);\n    }\n  }\n}\n",
+    "static": true,
+    "longname": "/Users/ssablan/PayPal/xo/public/paypal-sdk-client/src/errors.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 68,
+    "kind": "function",
+    "name": "logWarn",
+    "memberof": "src/errors.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/errors.js~logWarn",
+    "access": "public",
+    "export": false,
+    "importPath": "@paypal/sdk-client/src/errors.js",
+    "importStyle": null,
+    "description": " ",
+    "lineNumber": 8,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "err",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "void"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 69,
+    "kind": "function",
+    "name": "checkForCommonErrors",
+    "memberof": "src/errors.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/errors.js~checkForCommonErrors",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/errors.js",
+    "importStyle": "{checkForCommonErrors}",
+    "description": "",
+    "lineNumber": 20,
+    "params": [],
+    "return": null
+  },
+  {
+    "__docId__": 70,
+    "kind": "file",
+    "name": "src/events.js",
+    "content": "/* @flow */\n\nimport {\n  memoize,\n  eventEmitter,\n  type EventEmitterType,\n} from \"@krakenjs/belter/src\";\n\nexport const getEventEmitter: () => EventEmitterType = memoize(eventEmitter);\n",
+    "static": true,
+    "longname": "/Users/ssablan/PayPal/xo/public/paypal-sdk-client/src/events.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 71,
+    "kind": "variable",
+    "name": "getEventEmitter",
+    "memberof": "src/events.js",
+    "static": true,
+    "longname": "src/events.js~getEventEmitter",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/events.js",
+    "importStyle": "{getEventEmitter}",
+    "description": null,
+    "lineNumber": 9,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 72,
+    "kind": "file",
+    "name": "src/global.js",
+    "content": "/* @flow */\n\nimport {\n  ENV,\n  PROTOCOL,\n  COMPONENTS,\n  PLATFORM,\n  type FundingEligibilityType,\n} from \"@paypal/sdk-constants/src\";\nimport { isDevice } from \"@krakenjs/belter/src\";\n\nexport function getSDKHost(): string {\n  return __SDK_HOST__;\n}\n\nexport function getProtocol(): $Values<typeof PROTOCOL> {\n  return typeof __PROTOCOL__ !== \"undefined\" ? __PROTOCOL__ : PROTOCOL.HTTPS;\n}\n\nexport function getHost(): string {\n  return __HOST__;\n}\n\nexport function getHostName(): string {\n  return __HOSTNAME__;\n}\n\nexport function getPort(): number {\n  return __PORT__;\n}\n\nexport function getPath(): string {\n  return __PATH__;\n}\n\nexport function getEnv(): $Values<typeof ENV> {\n  return __ENV__;\n}\n\nexport function getPayPalDomain(): string {\n  return __PAYPAL_DOMAIN__;\n}\n\nexport function getPayPalAPIDomain(): string {\n  return __PAYPAL_API_DOMAIN__;\n}\n\nexport function getDefaultServiceStageHost(): ?string {\n  if (\n    typeof __SERVICE_STAGE_HOST__ !== \"undefined\" &&\n    __SERVICE_STAGE_HOST__ !== null\n  ) {\n    return __SERVICE_STAGE_HOST__;\n  }\n}\n\nexport function getDefaultStageHost(): ?string {\n  if (typeof __STAGE_HOST__ !== \"undefined\" && __STAGE_HOST__ !== null) {\n    return __STAGE_HOST__;\n  }\n}\n\nexport function getDefaultAPIStageHost(): ?string {\n  const serviceStageHost = getDefaultServiceStageHost();\n  const stageHost = getDefaultStageHost();\n\n  if (serviceStageHost) {\n    return serviceStageHost;\n  } else if (stageHost) {\n    return stageHost;\n  }\n}\n\nexport function getStageHost(): ?string {\n  return getDefaultStageHost();\n}\n\nexport function getAPIStageHost(): ?string {\n  const defaultAPIStageHost = getDefaultAPIStageHost();\n\n  if (defaultAPIStageHost) {\n    return defaultAPIStageHost.replace(\"www.\", \"api.\");\n  }\n}\n\nexport function getVersion(): string {\n  return __VERSION__;\n}\n\nexport function getCorrelationID(): string {\n  return __CORRELATION_ID__;\n}\n\nexport function getDefaultNamespace(): string {\n  return __NAMESPACE__;\n}\n\nexport function getDebug(): boolean {\n  return __DEBUG__;\n}\n\nexport function getComponents(): $ReadOnlyArray<$Values<typeof COMPONENTS>> {\n  return __COMPONENTS__;\n}\n\nexport function getFundingEligibility(): FundingEligibilityType {\n  return __FUNDING_ELIGIBILITY__;\n}\n\nexport function getPlatform(): $Values<typeof PLATFORM> {\n  return isDevice() ? PLATFORM.MOBILE : PLATFORM.DESKTOP;\n}\n\n// Experiment Variable\nexport function getDisableSetCookie(): boolean {\n  return __DISABLE_SET_COOKIE__;\n}\n",
+    "static": true,
+    "longname": "/Users/ssablan/PayPal/xo/public/paypal-sdk-client/src/global.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 73,
+    "kind": "function",
+    "name": "getSDKHost",
+    "memberof": "src/global.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/global.js~getSDKHost",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/global.js",
+    "importStyle": "{getSDKHost}",
+    "description": " ",
+    "lineNumber": 12,
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 74,
+    "kind": "function",
+    "name": "getProtocol",
+    "memberof": "src/global.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/global.js~getProtocol",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/global.js",
+    "importStyle": "{getProtocol}",
+    "description": " ",
+    "lineNumber": 16,
+    "return": {
+      "nullable": null,
+      "types": [
+        "$Values<typeof>"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 75,
+    "kind": "function",
+    "name": "getHost",
+    "memberof": "src/global.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/global.js~getHost",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/global.js",
+    "importStyle": "{getHost}",
+    "description": " ",
+    "lineNumber": 20,
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 76,
+    "kind": "function",
+    "name": "getHostName",
+    "memberof": "src/global.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/global.js~getHostName",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/global.js",
+    "importStyle": "{getHostName}",
+    "description": " ",
+    "lineNumber": 24,
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 77,
+    "kind": "function",
+    "name": "getPort",
+    "memberof": "src/global.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/global.js~getPort",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/global.js",
+    "importStyle": "{getPort}",
+    "description": " ",
+    "lineNumber": 28,
+    "return": {
+      "nullable": null,
+      "types": [
+        "number"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 78,
+    "kind": "function",
+    "name": "getPath",
+    "memberof": "src/global.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/global.js~getPath",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/global.js",
+    "importStyle": "{getPath}",
+    "description": " ",
+    "lineNumber": 32,
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 79,
+    "kind": "function",
+    "name": "getEnv",
+    "memberof": "src/global.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/global.js~getEnv",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/global.js",
+    "importStyle": "{getEnv}",
+    "description": " ",
+    "lineNumber": 36,
+    "return": {
+      "nullable": null,
+      "types": [
+        "$Values<typeof>"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 80,
+    "kind": "function",
+    "name": "getPayPalDomain",
+    "memberof": "src/global.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/global.js~getPayPalDomain",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/global.js",
+    "importStyle": "{getPayPalDomain}",
+    "description": " ",
+    "lineNumber": 40,
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 81,
+    "kind": "function",
+    "name": "getPayPalAPIDomain",
+    "memberof": "src/global.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/global.js~getPayPalAPIDomain",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/global.js",
+    "importStyle": "{getPayPalAPIDomain}",
+    "description": " ",
+    "lineNumber": 44,
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 82,
+    "kind": "function",
+    "name": "getDefaultServiceStageHost",
+    "memberof": "src/global.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/global.js~getDefaultServiceStageHost",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/global.js",
+    "importStyle": "{getDefaultServiceStageHost}",
+    "description": " ",
+    "lineNumber": 48,
+    "return": {
+      "nullable": true,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 83,
+    "kind": "function",
+    "name": "getDefaultStageHost",
+    "memberof": "src/global.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/global.js~getDefaultStageHost",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/global.js",
+    "importStyle": "{getDefaultStageHost}",
+    "description": " ",
+    "lineNumber": 57,
+    "return": {
+      "nullable": true,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 84,
+    "kind": "function",
+    "name": "getDefaultAPIStageHost",
+    "memberof": "src/global.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/global.js~getDefaultAPIStageHost",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/global.js",
+    "importStyle": "{getDefaultAPIStageHost}",
+    "description": " ",
+    "lineNumber": 63,
+    "return": {
+      "nullable": true,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 85,
+    "kind": "function",
+    "name": "getStageHost",
+    "memberof": "src/global.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/global.js~getStageHost",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/global.js",
+    "importStyle": "{getStageHost}",
+    "description": " ",
+    "lineNumber": 74,
+    "return": {
+      "nullable": true,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 86,
+    "kind": "function",
+    "name": "getAPIStageHost",
+    "memberof": "src/global.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/global.js~getAPIStageHost",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/global.js",
+    "importStyle": "{getAPIStageHost}",
+    "description": " ",
+    "lineNumber": 78,
+    "return": {
+      "nullable": true,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 87,
+    "kind": "function",
+    "name": "getVersion",
+    "memberof": "src/global.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/global.js~getVersion",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/global.js",
+    "importStyle": "{getVersion}",
+    "description": " ",
+    "lineNumber": 86,
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 88,
+    "kind": "function",
+    "name": "getCorrelationID",
+    "memberof": "src/global.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/global.js~getCorrelationID",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/global.js",
+    "importStyle": "{getCorrelationID}",
+    "description": " ",
+    "lineNumber": 90,
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 89,
+    "kind": "function",
+    "name": "getDefaultNamespace",
+    "memberof": "src/global.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/global.js~getDefaultNamespace",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/global.js",
+    "importStyle": "{getDefaultNamespace}",
+    "description": " ",
+    "lineNumber": 94,
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 90,
+    "kind": "function",
+    "name": "getDebug",
+    "memberof": "src/global.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/global.js~getDebug",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/global.js",
+    "importStyle": "{getDebug}",
+    "description": " ",
+    "lineNumber": 98,
+    "return": {
+      "nullable": null,
+      "types": [
+        "boolean"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 91,
+    "kind": "function",
+    "name": "getComponents",
+    "memberof": "src/global.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/global.js~getComponents",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/global.js",
+    "importStyle": "{getComponents}",
+    "description": " ",
+    "lineNumber": 102,
+    "return": {
+      "nullable": null,
+      "types": [
+        "$ReadOnlyArray<$Values<typeof>>"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 92,
+    "kind": "function",
+    "name": "getFundingEligibility",
+    "memberof": "src/global.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/global.js~getFundingEligibility",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/global.js",
+    "importStyle": "{getFundingEligibility}",
+    "description": " ",
+    "lineNumber": 106,
+    "return": {
+      "nullable": null,
+      "types": [
+        "FundingEligibilityType"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 93,
+    "kind": "function",
+    "name": "getPlatform",
+    "memberof": "src/global.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/global.js~getPlatform",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/global.js",
+    "importStyle": "{getPlatform}",
+    "description": " ",
+    "lineNumber": 110,
+    "return": {
+      "nullable": null,
+      "types": [
+        "$Values<typeof>"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 94,
+    "kind": "function",
+    "name": "getDisableSetCookie",
+    "memberof": "src/global.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/global.js~getDisableSetCookie",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/global.js",
+    "importStyle": "{getDisableSetCookie}",
+    "description": " ",
+    "lineNumber": 115,
+    "return": {
+      "nullable": null,
+      "types": [
+        "boolean"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 95,
+    "kind": "file",
+    "name": "src/index.js",
+    "content": "/* @flow */\n\nexport * from \"./setup\";\nexport * from \"./config\";\nexport * from \"./logger\";\nexport * from \"./types\";\nexport * from \"./global\";\nexport * from \"./script\";\nexport * from \"./meta\";\nexport * from \"./api\";\nexport * from \"./experiment\";\nexport * from \"./session\";\nexport * from \"./events\";\nexport * from \"./test\";\nexport * from \"./graphql\";\nexport * from \"./domains\";\nexport * from \"./tracking\";\nexport * from \"./utils\";\n",
+    "static": true,
+    "longname": "/Users/ssablan/PayPal/xo/public/paypal-sdk-client/src/index.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 96,
+    "kind": "file",
+    "name": "src/interface.js",
+    "content": "/* @flow */\n\nimport { setupLogger } from \"./tracking\";\nimport { getSDKScript } from \"./script\";\nimport { checkForCommonErrors } from \"./errors\";\n\nexport { FUNDING } from \"@paypal/sdk-constants/src\";\nexport { getCorrelationID } from \"./global\";\n\nexport function setup() {\n  checkForCommonErrors();\n  getSDKScript();\n  setupLogger();\n}\n",
+    "static": true,
+    "longname": "/Users/ssablan/PayPal/xo/public/paypal-sdk-client/src/interface.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 97,
+    "kind": "function",
+    "name": "setup",
+    "memberof": "src/interface.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/interface.js~setup",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/interface.js",
+    "importStyle": "{setup}",
+    "description": "",
+    "lineNumber": 10,
+    "params": [],
+    "return": null
+  },
+  {
+    "__docId__": 98,
+    "kind": "file",
+    "name": "src/logger.js",
+    "content": "/* @flow */\n\nimport { Logger, type LoggerType } from \"@krakenjs/beaver-logger/src\";\nimport { memoize } from \"@krakenjs/belter/src\";\n\nimport { getDisableSetCookie } from \"./global\";\nimport { getPayPalLoggerUrl } from \"./domains\";\n\ntype GetLogger = () => LoggerType;\n\n// TODO: Try to get this aliased with csnw\n// TODO: Validate that the logic below is good\n// -- Will getDisableSetCookie() be a boolean or string? String, right??\n// -- Should I turn it into a boolean within the getDisableSetCookie() function??\nconst loggerUrl = getDisableSetCookie()\n  ? `${getPayPalLoggerUrl()}?disable-set-cookie=true`\n  : getPayPalLoggerUrl();\n\nexport const getLogger: GetLogger = memoize(() => {\n  return Logger({\n    url: loggerUrl,\n  });\n});\n",
+    "static": true,
+    "longname": "/Users/ssablan/PayPal/xo/public/paypal-sdk-client/src/logger.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 99,
+    "kind": "variable",
+    "name": "loggerUrl",
+    "memberof": "src/logger.js",
+    "static": true,
+    "longname": "src/logger.js~loggerUrl",
+    "access": "public",
+    "export": false,
+    "importPath": "@paypal/sdk-client/src/logger.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 15,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 100,
+    "kind": "variable",
+    "name": "getLogger",
+    "memberof": "src/logger.js",
+    "static": true,
+    "longname": "src/logger.js~getLogger",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/logger.js",
+    "importStyle": "{getLogger}",
+    "description": null,
+    "lineNumber": 19,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 101,
+    "kind": "file",
+    "name": "src/meta.js",
+    "content": "/* @flow */\n\nimport { SDK_SETTINGS } from \"@paypal/sdk-constants/src\";\nimport { base64encode, ATTRIBUTES } from \"@krakenjs/belter/src\";\n\nimport { getScriptUrl, getSDKAttributes } from \"./script\";\n\nconst ALLOWED_ATTRS = [\n  SDK_SETTINGS.AMOUNT,\n  SDK_SETTINGS.MERCHANT_ID,\n  SDK_SETTINGS.PARTNER_ATTRIBUTION_ID,\n  SDK_SETTINGS.POPUPS_DISABLED,\n  SDK_SETTINGS.ENABLE_3DS,\n  SDK_SETTINGS.SDK_INTEGRATION_SOURCE,\n  SDK_SETTINGS.CLIENT_METADATA_ID,\n  ATTRIBUTES.UID,\n  SDK_SETTINGS.CSP_NONCE,\n];\n\nexport function getSDKMeta(): string {\n  const url = getScriptUrl();\n\n  const scriptAttrs = getSDKAttributes();\n  const attrs = {};\n  for (const attr of Object.keys(scriptAttrs)) {\n    if (ALLOWED_ATTRS.indexOf(attr) !== -1) {\n      attrs[attr] = scriptAttrs[attr];\n    }\n  }\n\n  return base64encode(JSON.stringify({ url, attrs })).replace(/\\=+$/, \"\"); // eslint-disable-line no-useless-escape\n}\n",
+    "static": true,
+    "longname": "/Users/ssablan/PayPal/xo/public/paypal-sdk-client/src/meta.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 102,
+    "kind": "variable",
+    "name": "ALLOWED_ATTRS",
+    "memberof": "src/meta.js",
+    "static": true,
+    "longname": "src/meta.js~ALLOWED_ATTRS",
+    "access": "public",
+    "export": false,
+    "importPath": "@paypal/sdk-client/src/meta.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 8,
+    "undocument": true,
+    "type": {
+      "types": [
+        "undefined[]"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 103,
+    "kind": "function",
+    "name": "getSDKMeta",
+    "memberof": "src/meta.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/meta.js~getSDKMeta",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/meta.js",
+    "importStyle": "{getSDKMeta}",
+    "description": " ",
+    "lineNumber": 20,
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 104,
+    "kind": "file",
+    "name": "src/script.js",
+    "content": "/* @flow */\n\nimport {\n  getCurrentScriptUID,\n  ATTRIBUTES,\n  parseQuery,\n  getBrowserLocales,\n  base64decode,\n  values,\n  getCurrentScript,\n  memoize,\n  stringifyError,\n  getScript,\n} from \"@krakenjs/belter/src\";\nimport {\n  COUNTRY,\n  SDK_SETTINGS,\n  SDK_QUERY_KEYS,\n  INTENT,\n  COMMIT,\n  VAULT,\n  CURRENCY,\n  FUNDING,\n  CARD,\n  COUNTRY_LANGS,\n  DEFAULT_INTENT,\n  DEFAULT_CURRENCY,\n  DEFAULT_VAULT,\n  QUERY_BOOL,\n  LANG,\n  type LocaleType,\n  DEFAULT_SALE_COMMIT,\n  DEFAULT_NONSALE_COMMIT,\n  PAGE_TYPES,\n} from \"@paypal/sdk-constants/src\";\n\nimport { getPath, getDefaultNamespace, getSDKHost } from \"./global\";\nimport { CLIENT_ID_ALIAS } from \"./config\";\nimport { getComputedLocales } from \"./utils\";\n\ntype GetSDKScript = () => HTMLScriptElement;\n\nconst buildScriptNotFoundError = (host, path, error) => {\n  const errorString = error ? stringifyError(error) : \"\";\n\n  return new Error(\n    `PayPal Payments SDK script not found on page! Expected to find <script src=\"https://${host}${path}\">\\n\\n${errorString}`\n  );\n};\n\nexport const getSDKScript: GetSDKScript = memoize(() => {\n  if (__TEST__) {\n    const script = getScript({\n      host: getSDKHost(),\n      path: getPath(),\n      reverse: true,\n    });\n    if (!script) {\n      throw buildScriptNotFoundError(getSDKHost(), getPath());\n    }\n    return script;\n  }\n\n  try {\n    return getCurrentScript();\n  } catch (error) {\n    throw buildScriptNotFoundError(getSDKHost(), getPath(), error);\n  }\n});\n\ntype GetSDKAttributes = () => { [string]: string };\n\nexport const getSDKAttributes: GetSDKAttributes = memoize(() => {\n  const sdkScript = getSDKScript();\n  const result = {};\n  for (const attr of sdkScript.attributes) {\n    if (attr.name.indexOf(\"data-\") === 0) {\n      result[attr.name] = attr.value;\n    }\n  }\n  result[ATTRIBUTES.UID] = getCurrentScriptUID();\n  return result;\n});\n\nexport function getSDKAttribute<T: string | void>(\n  name: $Values<typeof SDK_SETTINGS>,\n  def: T\n): T {\n  // $FlowFixMe\n  return getSDKAttributes()[name] || def;\n}\n\nexport function getSDKQueryParams(): { [string]: string } {\n  const script = getSDKScript();\n  return parseQuery(script.src.split(\"?\")[1] || \"\");\n}\n\ntype GetSDKQueryParam =\n  // eslint-disable-next-line no-undef\n  (<T: string>($Values<typeof SDK_QUERY_KEYS>) => T | void) &\n    // eslint-disable-next-line no-undef\n    (<T: string>($Values<typeof SDK_QUERY_KEYS>, T) => T);\n\nexport const getSDKQueryParam: GetSDKQueryParam = <T>(name: string, def: T) => {\n  // $FlowFixMe\n  return getSDKQueryParams()[name] || def;\n};\n\nexport function getScriptUrl(): string {\n  const src = getSDKScript().getAttribute(\"src\");\n  if (!src) {\n    throw new Error(`Can not find src for sdk script`);\n  }\n  return src;\n}\n\nexport function getSDKQueryParamBool<T: boolean>(\n  name: $Values<typeof SDK_QUERY_KEYS>,\n  def?: T\n): T {\n  return (\n    // $FlowFixMe\n    getSDKQueryParam(name, def ? def.toString() : QUERY_BOOL.FALSE) ===\n    QUERY_BOOL.TRUE\n  );\n}\n\nexport function getClientID(): string {\n  const clientID = getSDKQueryParam(SDK_QUERY_KEYS.CLIENT_ID);\n\n  if (!clientID) {\n    throw new Error(\n      `Expected ${SDK_QUERY_KEYS.CLIENT_ID} parameter in sdk url`\n    );\n  }\n\n  if (CLIENT_ID_ALIAS[clientID]) {\n    return CLIENT_ID_ALIAS[clientID];\n  }\n\n  return clientID;\n}\n\nexport function getMerchantID(): $ReadOnlyArray<string> {\n  const merchantIDString = getSDKQueryParam(SDK_QUERY_KEYS.MERCHANT_ID);\n\n  if (merchantIDString === \"*\") {\n    // get multiple merchant ids or emails from data-merchant-id\n    const merchantIDAttribute = getSDKAttribute(SDK_SETTINGS.MERCHANT_ID);\n\n    if (!merchantIDAttribute) {\n      throw new Error(\n        `Must pass ${SDK_SETTINGS.MERCHANT_ID} when ${SDK_QUERY_KEYS.MERCHANT_ID}=* passed in url`\n      );\n    }\n\n    const merchantID = merchantIDAttribute.split(\",\");\n\n    if (merchantID.length <= 1) {\n      throw new Error(\n        `Must pass multiple merchant ids to ${SDK_SETTINGS.MERCHANT_ID}. If passing a single id, pass ${SDK_QUERY_KEYS.MERCHANT_ID}=XYZ in url`\n      );\n    }\n\n    // check duplicates\n    const hasDuplicate = merchantID.some(\n      (val, i) => merchantID && merchantID.indexOf(val) !== i\n    );\n\n    if (hasDuplicate) {\n      throw new Error(\n        `Duplicates ${SDK_SETTINGS.MERCHANT_ID}. Must pass unique merchant ids to ${SDK_SETTINGS.MERCHANT_ID}.`\n      );\n    }\n    return merchantID;\n  }\n\n  if (merchantIDString) {\n    return merchantIDString.split(\",\");\n  }\n\n  return [];\n}\n\nexport function getIntent(): $Values<typeof INTENT> {\n  return getSDKQueryParam(SDK_QUERY_KEYS.INTENT, DEFAULT_INTENT);\n}\n\nexport function getCommit(): $Values<typeof COMMIT> {\n  return getSDKQueryParamBool(\n    SDK_QUERY_KEYS.COMMIT,\n    getIntent() === INTENT.CAPTURE\n      ? DEFAULT_SALE_COMMIT\n      : DEFAULT_NONSALE_COMMIT\n  );\n}\n\nexport function getVault(): $Values<typeof VAULT> {\n  return getSDKQueryParamBool(SDK_QUERY_KEYS.VAULT, DEFAULT_VAULT);\n}\n\nexport function getCurrency(): $Values<typeof CURRENCY> {\n  return getSDKQueryParam(SDK_QUERY_KEYS.CURRENCY, DEFAULT_CURRENCY);\n}\n\nexport function getEnableFunding(): $ReadOnlyArray<?$Values<typeof FUNDING>> {\n  const funding = getSDKQueryParam(SDK_QUERY_KEYS.ENABLE_FUNDING);\n  if (funding) {\n    return funding.split(\",\");\n  }\n  return [];\n}\n\nexport function getDisableFunding(): $ReadOnlyArray<?$Values<typeof FUNDING>> {\n  const funding = getSDKQueryParam(SDK_QUERY_KEYS.DISABLE_FUNDING);\n  if (funding) {\n    return funding.split(\",\");\n  }\n  return [];\n}\n\nexport function getDisableCard(): $ReadOnlyArray<?$Values<typeof CARD>> {\n  const funding = getSDKQueryParam(SDK_QUERY_KEYS.DISABLE_CARD);\n  if (funding) {\n    return funding.split(\",\");\n  }\n  return [];\n}\n\nexport function getBuyerCountry(): ?$Values<typeof COUNTRY> {\n  return getSDKQueryParam(SDK_QUERY_KEYS.BUYER_COUNTRY);\n}\n\nexport function getNamespace(): string {\n  return getSDKAttribute(SDK_SETTINGS.NAMESPACE) || getDefaultNamespace();\n}\n\nexport function getClientToken(): ?string {\n  return getSDKAttribute(SDK_SETTINGS.CLIENT_TOKEN);\n}\n\nexport function getAmount(): ?string {\n  const amount = getSDKAttribute(SDK_SETTINGS.AMOUNT);\n  if (amount && !amount.match(/^\\d+\\.\\d\\d$/)) {\n    throw new Error(`Invalid amount: ${amount}`);\n  }\n  return amount;\n}\n\nexport function getUserIDToken(): ?string {\n  return getSDKAttribute(SDK_SETTINGS.USER_ID_TOKEN);\n}\n\nexport function getClientAccessToken(): ?string {\n  const clientToken = getClientToken();\n\n  if (clientToken) {\n    return JSON.parse(base64decode(clientToken)).paypal.accessToken;\n  }\n}\n\nexport function getPartnerAttributionID(): ?string {\n  return getSDKAttribute(SDK_SETTINGS.PARTNER_ATTRIBUTION_ID);\n}\n\nexport function getMerchantRequestedPopupsDisabled(): boolean {\n  return getSDKAttribute(SDK_SETTINGS.POPUPS_DISABLED) === \"true\";\n}\n\nexport function getPageType(): ?string {\n  const pageType = getSDKAttribute(SDK_SETTINGS.PAGE_TYPE, \"\");\n  const validPageType =\n    values(PAGE_TYPES).indexOf(pageType.toLowerCase()) !== -1;\n\n  if (!validPageType && pageType.length) {\n    throw new Error(`Invalid page type, '${pageType}'`);\n  }\n  return pageType.toLowerCase();\n}\n\nexport function getLocale(): LocaleType {\n  const locale = getSDKQueryParam(SDK_QUERY_KEYS.LOCALE);\n\n  if (locale) {\n    return getComputedLocales(locale);\n  }\n\n  for (let { country, lang } of getBrowserLocales()) {\n    country = country && COUNTRY[country];\n    lang = lang && LANG[lang.toUpperCase()];\n\n    if (\n      country &&\n      lang &&\n      COUNTRY_LANGS[country] &&\n      COUNTRY_LANGS[country].indexOf(lang) !== -1\n    ) {\n      return { country, lang };\n    } else if (lang) {\n      // We infer country from language if there is only one possible country match\n      const possibleCountries = Object.keys(COUNTRY_LANGS).filter((c) =>\n        COUNTRY_LANGS[c].some((l) => l === lang)\n      );\n\n      if (possibleCountries.length === 1) {\n        const possibleCountry = possibleCountries[0];\n        return { country: possibleCountry, lang };\n      }\n    }\n  }\n\n  for (const { country } of getBrowserLocales()) {\n    if (COUNTRY_LANGS.hasOwnProperty(country)) {\n      // $FlowFixMe\n      return { country, lang: COUNTRY_LANGS[country][0] };\n    }\n  }\n\n  return {\n    lang: LANG.EN,\n    country: COUNTRY.US,\n  };\n}\n\nexport function getCSPNonce(): string {\n  return getSDKAttribute(SDK_SETTINGS.CSP_NONCE) || \"\";\n}\n\nexport function getEnableThreeDomainSecure(): boolean {\n  return getSDKAttributes().hasOwnProperty(SDK_SETTINGS.ENABLE_3DS);\n}\n\nexport function getSDKIntegrationSource(): ?string {\n  return getSDKAttribute(SDK_SETTINGS.SDK_INTEGRATION_SOURCE);\n}\n\nexport function getUserExperienceFlow(): ?string {\n  return getSDKAttribute(SDK_SETTINGS.USER_EXPERIENCE_FLOW);\n}\n\n// whether in zoid window\nexport function isChildWindow(): boolean {\n  return Boolean(window.xprops);\n}\n\n// istanbul ignore next\nexport function getUserAccessToken(): ?string {\n  // pass\n}\n\n// istanbul ignore next\nexport function getUserAuthCode(): ?string {\n  // pass\n}\n\n// Remove\n// istanbul ignore next\nexport function getCountry(): $Values<typeof COUNTRY> {\n  return getLocale().country;\n}\n\n// Remove\n// istanbul ignore next\nexport function getLang(): $Values<typeof LANG> {\n  return getLocale().lang;\n}\n",
+    "static": true,
+    "longname": "/Users/ssablan/PayPal/xo/public/paypal-sdk-client/src/script.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 105,
+    "kind": "function",
+    "name": "buildScriptNotFoundError",
+    "memberof": "src/script.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/script.js~buildScriptNotFoundError",
+    "access": "public",
+    "export": false,
+    "importPath": "@paypal/sdk-client/src/script.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 43,
+    "undocument": true,
+    "params": [
+      {
+        "name": "host",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "path",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "error",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 106,
+    "kind": "variable",
+    "name": "getSDKScript",
+    "memberof": "src/script.js",
+    "static": true,
+    "longname": "src/script.js~getSDKScript",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/script.js",
+    "importStyle": "{getSDKScript}",
+    "description": null,
+    "lineNumber": 51,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 107,
+    "kind": "variable",
+    "name": "getSDKAttributes",
+    "memberof": "src/script.js",
+    "static": true,
+    "longname": "src/script.js~getSDKAttributes",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/script.js",
+    "importStyle": "{getSDKAttributes}",
+    "description": null,
+    "lineNumber": 73,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 108,
+    "kind": "function",
+    "name": "getSDKAttribute",
+    "memberof": "src/script.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/script.js~getSDKAttribute",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/script.js",
+    "importStyle": "{getSDKAttribute}",
+    "description": " ",
+    "lineNumber": 85,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "$Values<typeof>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "T"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "def",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "T"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 109,
+    "kind": "function",
+    "name": "getSDKQueryParams",
+    "memberof": "src/script.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/script.js~getSDKQueryParams",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/script.js",
+    "importStyle": "{getSDKQueryParams}",
+    "description": " ",
+    "lineNumber": 93,
+    "return": {
+      "nullable": null,
+      "types": [
+        "object"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 110,
+    "kind": "function",
+    "name": "getSDKQueryParam",
+    "memberof": "src/script.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/script.js~getSDKQueryParam",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/script.js",
+    "importStyle": "{getSDKQueryParam}",
+    "description": null,
+    "lineNumber": 104,
+    "undocument": true,
+    "params": [
+      {
+        "name": "name",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "def",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 111,
+    "kind": "function",
+    "name": "getScriptUrl",
+    "memberof": "src/script.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/script.js~getScriptUrl",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/script.js",
+    "importStyle": "{getScriptUrl}",
+    "description": " ",
+    "lineNumber": 109,
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 112,
+    "kind": "function",
+    "name": "getSDKQueryParamBool",
+    "memberof": "src/script.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/script.js~getSDKQueryParamBool",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/script.js",
+    "importStyle": "{getSDKQueryParamBool}",
+    "description": " ",
+    "lineNumber": 117,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "$Values<typeof>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "T"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "def",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "T"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 113,
+    "kind": "function",
+    "name": "getClientID",
+    "memberof": "src/script.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/script.js~getClientID",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/script.js",
+    "importStyle": "{getClientID}",
+    "description": " ",
+    "lineNumber": 128,
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 114,
+    "kind": "function",
+    "name": "getMerchantID",
+    "memberof": "src/script.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/script.js~getMerchantID",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/script.js",
+    "importStyle": "{getMerchantID}",
+    "description": " ",
+    "lineNumber": 144,
+    "return": {
+      "nullable": null,
+      "types": [
+        "$ReadOnlyArray<string>"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 115,
+    "kind": "function",
+    "name": "getIntent",
+    "memberof": "src/script.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/script.js~getIntent",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/script.js",
+    "importStyle": "{getIntent}",
+    "description": " ",
+    "lineNumber": 185,
+    "return": {
+      "nullable": null,
+      "types": [
+        "$Values<typeof>"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 116,
+    "kind": "function",
+    "name": "getCommit",
+    "memberof": "src/script.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/script.js~getCommit",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/script.js",
+    "importStyle": "{getCommit}",
+    "description": " ",
+    "lineNumber": 189,
+    "return": {
+      "nullable": null,
+      "types": [
+        "$Values<typeof>"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 117,
+    "kind": "function",
+    "name": "getVault",
+    "memberof": "src/script.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/script.js~getVault",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/script.js",
+    "importStyle": "{getVault}",
+    "description": " ",
+    "lineNumber": 198,
+    "return": {
+      "nullable": null,
+      "types": [
+        "$Values<typeof>"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 118,
+    "kind": "function",
+    "name": "getCurrency",
+    "memberof": "src/script.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/script.js~getCurrency",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/script.js",
+    "importStyle": "{getCurrency}",
+    "description": " ",
+    "lineNumber": 202,
+    "return": {
+      "nullable": null,
+      "types": [
+        "$Values<typeof>"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 119,
+    "kind": "function",
+    "name": "getEnableFunding",
+    "memberof": "src/script.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/script.js~getEnableFunding",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/script.js",
+    "importStyle": "{getEnableFunding}",
+    "description": " ",
+    "lineNumber": 206,
+    "return": {
+      "nullable": null,
+      "types": [
+        "$ReadOnlyArray<?$Values<typeof>>"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 120,
+    "kind": "function",
+    "name": "getDisableFunding",
+    "memberof": "src/script.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/script.js~getDisableFunding",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/script.js",
+    "importStyle": "{getDisableFunding}",
+    "description": " ",
+    "lineNumber": 214,
+    "return": {
+      "nullable": null,
+      "types": [
+        "$ReadOnlyArray<?$Values<typeof>>"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 121,
+    "kind": "function",
+    "name": "getDisableCard",
+    "memberof": "src/script.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/script.js~getDisableCard",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/script.js",
+    "importStyle": "{getDisableCard}",
+    "description": " ",
+    "lineNumber": 222,
+    "return": {
+      "nullable": null,
+      "types": [
+        "$ReadOnlyArray<?$Values<typeof>>"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 122,
+    "kind": "function",
+    "name": "getBuyerCountry",
+    "memberof": "src/script.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/script.js~getBuyerCountry",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/script.js",
+    "importStyle": "{getBuyerCountry}",
+    "description": " ",
+    "lineNumber": 230,
+    "return": {
+      "nullable": true,
+      "types": [
+        "$Values<typeof>"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 123,
+    "kind": "function",
+    "name": "getNamespace",
+    "memberof": "src/script.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/script.js~getNamespace",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/script.js",
+    "importStyle": "{getNamespace}",
+    "description": " ",
+    "lineNumber": 234,
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 124,
+    "kind": "function",
+    "name": "getClientToken",
+    "memberof": "src/script.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/script.js~getClientToken",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/script.js",
+    "importStyle": "{getClientToken}",
+    "description": " ",
+    "lineNumber": 238,
+    "return": {
+      "nullable": true,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 125,
+    "kind": "function",
+    "name": "getAmount",
+    "memberof": "src/script.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/script.js~getAmount",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/script.js",
+    "importStyle": "{getAmount}",
+    "description": " ",
+    "lineNumber": 242,
+    "return": {
+      "nullable": true,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 126,
+    "kind": "function",
+    "name": "getUserIDToken",
+    "memberof": "src/script.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/script.js~getUserIDToken",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/script.js",
+    "importStyle": "{getUserIDToken}",
+    "description": " ",
+    "lineNumber": 250,
+    "return": {
+      "nullable": true,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 127,
+    "kind": "function",
+    "name": "getClientAccessToken",
+    "memberof": "src/script.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/script.js~getClientAccessToken",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/script.js",
+    "importStyle": "{getClientAccessToken}",
+    "description": " ",
+    "lineNumber": 254,
+    "return": {
+      "nullable": true,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 128,
+    "kind": "function",
+    "name": "getPartnerAttributionID",
+    "memberof": "src/script.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/script.js~getPartnerAttributionID",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/script.js",
+    "importStyle": "{getPartnerAttributionID}",
+    "description": " ",
+    "lineNumber": 262,
+    "return": {
+      "nullable": true,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 129,
+    "kind": "function",
+    "name": "getMerchantRequestedPopupsDisabled",
+    "memberof": "src/script.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/script.js~getMerchantRequestedPopupsDisabled",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/script.js",
+    "importStyle": "{getMerchantRequestedPopupsDisabled}",
+    "description": " ",
+    "lineNumber": 266,
+    "return": {
+      "nullable": null,
+      "types": [
+        "boolean"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 130,
+    "kind": "function",
+    "name": "getPageType",
+    "memberof": "src/script.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/script.js~getPageType",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/script.js",
+    "importStyle": "{getPageType}",
+    "description": " ",
+    "lineNumber": 270,
+    "return": {
+      "nullable": true,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 131,
+    "kind": "function",
+    "name": "getLocale",
+    "memberof": "src/script.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/script.js~getLocale",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/script.js",
+    "importStyle": "{getLocale}",
+    "description": " ",
+    "lineNumber": 281,
+    "return": {
+      "nullable": null,
+      "types": [
+        "LocaleType"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 132,
+    "kind": "function",
+    "name": "getCSPNonce",
+    "memberof": "src/script.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/script.js~getCSPNonce",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/script.js",
+    "importStyle": "{getCSPNonce}",
+    "description": " ",
+    "lineNumber": 325,
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 133,
+    "kind": "function",
+    "name": "getEnableThreeDomainSecure",
+    "memberof": "src/script.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/script.js~getEnableThreeDomainSecure",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/script.js",
+    "importStyle": "{getEnableThreeDomainSecure}",
+    "description": " ",
+    "lineNumber": 329,
+    "return": {
+      "nullable": null,
+      "types": [
+        "boolean"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 134,
+    "kind": "function",
+    "name": "getSDKIntegrationSource",
+    "memberof": "src/script.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/script.js~getSDKIntegrationSource",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/script.js",
+    "importStyle": "{getSDKIntegrationSource}",
+    "description": " ",
+    "lineNumber": 333,
+    "return": {
+      "nullable": true,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 135,
+    "kind": "function",
+    "name": "getUserExperienceFlow",
+    "memberof": "src/script.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/script.js~getUserExperienceFlow",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/script.js",
+    "importStyle": "{getUserExperienceFlow}",
+    "description": " ",
+    "lineNumber": 337,
+    "return": {
+      "nullable": true,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 136,
+    "kind": "function",
+    "name": "isChildWindow",
+    "memberof": "src/script.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/script.js~isChildWindow",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/script.js",
+    "importStyle": "{isChildWindow}",
+    "description": " ",
+    "lineNumber": 342,
+    "return": {
+      "nullable": null,
+      "types": [
+        "boolean"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 137,
+    "kind": "function",
+    "name": "getUserAccessToken",
+    "memberof": "src/script.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/script.js~getUserAccessToken",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/script.js",
+    "importStyle": "{getUserAccessToken}",
+    "description": " ",
+    "lineNumber": 347,
+    "return": {
+      "nullable": true,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 138,
+    "kind": "function",
+    "name": "getUserAuthCode",
+    "memberof": "src/script.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/script.js~getUserAuthCode",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/script.js",
+    "importStyle": "{getUserAuthCode}",
+    "description": " ",
+    "lineNumber": 352,
+    "return": {
+      "nullable": true,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 139,
+    "kind": "function",
+    "name": "getCountry",
+    "memberof": "src/script.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/script.js~getCountry",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/script.js",
+    "importStyle": "{getCountry}",
+    "description": " ",
+    "lineNumber": 358,
+    "return": {
+      "nullable": null,
+      "types": [
+        "$Values<typeof>"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 140,
+    "kind": "function",
+    "name": "getLang",
+    "memberof": "src/script.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/script.js~getLang",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/script.js",
+    "importStyle": "{getLang}",
+    "description": " ",
+    "lineNumber": 364,
+    "return": {
+      "nullable": null,
+      "types": [
+        "$Values<typeof>"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 141,
+    "kind": "file",
+    "name": "src/session.js",
+    "content": "/* @flow */\n\nimport { SDK_SETTINGS } from \"@paypal/sdk-constants/src\";\nimport { getStorage, type Storage } from \"@krakenjs/belter/src\";\n\nimport { getNamespace, getSDKAttribute } from \"./script\";\n\nfunction getSDKStorage(): Storage {\n  return getStorage({\n    name: getNamespace(),\n  });\n}\n\nexport function getSessionID(): string {\n  return getSDKStorage().getSessionID();\n}\n\nexport function getStorageState<T>(handler: (storage: Object) => T): T {\n  return getSDKStorage().getState(handler);\n}\n\nexport function getStorageID(): string {\n  return getSDKStorage().getID();\n}\n\nexport function getSessionState<T>(handler: (state: Object) => T): T {\n  return getSDKStorage().getSessionState(handler);\n}\n\nexport function getClientMetadataID(): ?string {\n  return getSDKAttribute(SDK_SETTINGS.CLIENT_METADATA_ID);\n}\n",
+    "static": true,
+    "longname": "/Users/ssablan/PayPal/xo/public/paypal-sdk-client/src/session.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 142,
+    "kind": "function",
+    "name": "getSDKStorage",
+    "memberof": "src/session.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/session.js~getSDKStorage",
+    "access": "public",
+    "export": false,
+    "importPath": "@paypal/sdk-client/src/session.js",
+    "importStyle": null,
+    "description": " ",
+    "lineNumber": 8,
+    "return": {
+      "nullable": null,
+      "types": [
+        "Storage"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": [],
+    "ignore": true
+  },
+  {
+    "__docId__": 143,
+    "kind": "function",
+    "name": "getSessionID",
+    "memberof": "src/session.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/session.js~getSessionID",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/session.js",
+    "importStyle": "{getSessionID}",
+    "description": " ",
+    "lineNumber": 14,
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 144,
+    "kind": "function",
+    "name": "getStorageState",
+    "memberof": "src/session.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/session.js~getStorageState",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/session.js",
+    "importStyle": "{getStorageState}",
+    "description": " ",
+    "lineNumber": 18,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "handler",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "T"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 145,
+    "kind": "function",
+    "name": "getStorageID",
+    "memberof": "src/session.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/session.js~getStorageID",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/session.js",
+    "importStyle": "{getStorageID}",
+    "description": " ",
+    "lineNumber": 22,
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 146,
+    "kind": "function",
+    "name": "getSessionState",
+    "memberof": "src/session.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/session.js~getSessionState",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/session.js",
+    "importStyle": "{getSessionState}",
+    "description": " ",
+    "lineNumber": 26,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "handler",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "T"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 147,
+    "kind": "function",
+    "name": "getClientMetadataID",
+    "memberof": "src/session.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/session.js~getClientMetadataID",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/session.js",
+    "importStyle": "{getClientMetadataID}",
+    "description": " ",
+    "lineNumber": 30,
+    "return": {
+      "nullable": true,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 148,
+    "kind": "file",
+    "name": "src/tracking.js",
+    "content": "/* @flow */\n\nimport {\n  noop,\n  stringifyError,\n  stringifyErrorMessage,\n  isIEIntranet,\n  getResourceLoadTime,\n  waitForWindowReady,\n  ATTRIBUTES,\n} from \"@krakenjs/belter/src\";\nimport { ZalgoPromise } from \"@krakenjs/zalgo-promise/src\";\nimport {\n  FPTI_KEY,\n  FPTI_FEED,\n  FPTI_DATA_SOURCE,\n  FPTI_SDK_NAME,\n  FPTI_USER_ACTION,\n} from \"@paypal/sdk-constants/src\";\n\nimport { getEnv, getVersion, getCorrelationID, getComponents } from \"./global\";\nimport {\n  getPartnerAttributionID,\n  getClientID,\n  getMerchantID,\n  getCommit,\n  getLocale,\n  getSDKScript,\n  getSDKIntegrationSource,\n  getPageType,\n} from \"./script\";\nimport { getSessionID } from \"./session\";\nimport { getLogger } from \"./logger\";\nimport { isPayPalDomain } from \"./domains\";\n\nlet sdkInitTime;\n\nexport function getSDKInitTime(): number {\n  if (typeof sdkInitTime === \"undefined\") {\n    throw new TypeError(`SDK not initialized`);\n  }\n\n  return sdkInitTime;\n}\n\nexport function setupLogger() {\n  const logger = getLogger();\n\n  sdkInitTime = Date.now();\n\n  logger.addPayloadBuilder(() => {\n    return {\n      referer: window.location.host,\n      uid: getSessionID(),\n      env: getEnv(),\n    };\n  });\n\n  logger.addTrackingBuilder(() => {\n    const { lang, country } = getLocale();\n    const mID = getMerchantID();\n\n    return {\n      [FPTI_KEY.FEED]: FPTI_FEED.PAYMENTS_SDK,\n      [FPTI_KEY.DATA_SOURCE]: FPTI_DATA_SOURCE.PAYMENTS_SDK,\n      [FPTI_KEY.CLIENT_ID]: getClientID(),\n      [FPTI_KEY.SELLER_ID]: mID && mID.toString(),\n      [FPTI_KEY.SESSION_UID]: getSessionID(),\n      [FPTI_KEY.REFERER]: window.location.host,\n      [FPTI_KEY.LOCALE]: `${lang}_${country}`,\n      [FPTI_KEY.INTEGRATION_IDENTIFIER]: getClientID(),\n      [FPTI_KEY.PARTNER_ATTRIBUTION_ID]: getPartnerAttributionID(),\n      [FPTI_KEY.PAGE_TYPE]: getPageType(),\n      [FPTI_KEY.SDK_NAME]: FPTI_SDK_NAME.PAYMENTS_SDK,\n      [FPTI_KEY.SDK_VERSION]: getVersion(),\n      [FPTI_KEY.USER_AGENT]: window.navigator && window.navigator.userAgent,\n      [FPTI_KEY.USER_ACTION]: getCommit()\n        ? FPTI_USER_ACTION.COMMIT\n        : FPTI_USER_ACTION.CONTINUE,\n      [FPTI_KEY.CONTEXT_CORRID]: getCorrelationID(),\n      [FPTI_KEY.SDK_INTEGRATION_SOURCE]: getSDKIntegrationSource(),\n    };\n  });\n\n  ZalgoPromise.onPossiblyUnhandledException((err) => {\n    logger.track({\n      [FPTI_KEY.ERROR_CODE]: \"payments_sdk_error\",\n      [FPTI_KEY.ERROR_DESC]: stringifyErrorMessage(err),\n    });\n\n    logger.error(\"unhandled_error\", {\n      err: stringifyError(err),\n    });\n\n    // eslint-disable-next-line promise/no-promise-in-callback\n    logger.flush().catch(noop);\n  });\n\n  waitForWindowReady().then(() => {\n    const sdkScript = getSDKScript();\n    const loadTime = getResourceLoadTime(sdkScript.src);\n    let cache;\n\n    if (loadTime === 0) {\n      cache = \"sdk_client_cache_hit\";\n    } else if (typeof loadTime === \"number\") {\n      cache = \"sdk_client_cache_miss\";\n    } else {\n      cache = \"sdk_client_cache_unknown\";\n    }\n\n    // Exclude apps that use the JS SDK and are hosted directly on www.paypal.com. Ex:\n    // https://www.paypal.com/buttons/smart\n    // https://www.paypal.com/us/gifts/\n    const isLoadedInFrame = isPayPalDomain() && window.xprops;\n    const sdkLoadTime =\n      typeof loadTime === \"number\" ? loadTime.toString() : undefined;\n\n    logger\n      .info(`setup_${getEnv()}`)\n      .info(`setup_${getEnv()}_${getVersion().replace(/\\./g, \"_\")}`)\n      .info(\n        `sdk_${isLoadedInFrame ? \"paypal\" : \"non_paypal\"}_domain_script_uid_${\n          sdkScript.hasAttribute(ATTRIBUTES.UID) ? \"present\" : \"missing\"\n        }`\n      )\n      .info(cache, { sdkLoadTime })\n      // $FlowFixMe beaver-logger types need to be updated\n      .metric({\n        metricNamespace: \"pp.app.sdk.paypal_js_v5.sdk_load_time.gauge\",\n        metricEventName: \"unused\",\n        metricValue: sdkLoadTime,\n        dimensions: { cacheType: cache, components: getComponents().join(\",\") },\n      })\n      .track({\n        [FPTI_KEY.TRANSITION]: \"process_js_sdk_init_client\",\n        [FPTI_KEY.SDK_LOAD_TIME]: sdkLoadTime,\n        [FPTI_KEY.SDK_CACHE]: cache,\n      })\n      .flush();\n\n    if (isIEIntranet()) {\n      logger.warn(\"ie_intranet_mode\");\n    }\n  });\n}\n",
+    "static": true,
+    "longname": "/Users/ssablan/PayPal/xo/public/paypal-sdk-client/src/tracking.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 149,
+    "kind": "function",
+    "name": "getSDKInitTime",
+    "memberof": "src/tracking.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/tracking.js~getSDKInitTime",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/tracking.js",
+    "importStyle": "{getSDKInitTime}",
+    "description": " ",
+    "lineNumber": 38,
+    "return": {
+      "nullable": null,
+      "types": [
+        "number"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 150,
+    "kind": "function",
+    "name": "setupLogger",
+    "memberof": "src/tracking.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/tracking.js~setupLogger",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/tracking.js",
+    "importStyle": "{setupLogger}",
+    "description": "",
+    "lineNumber": 46,
+    "params": [],
+    "return": null
+  },
+  {
+    "__docId__": 151,
+    "kind": "file",
+    "name": "src/types.js",
+    "content": "/* @flow */\n\nexport const _TYPES = true;\n\nexport * from \"@paypal/sdk-constants/src/types\";\n",
+    "static": true,
+    "longname": "/Users/ssablan/PayPal/xo/public/paypal-sdk-client/src/types.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 152,
+    "kind": "variable",
+    "name": "_TYPES",
+    "memberof": "src/types.js",
+    "static": true,
+    "longname": "src/types.js~_TYPES",
+    "access": "private",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/types.js",
+    "importStyle": "{_TYPES}",
+    "description": null,
+    "lineNumber": 3,
+    "undocument": true,
+    "type": {
+      "types": [
+        "boolean"
+      ]
+    }
+  },
+  {
+    "__docId__": 153,
+    "kind": "file",
+    "name": "src/utils.js",
+    "content": "/* @flow */\n\nimport {\n  COUNTRY_LANGS,\n  LANG,\n  COUNTRY,\n  type LocaleType,\n} from \"@paypal/sdk-constants/src\";\n\nexport function getComputedLocales(locale: string): LocaleType {\n  let [lang, country] = locale.split(\"_\");\n\n  lang = LANG[lang.toUpperCase()];\n  country = COUNTRY[country];\n  const countryLangs = COUNTRY_LANGS[country];\n\n  if (\n    countryLangs &&\n    countryLangs.indexOf(LANG.ZH_HANT) !== -1 &&\n    lang === LANG.ZH\n  ) {\n    lang = LANG.ZH_HANT;\n  }\n\n  return { lang, country };\n}\n",
+    "static": true,
+    "longname": "/Users/ssablan/PayPal/xo/public/paypal-sdk-client/src/utils.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 154,
+    "kind": "function",
+    "name": "getComputedLocales",
+    "memberof": "src/utils.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/utils.js~getComputedLocales",
+    "access": "public",
+    "export": true,
+    "importPath": "@paypal/sdk-client/src/utils.js",
+    "importStyle": "{getComputedLocales}",
+    "description": " ",
+    "lineNumber": 10,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "locale",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "LocaleType"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "kind": "index",
+    "content": "## PayPal SDK Client\n\n[![build status][build-badge]][build]\n[![code coverage][coverage-badge]][coverage]\n[![npm version][version-badge]][package]\n[![apache license][license-badge]][license]\n\n[build-badge]: https://img.shields.io/github/actions/workflow/status/paypal/paypal-sdk-client/main.yml?branch=main&logo=github&style=flat-square\n[build]: https://github.com/paypal/paypal-sdk-client/actions?query=workflow%3Abuild\n[coverage-badge]: https://img.shields.io/codecov/c/github/paypal/paypal-sdk-client.svg?style=flat-square\n[coverage]: https://codecov.io/github/paypal/paypal-sdk-client/\n[version-badge]: https://img.shields.io/npm/v/@paypal/sdk-client.svg?style=flat-square\n[package]: https://www.npmjs.com/package/@paypal/sdk-client\n[license-badge]: https://img.shields.io/npm/l/@paypal/sdk-client.svg?style=flat-square\n[license]: https://github.com/paypal/paypal-sdk-client/blob/main/LICENSE\n\nA shared client for PayPal/Braintree client sdk modules. Has both client-side and server-side bindings to help you build and integrate an sdk component.\n\n## Client\n\nYour client-side sdk component can take advantage of any common utilities or functionality exposed by this module. For example:\n\n- Determining the current paypal url\n- Getting the merchant's client-id\n- Running experiments.\n\n```javascript\nimport { getClientID } from \"@paypal/sdk-client/src\";\n\nfetch(\"https://api.paypal.com/v1/foo\", {\n\theaders: {\n\t\t\"client-id\": getClientID(),\n\t},\n});\n```\n\n## Server\n\nThis module helps you load the payments sdk in a child window, matching the url from the parent.\n\n### Rationale\n\n- You're building a component that is rendered into an iframe or popup window.\n- Your component uses [zoid](https://github.com/krakenjs/zoid) to construct the component, and to communicate between the component and the parent page and vice-versa.\n- You want to make sure the version of the component between the parent and child, to prevent any incompatibilities in the messaging protocol zoid defines (trust me on this one)\n- You also want to take advantage of browser caching benefits, and not download dependencies like zoid multiple times in each new frame or window being rendered\n- You can't just load `<script src=\"https://www.paypal.com/sdk/js?client-id=CLIENT_ID\"></script>` in the child frame or popup, because different query params could have been passed on the top level page, and to take advantage of any caching benefits you need to match the url exactly as it appeared in the parent.\n- You also probably want to avoid passing down all of the query params from `/sdk/js`, but that's a lot to keep track of, and you would need to update your code every time a new parameter is added.\n- Or, you could pass the entire `https://www.paypal.com/sdk/js?client-id=xyz&...` url down from the parent to each new child; meaning we'll get an exact match each time, with exact the same version of the code, and any new url params will automatically be included without any more integration work.\n- And of course, if we're doing that, we need to validate the url before we throw it into a script tag, to prevent xss or injection attacks\n\nThis module helps with that.\n\n### On your server\n\n1. Import `unpackSDKMeta`:\n\n```javascript\nimport { unpackSDKMeta } from \"@paypal/sdk-client\";\n```\n\n2. Call `unpackSDKMeta` with `req.query.sdkMeta`, passed from the client in the query string, and pass the script tag in the page render.\n\n```javascript\n// Listen for requests to your app\napp.get(\"/my-app\", (req, res) => {\n\t// Unpack the sdk meta payload from the client\n\tconst { getSDKLoader } = unpackSDKMeta(req.query.sdkMeta);\n\n\t// Call getSDKLoader to build a script tag, passing in csp nonce, if applicable\n\tconst sdkScriptTag = getSDKLoader({ nonce });\n\n\t// Insert script tag into response\n\tres.send(`\n        <body>\n            <h1>My App</h1>\n            ${sdkScriptTag}\n        </body>\n    `);\n});\n```\n\n3. Ensure the `sdkMeta` payload is passed to the child window from the parent. If you are using [zoid](https://github.com/krakenjs/zoid) to construct your component, please add the following:\n\n```javascript\nimport { getSdkMeta } from \"@paypal/sdk-client/src\";\n\nlet MyComponent = zoid.create({\n\ttag: \"my-component\",\n\turl: \"https://www.paypal.com/my-component\",\n\tprops: {\n\t\tsdkMeta: {\n\t\t\ttype: \"string\",\n\t\t\tvalue: getSdkMeta,\n\t\t\tqueryParam: true,\n\t\t},\n\t},\n});\n```\n\nIf you are not using zoid, please use `getSdkMeta()` to construct the `sdkMeta` payload, and pass it to your child-window or frame in a different way.\n\n**Notes:**\n\n- The script tag should not introduce any extra latency. It has already been downloaded, pre-cached, and pre-parsed in the parent window. So it is usually safe to put in the `<head>` tag.\n- Assuming a [zoid](https://github.com/krakenjs/zoid) component integration, `window.xprops`, containing the props used to receive data from the parent and used to send callbacks back to the parent window, will only be available after the script tag has completed loading on the client. If any other scripts require `window.xprops` immediately, please ensure the sdk script tag is placed before those scripts.\n- `unpackSDKMeta` will throw an error if `req.query.sdkMeta` does not validate. This should be handled and translated into a 500 server error, indicating that the payload has been tampered with.\n- `unpackSDKMeta` may be passed `undefined` if `req.query.sdkMeta` is not present. This is necessary for some legacy integrations where the sdk metadata is passed via `window.name` entirely on the client-side.\n\n## Quick Start\n\n#### Installing\n\n```bash\nnpm install --save @paypal/sdk-client\n```\n\n#### Getting Started\n\n- Fork the module\n- Run setup: `npm run setup`\n- Start editing code in `./src` and writing tests in `./tests`\n- `npm run build`\n\n#### Building\n\n```bash\nnpm run build\n```\n\n#### Tests\n\n- Edit tests in `./test/tests`\n- Run the tests:\n\n  ```bash\n  npm test\n  ```\n",
+    "longname": "/Users/ssablan/PayPal/xo/public/paypal-sdk-client/README.md",
+    "name": "./README.md",
+    "static": true,
+    "access": "public"
+  },
+  {
+    "kind": "packageJSON",
+    "content": "{\n  \"name\": \"@paypal/sdk-client\",\n  \"version\": \"4.0.171\",\n  \"description\": \"Shared config between PayPal/Braintree.\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"babel\": \"babel ./server --ignore=node_modules --out-dir ./server\",\n    \"build\": \"npm run test && npm run doc\",\n    \"clean\": \"rimraf dist coverage\",\n    \"debug\": \"cross-env NODE_ENV=debug\",\n    \"doc\": \"esdoc\",\n    \"flow\": \"flow\",\n    \"flow-typed\": \"rm -rf ./flow-typed && flow-typed install\",\n    \"karma\": \"cross-env NODE_ENV=test babel-node --plugins=transform-es2015-modules-commonjs ./node_modules/.bin/karma start\",\n    \"lint\": \"eslint src/ server/ test/ *.js\",\n    \"reinstall\": \"rimraf flow-typed && rimraf node_modules && npm install && flow-typed install\",\n    \"release\": \"./publish.sh\",\n    \"release:major\": \"./publish.sh major\",\n    \"release:minor\": \"./publish.sh minor\",\n    \"release:patch\": \"./publish.sh patch\",\n    \"setup\": \"npm install && npm run flow-typed\",\n    \"format\": \"prettier --write --ignore-unknown .\",\n    \"format:check\": \"prettier --check .\",\n    \"test\": \"npm run format:check && npm run lint && npm run flow-typed && npm run flow && npm run jest && npm run karma\",\n    \"webpack\": \"babel-node --plugins=transform-es2015-modules-commonjs ./node_modules/.bin/webpack --progress\",\n    \"jest\": \"jest test/server --env=node --no-cache --collectCoverageFrom='server/' --coverageDirectory='coverage/jest' --coverage --verbose --runInBand --silent=false\",\n    \"prepublishOnly\": \"npm run babel\",\n    \"postpublish\": \"rm -rf ./server && git checkout ./server\",\n    \"validate-codecov\": \"curl --data-binary @.github/codecov.yml https://codecov.io/validate\",\n    \"prepare\": \"husky install\"\n  },\n  \"files\": [\n    \"dist/\",\n    \"src/\",\n    \"server/\",\n    \"__sdk__.js\",\n    \"test/globals.js\"\n  ],\n  \"browserslist\": [\n    \"IE >= 11\",\n    \"chrome >= 27\",\n    \"firefox >= 30\",\n    \"safari >= 7\",\n    \"opera >= 23\"\n  ],\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"git://github.com/paypal/paypal-sdk-client.git\"\n  },\n  \"keywords\": [\n    \"template\"\n  ],\n  \"license\": \"Apache-2.0\",\n  \"readmeFilename\": \"README.md\",\n  \"dependencies\": {\n    \"@krakenjs/beaver-logger\": \"^5.0.0\",\n    \"@krakenjs/belter\": \"^2.0.0\",\n    \"@krakenjs/cross-domain-utils\": \"^3.0.2\",\n    \"@krakenjs/jsx-pragmatic\": \"^3.0.0\",\n    \"@krakenjs/zalgo-promise\": \"^2.0.0\",\n    \"@paypal/sdk-constants\": \"^1.0.94\",\n    \"bowser\": \"^2.0.0\"\n  },\n  \"devDependencies\": {\n    \"@krakenjs/grumbler-scripts\": \"^8.0.4\",\n    \"@krakenjs/sync-browser-mocks\": \"^3.0.0\",\n    \"babel-core\": \"7.0.0-bridge.0\",\n    \"cheerio\": \"1.0.0-rc.9\",\n    \"cross-env\": \"^7.0.3\",\n    \"esdoc\": \"1.1.0\",\n    \"esdoc-flow-type-plugin\": \"1.1.0\",\n    \"esdoc-standard-plugin\": \"1.0.0\",\n    \"flow-bin\": \"0.155.0\",\n    \"flow-typed\": \"^3.8.0\",\n    \"husky\": \"^8.0.1\",\n    \"jest\": \"^29.3.1\",\n    \"lint-staged\": \"^13.0.3\",\n    \"mocha\": \"^10.0.0\",\n    \"prettier\": \"2.8.8\"\n  },\n  \"lint-staged\": {\n    \"**/*\": \"prettier --write --ignore-unknown\"\n  }\n}\n",
+    "longname": "/Users/ssablan/PayPal/xo/public/paypal-sdk-client/package.json",
+    "name": "package.json",
+    "static": true,
+    "access": "public"
+  }
+]

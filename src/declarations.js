@@ -32,4 +32,4 @@ declare var __COMPONENTS__: $ReadOnlyArray<$Values<typeof COMPONENTS>>;
 declare var __FUNDING_ELIGIBILITY__: FundingEligibilityType;
 
 // Experiment Variable
-declare var __DISABLE_SET_COOKIE__: ?string;
+declare var __DISABLE_SET_COOKIE__: boolean;

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href>
+  <title data-ice="title">Source | @paypal/sdk-client</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="Shared config between PayPal/Braintree."><meta property="twitter:card" content="summary"><meta property="twitter:title" content="@paypal/sdk-client"><meta property="twitter:description" content="Shared config between PayPal/Braintree."></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-buildPayPalAPIUrl">buildPayPalAPIUrl</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-buildPayPalUrl">buildPayPalUrl</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getAuthAPIUrl">getAuthAPIUrl</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getOrderAPIUrl">getOrderAPIUrl</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPayPalDomainRegex">getPayPalDomainRegex</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPayPalLoggerDomain">getPayPalLoggerDomain</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPayPalLoggerUrl">getPayPalLoggerUrl</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isPayPalDomain">isPayPalDomain</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-checkForCommonErrors">checkForCommonErrors</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getAPIStageHost">getAPIStageHost</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getComponents">getComponents</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getCorrelationID">getCorrelationID</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDebug">getDebug</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaultAPIStageHost">getDefaultAPIStageHost</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaultNamespace">getDefaultNamespace</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaultServiceStageHost">getDefaultServiceStageHost</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaultStageHost">getDefaultStageHost</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDisableSetCookie">getDisableSetCookie</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getEnv">getEnv</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getFundingEligibility">getFundingEligibility</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getHost">getHost</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getHostName">getHostName</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPath">getPath</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPayPalAPIDomain">getPayPalAPIDomain</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPayPalDomain">getPayPalDomain</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPlatform">getPlatform</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPort">getPort</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getProtocol">getProtocol</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getSDKHost">getSDKHost</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getStageHost">getStageHost</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getVersion">getVersion</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-setup">setup</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getSDKMeta">getSDKMeta</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getAmount">getAmount</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getBuyerCountry">getBuyerCountry</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getCSPNonce">getCSPNonce</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getClientAccessToken">getClientAccessToken</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getClientID">getClientID</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getClientToken">getClientToken</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getCommit">getCommit</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getCountry">getCountry</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getCurrency">getCurrency</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDisableCard">getDisableCard</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDisableFunding">getDisableFunding</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getEnableFunding">getEnableFunding</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getEnableThreeDomainSecure">getEnableThreeDomainSecure</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getIntent">getIntent</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getLang">getLang</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getLocale">getLocale</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getMerchantID">getMerchantID</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getMerchantRequestedPopupsDisabled">getMerchantRequestedPopupsDisabled</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNamespace">getNamespace</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPageType">getPageType</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPartnerAttributionID">getPartnerAttributionID</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getSDKAttribute">getSDKAttribute</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getSDKIntegrationSource">getSDKIntegrationSource</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getSDKQueryParam">getSDKQueryParam</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getSDKQueryParamBool">getSDKQueryParamBool</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getSDKQueryParams">getSDKQueryParams</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getScriptUrl">getScriptUrl</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getUserAccessToken">getUserAccessToken</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getUserAuthCode">getUserAuthCode</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getUserExperienceFlow">getUserExperienceFlow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getUserIDToken">getUserIDToken</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getVault">getVault</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isChildWindow">isChildWindow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getClientMetadataID">getClientMetadataID</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getSessionID">getSessionID</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getSessionState">getSessionState</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getStorageID">getStorageID</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getStorageState">getStorageState</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getSDKInitTime">getSDKInitTime</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-setupLogger">setupLogger</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getComputedLocales">getComputedLocales</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-CLIENT_ID_ALIAS">CLIENT_ID_ALIAS</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-SUPPORTED_BROWSERS">SUPPORTED_BROWSERS</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-URI">URI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FPTI_CONTEXT_TYPE">FPTI_CONTEXT_TYPE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FPTI_STATE">FPTI_STATE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FPTI_TRANSITION">FPTI_TRANSITION</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-getEventEmitter">getEventEmitter</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-getLogger">getLogger</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-getSDKAttributes">getSDKAttributes</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-getSDKScript">getSDKScript</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_TYPES">_TYPES</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1>Source <img data-ice="coverageBadge" src="./badge.svg"><span data-ice="totalCoverageCount" class="total-coverage-count">75/91</span></h1>
+
+<table class="files-summary" data-ice="files" data-use-coverage="true">
+  <thead>
+    <tr>
+      <td>File</td>
+      <td>Identifier</td>
+      <td class="coverage">Document</td>
+      <td style="display: none;">Size</td>
+      <td style="display: none;">Lines</td>
+      <td style="display: none;">Updated</td>
+    </tr>
+  </thead>
+  <tbody>
+    
+  <tr data-ice="file">
+      <td data-ice="filePath"><span><a href="file/src/config.js.html#errorLines=16,19,25,3">src/config.js</a></span></td>
+      <td data-ice="identifier" class="identifiers"><span><a href="variable/index.html#static-variable-CLIENT_ID_ALIAS">CLIENT_ID_ALIAS</a></span>
+<span><a href="variable/index.html#static-variable-SUPPORTED_BROWSERS">SUPPORTED_BROWSERS</a></span>
+<span><a href="variable/index.html#static-variable-URI">URI</a></span></td>
+      <td class="coverage"><span data-ice="coverage">0 %</span><span data-ice="coverageCount" class="coverage-count">0/4</span></td>
+      <td style="display: none;" data-ice="size">576 byte</td>
+      <td style="display: none;" data-ice="lines">29</td>
+      <td style="display: none;" data-ice="updated">2023-06-03 21:36:37 (UTC)</td>
+    </tr>
+<tr data-ice="file">
+      <td data-ice="filePath"><span><a href="file/src/constants.js.html#errorLines=13,3,7">src/constants.js</a></span></td>
+      <td data-ice="identifier" class="identifiers"><span><a href="variable/index.html#static-variable-FPTI_CONTEXT_TYPE">FPTI_CONTEXT_TYPE</a></span>
+<span><a href="variable/index.html#static-variable-FPTI_STATE">FPTI_STATE</a></span>
+<span><a href="variable/index.html#static-variable-FPTI_TRANSITION">FPTI_TRANSITION</a></span></td>
+      <td class="coverage"><span data-ice="coverage">0 %</span><span data-ice="coverageCount" class="coverage-count">0/3</span></td>
+      <td style="display: none;" data-ice="size">373 byte</td>
+      <td style="display: none;" data-ice="lines">15</td>
+      <td style="display: none;" data-ice="updated">2023-06-03 21:36:37 (UTC)</td>
+    </tr>
+<tr data-ice="file">
+      <td data-ice="filePath"><span><a href="file/src/declarations.js.html">src/declarations.js</a></span></td>
+      <td data-ice="identifier" class="identifiers">-</td>
+      <td class="coverage"><span data-ice="coverage">-</span></td>
+      <td style="display: none;" data-ice="size">1102 byte</td>
+      <td style="display: none;" data-ice="lines">35</td>
+      <td style="display: none;" data-ice="updated">2023-06-06 19:01:07 (UTC)</td>
+    </tr>
+<tr data-ice="file">
+      <td data-ice="filePath"><span><a href="file/src/domains.js.html">src/domains.js</a></span></td>
+      <td data-ice="identifier" class="identifiers"><span><a href="function/index.html#static-function-buildPayPalAPIUrl">buildPayPalAPIUrl</a></span>
+<span><a href="function/index.html#static-function-buildPayPalUrl">buildPayPalUrl</a></span>
+<span><a href="function/index.html#static-function-getAuthAPIUrl">getAuthAPIUrl</a></span>
+<span><a href="function/index.html#static-function-getOrderAPIUrl">getOrderAPIUrl</a></span>
+<span><a href="function/index.html#static-function-getPayPalDomainRegex">getPayPalDomainRegex</a></span>
+<span><a href="function/index.html#static-function-getPayPalLoggerDomain">getPayPalLoggerDomain</a></span>
+<span><a href="function/index.html#static-function-getPayPalLoggerUrl">getPayPalLoggerUrl</a></span>
+<span><a href="function/index.html#static-function-isPayPalDomain">isPayPalDomain</a></span></td>
+      <td class="coverage"><span data-ice="coverage">100 %</span><span data-ice="coverageCount" class="coverage-count">8/8</span></td>
+      <td style="display: none;" data-ice="size">1591 byte</td>
+      <td style="display: none;" data-ice="lines">70</td>
+      <td style="display: none;" data-ice="updated">2023-06-03 21:36:37 (UTC)</td>
+    </tr>
+<tr data-ice="file">
+      <td data-ice="filePath"><span><a href="file/src/errors.js.html">src/errors.js</a></span></td>
+      <td data-ice="identifier" class="identifiers"><span><a href="function/index.html#static-function-checkForCommonErrors">checkForCommonErrors</a></span></td>
+      <td class="coverage"><span data-ice="coverage">100 %</span><span data-ice="coverageCount" class="coverage-count">2/2</span></td>
+      <td style="display: none;" data-ice="size">2488 byte</td>
+      <td style="display: none;" data-ice="lines">100</td>
+      <td style="display: none;" data-ice="updated">2023-06-03 21:36:37 (UTC)</td>
+    </tr>
+<tr data-ice="file">
+      <td data-ice="filePath"><span><a href="file/src/events.js.html#errorLines=9">src/events.js</a></span></td>
+      <td data-ice="identifier" class="identifiers"><span><a href="variable/index.html#static-variable-getEventEmitter">getEventEmitter</a></span></td>
+      <td class="coverage"><span data-ice="coverage">0 %</span><span data-ice="coverageCount" class="coverage-count">0/1</span></td>
+      <td style="display: none;" data-ice="size">184 byte</td>
+      <td style="display: none;" data-ice="lines">9</td>
+      <td style="display: none;" data-ice="updated">2023-06-03 21:36:37 (UTC)</td>
+    </tr>
+<tr data-ice="file">
+      <td data-ice="filePath"><span><a href="file/src/global.js.html">src/global.js</a></span></td>
+      <td data-ice="identifier" class="identifiers"><span><a href="function/index.html#static-function-getAPIStageHost">getAPIStageHost</a></span>
+<span><a href="function/index.html#static-function-getComponents">getComponents</a></span>
+<span><a href="function/index.html#static-function-getCorrelationID">getCorrelationID</a></span>
+<span><a href="function/index.html#static-function-getDebug">getDebug</a></span>
+<span><a href="function/index.html#static-function-getDefaultAPIStageHost">getDefaultAPIStageHost</a></span>
+<span><a href="function/index.html#static-function-getDefaultNamespace">getDefaultNamespace</a></span>
+<span><a href="function/index.html#static-function-getDefaultServiceStageHost">getDefaultServiceStageHost</a></span>
+<span><a href="function/index.html#static-function-getDefaultStageHost">getDefaultStageHost</a></span>
+<span><a href="function/index.html#static-function-getDisableSetCookie">getDisableSetCookie</a></span>
+<span><a href="function/index.html#static-function-getEnv">getEnv</a></span>
+<span><a href="function/index.html#static-function-getFundingEligibility">getFundingEligibility</a></span>
+<span><a href="function/index.html#static-function-getHost">getHost</a></span>
+<span><a href="function/index.html#static-function-getHostName">getHostName</a></span>
+<span><a href="function/index.html#static-function-getPath">getPath</a></span>
+<span><a href="function/index.html#static-function-getPayPalAPIDomain">getPayPalAPIDomain</a></span>
+<span><a href="function/index.html#static-function-getPayPalDomain">getPayPalDomain</a></span>
+<span><a href="function/index.html#static-function-getPlatform">getPlatform</a></span>
+<span><a href="function/index.html#static-function-getPort">getPort</a></span>
+<span><a href="function/index.html#static-function-getProtocol">getProtocol</a></span>
+<span><a href="function/index.html#static-function-getSDKHost">getSDKHost</a></span>
+<span><a href="function/index.html#static-function-getStageHost">getStageHost</a></span>
+<span><a href="function/index.html#static-function-getVersion">getVersion</a></span></td>
+      <td class="coverage"><span data-ice="coverage">100 %</span><span data-ice="coverageCount" class="coverage-count">22/22</span></td>
+      <td style="display: none;" data-ice="size">2457 byte</td>
+      <td style="display: none;" data-ice="lines">117</td>
+      <td style="display: none;" data-ice="updated">2023-06-06 18:59:37 (UTC)</td>
+    </tr>
+<tr data-ice="file">
+      <td data-ice="filePath"><span><a href="file/src/index.js.html">src/index.js</a></span></td>
+      <td data-ice="identifier" class="identifiers">-</td>
+      <td class="coverage"><span data-ice="coverage">-</span></td>
+      <td style="display: none;" data-ice="size">428 byte</td>
+      <td style="display: none;" data-ice="lines">18</td>
+      <td style="display: none;" data-ice="updated">2023-06-03 21:36:37 (UTC)</td>
+    </tr>
+<tr data-ice="file">
+      <td data-ice="filePath"><span><a href="file/src/interface.js.html">src/interface.js</a></span></td>
+      <td data-ice="identifier" class="identifiers"><span><a href="function/index.html#static-function-setup">setup</a></span></td>
+      <td class="coverage"><span data-ice="coverage">100 %</span><span data-ice="coverageCount" class="coverage-count">1/1</span></td>
+      <td style="display: none;" data-ice="size">334 byte</td>
+      <td style="display: none;" data-ice="lines">14</td>
+      <td style="display: none;" data-ice="updated">2023-06-03 21:36:37 (UTC)</td>
+    </tr>
+<tr data-ice="file">
+      <td data-ice="filePath"><span><a href="file/src/logger.js.html#errorLines=15,19">src/logger.js</a></span></td>
+      <td data-ice="identifier" class="identifiers"><span><a href="variable/index.html#static-variable-getLogger">getLogger</a></span></td>
+      <td class="coverage"><span data-ice="coverage">0 %</span><span data-ice="coverageCount" class="coverage-count">0/2</span></td>
+      <td style="display: none;" data-ice="size">732 byte</td>
+      <td style="display: none;" data-ice="lines">23</td>
+      <td style="display: none;" data-ice="updated">2023-06-06 18:56:52 (UTC)</td>
+    </tr>
+<tr data-ice="file">
+      <td data-ice="filePath"><span><a href="file/src/meta.js.html#errorLines=8">src/meta.js</a></span></td>
+      <td data-ice="identifier" class="identifiers"><span><a href="function/index.html#static-function-getSDKMeta">getSDKMeta</a></span></td>
+      <td class="coverage"><span data-ice="coverage">50 %</span><span data-ice="coverageCount" class="coverage-count">1/2</span></td>
+      <td style="display: none;" data-ice="size">887 byte</td>
+      <td style="display: none;" data-ice="lines">32</td>
+      <td style="display: none;" data-ice="updated">2023-06-03 21:36:37 (UTC)</td>
+    </tr>
+<tr data-ice="file">
+      <td data-ice="filePath"><span><a href="file/src/script.js.html#errorLines=104,43,51,73">src/script.js</a></span></td>
+      <td data-ice="identifier" class="identifiers"><span><a href="function/index.html#static-function-getAmount">getAmount</a></span>
+<span><a href="function/index.html#static-function-getBuyerCountry">getBuyerCountry</a></span>
+<span><a href="function/index.html#static-function-getCSPNonce">getCSPNonce</a></span>
+<span><a href="function/index.html#static-function-getClientAccessToken">getClientAccessToken</a></span>
+<span><a href="function/index.html#static-function-getClientID">getClientID</a></span>
+<span><a href="function/index.html#static-function-getClientToken">getClientToken</a></span>
+<span><a href="function/index.html#static-function-getCommit">getCommit</a></span>
+<span><a href="function/index.html#static-function-getCountry">getCountry</a></span>
+<span><a href="function/index.html#static-function-getCurrency">getCurrency</a></span>
+<span><a href="function/index.html#static-function-getDisableCard">getDisableCard</a></span>
+<span><a href="function/index.html#static-function-getDisableFunding">getDisableFunding</a></span>
+<span><a href="function/index.html#static-function-getEnableFunding">getEnableFunding</a></span>
+<span><a href="function/index.html#static-function-getEnableThreeDomainSecure">getEnableThreeDomainSecure</a></span>
+<span><a href="function/index.html#static-function-getIntent">getIntent</a></span>
+<span><a href="function/index.html#static-function-getLang">getLang</a></span>
+<span><a href="function/index.html#static-function-getLocale">getLocale</a></span>
+<span><a href="function/index.html#static-function-getMerchantID">getMerchantID</a></span>
+<span><a href="function/index.html#static-function-getMerchantRequestedPopupsDisabled">getMerchantRequestedPopupsDisabled</a></span>
+<span><a href="function/index.html#static-function-getNamespace">getNamespace</a></span>
+<span><a href="function/index.html#static-function-getPageType">getPageType</a></span>
+<span><a href="function/index.html#static-function-getPartnerAttributionID">getPartnerAttributionID</a></span>
+<span><a href="function/index.html#static-function-getSDKAttribute">getSDKAttribute</a></span>
+<span><a href="variable/index.html#static-variable-getSDKAttributes">getSDKAttributes</a></span>
+<span><a href="function/index.html#static-function-getSDKIntegrationSource">getSDKIntegrationSource</a></span>
+<span><a href="function/index.html#static-function-getSDKQueryParam">getSDKQueryParam</a></span>
+<span><a href="function/index.html#static-function-getSDKQueryParamBool">getSDKQueryParamBool</a></span>
+<span><a href="function/index.html#static-function-getSDKQueryParams">getSDKQueryParams</a></span>
+<span><a href="variable/index.html#static-variable-getSDKScript">getSDKScript</a></span>
+<span><a href="function/index.html#static-function-getScriptUrl">getScriptUrl</a></span>
+<span><a href="function/index.html#static-function-getUserAccessToken">getUserAccessToken</a></span>
+<span><a href="function/index.html#static-function-getUserAuthCode">getUserAuthCode</a></span>
+<span><a href="function/index.html#static-function-getUserExperienceFlow">getUserExperienceFlow</a></span>
+<span><a href="function/index.html#static-function-getUserIDToken">getUserIDToken</a></span>
+<span><a href="function/index.html#static-function-getVault">getVault</a></span>
+<span><a href="function/index.html#static-function-isChildWindow">isChildWindow</a></span></td>
+      <td class="coverage"><span data-ice="coverage">88 %</span><span data-ice="coverageCount" class="coverage-count">32/36</span></td>
+      <td style="display: none;" data-ice="size">9191 byte</td>
+      <td style="display: none;" data-ice="lines">366</td>
+      <td style="display: none;" data-ice="updated">2023-06-03 21:36:37 (UTC)</td>
+    </tr>
+<tr data-ice="file">
+      <td data-ice="filePath"><span><a href="file/src/session.js.html">src/session.js</a></span></td>
+      <td data-ice="identifier" class="identifiers"><span><a href="function/index.html#static-function-getClientMetadataID">getClientMetadataID</a></span>
+<span><a href="function/index.html#static-function-getSessionID">getSessionID</a></span>
+<span><a href="function/index.html#static-function-getSessionState">getSessionState</a></span>
+<span><a href="function/index.html#static-function-getStorageID">getStorageID</a></span>
+<span><a href="function/index.html#static-function-getStorageState">getStorageState</a></span></td>
+      <td class="coverage"><span data-ice="coverage">100 %</span><span data-ice="coverageCount" class="coverage-count">6/6</span></td>
+      <td style="display: none;" data-ice="size">807 byte</td>
+      <td style="display: none;" data-ice="lines">32</td>
+      <td style="display: none;" data-ice="updated">2023-06-03 21:36:37 (UTC)</td>
+    </tr>
+<tr data-ice="file">
+      <td data-ice="filePath"><span><a href="file/src/tracking.js.html">src/tracking.js</a></span></td>
+      <td data-ice="identifier" class="identifiers"><span><a href="function/index.html#static-function-getSDKInitTime">getSDKInitTime</a></span>
+<span><a href="function/index.html#static-function-setupLogger">setupLogger</a></span></td>
+      <td class="coverage"><span data-ice="coverage">100 %</span><span data-ice="coverageCount" class="coverage-count">2/2</span></td>
+      <td style="display: none;" data-ice="size">4189 byte</td>
+      <td style="display: none;" data-ice="lines">146</td>
+      <td style="display: none;" data-ice="updated">2023-06-03 21:36:37 (UTC)</td>
+    </tr>
+<tr data-ice="file">
+      <td data-ice="filePath"><span><a href="file/src/types.js.html#errorLines=3">src/types.js</a></span></td>
+      <td data-ice="identifier" class="identifiers"><span><a href="variable/index.html#static-variable-_TYPES">_TYPES</a></span></td>
+      <td class="coverage"><span data-ice="coverage">0 %</span><span data-ice="coverageCount" class="coverage-count">0/1</span></td>
+      <td style="display: none;" data-ice="size">91 byte</td>
+      <td style="display: none;" data-ice="lines">5</td>
+      <td style="display: none;" data-ice="updated">2023-06-03 21:36:37 (UTC)</td>
+    </tr>
+<tr data-ice="file">
+      <td data-ice="filePath"><span><a href="file/src/utils.js.html">src/utils.js</a></span></td>
+      <td data-ice="identifier" class="identifiers"><span><a href="function/index.html#static-function-getComputedLocales">getComputedLocales</a></span></td>
+      <td class="coverage"><span data-ice="coverage">100 %</span><span data-ice="coverageCount" class="coverage-count">1/1</span></td>
+      <td style="display: none;" data-ice="size">499 byte</td>
+      <td style="display: none;" data-ice="lines">26</td>
+      <td style="display: none;" data-ice="updated">2023-06-03 21:36:37 (UTC)</td>
+    </tr>
+</tbody>
+</table>
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

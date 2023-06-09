@@ -1,0 +1,100 @@
+{
+  "coverage": "82.41%",
+  "expectCount": 91,
+  "actualCount": 75,
+  "files": {
+    "src/config.js": {
+      "expectCount": 4,
+      "actualCount": 0,
+      "undocumentLines": [
+        3,
+        16,
+        19,
+        25
+      ]
+    },
+    "src/constants.js": {
+      "expectCount": 3,
+      "actualCount": 0,
+      "undocumentLines": [
+        3,
+        7,
+        13
+      ]
+    },
+    "src/domains.js": {
+      "expectCount": 8,
+      "actualCount": 8,
+      "undocumentLines": []
+    },
+    "src/errors.js": {
+      "expectCount": 2,
+      "actualCount": 2,
+      "undocumentLines": []
+    },
+    "src/events.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        9
+      ]
+    },
+    "src/global.js": {
+      "expectCount": 22,
+      "actualCount": 22,
+      "undocumentLines": []
+    },
+    "src/interface.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/logger.js": {
+      "expectCount": 2,
+      "actualCount": 0,
+      "undocumentLines": [
+        15,
+        19
+      ]
+    },
+    "src/meta.js": {
+      "expectCount": 2,
+      "actualCount": 1,
+      "undocumentLines": [
+        8
+      ]
+    },
+    "src/script.js": {
+      "expectCount": 36,
+      "actualCount": 32,
+      "undocumentLines": [
+        43,
+        51,
+        73,
+        104
+      ]
+    },
+    "src/session.js": {
+      "expectCount": 6,
+      "actualCount": 6,
+      "undocumentLines": []
+    },
+    "src/tracking.js": {
+      "expectCount": 2,
+      "actualCount": 2,
+      "undocumentLines": []
+    },
+    "src/types.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        3
+      ]
+    },
+    "src/utils.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    }
+  }
+}

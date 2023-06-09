@@ -12,10 +12,9 @@ type GetLogger = () => LoggerType;
 // TODO: Validate that the logic below is good
 // -- Will getDisableSetCookie() be a boolean or string? String, right??
 // -- Should I turn it into a boolean within the getDisableSetCookie() function??
-const loggerUrl =
-  getDisableSetCookie() === "true"
-    ? `${getPayPalLoggerUrl}?disable-set-cookie=true`
-    : getPayPalLoggerUrl();
+const loggerUrl = getDisableSetCookie()
+  ? `${getPayPalLoggerUrl()}?disable-set-cookie=true`
+  : getPayPalLoggerUrl();
 
 export const getLogger: GetLogger = memoize(() => {
   return Logger({
