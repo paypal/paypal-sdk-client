@@ -65,6 +65,21 @@ export function getPayPalDomainRegex(): RegExp {
   return /\.paypal\.(com|cn)(:\d+)?$/;
 }
 
+export function getVenmoDomainRegex(): RegExp {
+  if (__ENV__ === ENV.LOCAL) {
+    return /.*loca.*/;
+  }
+  // eslint-disable-next-line security/detect-unsafe-regex
+  return /^([\w]*\.)*(venmo\.com)(:\d+)?$/;
+}
+
 export function isPayPalDomain(): boolean {
   return Boolean(getDomain().match(getPayPalDomainRegex()));
+}
+
+export function isPayPalTrustedDomain(): boolean {
+  return (
+    Boolean(getDomain().match(getPayPalDomainRegex())) ||
+    Boolean(getDomain().match(getVenmoDomainRegex()))
+  );
 }

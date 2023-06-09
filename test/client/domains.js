@@ -1,7 +1,7 @@
 /* @flow */
 import { ENV } from "@paypal/sdk-constants/src";
 
-import { getPayPalDomainRegex } from "../../src";
+import { getPayPalDomainRegex, getVenmoDomainRegex } from "../../src";
 import {
   getPayPalLoggerDomain,
   getAuthAPIUrl,
@@ -13,7 +13,7 @@ beforeEach(() => {
 });
 
 describe(`domains test`, () => {
-  it("should successfully match valid domain", () => {
+  it("should successfully match valid paypal domain", () => {
     const validDomains = [
       "master.qa.paypal.com",
       "test-env.qa.paypal.com:3000",
@@ -32,7 +32,7 @@ describe(`domains test`, () => {
     }
   });
 
-  it("should not match invalid domains", () => {
+  it("should not match invalid paypal domains", () => {
     const invalidDomains = [
       "www.paypal.com.example.com",
       "www.paypal.cn.example.com",
@@ -40,6 +40,36 @@ describe(`domains test`, () => {
 
     for (const domain of invalidDomains) {
       if (domain.match(getPayPalDomainRegex())) {
+        throw new Error(`${domain} must not match the regex`);
+      }
+    }
+  });
+
+  it("should successfully match valid venmo domain", () => {
+    const validDomains = [
+      "www.venmo.com",
+      "www.venmo.com:8000",
+      "account.qa.venmo.com",
+      "www.account.qa.venmo.com",
+      "venmo.com",
+      "id.venmo.com",
+    ];
+
+    for (const domain of validDomains) {
+      if (!domain.match(getVenmoDomainRegex())) {
+        throw new Error(`${domain} must match the regex`);
+      }
+    }
+  });
+
+  it("should not match invalid venmo domains", () => {
+    const invalidDomains = [
+      "www.venmo.com.example.com",
+      "www.venmo.cn.example.com",
+    ];
+
+    for (const domain of invalidDomains) {
+      if (domain.match(getVenmoDomainRegex())) {
         throw new Error(`${domain} must not match the regex`);
       }
     }
