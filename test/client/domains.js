@@ -1,7 +1,11 @@
 /* @flow */
 import { ENV } from "@paypal/sdk-constants/src";
 
-import { getPayPalDomainRegex, getVenmoDomainRegex } from "../../src";
+import {
+  getPayPalDomainRegex,
+  getVenmoDomainRegex,
+  isPayPalTrustedDomain,
+} from "../../src";
 import {
   getPayPalLoggerDomain,
   getAuthAPIUrl,
@@ -72,6 +76,15 @@ describe(`domains test`, () => {
       if (domain.match(getVenmoDomainRegex())) {
         throw new Error(`${domain} must not match the regex`);
       }
+    }
+  });
+
+  it("isPayPalTrustedDomain should return true", () => {
+    window.__ENV__ = ENV.LOCAL;
+    const result = isPayPalTrustedDomain();
+
+    if (!result) {
+      throw new Error("should get true, but got false");
     }
   });
 
