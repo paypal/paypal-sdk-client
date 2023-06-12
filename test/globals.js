@@ -1,7 +1,7 @@
 /* @flow */
 
 type TestGlobals = {|
-  [string]: string | number | (() => string | (() => number)),
+  [string]: string | number | boolean | (() => string | (() => number)),
   __COMPONENTS__: $ReadOnlyArray<string>,
 |};
 
@@ -19,4 +19,5 @@ export const sdkClientTestGlobals: TestGlobals = {
   __PAYPAL_DOMAIN__: "mock://www.paypal.com",
   __PAYPAL_API_DOMAIN__: "mock://msmaster.qa.paypal.com",
   __COMPONENTS__: ["buttons"],
+  __DISABLE_SET_COOKIE__: true,
 };
