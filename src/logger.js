@@ -8,10 +8,6 @@ import { getPayPalLoggerUrl } from "./domains";
 
 type GetLogger = () => LoggerType;
 
-// TODO: Try to get this aliased with csnw
-// TODO: Validate that the logic below is good
-// -- Will getDisableSetCookie() be a boolean or string? String, right??
-// -- Should I turn it into a boolean within the getDisableSetCookie() function??
 const loggerUrl = getDisableSetCookie()
   ? `${getPayPalLoggerUrl()}?disable-set-cookie=true`
   : getPayPalLoggerUrl();
