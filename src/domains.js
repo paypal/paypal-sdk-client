@@ -66,11 +66,8 @@ export function getPayPalDomainRegex(): RegExp {
 }
 
 export function getVenmoDomainRegex(): RegExp {
-  if (__ENV__ === ENV.LOCAL) {
-    return /.*loca.*/;
-  }
   // eslint-disable-next-line security/detect-unsafe-regex
-  return /^([\w]*\.)*(venmo\.com)(:\d+)?$/;
+  return /http.*(\.|\/)venmo\.com(:\d*)?$/;
 }
 
 export function isPayPalDomain(): boolean {

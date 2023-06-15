@@ -51,12 +51,14 @@ describe(`domains test`, () => {
 
   it("should successfully match valid venmo domain", () => {
     const validDomains = [
-      "www.venmo.com",
-      "www.venmo.com:8000",
-      "account.qa.venmo.com",
-      "www.account.qa.venmo.com",
-      "venmo.com",
-      "id.venmo.com",
+      "https://venmo.com",
+      "http://www.venmo.com",
+      "https://id.venmo.com",
+      "http://www.venmo.com:8000",
+      "https://account.qa.venmo.com",
+      "http://www.account.qa.venmo.com",
+      "https://account.qa.venmo.com",
+      "https://account.venmo.com",
     ];
 
     for (const domain of validDomains) {
@@ -68,7 +70,7 @@ describe(`domains test`, () => {
 
   it("should successfully match valid venmo testing domain", () => {
     window.__ENV__ = "local";
-    const validDomains = ["localhost.venmo.com"];
+    const validDomains = ["https://localhost.venmo.com"];
 
     for (const domain of validDomains) {
       if (!domain.match(getVenmoDomainRegex())) {
@@ -81,6 +83,7 @@ describe(`domains test`, () => {
     const invalidDomains = [
       "www.venmo.com.example.com",
       "www.venmo.cn.example.com",
+      "www.venmo.com",
     ];
 
     for (const domain of invalidDomains) {
