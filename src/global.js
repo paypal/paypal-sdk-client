@@ -113,5 +113,9 @@ export function getPlatform(): $Values<typeof PLATFORM> {
 
 // Experiment Variable
 export function getDisableSetCookie(): boolean {
-  return __DISABLE_SET_COOKIE__;
+  if (typeof __DISABLE_SET_COOKIE__ !== "undefined") {
+    return __DISABLE_SET_COOKIE__;
+  }
+
+  return false;
 }
