@@ -83,6 +83,7 @@ describe(`domains test`, () => {
     const invalidDomains = [
       "www.venmo.com.example.com",
       "www.venmo.cn.example.com",
+      "www.venmo.com",
     ];
 
     for (const domain of invalidDomains) {
