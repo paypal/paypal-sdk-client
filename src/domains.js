@@ -67,7 +67,7 @@ export function getPayPalDomainRegex(): RegExp {
 
 export function getVenmoDomainRegex(): RegExp {
   // eslint-disable-next-line security/detect-unsafe-regex
-  return /.*(\.|\/)venmo\.com(:\d*)?$/;
+  return /http.*(\.|\/)venmo\.com(:\d*)?$/;
 }
 
 export function isPayPalDomain(): boolean {

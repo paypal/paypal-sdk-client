@@ -70,7 +70,7 @@ describe(`domains test`, () => {
 
   it("should successfully match valid venmo testing domain", () => {
     window.__ENV__ = "local";
-    const validDomains = ["localhost.venmo.com"];
+    const validDomains = ["https://localhost.venmo.com"];
 
     for (const domain of validDomains) {
       if (!domain.match(getVenmoDomainRegex())) {
