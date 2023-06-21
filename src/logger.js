@@ -8,13 +8,13 @@ import { getPayPalLoggerUrl } from "./domains";
 
 type GetLogger = () => LoggerType;
 
-const disableSetCookieQuery = "disableSetCookie=true";
-
-const loggerUrl = getDisableSetCookie()
-  ? `${getPayPalLoggerUrl()}?${disableSetCookieQuery}`
-  : getPayPalLoggerUrl();
-
 export const getLogger: GetLogger = memoize(() => {
+  const disableSetCookieQuery = "disableSetCookie=true";
+
+  const loggerUrl = getDisableSetCookie()
+    ? `${getPayPalLoggerUrl()}?${disableSetCookieQuery}`
+    : getPayPalLoggerUrl();
+
   return Logger({
     url: loggerUrl,
   });
