@@ -106,9 +106,9 @@ describe(`domains test`, () => {
     window.__ENV__ = ENV.LOCAL;
     const result = getPayPalLoggerDomain();
 
-    if (result !== "https://mock://msmaster.qa.paypal.com") {
+    if (result !== "https://mock://sandbox.paypal.com") {
       throw new Error(
-        `should get the logger domain "https://mock://msmaster.qa.paypal.com", but got: ${result}`
+        `should get the logger domain "https://mock://sandbosandboxx.paypal.com", but got: ${result}`
       );
     }
   });
@@ -125,7 +125,7 @@ describe(`domains test`, () => {
         );
       }
     }
-    window.__STAGE_HOST__ = "mock://msmaster.qa.paypal.com";
+    window.__STAGE_HOST__ = "mock://sandbox.paypal.com";
   });
 
   it("getAuthAPIUrl should return a valid authentication string URL", () => {
