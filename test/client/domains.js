@@ -108,7 +108,7 @@ describe(`domains test`, () => {
 
     if (result !== "https://mock://sandbox.paypal.com") {
       throw new Error(
-        `should get the logger domain "https://mock://sandbosandboxx.paypal.com", but got: ${result}`
+        `should get the logger domain "https://mock://sandbox.paypal.com", but got: ${result}`
       );
     }
   });
