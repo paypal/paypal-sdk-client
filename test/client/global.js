@@ -25,7 +25,7 @@ import {
 
 describe(`globals cases`, () => {
   afterEach(() => {
-    window.__STAGE_HOST__ = "mock://msmaster.qa.paypal.com";
+    window.__STAGE_HOST__ = "mock://sandbox.paypal.com";
     delete window.__PROTOCOL__;
     delete window.__SERVICE_STAGE_HOST__;
     delete window.__COMPONENTS__;
@@ -91,7 +91,7 @@ describe(`globals cases`, () => {
   });
 
   it("should successfully get the default stage host", () => {
-    const expectedResult = "mock://msmaster.qa.paypal.com";
+    const expectedResult = "mock://sandbox.paypal.com";
     const result = getDefaultStageHost();
 
     if (expectedResult !== result) {
@@ -181,7 +181,7 @@ describe(`globals cases`, () => {
   });
 
   it("should successfully get the default service stage host", () => {
-    window.__SERVICE_STAGE_HOST__ = "mock://msmaster.qa.paypal.com";
+    window.__SERVICE_STAGE_HOST__ = "mock://sandbox.paypal.com";
     const result = getDefaultServiceStageHost();
 
     if (__SERVICE_STAGE_HOST__ !== result) {
@@ -198,7 +198,7 @@ describe(`globals cases`, () => {
   });
 
   it("should get the API stage from the default service stage host", () => {
-    window.__SERVICE_STAGE_HOST__ = "mock://msmaster.qa.paypal.com";
+    window.__SERVICE_STAGE_HOST__ = "mock://sandbox.paypal.com";
     const result = getDefaultAPIStageHost();
 
     if (window.__SERVICE_STAGE_HOST__ !== result) {
