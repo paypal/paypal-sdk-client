@@ -3,6 +3,7 @@
 type TestGlobals = {|
   [string]: string | number | boolean | (() => string | (() => number)),
   __COMPONENTS__: $ReadOnlyArray<string>,
+  __EXPERIMENTATION__: Object,
 |};
 
 export const sdkClientTestGlobals: TestGlobals = {
@@ -20,4 +21,8 @@ export const sdkClientTestGlobals: TestGlobals = {
   __PAYPAL_API_DOMAIN__: "mock://sandbox.paypal.com",
   __COMPONENTS__: ["buttons"],
   __DISABLE_SET_COOKIE__: true,
+  __EXPERIMENTATION__: {
+    __EXPERIENCE__: "1122",
+    __TREATMENT__: "1234",
+  },
 };

@@ -119,3 +119,11 @@ export function getDisableSetCookie(): boolean {
 
   return false;
 }
+
+export function getExperimentation(): Object {
+  if (typeof __EXPERIMENTATION__ !== "undefined") {
+    return __EXPERIMENTATION__;
+  }
+
+  return null;
+}
