@@ -10,18 +10,31 @@ type GetLogger = () => LoggerType;
 
 export const getLogger: GetLogger = memoize(() => {
   const disableSetCookieQuery = "disableSetCookie=true";
-  let params = "?";
-  const experimentation = getExperimentation();
+  let params = "";
 
   if (getDisableSetCookie()) {
-    params += disableSetCookieQuery;
+    params = `?${disableSetCookieQuery}`;
   }
 
+  const experimentation = getExperimentation();
+
   if (experimentation) {
-    params =
-      params.length > 1
-        ? `${params}&experimentation=${JSON.stringify(experimentation)}`
-        : `${params}experimentation=${JSON.stringify(experimentation)}`;
+    const { experience, treatment } = experimentation;
+    let experimentationParam = params.length > 0 ? "&" : "?";
+
+    if (experience) {
+      experimentationParam += `experimation.experience=${experience}`;
+    }
+
+    if (treatment) {
+      if (experience) {
+        experimentationParam += `&experimation.treatment=${treatment}`;
+      } else {
+        experimentationParam += `experimation.treatment=${treatment}`;
+      }
+    }
+
+    params += experimentationParam;
   }
 
   const loggerUrl =
