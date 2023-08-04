@@ -122,15 +122,18 @@ export function getDisableSetCookie(): boolean {
 
 export function getExperimentation(): Object {
   if (typeof __EXPERIMENTATION__ !== "undefined") {
-    const experimation = {};
-    if (__EXPERIMENTATION__.__EXPERIENCE__) {
-      experimation.experience = __EXPERIMENTATION__.__EXPERIENCE__;
-    }
-    if (__EXPERIMENTATION__.__TREATMENT__) {
-      experimation.treatment = __EXPERIMENTATION__.__TREATMENT__;
+    if (__EXPERIMENTATION__) {
+      const experimation = {};
+      if (__EXPERIMENTATION__.__EXPERIENCE__) {
+        experimation.experience = __EXPERIMENTATION__.__EXPERIENCE__;
+      }
+      if (__EXPERIMENTATION__.__TREATMENT__) {
+        experimation.treatment = __EXPERIMENTATION__.__TREATMENT__;
+      }
+      return experimation;
     }
 
-    return experimation;
+    return null;
   }
 
   return null;
