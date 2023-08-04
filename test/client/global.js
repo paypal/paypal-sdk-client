@@ -328,4 +328,18 @@ describe(`globals cases`, () => {
       );
     }
   });
+
+  it("should not get experimation value", () => {
+    window.__EXPERIMENTATION__ = null;
+    const expectedResult = null;
+    const result = getExperimentation();
+
+    if (result !== expectedResult) {
+      throw new Error(
+        `Expected experimation to be ${String(expectedResult)}, got ${String(
+          result
+        )}`
+      );
+    }
+  });
 });
