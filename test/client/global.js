@@ -21,6 +21,7 @@ import {
   getVersion,
   getCorrelationID,
   getPlatform,
+  getExperimentation,
 } from "../../src";
 
 describe(`globals cases`, () => {
@@ -304,6 +305,26 @@ describe(`globals cases`, () => {
         `Expected funding eligibility type  to be ${
           window.__FUNDING_ELIGIBILITY__
         }, got ${result.toString()}`
+      );
+    }
+  });
+
+  it("should successfully get experimation value", () => {
+    window.__EXPERIMENTATION__ = {
+      __EXPERIENCE__: "1234, 4321",
+      __TREATMENT__: "8765,7890",
+    };
+    const expectedResult = {
+      experience: "1234, 4321",
+      treatment: "8765,7890",
+    };
+    const result = getExperimentation();
+
+    if (JSON.stringify(result) !== JSON.stringify(expectedResult)) {
+      throw new Error(
+        `Expected experimation to be ${JSON.stringify(
+          expectedResult
+        )}, got ${JSON.stringify(result)}`
       );
     }
   });
