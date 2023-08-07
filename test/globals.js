@@ -1,9 +1,10 @@
 /* @flow */
+import type { GetExperimentation } from "../src/types";
 
 type TestGlobals = {|
   [string]: string | number | boolean | (() => string | (() => number)),
   __COMPONENTS__: $ReadOnlyArray<string>,
-  __EXPERIMENTATION__: Object,
+  __EXPERIMENTATION__: GetExperimentation,
 |};
 
 export const sdkClientTestGlobals: TestGlobals = {
