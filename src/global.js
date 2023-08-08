@@ -122,19 +122,15 @@ export function getDisableSetCookie(): boolean {
   return false;
 }
 
-export function getExperimentation(): Experimentation | null {
+export function getExperimentation(): Experimentation {
+  const experimation = {
+    experience: "",
+    treatment: "",
+  };
   if (typeof __EXPERIMENTATION__ !== "undefined") {
-    if (__EXPERIMENTATION__) {
-      const experimation: Experimentation = {};
-      if (__EXPERIMENTATION__.__EXPERIENCE__) {
-        experimation.experience = __EXPERIMENTATION__.__EXPERIENCE__;
-      }
-      if (__EXPERIMENTATION__.__TREATMENT__) {
-        experimation.treatment = __EXPERIMENTATION__.__TREATMENT__;
-      }
-      return experimation;
-    }
+    experimation.experience = __EXPERIMENTATION__?.__EXPERIENCE__ || "";
+    experimation.treatment = __EXPERIMENTATION__?.__TREATMENT__ || "";
   }
 
-  return null;
+  return experimation;
 }

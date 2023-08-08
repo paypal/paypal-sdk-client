@@ -329,23 +329,29 @@ describe(`globals cases`, () => {
     }
   });
 
-  it("should get experimation null value", () => {
+  it("should successfully get experimation default value when null", () => {
     window.__EXPERIMENTATION__ = null;
-    const expectedResult = null;
+    const expectedResult = {
+      experience: "",
+      treatment: "",
+    };
     const result = getExperimentation();
 
-    if (result !== expectedResult) {
+    if (JSON.stringify(result) !== JSON.stringify(expectedResult)) {
       throw new Error(
-        `Expected experimation to be ${String(expectedResult)}, got ${String(
-          result
-        )}`
+        `Expected experimation to be ${JSON.stringify(
+          expectedResult
+        )}, got ${JSON.stringify(result)}`
       );
     }
   });
 
-  it("should get experimation empty value", () => {
+  it("should successfully get experimation default value when empty", () => {
     window.__EXPERIMENTATION__ = {};
-    const expectedResult = {};
+    const expectedResult = {
+      experience: "",
+      treatment: "",
+    };
     const result = getExperimentation();
 
     if (JSON.stringify(result) !== JSON.stringify(expectedResult)) {
