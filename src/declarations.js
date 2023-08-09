@@ -33,3 +33,7 @@ declare var __FUNDING_ELIGIBILITY__: FundingEligibilityType;
 
 // Experiment Variable
 declare var __DISABLE_SET_COOKIE__: boolean;
+declare var __EXPERIMENTATION__: {|
+  __EXPERIENCE__?: string,
+  __TREATMENT__?: string,
+|};
