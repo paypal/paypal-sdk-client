@@ -260,8 +260,9 @@ function sanitizeSDKUrl(sdkUrl: string): string {
 }
 
 export function unpackSDKMeta(sdkMeta?: string): SDKMeta {
+  const decodedMeta = decodeURIComponent(sdkMeta);
   const { url, attrs } = sdkMeta
-    ? JSON.parse(Buffer.from(sdkMeta, "base64").toString("utf8"))
+    ? JSON.parse(Buffer.from(decodedMeta, "base64").toString("utf8"))
     : DEFAULT_SDK_META;
 
   if (url) {
