@@ -114,7 +114,7 @@ export function setupLogger() {
     // https://www.paypal.com/us/gifts/
     const isLoadedInFrame = isPayPalDomain() && window.xprops;
     const sdkLoadTime =
-      typeof loadTime === "number" ? loadTime.toString() : undefined;
+      typeof loadTime === "number" ? Number(loadTime) : undefined;
 
     logger
       .info(`setup_${getEnv()}`)
