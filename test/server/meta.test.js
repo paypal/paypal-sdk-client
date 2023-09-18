@@ -71,6 +71,28 @@ test("should construct a valid script url with paypalobjects", () => {
   }
 });
 
+test("should construct a valid script url with url encoded sdkMeta and trailing ? in checkout.js", () => {
+  const sdkUrl = "https://www.paypalobjects.com/api/checkout.js?";
+
+  const { getSDKLoader } = unpackSDKMeta(
+    encodeURIComponent(
+      Buffer.from(
+        JSON.stringify({
+          url: sdkUrl,
+        })
+      ).toString("base64")
+    )
+  );
+
+  const $ = cheerio.load(getSDKLoader());
+  const script = $("script[data-paypal-checkout]");
+  const src = script.attr("src");
+
+  if (src !== "https://www.paypalobjects.com/api/checkout.js") {
+    throw new Error(`unexpected script url ${src}`);
+  }
+});
+
 test("should construct a valid script url with checkout.js using the qa cdn", () => {
   const sdkUrl =
     "https://uideploy--staticcontent--7482d416a81b5--ghe.preview.dev.paypalinc.com/api/checkout.js";

@@ -34,8 +34,10 @@ export function createExperiment(
 
     logCheckpoint({ treatment, checkpoint, payload }) {
       if (treatment.indexOf(name) !== -1) {
+        // $FlowFixMe
         log.info(`${treatment}_${checkpoint}`, payload);
       } else {
+        // $FlowFixMe
         log.info(`${name}_${treatment}_${checkpoint}`, payload);
       }
 
