@@ -1,4 +1,5 @@
 /* @flow */
+import { ENV } from "@paypal/sdk-constants/src";
 
 export const FPTI_CONTEXT_TYPE = {
   ORDER_ID: ("EC-Token": "EC-Token"),
@@ -13,3 +14,15 @@ export const FPTI_TRANSITION = {
 export const FPTI_STATE = {
   PXP: ("PXP_CHECK": "PXP_CHECK"),
 };
+
+export const FRAUDNET_URL = {
+  [ENV.LOCAL]: "https://www.msmaster.qa.paypal.com/en_US/m/fb-raw.js",
+  [ENV.STAGE]:
+    "https://stage2mb044.qa.paypal.com/fraudnetjsnodeweb/automate/develop/stage_raw.js",
+  [ENV.SANDBOX]: "https://c.paypal.com/da/r/fb.js",
+  [ENV.PRODUCTION]: "https://c.paypal.com/da/r/fb.js",
+  [ENV.TEST]: "https://c.paypal.com/da/r/fb.js",
+};
+
+export const FRAUDNET_FNCLS = "fnparams-dede7cc5-15fd-4c75-a9f4-36c430ee3a99";
+export const FRAUDNET_APP_NAME = "SMART_PAYMENT_BUTTONS";
