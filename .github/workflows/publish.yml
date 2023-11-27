@@ -8,12 +8,14 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: ${{ github.head_ref }}
+      - name: 🤝 Set Node version from .nvmrc
+        run: echo NVMRC=`cat .nvmrc` >> $GITHUB_ENV
 
       - name: ⎔ Setup node
         # sets up the .npmrc file to publish to npm
         uses: actions/setup-node@v3
         with:
-          node-version: "16"
+          node-version: ${{ env.NVMRC }}
           registry-url: "https://registry.npmjs.org"
 
       - name: 📥 Download deps
