@@ -16,9 +16,10 @@ export const FPTI_STATE = {
 };
 
 export const FRAUDNET_URL = {
-  [ENV.LOCAL]: "https://www.msmaster.qa.paypal.com/en_US/m/fb-raw.js",
+  [ENV.LOCAL]:
+    "https://cdn-latest.static.engineering.dev.paypalinc.com/rdaAssets/fraudnet/async/fb-raw.js",
   [ENV.STAGE]:
-    "https://stage2mb044.qa.paypal.com/fraudnetjsnodeweb/automate/develop/stage_raw.js",
+    "https://cdn-latest.static.engineering.dev.paypalinc.com/rdaAssets/fraudnet/async/fb-raw.js",
   [ENV.SANDBOX]: "https://c.paypal.com/da/r/fb.js",
   [ENV.PRODUCTION]: "https://c.paypal.com/da/r/fb.js",
   [ENV.TEST]: "https://c.paypal.com/da/r/fb.js",

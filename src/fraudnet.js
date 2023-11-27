@@ -38,6 +38,7 @@ export const createConfigScript = ({
     const config: FraudnetConfig = {
       f: clientMetadataID,
       s: appName,
+      io: true,
       cb1: "fnCallback",
     };
 
