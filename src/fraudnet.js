@@ -29,7 +29,6 @@ export const createConfigScript = ({
   clientMetadataID,
   appName,
 }) => {
-  console.log("### inside 2nd call");
   return new ZalgoPromise((resolve) => {
     if (__TEST__) {
       return resolve();
@@ -64,7 +63,6 @@ export const createFraudnetScript = ({
   queryStringParams,
   timeout,
 }) => {
-  console.log("### inside 2nd call");
   return new ZalgoPromise((resolve) => {
     const fraudnetScript = document.createElement("script");
     const queryString = Object.keys(queryStringParams)
@@ -96,7 +94,6 @@ export const loadFraudnet: Memoized<FraudnetOptions> = memoize(
     appName,
     queryStringParams = {},
   }) => {
-    console.log("### Inside First call");
     createConfigScript({ env, cspNonce, clientMetadataID, appName });
     createFraudnetScript({ cspNonce, env, timeout, queryStringParams });
   }
