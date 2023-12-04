@@ -81,6 +81,7 @@ describe.only("data-collector.js", () => {
 
     expect(document.createElement).toHaveBeenCalledWith("script");
     expect(mockSetAttribute).toHaveBeenCalledWith("nonce", testInputs.cspNonce);
+    // TODO: Update the test and implementation to address the need for the SRC attribute and various env urls
     // expect(mockSetAttribute).toHaveBeenCalledWith("src", expect.stringContaining("fb.js"))
     expect(mockListener).toHaveBeenCalledWith("error", expect.any(Function));
     expect(mockAppendChild).toBeCalledWith(mockReturnedElement);
