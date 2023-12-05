@@ -37,7 +37,6 @@ import {
 import { getPath, getDefaultNamespace, getSDKHost } from "./global";
 import { CLIENT_ID_ALIAS } from "./config";
 import { getComputedLocales } from "./utils";
-import { isPayPalDomain } from "./domains";
 
 type GetSDKScript = () => HTMLScriptElement;
 
@@ -340,7 +339,7 @@ export function getUserExperienceFlow(): ?string {
 }
 
 export function getSDKToken(): ?string {
-  return isPayPalDomain() ? getSDKAttribute(SDK_SETTINGS.SDK_TOKEN) : "";
+  return getSDKAttribute(SDK_SETTINGS.SDK_TOKEN);
 }
 
 // whether in zoid window
