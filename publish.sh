@@ -30,7 +30,8 @@ if [ "$current_branch" != "$default_branch" ]; then
   npm publish --tag $tag
 else
   npm test;
-  npm version ${1-bump}
+  npm version ${1-$bump}
+  echo "npm version ${1-$bump}"
 
   git push;
   git push --tags;
