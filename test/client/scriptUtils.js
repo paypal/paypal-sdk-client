@@ -10,6 +10,7 @@ import {
   getCSPNonce,
   getEnableThreeDomainSecure,
   getUserExperienceFlow,
+  getSDKToken,
   isChildWindow,
 } from "../../src/script";
 import { insertMockSDKScript } from "../../src";
@@ -158,6 +159,21 @@ describe(`script utils cases`, () => {
     if (result !== "token") {
       throw new Error(
         `should return the "token" word, but got: ${String(result)}`
+      );
+    }
+  });
+
+  it("getSDKToken should return a sdk-token string", () => {
+    insertMockSDKScript({
+      attributes: {
+        "data-sdk-client-token": "sdk-token",
+      },
+    });
+    const result = getSDKToken();
+
+    if (result !== "sdk-token") {
+      throw new Error(
+        `should return the "sdk-token" word, but got: ${String(result)}`
       );
     }
   });

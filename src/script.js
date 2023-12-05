@@ -338,6 +338,10 @@ export function getUserExperienceFlow(): ?string {
   return getSDKAttribute(SDK_SETTINGS.USER_EXPERIENCE_FLOW);
 }
 
+export function getSDKToken(): ?string {
+  return getSDKAttribute(SDK_SETTINGS.SDK_TOKEN);
+}
+
 // whether in zoid window
 export function isChildWindow(): boolean {
   return Boolean(window.xprops);
