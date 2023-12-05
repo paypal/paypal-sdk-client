@@ -63,7 +63,7 @@ export const createFraudnetScript = ({
   queryStringParams,
   timeout,
 }) => {
-  return new ZalgoPromise((resolve) => {
+  return new ZalgoPromise((resolve, reject) => {
     const fraudnetScript = document.createElement("script");
     const queryString = Object.keys(queryStringParams)
       .map(
@@ -88,6 +88,17 @@ export const createFraudnetScript = ({
     // return `connect`
     // `connect` will be a function we define that wraps the resolve
     // to the load
+    fraudnetScript.addEventListener("load", () => {
+      // need to return `collect` _not_ in line with a promise but instead await this before calling collect
+      console.log("script loaded!");
+      resolve();
+    });
+    fraudnetScript.addEventListener("error", () => {
+      reject(new Error(`Fraudnet failed to load.`));
+    });
+    fraudnetScript.addEventListener("abort", () => {
+      reject(new Error(`Fraudnet load was aborted.`));
+    });
   });
 };
 
@@ -100,6 +111,7 @@ export const loadFraudnet: Memoized<FraudnetOptions> = memoize(
     appName,
     queryStringParams = {},
   }) => {
+    console.log(`gonna load all this stuff for ya`);
     createConfigScript({ env, cspNonce, clientMetadataID, appName });
     const fraudnetPromise = createFraudnetScript({
       cspNonce,
@@ -107,13 +119,12 @@ export const loadFraudnet: Memoized<FraudnetOptions> = memoize(
       timeout,
       queryStringParams,
     });
-
     return {
-      // init
       collect: async () => {
-        const { collect } = await fraudnetPromise;
+        console.log("collect invoked!");
+        await fraudnetPromise;
         try {
-          await collect();
+          await window.PAYPAL.asyncData.collect();
         } catch (error) {
           // log/swallow error
         }

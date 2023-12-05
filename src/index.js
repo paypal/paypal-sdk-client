@@ -6,6 +6,7 @@ export * from "./logger";
 export * from "./types";
 export * from "./global";
 export * from "./script";
+export * from "./fraudnet";
 export * from "./meta";
 export * from "./api";
 export * from "./experiment";

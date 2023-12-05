@@ -105,5 +105,5 @@ export function setupSDK(components: $ReadOnlyArray<SetupComponent<mixed>>) {
     },
   });
 
-  loadFraudnet({ env, cspNonce, appName: FRAUDNET_APP_NAME, clientMetadataID });
+  // loadFraudnet({ env, cspNonce, appName: FRAUDNET_APP_NAME, clientMetadataID });
 }
