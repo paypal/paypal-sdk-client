@@ -70,6 +70,7 @@ export const createFraudnetScript = ({
         (key) => `${key}=${encodeURIComponent(String(queryStringParams[key]))}`
       )
       .join("&");
+
     const fraudnetUrl = queryString.length
       ? `${FRAUDNET_URL[env]}?${queryString}`
       : FRAUDNET_URL[env];
@@ -82,6 +83,11 @@ export const createFraudnetScript = ({
     setTimeout(resolve, timeout);
     // eslint-disable-next-line compat/compat
     document.body.appendChild(fraudnetScript);
+    // wait on load events
+    // once load event fires::: resolve with _something_
+    // return `connect`
+    // `connect` will be a function we define that wraps the resolve
+    // to the load
   });
 };
 
@@ -95,6 +101,23 @@ export const loadFraudnet: Memoized<FraudnetOptions> = memoize(
     queryStringParams = {},
   }) => {
     createConfigScript({ env, cspNonce, clientMetadataID, appName });
-    createFraudnetScript({ cspNonce, env, timeout, queryStringParams });
+    const fraudnetPromise = createFraudnetScript({
+      cspNonce,
+      env,
+      timeout,
+      queryStringParams,
+    });
+
+    return {
+      // init
+      collect: async () => {
+        const { collect } = await fraudnetPromise;
+        try {
+          await collect();
+        } catch (error) {
+          // log/swallow error
+        }
+      },
+    };
   }
 );
