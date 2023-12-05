@@ -1,8 +1,6 @@
 #!/bin/sh
 
 # This script will determine the type of release based on the git branch. When the default branch is used, it will be a `patch` that's published to npm under the `latest` dist-tag. Any other branch will be a `prelease` that's published to npm under the `alpha` dist-tag.
-bump='patch'
-tag='latest'
 
 set -e;
 
@@ -30,8 +28,8 @@ if [ "$current_branch" != "$default_branch" ]; then
   npm publish --tag $tag
 else
   npm test;
-  npm version ${1-$bump}
-  echo "npm version ${1-$bump}"
+  npm version ${1-patch}
+  echo "npm version ${1-patch}"
 
   git push;
   git push --tags;
