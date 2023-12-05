@@ -29,7 +29,7 @@ if [ "$current_branch" != "$default_branch" ]; then
 else
   npm test;
   npm version ${1-patch}
-  echo "npm version ${1-patch}"
+  echo "Publishing NPM version: ${1-patch}"
 
   git push;
   git push --tags;
