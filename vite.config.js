@@ -1,6 +1,7 @@
 /* eslint-disable spaced-comment */
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference types="vitest" />
+import { flowPlugin, esbuildFlowPlugin } from "@bunchtogether/vite-plugin-flow";
 
 // Configure Vitest (https://vitest.dev/config/)
 
@@ -46,4 +47,10 @@ export default defineConfig({
   test: {
     environment: "jsdom",
   },
+  optimizeDeps: {
+    esbuildOptions: {
+      plugins: [esbuildFlowPlugin()],
+    },
+  },
+  plugins: [flowPlugin()],
 });
