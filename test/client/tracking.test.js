@@ -1,4 +1,5 @@
 /* @flow */
+import { describe, it } from "vitest";
 
 import { getSDKInitTime, setupLogger } from "../../src/tracking";
 
