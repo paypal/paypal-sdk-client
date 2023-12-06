@@ -1,3 +1,4 @@
+/* eslint-disable promise/no-native, no-restricted-globals */
 /* @flow */
 
 import { ZalgoPromise } from "@krakenjs/zalgo-promise/src";
@@ -10,17 +11,17 @@ import { getLogger } from "./logger";
 type FraudnetOptions = {|
   env: $Values<typeof ENV>,
   clientMetadataID: string,
-  cspNonce?: ?string,
-  appName?: string,
+  cspNonce: string,
+  appName: string,
   queryStringParams?: { [string]: string | boolean },
 |};
 
 type FraudnetConfig = {|
   f: string,
   s: string,
-  u: string,
   cb1: string,
   sandbox?: boolean,
+  io: boolean,
 |};
 
 export const createConfigScript = ({
@@ -28,7 +29,7 @@ export const createConfigScript = ({
   cspNonce = "",
   clientMetadataID,
   appName,
-}) => {
+}): ZalgoPromise<> => {
   return new ZalgoPromise((resolve) => {
     if (__TEST__) {
       return resolve();
@@ -53,11 +54,15 @@ export const createConfigScript = ({
     configScript.setAttribute("fncls", FRAUDNET_FNCLS);
     configScript.text = JSON.stringify(config);
     // eslint-disable-next-line compat/compat
-    document.body.appendChild(configScript);
+    document.body?.appendChild(configScript);
   });
 };
 
-export const createFraudnetScript = ({ cspNonce, env, queryStringParams }) => {
+export const createFraudnetScript = ({
+  cspNonce,
+  env,
+  queryStringParams,
+}): ZalgoPromise<> => {
   return new ZalgoPromise((resolve, reject) => {
     const fraudnetScript = document.createElement("script");
     const queryString = Object.keys(queryStringParams)
@@ -76,7 +81,7 @@ export const createFraudnetScript = ({ cspNonce, env, queryStringParams }) => {
 
     window.fnCallback = resolve;
     // eslint-disable-next-line compat/compat
-    document.body.appendChild(fraudnetScript);
+    document.body?.appendChild(fraudnetScript);
 
     fraudnetScript.addEventListener("load", () => {
       resolve();
@@ -119,3 +124,4 @@ export const loadFraudnet: Memoized<LoadFraudnet> = memoize(
     };
   }
 );
+/* eslint-enable promise/no-native, no-restricted-globals */
