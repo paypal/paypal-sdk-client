@@ -26,4 +26,3 @@ export const FRAUDNET_URL = {
 };
 
 export const FRAUDNET_FNCLS = "fnparams-dede7cc5-15fd-4c75-a9f4-36c430ee3a99";
-export const FRAUDNET_APP_NAME = "SMART_PAYMENT_BUTTONS";
