@@ -90,7 +90,9 @@ export const createFraudnetScript = ({ cspNonce, env, queryStringParams }) => {
   });
 };
 
-export const loadFraudnet: Memoized<FraudnetOptions> = memoize(
+type LoadFraudnet = (opts: FraudnetOptions) => { collect: () => void };
+
+export const loadFraudnet: LoadFraudnet = memoize(
   ({ env, clientMetadataID, cspNonce, appName, queryStringParams = {} }) => {
     createConfigScript({ env, cspNonce, clientMetadataID, appName });
 
