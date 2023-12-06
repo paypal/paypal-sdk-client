@@ -26,7 +26,7 @@ type FraudnetConfig = {|
 |};
 
 type CreateConfigOptions = {|
-  env: string,
+  env: $Values<typeof ENV>,
   cspNonce: string,
   clientMetadataID: string,
   appName: string,
@@ -34,7 +34,7 @@ type CreateConfigOptions = {|
 
 type CreateFraudnetOptions = {|
   cspNonce: string,
-  env: string,
+  env: $Values<typeof ENV>,
   queryStringParams?: { [string]: string | boolean },
 |};
 
