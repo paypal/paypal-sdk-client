@@ -19,9 +19,24 @@ type FraudnetOptions = {|
 type FraudnetConfig = {|
   f: string,
   s: string,
+  u?: string,
+  io: boolean,
   cb1: string,
   sandbox?: boolean,
   io: boolean,
+|};
+
+type CreateConfigOptions = {|
+  env: string,
+  cspNonce: string,
+  clientMetadataID: string,
+  appName: string,
+|};
+
+type CreateFraudnetOptions = {|
+  cspNonce: string,
+  env: string,
+  queryStringParams?: { [string]: string | boolean },
 |};
 
 export const createConfigScript = ({
@@ -29,7 +44,7 @@ export const createConfigScript = ({
   cspNonce = "",
   clientMetadataID,
   appName,
-}): ZalgoPromise<> => {
+}: CreateConfigOptions): ZalgoPromise<void> => {
   return new ZalgoPromise((resolve) => {
     if (__TEST__) {
       return resolve();
@@ -61,8 +76,8 @@ export const createConfigScript = ({
 export const createFraudnetScript = ({
   cspNonce,
   env,
-  queryStringParams,
-}): ZalgoPromise<> => {
+  queryStringParams = {},
+}: CreateFraudnetOptions): ZalgoPromise<void> => {
   return new ZalgoPromise((resolve, reject) => {
     const fraudnetScript = document.createElement("script");
     const queryString = Object.keys(queryStringParams)
