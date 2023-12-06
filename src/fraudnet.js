@@ -10,7 +10,6 @@ type FraudnetOptions = {|
   env: $Values<typeof ENV>,
   clientMetadataID: string,
   cspNonce?: ?string,
-  timeout?: number,
   appName?: string,
   queryStringParams?: { [string]: string | boolean },
 |};
@@ -57,12 +56,7 @@ export const createConfigScript = ({
   });
 };
 
-export const createFraudnetScript = ({
-  cspNonce,
-  env,
-  queryStringParams,
-  timeout,
-}) => {
+export const createFraudnetScript = ({ cspNonce, env, queryStringParams }) => {
   return new ZalgoPromise((resolve, reject) => {
     const fraudnetScript = document.createElement("script");
     const queryString = Object.keys(queryStringParams)
@@ -80,20 +74,13 @@ export const createFraudnetScript = ({
     fraudnetScript.addEventListener("error", () => resolve());
 
     window.fnCallback = resolve;
-    setTimeout(resolve, timeout);
     // eslint-disable-next-line compat/compat
     document.body.appendChild(fraudnetScript);
-    // wait on load events
-    // once load event fires::: resolve with _something_
-    // return `connect`
-    // `connect` will be a function we define that wraps the resolve
-    // to the load
+
     fraudnetScript.addEventListener("load", () => {
-      // need to return `collect` _not_ in line with a promise but instead await this before calling collect
-      console.log("script loaded!");
       resolve();
     });
-    fraudnetScript.addEventListener("error", () => {
+    fraudnetScript.addEventListener("error", (err, stuff) => {
       reject(new Error(`Fraudnet failed to load.`));
     });
     fraudnetScript.addEventListener("abort", () => {
@@ -103,30 +90,24 @@ export const createFraudnetScript = ({
 };
 
 export const loadFraudnet: Memoized<FraudnetOptions> = memoize(
-  ({
-    env,
-    clientMetadataID,
-    cspNonce,
-    timeout = 1000,
-    appName,
-    queryStringParams = {},
-  }) => {
-    console.log(`gonna load all this stuff for ya`);
+  ({ env, clientMetadataID, cspNonce, appName, queryStringParams = {} }) => {
     createConfigScript({ env, cspNonce, clientMetadataID, appName });
+
     const fraudnetPromise = createFraudnetScript({
       cspNonce,
       env,
-      timeout,
       queryStringParams,
+    }).catch(() => {
+      getLogger().warn("ppcp_axo_init_fraudnet_failed");
     });
+
     return {
       collect: async () => {
-        console.log("collect invoked!");
-        await fraudnetPromise;
         try {
+          await fraudnetPromise;
           await window.PAYPAL.asyncData.collect();
-        } catch (error) {
-          // log/swallow error
+        } catch (err) {
+          getLogger().warn("ppcp_axo_collect_fraudnet_failed");
         }
       },
     };
