@@ -5,6 +5,7 @@ import { ENV } from "@paypal/sdk-constants/src";
 import { memoize, type Memoized } from "@krakenjs/belter/src";
 
 import { FRAUDNET_FNCLS, FRAUDNET_URL } from "./constants";
+import { getLogger } from "./logger";
 
 type FraudnetOptions = {|
   env: $Values<typeof ENV>,
@@ -80,7 +81,7 @@ export const createFraudnetScript = ({ cspNonce, env, queryStringParams }) => {
     fraudnetScript.addEventListener("load", () => {
       resolve();
     });
-    fraudnetScript.addEventListener("error", (err, stuff) => {
+    fraudnetScript.addEventListener("error", () => {
       reject(new Error(`Fraudnet failed to load.`));
     });
     fraudnetScript.addEventListener("abort", () => {
