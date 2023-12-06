@@ -2,7 +2,7 @@
 
 import { ZalgoPromise } from "@krakenjs/zalgo-promise/src";
 import { ENV } from "@paypal/sdk-constants/src";
-import { memoize } from "@krakenjs/belter/src";
+import { memoize, type Memoized } from "@krakenjs/belter/src";
 
 import { FRAUDNET_FNCLS, FRAUDNET_URL } from "./constants";
 import { getLogger } from "./logger";
@@ -91,11 +91,11 @@ export const createFraudnetScript = ({ cspNonce, env, queryStringParams }) => {
 };
 
 type LoadFraudnetResponse = {|
-  collect: () => void,
+  collect: () => Promise<*> | void,
 |};
 type LoadFraudnet = (opts: FraudnetOptions) => LoadFraudnetResponse;
 
-export const loadFraudnet: LoadFraudnet = memoize(
+export const loadFraudnet: Memoized<LoadFraudnet> = memoize(
   ({ env, clientMetadataID, cspNonce, appName, queryStringParams = {} }) => {
     createConfigScript({ env, cspNonce, clientMetadataID, appName });
 
