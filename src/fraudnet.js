@@ -20,7 +20,6 @@ type FraudnetConfig = {|
   f: string,
   s: string,
   u?: string,
-  io: boolean,
   cb1: string,
   sandbox?: boolean,
   io: boolean,

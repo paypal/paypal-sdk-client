@@ -18,6 +18,7 @@ export const FPTI_STATE = {
 type FraudnetUrl = {|
   [$Values<typeof ENV>]: string,
 |};
+
 export const FRAUDNET_URL = {
   [ENV.LOCAL]:
     "https://cdn-latest.static.engineering.dev.paypalinc.com/rdaAssets/fraudnet/async/fb-raw.js",
