@@ -2,6 +2,7 @@
 /* eslint max-lines: off */
 
 import cheerio from "cheerio";
+import { test, afterEach } from "vitest";
 
 import { unpackSDKMeta } from "../../server";
 

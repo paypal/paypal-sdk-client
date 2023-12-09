@@ -1,10 +1,30 @@
 /* @flow */
+import { describe, beforeAll, beforeEach, it, expect, vi } from "vitest";
+import { setupServer } from "msw/node";
+import { http, HttpResponse } from "msw";
 
-import { $mockEndpoint } from "@krakenjs/sync-browser-mocks/dist/sync-browser-mocks";
-
+import { getCurrentScript, base64encode } from "@krakenjs/belter/src";
 import { createAccessToken, createOrder } from "../../src/api";
 
+const BASE_URL = `${window.location.protocol}//${window.location.host}`;
+
+vi.mock("@krakenjs/belter/src", async () => {
+  const actual = await vi.importActual("@krakenjs/belter/src");
+  return {
+    ...actual,
+    getCurrentScript: vi.fn(),
+  };
+});
+
+const clientIdMatch = (req, desiredClientId) =>
+  req.headers.get("Authorization").split(" ")[1] ===
+  base64encode(`${desiredClientId}:`);
+
 describe("api cases", () => {
+  let order;
+  let mockWorker;
+  const invalidClientId = "invalid-client-id";
+  const emptyResponseClientId = "empty-response-client-id";
   const expectedToken =
     "A21AAKNZBaqilFBC4dVVz-tr-ySIT78NREeBidy3lkGdr-EA8wbhGrByPayhgnJRPE5xg4QW46moDbCFjZ13i1GH-Ax4SjtjA";
   const defaultAuthResponse = {
@@ -14,30 +34,47 @@ describe("api cases", () => {
     app_id: "APP-80W284485P519543T",
     expires_in: 31838,
     nonce: "2022-03-07T22:41:38ZqHkiC0_odfzFwo27_X0wVuF67STYq39KRplBeeyY2bk",
+    error: null,
   };
-  const mockAuthEndpoint = function (data = defaultAuthResponse) {
-    $mockEndpoint
-      .register({
-        method: "POST",
-        uri: `${window.location.protocol}//${window.location.host}/v1/oauth2/token`,
-        data,
-      })
-      .listen();
+
+  const makeMockAuthHandler = (
+    data = defaultAuthResponse,
+    statusCode = 200
+  ) => {
+    return http.post(`${BASE_URL}/v1/oauth2/token`, async ({ request }) => {
+      if (clientIdMatch(request, invalidClientId)) {
+        return HttpResponse.json(
+          { error: "invalid_client" },
+          { status: statusCode }
+        );
+      } else if (clientIdMatch(request, emptyResponseClientId)) {
+        return HttpResponse.json({}, { status: statusCode });
+      }
+
+      return HttpResponse.json(data, { status: statusCode });
+    });
   };
-  const mockCreateOrder = function (data) {
-    $mockEndpoint
-      .register({
-        method: "POST",
-        uri: `${window.location.protocol}//${window.location.host}/v2/checkout/orders`,
-        data,
-      })
-      .listen();
+
+  const makeMockOrdersHandler = (data = {}, statusCode = 200) => {
+    return http.post(`${BASE_URL}/v2/checkout/orders`, async () => {
+      return HttpResponse.json(data, { status: statusCode });
+    });
   };
-  let order;
+
+  beforeAll(() => {
+    mockWorker = setupServer(makeMockOrdersHandler(), makeMockAuthHandler());
+    mockWorker.listen();
+  });
 
   beforeEach(() => {
+    getCurrentScript.mockReturnValue({
+      src: `https://sdkplz.com/sdk/js?intent=capture`,
+      attributes: [],
+    });
+    vi.clearAllMocks();
+
     order = {
-      intent: "capture",
+      intent: "CAPTURE",
       purchase_units: [
         {
           amount: {
@@ -50,93 +87,42 @@ describe("api cases", () => {
   });
 
   it("createAccessToken should return a valid token", async () => {
-    mockAuthEndpoint();
     const result = await createAccessToken("testClient");
 
-    if (result !== expectedToken) {
-      throw new Error(
-        `should receive token equals '${expectedToken}', but got: ${String(
-          result
-        )}`
-      );
-    }
+    expect(result).toEqual(expectedToken);
   });
 
-  it("createAccessToken should return invalid client argument", async () => {
-    mockAuthEndpoint({
-      error: "invalid_client",
-    });
-
-    try {
-      await createAccessToken("testClient");
-    } catch (err) {
-      if (!err.message.startsWith("Auth Api invalid client id:")) {
-        throw new Error(
-          `should throw an error message starting with 'Auth Api invalid client id:', but got: '${err}'`
-        );
-      }
-    }
+  it("createAccessToken should throw invalid client argument error", async () => {
+    await expect(() => createAccessToken(invalidClientId)).rejects.toThrowError(
+      /Auth Api invalid client id:/
+    );
   });
 
   it("createAccessToken should return an error message when response is an empty object", async () => {
-    mockAuthEndpoint({});
-
-    try {
-      await createAccessToken("testClient");
-    } catch (err) {
-      if (!err.message.startsWith("Auth Api response error:")) {
-        throw new Error(
-          `should throw an error message starting with 'Auth Api response error:', but got: '${err}'`
-        );
-      }
-    }
+    await expect(() =>
+      createAccessToken(emptyResponseClientId)
+    ).rejects.toThrow(/Auth Api response error:/);
   });
 
   it("createOrder should throw an error when clientId is null", async () => {
-    const expectedErrorMessage = "Client ID not passed";
-
-    try {
-      // $FlowIgnore[incompatible-call]
-      await createOrder(null);
-    } catch (err) {
-      if (err.message !== expectedErrorMessage) {
-        throw new Error(
-          `should throw an error with message '${expectedErrorMessage}', but got: '${err.message}'`
-        );
-      }
-    }
+    expect(() => createOrder(null)).toThrowError(/Client ID not passed/);
   });
 
   it("createOrder should throw an error when order is null", async () => {
-    const expectedErrorMessage = "Expected order details to be passed";
-
-    try {
-      // $FlowIgnore[incompatible-call]
-      await createOrder("testClient");
-    } catch (err) {
-      if (err.message !== expectedErrorMessage) {
-        throw new Error(
-          `should throw an error with message '${expectedErrorMessage}', but got: '${err.message}'`
-        );
-      }
-    }
+    expect(() => createOrder("testClient")).toThrow(
+      /Expected order details to be passed/
+    );
   });
 
   it("createOrder should throw an error when order intent does not match with query parameters intent", async () => {
     const expectedErrorMessage =
       "Unexpected intent: authorize passed to order.create. Please ensure you are passing /sdk/js?intent=authorize in the paypal script tag.";
+
     order.intent = "authorize";
 
-    try {
-      // $FlowIgnore[incompatible-call]
-      await createOrder("testClient", order);
-    } catch (err) {
-      if (err.message !== expectedErrorMessage) {
-        throw new Error(
-          `should throw an error with message '${expectedErrorMessage}', but got: '${err.message}'`
-        );
-      }
-    }
+    expect(() => createOrder("testClient", order)).toThrowError(
+      expectedErrorMessage
+    );
   });
 
   it("createOrder should throw an error when order currency does not match with query parameters currency", async () => {
@@ -144,50 +130,31 @@ describe("api cases", () => {
       "Unexpected currency: AUD passed to order.create. Please ensure you are passing /sdk/js?currency=AUD in the paypal script tag.";
     order.purchase_units[0].amount.currency_code = "AUD";
 
-    try {
-      await createOrder("testClient", order);
-    } catch (err) {
-      if (err.message !== expectedErrorMessage) {
-        throw new Error(
-          `should throw an error with message '${expectedErrorMessage}', but got: '${err.message}'`
-        );
-      }
-    }
+    expect(() => createOrder("testClient", order)).toThrow(
+      expectedErrorMessage
+    );
   });
 
   it("createOrder should throw an error when order identifier is not in the server response", async () => {
     const expectedErrorMessage = "Order Api response error:";
 
-    mockAuthEndpoint();
-    mockCreateOrder({});
-
-    try {
-      await createOrder("testClient", order);
-    } catch (err) {
-      if (!err.message.startsWith(expectedErrorMessage)) {
-        throw new Error(
-          `should and error starting with the string "${expectedErrorMessage}", but got: ${err.message}`
-        );
-      }
-    }
+    await expect(() => createOrder("testClient", order)).rejects.toThrow(
+      expectedErrorMessage
+    );
   });
 
   it("createOrder should return a valid orderId", async () => {
+    // TODO: need to adapt this function to split within the msw worker like for the auth endpoint
+    // unless this is the default?
     const expectedOrderId = "9BL31648CM342010L";
-
-    mockAuthEndpoint();
-    mockCreateOrder({
+    const mockOrderResponse = {
       id: expectedOrderId,
       status: "CREATED",
       links: [],
-    });
+    };
+    mockWorker.use(makeMockOrdersHandler(mockOrderResponse));
 
     const result = await createOrder("testClient", order);
-
-    if (result !== expectedOrderId) {
-      throw new Error(
-        `should return orderId "${expectedOrderId}", but got: ${String(result)}`
-      );
-    }
+    expect(result).toEqual(expectedOrderId);
   });
 });

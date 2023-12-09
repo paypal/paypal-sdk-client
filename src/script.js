@@ -49,18 +49,6 @@ const buildScriptNotFoundError = (host, path, error) => {
 };
 
 export const getSDKScript: GetSDKScript = memoize(() => {
-  if (__TEST__) {
-    const script = getScript({
-      host: getSDKHost(),
-      path: getPath(),
-      reverse: true,
-    });
-    if (!script) {
-      throw buildScriptNotFoundError(getSDKHost(), getPath());
-    }
-    return script;
-  }
-
   try {
     return getCurrentScript();
   } catch (error) {

@@ -25,6 +25,7 @@
     "webpack": "babel-node --plugins=transform-es2015-modules-commonjs ./node_modules/.bin/webpack --progress",
     "jest": "jest test/server --env=node --no-cache --collectCoverageFrom='server/' --coverageDirectory='coverage/jest' --coverage --verbose --runInBand --silent=false",
     "vitest": "vitest run",
+    "test:unit": "vitest",
     "prepublishOnly": "npm run babel",
     "postpublish": "rm -rf ./server && git checkout ./server",
     "validate-codecov": "curl --data-binary @.github/codecov.yml https://codecov.io/validate",
@@ -63,6 +64,7 @@
     "bowser": "^2.0.0"
   },
   "devDependencies": {
+    "@bunchtogether/vite-plugin-flow": "^1.0.2",
     "@krakenjs/babel-config-grumbler": "^8.1.1",
     "@krakenjs/eslint-config-grumbler": "^8.1.1",
     "@krakenjs/webpack-config-grumbler": "^8.1.1",
@@ -82,11 +84,11 @@
     "lint-staged": "^13.0.3",
     "mocha": "^10.0.0",
     "prettier": "2.8.8",
-    "@vitest/coverage-c8": "^0.25.8",
-    "@vitest/ui": "^0.25.8",
-    "msw": "^0.49.2",
+    "@vitest/coverage-v8": "^1.0.0",
+    "@vitest/ui": "^1.0.0",
+    "msw": "^2.0.0",
     "vite": "^4.0.1",
-    "vitest": "^0.25.8"
+    "vitest": "^1.0.0"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"

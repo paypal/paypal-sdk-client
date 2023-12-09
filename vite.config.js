@@ -1,12 +1,12 @@
 /* eslint-disable spaced-comment */
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference types="vitest" />
-import { flowPlugin, esbuildFlowPlugin } from "@bunchtogether/vite-plugin-flow";
 
 // Configure Vitest (https://vitest.dev/config/)
 
 import path from "path";
 
+import { flowPlugin, esbuildFlowPlugin } from "@bunchtogether/vite-plugin-flow";
 import { defineConfig } from "vite";
 
 const define = {
@@ -44,13 +44,18 @@ const define = {
 // eslint-disable-next-line import/no-default-export
 export default defineConfig({
   define,
+  esbuild: {
+    define,
+  },
   test: {
     environment: "jsdom",
+    clearMocks: true,
+    include: ["**/test/**/*.test.js"],
   },
   optimizeDeps: {
     esbuildOptions: {
       plugins: [esbuildFlowPlugin()],
     },
   },
-  plugins: [flowPlugin()],
+  plugins: [flowPlugin({ exclude: "" })],
 });
