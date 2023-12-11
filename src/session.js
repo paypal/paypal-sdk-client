@@ -8,6 +8,7 @@ import { getNamespace, getSDKAttribute } from "./script";
 function getSDKStorage(): Storage {
   return getStorage({
     name: getNamespace(),
+    stickySessionId: getClientMetadataID(),
   });
 }
 
