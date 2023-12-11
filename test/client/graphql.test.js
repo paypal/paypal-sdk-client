@@ -1,43 +1,62 @@
 /* @flow */
 
-import { $mockEndpoint } from "@krakenjs/sync-browser-mocks/dist/sync-browser-mocks";
-import { describe, it, beforeAll, afterAll, expect } from "vitest";
+import { describe, it, beforeAll, afterAll, expect, vi } from "vitest";
 import { graphql, http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
 
 import { callGraphQL, getGraphQLFundingEligibility } from "../../src/graphql";
-import { insertMockSDKScript } from "../../src";
+
+vi.mock("@krakenjs/belter/src", async () => {
+  const actual = await vi.importActual("@krakenjs/belter/src");
+  return {
+    ...actual,
+    getCurrentScript: vi.fn(() => ({
+      src: "https://mock-sdk.com/sdk/js?client-id='test'",
+      attributes: [],
+      hasAttribute: vi.fn(),
+    })),
+  };
+});
 
 describe("graphql cases", () => {
   let mockWorker;
   const graphqlNotFoundFailure = "failWith404";
-  const makeMockGraphQlHandler = () => {
-    return graphql.query("GetFundingEligibility", ({ query }) => {
-      console.log(`query`, query);
-      return HttpResponse.json({ someData: true });
-    });
-  };
+  const graphqlBodyContainsErrors = "bodyContainsErrorsQuery";
+  const validResponseBody = "validResponseBody";
+  const fundingEligiblityQuery = "GetFundingEligibility";
+  const fundingEligibilitySuccess = "fundingEligiblitySuccess";
+  // TODO: Move `callGraphQL` to it's own file/fn
+  //  Then test that fn using msw, but we can mock `callGraphQL` from here accordingly on a per-test basis
+  // making tests simpler instead of having the catch-all handlers in msw
   const mockGraphQlRestHandler = () => {
     return http.post("/graphql", async ({ request }) => {
-      console.log(`request`, request.body);
-      try {
-        const body = await request.body.json();
-        console.log(`body`, body);
-      } catch (error) {
-        console.log(`error`, error);
+      const body = await request.json();
+      if (body.query.includes(graphqlNotFoundFailure)) {
+        return HttpResponse.json({ testing: true }, { status: 404 });
+      } else if (body.query.includes(graphqlBodyContainsErrors)) {
+        return HttpResponse.json({ errors: ["unexpected error"] });
+      } else if (body.query.includes(fundingEligiblityQuery)) {
+        if (body.query.includes(fundingEligibilitySuccess)) {
+          return HttpResponse.json({
+            data: {
+              clientID: "Somethingsomething",
+              fundingEligibility: {
+                clientId: "a-funding-eligiblity-client-id",
+              },
+            },
+          });
+        } else {
+          return HttpResponse.json({ clientID: "Somethingsomething" });
+        }
       }
-      return HttpResponse.json({ testing: true }, { status: 404 });
+
+      return HttpResponse.json({
+        data: {
+          received: true,
+          fundingEligibility: { eligibleOrSomething: true },
+        },
+      });
     });
-  };
-  const mockGraphQl = function (data, status = 200) {
-    $mockEndpoint
-      .register({
-        method: "POST",
-        uri: `${window.location.protocol}//${window.location.host}/graphql`,
-        status,
-        data,
-      })
-      .listen();
   };
 
   beforeAll(() => {
@@ -48,75 +67,39 @@ describe("graphql cases", () => {
   afterAll(() => {
     mockWorker.close();
   });
-  it.only("callGraphQL should fail when graphql returns a non-200 status", async () => {
+  it("callGraphQL should fail when graphql returns a non-200 status", async () => {
     await expect(() =>
       callGraphQL({ query: `${graphqlNotFoundFailure} {}` })
     ).rejects.toThrow("/graphql returned status 404");
   });
 
-  it.only("callGraphQL should throw an exception when the response body contains errors", async () => {
-    const sourceData = { errors: ["unexpected error"] };
-
-    mockGraphQl(sourceData);
-    try {
-      await callGraphQL({
-        query: "query {}",
-      });
-    } catch (err) {
-      if (JSON.stringify(sourceData.errors[0]) !== err.message) {
-        throw new Error(
-          `should throw an error message "${sourceData.errors[0]}", but got: ${err.message}`
-        );
-      }
-    }
+  it("callGraphQL should throw an exception when the response body contains errors", async () => {
+    await expect(() =>
+      callGraphQL({ query: `${graphqlBodyContainsErrors} {}` })
+    ).rejects.toThrow("unexpected error");
   });
 
   it("callGraphQL should return a valid body response", async () => {
-    const sourceData = { data: { received: true } };
-
-    mockGraphQl(sourceData);
     // $FlowIgnore[prop-missing]
     const { received } = await callGraphQL({
-      query: "query {}",
+      query: `${validResponseBody} {}`,
     });
-
-    if (sourceData.data.received !== received) {
-      throw new Error(
-        `should return a valid data response, but got: ${String(received)}`
-      );
-    }
+    expect(received).toBe(true);
   });
 
   it("getGraphQLFundingEligibility should throw an error when fundingEligibility is not in the response", async () => {
     const expectedErrorMessage =
       "GraphQL fundingEligibility returned no fundingEligibility object";
 
-    try {
-      await getGraphQLFundingEligibility("fields");
-    } catch (err) {
-      if (err.message !== expectedErrorMessage) {
-        throw new Error(
-          `should throw an error message "${expectedErrorMessage}", but got: ${err.message}`
-        );
-      }
-    }
+    await expect(() =>
+      getGraphQLFundingEligibility("noFundingEligiblity")
+    ).rejects.toThrow(expectedErrorMessage);
   });
 
   it("getGraphQLFundingEligibility should return the fundingEligibility", async () => {
-    insertMockSDKScript({
-      query: {
-        "enable-funding": "paypal",
-        "disable-funding": "venmo",
-        "disable-card": "braintree",
-      },
-    });
-    mockGraphQl({ data: { fundingEligibility: {} } });
-    const result = await getGraphQLFundingEligibility("field: field");
-
-    if (!result) {
-      throw new Error(
-        `should return finding eligibility as "true", but got: ${result}`
-      );
-    }
+    const result = await getGraphQLFundingEligibility(
+      fundingEligibilitySuccess
+    );
+    expect(result).toEqual({ clientId: "a-funding-eligiblity-client-id" });
   });
 });
