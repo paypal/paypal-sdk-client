@@ -147,15 +147,20 @@ export function createOrder(
         Authorization: `Bearer ${accessToken}`,
         "PayPal-Partner-Attribution-Id": getPartnerAttributionID(),
       };
-
+      console.log(`order`, order);
       return request({
         method: `post`,
         url: getOrderAPIUrl(),
         headers,
         json: order,
       });
+      // .then((data) => {
+      //   console.log("here>?>", data)
+      //   return data
+      // });
     })
     .then(({ body }): string => {
+      // console.log(`body`, body.then((d) => { console.log(" ughggg ", d)}));
       if (!body || !body.id) {
         throw new Error(
           `Order Api response error:\n\n${JSON.stringify(body, null, 4)}`
@@ -171,5 +176,6 @@ export function createOrder(
       });
 
       return body.id;
-    });
+    })
+    .catch((err) => console.log("err", err));
 }

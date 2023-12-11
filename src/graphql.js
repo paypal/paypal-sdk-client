@@ -61,6 +61,7 @@ export function callGraphQL<T>({
   variables?: { [string]: mixed },
   headers?: { [string]: string },
 |}): ZalgoPromise<T> {
+  console.log(`query`, query);
   return request({
     url: buildPayPalUrl(GRAPHQL_URI),
     method: "POST",
@@ -79,7 +80,7 @@ export function callGraphQL<T>({
       const message = errors[0].message || JSON.stringify(errors[0]);
       throw new Error(message);
     }
-
+    console.log(`status`, status);
     if (status !== 200) {
       throw new Error(`${GRAPHQL_URI} returned status ${status}`);
     }

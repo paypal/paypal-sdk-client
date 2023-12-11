@@ -44,8 +44,8 @@ export function insertMockSDKScript({
   const script = document.createElement("script");
   script.setAttribute("type", "test/javascript");
   script.setAttribute("id", "test-sdk-script");
-
-  const url = extendUrl(`https://${getHost()}${getPath()}`, {
+  const host = "test.paypal.com"; // getHost() ||
+  const url = extendUrl(`https://${host}${getPath()}`, {
     query: {
       ...DEFAULT_QUERY,
       ...query,

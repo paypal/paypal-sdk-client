@@ -20,7 +20,7 @@ export function getProtocol(): $Values<typeof PROTOCOL> {
 }
 
 export function getHost(): string {
-  return __HOST__;
+  return __HOST__ || "test.paypal.com";
 }
 
 export function getHostName(): string {

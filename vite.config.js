@@ -8,6 +8,7 @@ import path from "path";
 
 import { flowPlugin, esbuildFlowPlugin } from "@bunchtogether/vite-plugin-flow";
 import { defineConfig } from "vite";
+// import { sdkClientTestGlobals } from "./test/globals"
 
 const define = {
   __DEBUG__: false,
@@ -24,6 +25,7 @@ const define = {
   // __VERSION__: "1.0.45",
   // __CORRELATION_ID__: "abc123",
   // __NAMESPACE__: "paypaltest",
+  // __PAYPAL_DOMAIN__: "mock://www.paypal.com",
   __PAYPAL_DOMAIN__: true,
   __PAYPAL_API_DOMAIN__: true,
 
@@ -48,6 +50,7 @@ export default defineConfig({
     define,
   },
   test: {
+    setupFiles: ["vitestSetup.js"],
     environment: "jsdom",
     clearMocks: true,
     include: ["**/test/**/*.test.js"],

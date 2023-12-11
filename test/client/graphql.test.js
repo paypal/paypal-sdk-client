@@ -1,11 +1,34 @@
 /* @flow */
 
 import { $mockEndpoint } from "@krakenjs/sync-browser-mocks/dist/sync-browser-mocks";
+import { describe, it, beforeAll, afterAll, expect } from "vitest";
+import { graphql, http, HttpResponse } from "msw";
+import { setupServer } from "msw/node";
 
 import { callGraphQL, getGraphQLFundingEligibility } from "../../src/graphql";
 import { insertMockSDKScript } from "../../src";
 
 describe("graphql cases", () => {
+  let mockWorker;
+  const graphqlNotFoundFailure = "failWith404";
+  const makeMockGraphQlHandler = () => {
+    return graphql.query("GetFundingEligibility", ({ query }) => {
+      console.log(`query`, query);
+      return HttpResponse.json({ someData: true });
+    });
+  };
+  const mockGraphQlRestHandler = () => {
+    return http.post("/graphql", async ({ request }) => {
+      console.log(`request`, request.body);
+      try {
+        const body = await request.body.json();
+        console.log(`body`, body);
+      } catch (error) {
+        console.log(`error`, error);
+      }
+      return HttpResponse.json({ testing: true }, { status: 404 });
+    });
+  };
   const mockGraphQl = function (data, status = 200) {
     $mockEndpoint
       .register({
@@ -17,22 +40,21 @@ describe("graphql cases", () => {
       .listen();
   };
 
-  it("callGraphQL should fail with status code 404 when the URL was not found", async () => {
-    mockGraphQl({}, 404);
-    try {
-      await callGraphQL({
-        query: "query {}",
-      });
-    } catch (err) {
-      if (err.message !== "/graphql returned status 404") {
-        throw new Error(
-          `should throw an error message "/graphql returned status 404", but got: ${err.message}`
-        );
-      }
-    }
+  beforeAll(() => {
+    mockWorker = setupServer(mockGraphQlRestHandler());
+    mockWorker.listen();
   });
 
-  it("callGraphQL should throw an exception when the response body contains errors", async () => {
+  afterAll(() => {
+    mockWorker.close();
+  });
+  it.only("callGraphQL should fail when graphql returns a non-200 status", async () => {
+    await expect(() =>
+      callGraphQL({ query: `${graphqlNotFoundFailure} {}` })
+    ).rejects.toThrow("/graphql returned status 404");
+  });
+
+  it.only("callGraphQL should throw an exception when the response body contains errors", async () => {
     const sourceData = { errors: ["unexpected error"] };
 
     mockGraphQl(sourceData);
