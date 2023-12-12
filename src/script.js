@@ -80,6 +80,7 @@ export function getSDKAttribute<T: string | void>(
 
 export function getSDKQueryParams(): { [string]: string } {
   const script = getSDKScript();
+  console.log(`script`, script.src);
   return parseQuery(script.src.split("?")[1] || "");
 }
 
@@ -117,7 +118,7 @@ export function getSDKQueryParamBool<T: boolean>(
 
 export function getClientID(): string {
   const clientID = getSDKQueryParam(SDK_QUERY_KEYS.CLIENT_ID);
-
+  console.log(`clientID`, clientID);
   if (!clientID) {
     throw new Error(
       `Expected ${SDK_QUERY_KEYS.CLIENT_ID} parameter in sdk url`
@@ -125,6 +126,7 @@ export function getClientID(): string {
   }
 
   if (CLIENT_ID_ALIAS[clientID]) {
+    console.log(`ALIAS clientID`, clientID);
     return CLIENT_ID_ALIAS[clientID];
   }
 
