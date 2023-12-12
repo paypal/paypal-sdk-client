@@ -1,7 +1,7 @@
 /* @flow */
 
 import { describe, it, beforeAll, afterAll, expect, vi } from "vitest";
-import { graphql, http, HttpResponse } from "msw";
+import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
 
 import { callGraphQL, getGraphQLFundingEligibility } from "../../src/graphql";

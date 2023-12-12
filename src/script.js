@@ -95,7 +95,9 @@ export const getSDKQueryParam: GetSDKQueryParam = <T>(name: string, def: T) => {
 };
 
 export function getScriptUrl(): string {
-  const src = getSDKScript().getAttribute("src");
+  const script = getSDKScript();
+  console.log(`script`, script.src);
+  const src = script.getAttribute("src");
   if (!src) {
     throw new Error(`Can not find src for sdk script`);
   }

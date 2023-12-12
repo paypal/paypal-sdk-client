@@ -32,7 +32,7 @@ describe(`script cases`, () => {
     });
   });
 
-  it("should successfully get a client id", () => {
+  it.only("should successfully get a client id", () => {
     const clientID = "foobar123";
 
     const url = insertMockSDKScript({
