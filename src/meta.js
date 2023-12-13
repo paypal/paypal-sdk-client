@@ -4,6 +4,7 @@ import { SDK_SETTINGS } from "@paypal/sdk-constants/src";
 import { base64encode, ATTRIBUTES } from "@krakenjs/belter/src";
 
 import { getScriptUrl, getSDKAttributes } from "./script";
+import { getSessionState } from "./session";
 
 const ALLOWED_ATTRS = [
   SDK_SETTINGS.AMOUNT,
@@ -21,12 +22,17 @@ export function getSDKMeta(): string {
   const url = getScriptUrl();
 
   const scriptAttrs = getSDKAttributes();
+  const handler = () => {};
+  const shopperInsights = getSessionState(handler);
+
   const attrs = {};
   for (const attr of Object.keys(scriptAttrs)) {
     if (ALLOWED_ATTRS.indexOf(attr) !== -1) {
       attrs[attr] = scriptAttrs[attr];
     }
   }
-
-  return base64encode(JSON.stringify({ url, attrs })).replace(/\=+$/, ""); // eslint-disable-line no-useless-escape
+  return base64encode(JSON.stringify({ url, attrs, shopperInsights })).replace(
+    /\=+$/,
+    ""
+  );
 }
