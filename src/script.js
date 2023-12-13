@@ -61,9 +61,12 @@ type GetSDKAttributes = () => { [string]: string };
 export const getSDKAttributes: GetSDKAttributes = memoize(() => {
   const sdkScript = getSDKScript();
   const result = {};
+  console.log(`sdkScript`, sdkScript);
   for (const attr of sdkScript.attributes) {
+    console.log(`attr`, attr);
     if (attr.name.indexOf("data-") === 0) {
       result[attr.name] = attr.value;
+      console.log(`attr.value`, typeof attr.value);
     }
   }
   result[ATTRIBUTES.UID] = getCurrentScriptUID();
@@ -233,6 +236,8 @@ export function getClientToken(): ?string {
 
 export function getAmount(): ?string {
   const amount = getSDKAttribute(SDK_SETTINGS.AMOUNT);
+  console.log(`amount`, amount);
+  console.log(`amount.match(/^\d+\.\d\d$/)`, amount.match(/^\d+\.\d\d$/));
   if (amount && !amount.match(/^\d+\.\d\d$/)) {
     throw new Error(`Invalid amount: ${amount}`);
   }
