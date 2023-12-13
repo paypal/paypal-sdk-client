@@ -1,6 +1,6 @@
 /* @flow */
 import { describe, it, afterEach, beforeEach, expect, vi } from "vitest";
-import { getCurrentScript } from "@krakenjs/belter/src";
+import { getCurrentScript, memoize } from "@krakenjs/belter/src";
 
 import {
   getStorageState,
@@ -8,7 +8,6 @@ import {
   getSessionState,
   getClientMetadataID,
 } from "../../src/session";
-import { insertMockSDKScript } from "../../src/test";
 
 const clientId = "foobar123";
 const mockScriptSrc = `https://test.paypal.com/sdk/js?client-id=${clientId}`;
@@ -33,6 +32,7 @@ vi.mock("@krakenjs/belter/src", async () => {
 describe("session cases", () => {
   afterEach(() => {
     vi.clearAllMocks();
+    memoize.clear();
   });
 
   it("getStorageState", () => {
@@ -61,19 +61,11 @@ describe("session cases", () => {
 
   it("getClientMetadataID", () => {
     const mockMerchantIds = "some-client-meta-data-id";
-    // insertMockSDKScript({
-    //   attributes: {
-    //     "data-client-metadata-id": mockMerchantIds,
-    //   },
-    // });
     const mockElement = makeMockScriptElement(mockScriptSrc);
     mockElement.setAttribute("data-client-metadata-id", mockMerchantIds);
     getCurrentScript.mockReturnValue(mockElement);
 
     const result = getClientMetadataID();
     expect(result).toEqual(mockMerchantIds);
-    // if (result !== mockMerchantIds) {
-    //   throw new Error(`should get the storage id, but got ${String(result)}`);
-    // }
   });
 });

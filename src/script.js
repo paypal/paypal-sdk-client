@@ -61,12 +61,10 @@ type GetSDKAttributes = () => { [string]: string };
 export const getSDKAttributes: GetSDKAttributes = memoize(() => {
   const sdkScript = getSDKScript();
   const result = {};
-  console.log(`sdkScript`, sdkScript);
+
   for (const attr of sdkScript.attributes) {
-    console.log(`attr`, attr);
     if (attr.name.indexOf("data-") === 0) {
       result[attr.name] = attr.value;
-      console.log(`attr.value`, typeof attr.value);
     }
   }
   result[ATTRIBUTES.UID] = getCurrentScriptUID();
@@ -83,7 +81,6 @@ export function getSDKAttribute<T: string | void>(
 
 export function getSDKQueryParams(): { [string]: string } {
   const script = getSDKScript();
-  console.log(`script`, script.src);
   return parseQuery(script.src.split("?")[1] || "");
 }
 
