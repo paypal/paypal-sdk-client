@@ -1,5 +1,5 @@
 /* @flow */
-import { describe, it, afterEach, beforeEach, expect, vi } from "vitest";
+import { describe, it, afterEach, expect, vi } from "vitest";
 import { getCurrentScript, memoize } from "@krakenjs/belter/src";
 
 import {

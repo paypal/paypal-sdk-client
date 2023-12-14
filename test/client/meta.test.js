@@ -1,25 +1,36 @@
 /* @flow */
-import { describe, it, vi, expect } from "vitest";
+import { describe, it, vi, beforeEach, expect } from "vitest";
+import { getCurrentScript, memoize } from "@krakenjs/belter/src";
 
 import { getSDKMeta, insertMockSDKScript } from "../../src";
 
-const mockScriptSrc = "https://test.paypal.com/sdk/js?client-id=foobar";
+const clientId = "foobar123";
+const mockScriptSrc = `https://test.paypal.com/sdk/js?client-id=${clientId}`;
+
+function makeMockScriptElement(src = mockScriptSrc) {
+  const mockElement = document.createElement("script");
+  mockElement.setAttribute("src", src);
+  document.body.appendChild(mockElement);
+  return mockElement;
+}
+
 vi.mock("@krakenjs/belter/src", async () => {
   const actual = await vi.importActual("@krakenjs/belter/src");
   return {
     ...actual,
-    getCurrentScript: vi.fn(() => ({
-      src: mockScriptSrc,
-      attributes: [],
-      hasAttribute: vi.fn(),
-      getAttribute: vi.fn(function (param) {
-        return this[param];
-      }),
-    })),
+    getCurrentScript: vi.fn(() => {
+      return makeMockScriptElement();
+    }),
   };
+  a;
 });
 
-describe.skip(`meta cases`, () => {
+describe(`meta cases`, () => {
+  beforeEach(() => {
+    memoize.clear();
+    vi.clearAllMocks();
+  });
+
   it("should successfully create a meta payload with script src url", () => {
     const meta = getSDKMeta();
 
@@ -28,87 +39,47 @@ describe.skip(`meta cases`, () => {
     expect(url).toEqual(mockScriptSrc);
   });
 
-  // TODO: do we need a special sdk script mock? Like `insertMockSDKScript` but less involved?
-  // Can we do it at a global level and edit it?
   it("should successfully create a meta payload with merchant id", () => {
     const expectedMerchantIds = "abcd1234,abcd5678";
-
-    insertMockSDKScript({
-      query: {
-        "client-id": "foobar",
-        "merchant-id": "*",
-      },
-      attributes: {
-        "data-merchant-id": expectedMerchantIds,
-      },
-    });
+    const merchantIdKey = "data-merchant-id";
+    const sdkUrl = `${mockScriptSrc}&${merchantIdKey}=*`;
+    const mockElement = makeMockScriptElement(sdkUrl);
+    mockElement.setAttribute(merchantIdKey, expectedMerchantIds);
+    getCurrentScript.mockReturnValue(mockElement);
 
     const meta = getSDKMeta();
-
-    const {
-      attrs: { "data-merchant-id": merchantIds },
-    } = JSON.parse(window.atob(meta));
-
-    if (merchantIds !== expectedMerchantIds) {
-      throw new Error(
-        `Expected sdk merchant ids to be ${expectedMerchantIds}, got ${merchantIds}`
-      );
-    }
+    const resultMeta = JSON.parse(window.atob(meta));
+    expect(resultMeta.attrs).toEqual(
+      expect.objectContaining({
+        [merchantIdKey]: expectedMerchantIds,
+      })
+    );
   });
 
   it("should construct a valid script url with data-popups-disabled attribute", () => {
-    insertMockSDKScript({
-      query: {
-        "client-id": "foobar",
-      },
-      attributes: {
-        "data-popups-disabled": "true",
-      },
-    });
+    const disablePops = true;
+    const popupsDisabledKey = "data-popups-disabled";
+    const sdkUrl = `${mockScriptSrc}&${popupsDisabledKey}=${disablePops}`;
+    const mockElement = makeMockScriptElement(sdkUrl);
+    mockElement.setAttribute(popupsDisabledKey, disablePops);
+    getCurrentScript.mockReturnValue(mockElement);
 
     const meta = getSDKMeta();
 
-    if (!meta) {
-      throw new Error(`Expected meta string to be returned`);
-    }
-
-    const {
-      attrs: { "data-popups-disabled": dataPopupDisabled },
-    } = JSON.parse(window.atob(meta));
-
-    if (dataPopupDisabled !== "true") {
-      throw new Error(
-        `Expected sdk dataPopupDisabled to be true , got ${dataPopupDisabled}`
-      );
-    }
+    const resultMeta = JSON.parse(window.atob(meta));
+    expect(resultMeta.attrs[popupsDisabledKey]).toEqual(`${disablePops}`);
   });
 
   it("should successfully create a meta payload with data-csp-nonce", () => {
     const dataCSPNonce = "12345";
-
-    insertMockSDKScript({
-      query: {
-        "client-id": "foobar",
-      },
-      attributes: {
-        "data-csp-nonce": dataCSPNonce,
-      },
-    });
+    const cspNonceKey = "data-csp-nonce";
+    const sdkUrl = `${mockScriptSrc}&${cspNonceKey}=${dataCSPNonce}`;
+    const mockElement = makeMockScriptElement(sdkUrl);
+    mockElement.setAttribute(cspNonceKey, dataCSPNonce);
+    getCurrentScript.mockReturnValue(mockElement);
 
     const meta = getSDKMeta();
-
-    if (!meta) {
-      throw new Error(`Expected meta string to be returned`);
-    }
-
-    const {
-      attrs: { "data-csp-nonce": nonce },
-    } = JSON.parse(window.atob(meta));
-
-    if (nonce !== dataCSPNonce) {
-      throw new Error(
-        `Expected sdk data-csp-nonce to be ${dataCSPNonce}, got ${nonce}`
-      );
-    }
+    const resultMeta = JSON.parse(window.atob(meta));
+    expect(resultMeta.attrs[cspNonceKey]).toEqual(dataCSPNonce);
   });
 });

@@ -1,17 +1,12 @@
 /* @flow */
-import {
-  describe,
-  beforeAll,
-  afterAll,
-  beforeEach,
-  it,
-  expect,
-  vi,
-} from "vitest";
-import { setupServer } from "msw/node";
-import { http, HttpResponse } from "msw";
+import { describe, beforeEach, it, expect, vi } from "vitest";
 
-import { getCurrentScript, base64encode } from "@krakenjs/belter/src";
+import {
+  getCurrentScript,
+  base64encode,
+  request,
+  memoize,
+} from "@krakenjs/belter/src";
 import { createAccessToken, createOrder } from "../../src/api";
 
 const BASE_URL = `${window.location.protocol}//${window.location.host}`;
@@ -21,16 +16,12 @@ vi.mock("@krakenjs/belter/src", async () => {
   return {
     ...actual,
     getCurrentScript: vi.fn(),
+    request: vi.fn(),
   };
 });
 
-const clientIdMatch = (req, desiredClientId) =>
-  req.headers.get("Authorization").split(" ")[1] ===
-  base64encode(`${desiredClientId}:`);
-
 describe("api cases", () => {
   let order;
-  let mockServer;
   const invalidClientId = "invalid-client-id";
   const emptyResponseClientId = "empty-response-client-id";
   const createOrderValidId = "create-order-valid-order-id";
@@ -46,52 +37,8 @@ describe("api cases", () => {
     error: null,
   };
 
-  const makeMockAuthHandler = (
-    data = defaultAuthResponse,
-    statusCode = 200
-  ) => {
-    return http.post(`${BASE_URL}/v1/oauth2/token`, ({ request }) => {
-      if (clientIdMatch(request, invalidClientId)) {
-        return HttpResponse.json(
-          { error: "invalid_client" },
-          { status: statusCode }
-        );
-      } else if (clientIdMatch(request, emptyResponseClientId)) {
-        return HttpResponse.json({}, { status: statusCode });
-      }
-
-      return HttpResponse.json(data, { status: statusCode });
-    });
-  };
-
-  const makeMockOrdersHandler = (data = {}, statusCode = 200) => {
-    return http.post(`${BASE_URL}/v2/checkout/orders`, ({ request }) => {
-      const payload = {
-        id: "asdasd",
-        status: "CREATED",
-        links: [],
-      };
-      // if (clientIdMatch(request, createOrderValidId)) {
-      // //   console.log("MATCH!");
-      // //   return HttpResponse.json(payload, { status: statusCode })
-      // } else {
-      // }
-      console.log("else else else", payload);
-      return HttpResponse.json(payload);
-    });
-  };
-
-  beforeAll(() => {
-    mockServer = setupServer(makeMockOrdersHandler(), makeMockAuthHandler());
-    mockServer.listen();
-    console.log(`Object.keys(mockServer)`, Object.keys(mockServer));
-  });
-
-  afterAll(() => {
-    mockServer.close();
-  });
-
   beforeEach(() => {
+    memoize.clear();
     window.__PAYPAL_DOMAIN__ = "testurl";
     getCurrentScript.mockReturnValue({
       src: `https://sdkplz.com/sdk/js?intent=capture`,
@@ -112,76 +59,88 @@ describe("api cases", () => {
     };
   });
 
-  it("createAccessToken should return a valid token", async () => {
-    const result = await createAccessToken("testClient");
+  describe("createAccessToken()", () => {
+    it("createAccessToken should return a valid token", async () => {
+      request.mockResolvedValueOnce({ body: defaultAuthResponse });
 
-    expect(result).toEqual(expectedToken);
+      const result = await createAccessToken("testClient");
+
+      expect(result).toEqual(expectedToken);
+    });
+
+    it("createAccessToken should throw invalid client argument error", async () => {
+      request.mockResolvedValueOnce({ body: { error: "invalid_client" } });
+
+      await expect(() =>
+        createAccessToken(invalidClientId)
+      ).rejects.toThrowError(/Auth Api invalid client id:/);
+    });
+
+    it("createAccessToken should return an error message when response is an empty object", async () => {
+      request.mockResolvedValueOnce({ body: {} });
+
+      await expect(() =>
+        createAccessToken(emptyResponseClientId)
+      ).rejects.toThrow(/Auth Api response error:/);
+    });
   });
 
-  it("createAccessToken should throw invalid client argument error", async () => {
-    await expect(() => createAccessToken(invalidClientId)).rejects.toThrowError(
-      /Auth Api invalid client id:/
-    );
-  });
+  describe("createOrder()", () => {
+    it("createOrder should throw an error when clientId is null", async () => {
+      expect(() => createOrder(null)).toThrowError(/Client ID not passed/);
+    });
 
-  it("createAccessToken should return an error message when response is an empty object", async () => {
-    await expect(() =>
-      createAccessToken(emptyResponseClientId)
-    ).rejects.toThrow(/Auth Api response error:/);
-  });
+    it("createOrder should throw an error when order is null", async () => {
+      expect(() => createOrder("testClient")).toThrow(
+        /Expected order details to be passed/
+      );
+    });
 
-  it("createOrder should throw an error when clientId is null", async () => {
-    expect(() => createOrder(null)).toThrowError(/Client ID not passed/);
-  });
+    it("createOrder should throw an error when order intent does not match with query parameters intent", async () => {
+      const expectedErrorMessage =
+        "Unexpected intent: authorize passed to order.create. Please ensure you are passing /sdk/js?intent=authorize in the paypal script tag.";
 
-  it("createOrder should throw an error when order is null", async () => {
-    expect(() => createOrder("testClient")).toThrow(
-      /Expected order details to be passed/
-    );
-  });
+      order.intent = "authorize";
 
-  it("createOrder should throw an error when order intent does not match with query parameters intent", async () => {
-    const expectedErrorMessage =
-      "Unexpected intent: authorize passed to order.create. Please ensure you are passing /sdk/js?intent=authorize in the paypal script tag.";
+      expect(() => createOrder("testClient", order)).toThrowError(
+        expectedErrorMessage
+      );
+    });
 
-    order.intent = "authorize";
+    it("createOrder should throw an error when order currency does not match with query parameters currency", async () => {
+      const expectedErrorMessage =
+        "Unexpected currency: AUD passed to order.create. Please ensure you are passing /sdk/js?currency=AUD in the paypal script tag.";
+      order.purchase_units[0].amount.currency_code = "AUD";
 
-    expect(() => createOrder("testClient", order)).toThrowError(
-      expectedErrorMessage
-    );
-  });
+      expect(() => createOrder("testClient", order)).toThrow(
+        expectedErrorMessage
+      );
+    });
 
-  it("createOrder should throw an error when order currency does not match with query parameters currency", async () => {
-    const expectedErrorMessage =
-      "Unexpected currency: AUD passed to order.create. Please ensure you are passing /sdk/js?currency=AUD in the paypal script tag.";
-    order.purchase_units[0].amount.currency_code = "AUD";
+    it("createOrder should throw an error when order identifier is not in the server response", async () => {
+      const expectedErrorMessage = "Order Api response error:";
+      const failuredPayload = {};
+      request.mockResolvedValueOnce({ body: defaultAuthResponse });
+      request.mockResolvedValueOnce({ body: failuredPayload });
 
-    expect(() => createOrder("testClient", order)).toThrow(
-      expectedErrorMessage
-    );
-  });
+      await expect(() => createOrder("testClient", order)).rejects.toThrow(
+        expectedErrorMessage
+      );
+    });
 
-  // TODO these next two tests for some reason ZalgoPromies doesn't resolve in to this part of the implementation
-  it.skip("createOrder should throw an error when order identifier is not in the server response", async () => {
-    const expectedErrorMessage = "Order Api response error:";
+    it("createOrder should return a valid orderId", async () => {
+      const expectedOrderId = "9BL31648CM342010L";
+      const mockOrderResponse = {
+        id: expectedOrderId,
+        status: "CREATED",
+        links: [],
+      };
+      request
+        .mockResolvedValueOnce({ body: defaultAuthResponse })
+        .mockResolvedValueOnce({ body: mockOrderResponse });
 
-    await expect(() => createOrder("testClient", order)).rejects.toThrow(
-      expectedErrorMessage
-    );
-  });
-
-  it.skip("createOrder should return a valid orderId", async () => {
-    // TODO: need to adapt this function to split within the msw worker like for the auth endpoint
-    // unless this is the default?
-    const expectedOrderId = "9BL31648CM342010L";
-    const mockOrderResponse = {
-      id: expectedOrderId,
-      status: "CREATED",
-      links: [],
-    };
-    // mockServer.use(makeMockOrdersHandler(mockOrderResponse));
-
-    const result = await createOrder(createOrderValidId, order);
-    expect(result).toEqual(expectedOrderId);
+      const result = await createOrder(createOrderValidId, order);
+      expect(result).toEqual(expectedOrderId);
+    });
   });
 });

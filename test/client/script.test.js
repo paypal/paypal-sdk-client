@@ -69,13 +69,6 @@ describe(`script cases`, () => {
       value: "",
       writable: true,
     });
-    vi.clearAllMocks();
-    // $FlowFixMe
-    delete getScript.__inline_memoize_cache__;
-    // $FlowFixMe
-    delete getSDKScript.__inline_memoize_cache__;
-    // $FlowFixMe
-    delete getSDKAttributes.__inline_memoize_cache__;
   });
 
   afterEach(() => {
@@ -84,12 +77,6 @@ describe(`script cases`, () => {
   });
 
   it("should successfully get a client id", () => {
-    insertMockSDKScript({
-      query: {
-        "client-id": clientId,
-      },
-    });
-
     expect(getClientID()).toEqual(clientId);
   });
 
@@ -491,26 +478,17 @@ describe(`script cases`, () => {
       expect(getAmount).toThrow(`Invalid amount: ${inputAmount}`);
     });
 
-    // TODO: Interestingly, it's not coming back as a string in the expected manner. Need to scope test env differences
-    it.skip("getAmount should return the amount", () => {
-      // insertMockSDKScript({
-      //   attributes: {
-      //     "data-amount": "10.00",
-      //   },
-      // });
+    it("getAmount should return the amount", () => {
       const inputAmount = "10.00";
       const mockElement = makeMockScriptElement(mockScriptSrc);
       mockElement.setAttribute("data-amount", inputAmount);
+      getCurrentScript.mockReturnValue(mockElement);
 
       const result = getAmount();
       expect(result).toEqual(inputAmount);
-      // if (result !== "10.00") {
-      //   throw new Error(
-      //     `should return an amount equals to "10.00", but got: ${String(result)}`
-      //   );
-      // }
     });
   });
+
   it("getUserIDToken return a token string", () => {
     const inputToken = "some-token";
     const mockElement = makeMockScriptElement(mockScriptSrc);
