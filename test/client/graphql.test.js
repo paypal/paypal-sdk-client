@@ -1,8 +1,7 @@
 /* @flow */
 
-import { describe, it, beforeAll, afterAll, expect, vi } from "vitest";
-import { http, HttpResponse } from "msw";
-import { setupServer } from "msw/node";
+import { describe, it, expect, vi } from "vitest";
+import { request } from "@krakenjs/belter/src";
 
 import { callGraphQL, getGraphQLFundingEligibility } from "../../src/graphql";
 
@@ -15,74 +14,36 @@ vi.mock("@krakenjs/belter/src", async () => {
       attributes: [],
       hasAttribute: vi.fn(),
     })),
+    request: vi.fn(),
   };
 });
 
 describe("graphql cases", () => {
-  let mockWorker;
-  const graphqlNotFoundFailure = "failWith404";
-  const graphqlBodyContainsErrors = "bodyContainsErrorsQuery";
-  const validResponseBody = "validResponseBody";
-  const fundingEligiblityQuery = "GetFundingEligibility";
-  const fundingEligibilitySuccess = "fundingEligiblitySuccess";
-  // TODO: Move `callGraphQL` to it's own file/fn
-  //  Then test that fn using msw, but we can mock `callGraphQL` from here accordingly on a per-test basis
-  // making tests simpler instead of having the catch-all handlers in msw
-  const mockGraphQlRestHandler = () => {
-    return http.post("/graphql", async ({ request }) => {
-      const body = await request.json();
-      if (body.query.includes(graphqlNotFoundFailure)) {
-        return HttpResponse.json({ testing: true }, { status: 404 });
-      } else if (body.query.includes(graphqlBodyContainsErrors)) {
-        return HttpResponse.json({ errors: ["unexpected error"] });
-      } else if (body.query.includes(fundingEligiblityQuery)) {
-        if (body.query.includes(fundingEligibilitySuccess)) {
-          return HttpResponse.json({
-            data: {
-              clientID: "Somethingsomething",
-              fundingEligibility: {
-                clientId: "a-funding-eligiblity-client-id",
-              },
-            },
-          });
-        } else {
-          return HttpResponse.json({ clientID: "Somethingsomething" });
-        }
-      }
-
-      return HttpResponse.json({
-        data: {
-          received: true,
-          fundingEligibility: { eligibleOrSomething: true },
-        },
-      });
-    });
-  };
-
-  beforeAll(() => {
-    mockWorker = setupServer(mockGraphQlRestHandler());
-    mockWorker.listen();
-  });
-
-  afterAll(() => {
-    mockWorker.close();
-  });
   it("callGraphQL should fail when graphql returns a non-200 status", async () => {
+    const expectedStatus = 404;
+    request.mockResolvedValue({ body: {}, status: expectedStatus });
     await expect(() =>
-      callGraphQL({ query: `${graphqlNotFoundFailure} {}` })
-    ).rejects.toThrow("/graphql returned status 404");
+      callGraphQL({ query: `non200Status {}` })
+    ).rejects.toThrow(`/graphql returned status ${expectedStatus}`);
   });
 
   it("callGraphQL should throw an exception when the response body contains errors", async () => {
+    const expectedError = "unexpected error";
+    request.mockResolvedValue({ body: { errors: [expectedError] } });
     await expect(() =>
-      callGraphQL({ query: `${graphqlBodyContainsErrors} {}` })
-    ).rejects.toThrow("unexpected error");
+      callGraphQL({ query: `graphqlErrors {}` })
+    ).rejects.toThrow(expectedError);
   });
 
   it("callGraphQL should return a valid body response", async () => {
+    request.mockResolvedValue({
+      body: { data: { received: true } },
+      status: 200,
+    });
+
     // $FlowIgnore[prop-missing]
     const { received } = await callGraphQL({
-      query: `${validResponseBody} {}`,
+      query: `validResponseBody {}`,
     });
     expect(received).toBe(true);
   });
@@ -90,6 +51,7 @@ describe("graphql cases", () => {
   it("getGraphQLFundingEligibility should throw an error when fundingEligibility is not in the response", async () => {
     const expectedErrorMessage =
       "GraphQL fundingEligibility returned no fundingEligibility object";
+    request.mockResolvedValue({ body: { data: {} }, status: 200 });
 
     await expect(() =>
       getGraphQLFundingEligibility("noFundingEligiblity")
@@ -97,8 +59,20 @@ describe("graphql cases", () => {
   });
 
   it("getGraphQLFundingEligibility should return the fundingEligibility", async () => {
+    request.mockResolvedValue({
+      body: {
+        data: {
+          clientID: "Somethingsomething",
+          fundingEligibility: {
+            clientId: "a-funding-eligiblity-client-id",
+          },
+        },
+      },
+      status: 200,
+    });
+
     const result = await getGraphQLFundingEligibility(
-      fundingEligibilitySuccess
+      "fundingEligibilitySuccess"
     );
     expect(result).toEqual({ clientId: "a-funding-eligiblity-client-id" });
   });
