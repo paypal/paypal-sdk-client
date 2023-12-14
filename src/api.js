@@ -147,7 +147,7 @@ export function createOrder(
         Authorization: `Bearer ${accessToken}`,
         "PayPal-Partner-Attribution-Id": getPartnerAttributionID(),
       };
-      console.log(`order`, order);
+
       return request({
         method: `post`,
         url: getOrderAPIUrl(),

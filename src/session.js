@@ -28,6 +28,5 @@ export function getSessionState<T>(handler: (state: Object) => T): T {
 }
 
 export function getClientMetadataID(): ?string {
-  console.log(`SDK_SETTINS`, SDK_SETTINGS.CLIENT_METADATA_ID);
   return getSDKAttribute(SDK_SETTINGS.CLIENT_METADATA_ID);
 }

@@ -97,7 +97,6 @@ export const getSDKQueryParam: GetSDKQueryParam = <T>(name: string, def: T) => {
 
 export function getScriptUrl(): string {
   const script = getSDKScript();
-  console.log(`script`, script.src);
   const src = script.getAttribute("src");
   if (!src) {
     throw new Error(`Can not find src for sdk script`);
@@ -118,7 +117,6 @@ export function getSDKQueryParamBool<T: boolean>(
 
 export function getClientID(): string {
   const clientID = getSDKQueryParam(SDK_QUERY_KEYS.CLIENT_ID);
-  console.log(`clientID`, clientID);
   if (!clientID) {
     throw new Error(
       `Expected ${SDK_QUERY_KEYS.CLIENT_ID} parameter in sdk url`
@@ -126,7 +124,6 @@ export function getClientID(): string {
   }
 
   if (CLIENT_ID_ALIAS[clientID]) {
-    console.log(`ALIAS clientID`, clientID);
     return CLIENT_ID_ALIAS[clientID];
   }
 
@@ -233,8 +230,6 @@ export function getClientToken(): ?string {
 
 export function getAmount(): ?string {
   const amount = getSDKAttribute(SDK_SETTINGS.AMOUNT);
-  console.log(`amount`, amount);
-  console.log(`amount.match(/^\d+\.\d\d$/)`, amount.match(/^\d+\.\d\d$/));
   if (amount && !amount.match(/^\d+\.\d\d$/)) {
     throw new Error(`Invalid amount: ${amount}`);
   }
