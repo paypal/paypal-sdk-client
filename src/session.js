@@ -5,9 +5,14 @@ import { getStorage, type Storage } from "@krakenjs/belter/src";
 
 import { getNamespace, getSDKAttribute } from "./script";
 
+export function getClientMetadataID(): ?string {
+  return getSDKAttribute(SDK_SETTINGS.CLIENT_METADATA_ID);
+}
+
 function getSDKStorage(): Storage {
   return getStorage({
     name: getNamespace(),
+    stickySessionId: getClientMetadataID() || "",
   });
 }
 
@@ -25,8 +30,4 @@ export function getStorageID(): string {
 
 export function getSessionState<T>(handler: (state: Object) => T): T {
   return getSDKStorage().getSessionState(handler);
-}
-
-export function getClientMetadataID(): ?string {
-  return getSDKAttribute(SDK_SETTINGS.CLIENT_METADATA_ID);
 }
