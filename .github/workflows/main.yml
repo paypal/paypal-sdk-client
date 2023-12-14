@@ -29,14 +29,7 @@ jobs:
       - name: ▶️ Run build script
         run: npm run build
 
-      - name: ⬆️ Upload client coverage report
+      - name: ⬆️ Upload coverage report
         uses: codecov/codecov-action@v3
         with:
           directory: ./coverage
-          flags: client
-
-      - name: ⬆️ Upload server coverage report
-        uses: codecov/codecov-action@v3
-        with:
-          directory: ./coverage
-          flags: server
