@@ -54,6 +54,11 @@ export default defineConfig({
     environment: "jsdom",
     clearMocks: true,
     include: ["**/test/**/*.test.js"],
+    coverage: {
+      provider: "v8",
+      reportsDirectory: "./coverage",
+      include: ["src/**/*.js"],
+    },
   },
   optimizeDeps: {
     esbuildOptions: {

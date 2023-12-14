@@ -32,11 +32,11 @@ jobs:
       - name: ⬆️ Upload client coverage report
         uses: codecov/codecov-action@v3
         with:
-          directory: ./coverage/karma
+          directory: ./coverage
           flags: client
 
       - name: ⬆️ Upload server coverage report
         uses: codecov/codecov-action@v3
         with:
-          directory: ./coverage/jest
+          directory: ./coverage
           flags: server
