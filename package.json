@@ -69,7 +69,6 @@
     "@krakenjs/eslint-config-grumbler": "^8.1.1",
     "@krakenjs/webpack-config-grumbler": "^8.1.1",
     "@krakenjs/grumbler-scripts": "^8.0.4",
-    "@krakenjs/sync-browser-mocks": "^3.0.0",
     "babel-core": "7.0.0-bridge.0",
     "cheerio": "1.0.0-rc.9",
     "cross-env": "^7.0.3",
