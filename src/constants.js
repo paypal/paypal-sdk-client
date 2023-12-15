@@ -21,9 +21,9 @@ type FraudnetUrl = {|
 
 export const FRAUDNET_URL: FraudnetUrl = {
   [ENV.LOCAL]:
-    "https://cdn-latest.static.engineering.dev.paypalinc.com/rdaAssets/fraudnet/async/fb-raw.js",
+    "https://cdn-latest.static.engineering.dev.paypalinc.com/qaRdaAssets/fraudnet/async/fb-raw.js",
   [ENV.STAGE]:
-    "https://cdn-latest.static.engineering.dev.paypalinc.com/rdaAssets/fraudnet/async/fb-raw.js",
+    "https://cdn-latest.static.engineering.dev.paypalinc.com/qaRdaAssets/fraudnet/async/fb-raw.js",
   [ENV.SANDBOX]: "https://c.paypal.com/da/r/fb.js",
   [ENV.PRODUCTION]: "https://c.paypal.com/da/r/fb.js",
   [ENV.TEST]: "https://c.paypal.com/da/r/fb.js",
