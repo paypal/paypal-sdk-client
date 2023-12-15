@@ -47,9 +47,6 @@ export const createConfigScript = ({
     configScript.setAttribute("type", "application/json");
     configScript.setAttribute("id", "fconfig");
     configScript.setAttribute("fncls", FRAUDNET_FNCLS);
-    // console.log(`config`, JSON.stringify(config));
-    console.log(`config`, config);
-    console.log(`JSON.stringify(config):: `, JSON.stringify(config));
     configScript.text = JSON.stringify(config);
     // eslint-disable-next-line compat/compat
     document.body.appendChild(configScript);
@@ -109,7 +106,6 @@ export const loadFraudnet: Memoized<FraudnetOptions> = memoize(
     });
 
     return {
-      // init
       collect: async () => {
         const { collect } = await fraudnetPromise;
         try {
