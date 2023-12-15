@@ -45,10 +45,6 @@ export const createConfigScript = ({
   appName,
 }: CreateConfigOptions): ZalgoPromise<void> => {
   return new ZalgoPromise((resolve) => {
-    if (__TEST__) {
-      return resolve();
-    }
-
     const config: FraudnetConfig = {
       f: clientMetadataID,
       s: appName,
@@ -92,7 +88,6 @@ export const createFraudnetScript = ({
 
     fraudnetScript.setAttribute("nonce", cspNonce || "");
     fraudnetScript.setAttribute("src", fraudnetUrl);
-    fraudnetScript.addEventListener("error", () => resolve());
 
     window.fnCallback = resolve;
     // eslint-disable-next-line compat/compat
@@ -131,8 +126,10 @@ export const loadFraudnet: Memoized<LoadFraudnet> = memoize(
       collect: async () => {
         try {
           await fraudnetPromise;
+          console.log(`one down`);
           await window.PAYPAL.asyncData.collect();
         } catch (err) {
+          console.log(`getLogger().warn`, getLogger().warn);
           getLogger().warn("ppcp_axo_collect_fraudnet_failed");
         }
       },

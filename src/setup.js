@@ -4,9 +4,7 @@ import { destroyElement } from "@krakenjs/belter/src";
 
 import { getVersion, getEnv } from "./global";
 import { getSDKScript, getNamespace, getCSPNonce } from "./script";
-import { loadFraudnet } from "./fraudnet";
 import { getClientMetadataID } from "./session";
-import { FRAUDNET_APP_NAME } from "./constants";
 
 export type SetupComponent<T> = {|
   name: string,
@@ -104,6 +102,4 @@ export function setupSDK(components: $ReadOnlyArray<SetupComponent<mixed>>) {
       delete window[namespace];
     },
   });
-
-  loadFraudnet({ env, cspNonce, appName: FRAUDNET_APP_NAME, clientMetadataID });
 }
