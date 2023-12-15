@@ -15,15 +15,18 @@ export const FPTI_STATE = {
   PXP: ("PXP_CHECK": "PXP_CHECK"),
 };
 
-export const FRAUDNET_URL = {
+type FraudnetUrl = {|
+  [$Values<typeof ENV>]: string,
+|};
+
+export const FRAUDNET_URL: FraudnetUrl = {
   [ENV.LOCAL]:
-    "https://cdn-latest.static.engineering.dev.paypalinc.com/rdaAssets/fraudnet/async/fb-raw.js",
+    "https://cdn-latest.static.engineering.dev.paypalinc.com/qaRdaAssets/fraudnet/async/fb-raw.js",
   [ENV.STAGE]:
-    "https://cdn-latest.static.engineering.dev.paypalinc.com/rdaAssets/fraudnet/async/fb-raw.js",
+    "https://cdn-latest.static.engineering.dev.paypalinc.com/qaRdaAssets/fraudnet/async/fb-raw.js",
   [ENV.SANDBOX]: "https://c.paypal.com/da/r/fb.js",
   [ENV.PRODUCTION]: "https://c.paypal.com/da/r/fb.js",
   [ENV.TEST]: "https://c.paypal.com/da/r/fb.js",
 };
 
 export const FRAUDNET_FNCLS = "fnparams-dede7cc5-15fd-4c75-a9f4-36c430ee3a99";
-export const FRAUDNET_APP_NAME = "SMART_PAYMENT_BUTTONS";
