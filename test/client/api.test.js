@@ -1,15 +1,8 @@
 /* @flow */
 import { describe, beforeEach, it, expect, vi } from "vitest";
 
-import {
-  getCurrentScript,
-  base64encode,
-  request,
-  memoize,
-} from "@krakenjs/belter/src";
+import { getCurrentScript, request, memoize } from "@krakenjs/belter/src";
 import { createAccessToken, createOrder } from "../../src/api";
-
-const BASE_URL = `${window.location.protocol}//${window.location.host}`;
 
 vi.mock("@krakenjs/belter/src", async () => {
   const actual = await vi.importActual("@krakenjs/belter/src");

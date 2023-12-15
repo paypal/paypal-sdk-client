@@ -30,10 +30,6 @@ export const createConfigScript = ({
   appName,
 }) => {
   return new ZalgoPromise((resolve) => {
-    if (__TEST__) {
-      return resolve();
-    }
-
     const config: FraudnetConfig = {
       f: clientMetadataID,
       s: appName,
@@ -51,9 +47,13 @@ export const createConfigScript = ({
     configScript.setAttribute("type", "application/json");
     configScript.setAttribute("id", "fconfig");
     configScript.setAttribute("fncls", FRAUDNET_FNCLS);
+    // console.log(`config`, JSON.stringify(config));
+    console.log(`config`, config);
+    console.log(`JSON.stringify(config):: `, JSON.stringify(config));
     configScript.text = JSON.stringify(config);
     // eslint-disable-next-line compat/compat
     document.body.appendChild(configScript);
+    resolve();
   });
 };
 
