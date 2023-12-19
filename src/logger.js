@@ -22,11 +22,11 @@ export const getLogger: GetLogger = memoize(() => {
 
 export const sendCountMetric = ({
   dimensions,
-  event = "unused",
+  event,
   name,
   value = 1,
 }: {|
-  event?: string,
+  event: string,
   name: string,
   value?: number,
   dimensions: {
