@@ -3,7 +3,7 @@
 import { SDK_SETTINGS } from "@paypal/sdk-constants/src";
 import { getStorage, type Storage } from "@krakenjs/belter/src";
 
-import { getNamespace, getSDKAttribute } from "./script";
+import { getNamespace, getSDKAttribute } from "./script"; // eslint-disable-line import/no-cycle
 
 function getSDKStorage(): Storage {
   return getStorage({
