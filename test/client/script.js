@@ -18,6 +18,7 @@ import {
   getPageType,
   getLocale,
   getMerchantRequestedPopupsDisabled,
+  getShopperInsights,
 } from "../../src";
 
 describe(`script cases`, () => {
@@ -581,6 +582,14 @@ describe(`script cases`, () => {
       throw new Error(
         `Expected lag to be ${expectedLang}, got ${receivedLang} from ${url}`
       );
+    }
+  });
+
+  it("getShopperInsights", () => {
+    const result = getShopperInsights();
+
+    if (typeof result != "boolean") {
+      throw new Error(`should get an boolean, but got ${typeof result}`);
     }
   });
 });
