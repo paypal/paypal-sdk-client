@@ -2,9 +2,8 @@
 
 import { destroyElement } from "@krakenjs/belter/src";
 
-import { getVersion, getEnv } from "./global";
-import { getSDKScript, getNamespace, getCSPNonce } from "./script";
-import { getClientMetadataID } from "./session";
+import { getVersion } from "./global";
+import { getSDKScript, getNamespace } from "./script";
 
 export type SetupComponent<T> = {|
   name: string,
@@ -15,9 +14,6 @@ export type SetupComponent<T> = {|
 export function setupSDK(components: $ReadOnlyArray<SetupComponent<mixed>>) {
   const namespace = getNamespace();
   const version = getVersion();
-  const env = getEnv();
-  const cspNonce = getCSPNonce();
-  const clientMetadataID = getClientMetadataID();
 
   const INTERNAL_DESTROY_KEY = `__internal_destroy__`;
 
