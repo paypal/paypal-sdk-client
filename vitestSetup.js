@@ -2,6 +2,10 @@
 
 import { sdkClientTestGlobals } from "./test/globals";
 
-Object.keys(sdkClientTestGlobals).forEach((k, v) => {
-  window[k] = sdkClientTestGlobals[k];
-});
+const applyEnvs = () => {
+  Object.keys(sdkClientTestGlobals).forEach((k, v) => {
+    window[k] = sdkClientTestGlobals[k];
+  });
+};
+
+applyEnvs();
