@@ -19,3 +19,25 @@ export const getLogger: GetLogger = memoize(() => {
     url: loggerUrl,
   });
 });
+
+export const sendCountMetric = ({
+  dimensions,
+  event,
+  name,
+  value = 1,
+}: {|
+  event: string,
+  name: string,
+  value?: number,
+  dimensions: {
+    [string]: mixed,
+  },
+  // $FlowIssue return type
+|}) =>
+  getLogger().metric({
+    dimensions,
+    metricEventName: event,
+    metricNamespace: name,
+    metricValue: value,
+    metricType: "counter",
+  });
