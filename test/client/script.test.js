@@ -1,12 +1,7 @@
 /* @flow */
 /* eslint max-lines: off */
 import { describe, it, afterEach, beforeEach, expect, vi } from "vitest";
-import {
-  base64encode,
-  getCurrentScript,
-  getScript,
-  memoize,
-} from "@krakenjs/belter/src";
+import { base64encode, getCurrentScript, memoize } from "@krakenjs/belter/src";
 
 import {
   getClientID,
@@ -19,12 +14,9 @@ import {
   getMerchantID,
   getClientAccessToken,
   getSDKIntegrationSource,
-  insertMockSDKScript,
   getPageType,
   getLocale,
   getMerchantRequestedPopupsDisabled,
-  getSDKScript,
-  getSDKAttributes,
   getScriptUrl,
   getEnableFunding,
   getDisableFunding,

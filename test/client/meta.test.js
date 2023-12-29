@@ -2,7 +2,7 @@
 import { describe, it, vi, beforeEach, expect } from "vitest";
 import { getCurrentScript, memoize } from "@krakenjs/belter/src";
 
-import { getSDKMeta, insertMockSDKScript } from "../../src";
+import { getSDKMeta } from "../../src";
 
 const clientId = "foobar123";
 const mockScriptSrc = `https://test.paypal.com/sdk/js?client-id=${clientId}`;
