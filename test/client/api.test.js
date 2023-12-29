@@ -33,6 +33,7 @@ describe("api cases", () => {
   beforeEach(() => {
     memoize.clear();
     window.__PAYPAL_DOMAIN__ = "testurl";
+    // $FlowIgnore
     getCurrentScript.mockReturnValue({
       src: `https://sdkplz.com/sdk/js?intent=capture`,
       attributes: [],
@@ -54,6 +55,7 @@ describe("api cases", () => {
 
   describe("createAccessToken()", () => {
     it("createAccessToken should return a valid token", async () => {
+      // $FlowIgnore
       request.mockResolvedValueOnce({ body: defaultAuthResponse });
 
       const result = await createAccessToken("testClient");
@@ -62,6 +64,7 @@ describe("api cases", () => {
     });
 
     it("createAccessToken should throw invalid client argument error", async () => {
+      // $FlowIgnore
       request.mockResolvedValueOnce({ body: { error: "invalid_client" } });
 
       await expect(() =>
@@ -70,6 +73,7 @@ describe("api cases", () => {
     });
 
     it("createAccessToken should return an error message when response is an empty object", async () => {
+      // $FlowIgnore
       request.mockResolvedValueOnce({ body: {} });
 
       await expect(() =>
@@ -80,11 +84,12 @@ describe("api cases", () => {
 
   describe("createOrder()", () => {
     it("createOrder should throw an error when clientId is null", async () => {
+      // $FlowIgnore
       expect(() => createOrder(null)).toThrowError(/Client ID not passed/);
     });
 
     it("createOrder should throw an error when order is null", async () => {
-      expect(() => createOrder("testClient")).toThrow(
+      expect(() => createOrder("testClient", order)).toThrow(
         /Expected order details to be passed/
       );
     });
@@ -93,7 +98,7 @@ describe("api cases", () => {
       const expectedErrorMessage =
         "Unexpected intent: authorize passed to order.create. Please ensure you are passing /sdk/js?intent=authorize in the paypal script tag.";
 
-      order.intent = "authorize";
+      order.intent = "AUTHORIZE";
 
       expect(() => createOrder("testClient", order)).toThrowError(
         expectedErrorMessage
@@ -113,8 +118,11 @@ describe("api cases", () => {
     it("createOrder should throw an error when order identifier is not in the server response", async () => {
       const expectedErrorMessage = "Order Api response error:";
       const failuredPayload = {};
-      request.mockResolvedValueOnce({ body: defaultAuthResponse });
-      request.mockResolvedValueOnce({ body: failuredPayload });
+
+      request
+        // $FlowIgnore
+        .mockResolvedValueOnce({ body: defaultAuthResponse })
+        .mockResolvedValueOnce({ body: failuredPayload });
 
       await expect(() => createOrder("testClient", order)).rejects.toThrow(
         expectedErrorMessage
@@ -128,7 +136,9 @@ describe("api cases", () => {
         status: "CREATED",
         links: [],
       };
+
       request
+        // $FlowIgnore
         .mockResolvedValueOnce({ body: defaultAuthResponse })
         .mockResolvedValueOnce({ body: mockOrderResponse });
 

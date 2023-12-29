@@ -37,7 +37,7 @@ const mockScriptSrc = `https://test.paypal.com/sdk/js?client-id=${clientId}`;
 function makeMockScriptElement(src = mockScriptSrc) {
   const mockElement = document.createElement("script");
   mockElement.setAttribute("src", src);
-  document.body.appendChild(mockElement);
+  document.body?.appendChild(mockElement);
   return mockElement;
 }
 
@@ -73,6 +73,7 @@ describe(`script cases`, () => {
   });
 
   it("should error out when client id not passed", () => {
+    // $FlowIgnore
     getCurrentScript.mockReturnValue(
       makeMockScriptElement("https://test.paypal.com/sdk/js?")
     );
@@ -81,6 +82,7 @@ describe(`script cases`, () => {
 
   it("should successfully get a client id alias", () => {
     const clientID = "sb";
+    // $FlowIgnore
     getCurrentScript.mockReturnValue(
       makeMockScriptElement(
         `https://test.paypal.com/sdk/js?client-id=${clientID}`
@@ -92,6 +94,7 @@ describe(`script cases`, () => {
   it("should successfully get a merchant id", () => {
     const merchantID = "abc987";
     const sdkUrl = `${mockScriptSrc}&merchant-id=${merchantID}`;
+    // $FlowIgnore
     getCurrentScript.mockReturnValue(makeMockScriptElement(sdkUrl));
 
     const mID = getMerchantID();
@@ -101,6 +104,7 @@ describe(`script cases`, () => {
   it("should error out when merchant-id is * but data-merchant-id not passed", () => {
     const merchantID = "*";
     const sdkUrl = `${mockScriptSrc}&merchant-id=${merchantID}`;
+    // $FlowIgnore
     getCurrentScript.mockReturnValue(makeMockScriptElement(sdkUrl));
 
     expect(getMerchantID).toThrow(
@@ -114,6 +118,7 @@ describe(`script cases`, () => {
     const sdkUrl = `${mockScriptSrc}&merchant-id=${merchantID}`;
     const mockElement = makeMockScriptElement(sdkUrl);
     mockElement.setAttribute("data-merchant-id", dataMerchantIDs);
+    // $FlowIgnore
     getCurrentScript.mockReturnValue(mockElement);
 
     expect(getMerchantID).toThrow(
@@ -127,6 +132,7 @@ describe(`script cases`, () => {
     const sdkUrl = `${mockScriptSrc}&merchant-id=${merchantID}`;
     const mockElement = makeMockScriptElement(sdkUrl);
     mockElement.setAttribute("data-merchant-id", dataMerchantIDs);
+    // $FlowIgnore
     getCurrentScript.mockReturnValue(mockElement);
 
     expect(getMerchantID).toThrow(
@@ -141,6 +147,7 @@ describe(`script cases`, () => {
     const sdkUrl = `${mockScriptSrc}&merchant-id=${merchantID}`;
     const mockElement = makeMockScriptElement(sdkUrl);
     mockElement.setAttribute("data-merchant-id", dataMerchantIDs);
+    // $FlowIgnore
     getCurrentScript.mockReturnValue(mockElement);
 
     expect(getMerchantID().join()).toEqual(dataMerchantIDs);
@@ -150,6 +157,7 @@ describe(`script cases`, () => {
     const intent = "authorize";
     const sdkUrl = `${mockScriptSrc}&intent=${intent}`;
     const mockElement = makeMockScriptElement(sdkUrl);
+    // $FlowIgnore
     getCurrentScript.mockReturnValue(mockElement);
 
     expect(getIntent()).toEqual(intent);
@@ -159,6 +167,7 @@ describe(`script cases`, () => {
     const currency = "EUR";
     const sdkUrl = `${mockScriptSrc}&currency=${currency}`;
     const mockElement = makeMockScriptElement(sdkUrl);
+    // $FlowIgnore
     getCurrentScript.mockReturnValue(mockElement);
 
     expect(getCurrency()).toEqual(currency);
@@ -166,8 +175,9 @@ describe(`script cases`, () => {
 
   it("should successfully get vault", () => {
     const vault = true;
-    const sdkUrl = `${mockScriptSrc}&vault=${vault}`;
+    const sdkUrl = `${mockScriptSrc}&vault=${vault.toString()}`;
     const mockElement = makeMockScriptElement(sdkUrl);
+    // $FlowIgnore
     getCurrentScript.mockReturnValue(mockElement);
 
     expect(getVault()).toEqual(vault);
@@ -176,8 +186,9 @@ describe(`script cases`, () => {
   it("should successfully get commit", () => {
     const commit = false;
 
-    const sdkUrl = `${mockScriptSrc}&commit=${commit}`;
+    const sdkUrl = `${mockScriptSrc}&commit=${commit.toString()}`;
     const mockElement = makeMockScriptElement(sdkUrl);
+    // $FlowIgnore
     getCurrentScript.mockReturnValue(mockElement);
 
     expect(getCommit()).toEqual(commit);
@@ -188,6 +199,7 @@ describe(`script cases`, () => {
 
     const mockElement = makeMockScriptElement(mockScriptSrc);
     mockElement.setAttribute("data-client-token", clientToken);
+    // $FlowIgnore
     getCurrentScript.mockReturnValue(mockElement);
 
     expect(getClientToken()).toEqual(clientToken);
@@ -195,6 +207,8 @@ describe(`script cases`, () => {
 
   it("should not error out when client token not passed", () => {
     const mockElement = makeMockScriptElement(mockScriptSrc);
+
+    // $FlowIgnore
     getCurrentScript.mockReturnValue(mockElement);
 
     expect(getClientToken()).toBeUndefined();
@@ -212,6 +226,7 @@ describe(`script cases`, () => {
 
     const mockElement = makeMockScriptElement(mockScriptSrc);
     mockElement.setAttribute("data-client-token", clientToken);
+    // $FlowIgnore
     getCurrentScript.mockReturnValue(mockElement);
 
     expect(getClientAccessToken()).toEqual(clientAccessToken);
@@ -224,6 +239,7 @@ describe(`script cases`, () => {
       "data-partner-attribution-id",
       partnerAttributionID
     );
+    // $FlowIgnore
     getCurrentScript.mockReturnValue(mockElement);
 
     expect(getPartnerAttributionID()).toEqual(partnerAttributionID);
@@ -236,6 +252,7 @@ describe(`script cases`, () => {
       "data-sdk-integration-source",
       SDKIntegrationSource
     );
+    // $FlowIgnore
     getCurrentScript.mockReturnValue(mockElement);
 
     expect(getSDKIntegrationSource()).toEqual(SDKIntegrationSource);
@@ -244,7 +261,8 @@ describe(`script cases`, () => {
   it("should successfully get popup disabled attribute as true when set to true", () => {
     const popupsDisabled = true;
     const mockElement = makeMockScriptElement(mockScriptSrc);
-    mockElement.setAttribute("data-popups-disabled", popupsDisabled);
+    mockElement.setAttribute("data-popups-disabled", popupsDisabled.toString());
+    // $FlowIgnore
     getCurrentScript.mockReturnValue(mockElement);
 
     expect(getMerchantRequestedPopupsDisabled()).toEqual(popupsDisabled);
@@ -253,7 +271,8 @@ describe(`script cases`, () => {
   it("should successfully get popup disabled attribute as false when set to false", () => {
     const popupsDisabled = false;
     const mockElement = makeMockScriptElement(mockScriptSrc);
-    mockElement.setAttribute("data-popups-disabled", popupsDisabled);
+    mockElement.setAttribute("data-popups-disabled", popupsDisabled.toString());
+    // $FlowIgnore
     getCurrentScript.mockReturnValue(mockElement);
 
     expect(getMerchantRequestedPopupsDisabled()).toEqual(popupsDisabled);
@@ -262,6 +281,7 @@ describe(`script cases`, () => {
   it("should successfully get popup disabled attribute as false when not set", () => {
     const expectedPopupsDisabled = false;
     const mockElement = makeMockScriptElement(mockScriptSrc);
+    // $FlowIgnore
     getCurrentScript.mockReturnValue(mockElement);
 
     expect(getMerchantRequestedPopupsDisabled()).toEqual(
@@ -273,6 +293,7 @@ describe(`script cases`, () => {
     const pageType = "home";
     const mockElement = makeMockScriptElement(mockScriptSrc);
     mockElement.setAttribute("data-page-type", pageType);
+    // $FlowIgnore
     getCurrentScript.mockReturnValue(mockElement);
 
     expect(getPageType()).toEqual(pageType);
@@ -282,6 +303,7 @@ describe(`script cases`, () => {
     const pageType = "Home";
     const mockElement = makeMockScriptElement(mockScriptSrc);
     mockElement.setAttribute("data-page-type", pageType);
+    // $FlowIgnore
     getCurrentScript.mockReturnValue(mockElement);
 
     expect(getPageType()).toEqual(pageType.toLowerCase());
@@ -291,6 +313,7 @@ describe(`script cases`, () => {
     const pageType = "abc";
     const mockElement = makeMockScriptElement(mockScriptSrc);
     mockElement.setAttribute("data-page-type", pageType);
+    // $FlowIgnore
     getCurrentScript.mockReturnValue(mockElement);
 
     expect(getPageType).toThrow(`Invalid page type, '${pageType}'`);
@@ -298,6 +321,7 @@ describe(`script cases`, () => {
 
   it("should default to empty page-type if none provided", () => {
     const mockElement = makeMockScriptElement(mockScriptSrc);
+    // $FlowIgnore
     getCurrentScript.mockReturnValue(mockElement);
 
     expect(getPageType()).toEqual("");
@@ -308,6 +332,7 @@ describe(`script cases`, () => {
 
     const sdkUrl = `${mockScriptSrc}&locale=${expectedLocale}`;
     const mockElement = makeMockScriptElement(sdkUrl);
+    // $FlowIgnore
     getCurrentScript.mockReturnValue(mockElement);
     const result = getLocale();
     const receivedLocal = `${result.lang}_${result.country}`;
@@ -319,6 +344,7 @@ describe(`script cases`, () => {
     window.navigator.languages = [expectedLocale]; // eslint-disable-line compat/compat
 
     const mockElement = makeMockScriptElement(mockScriptSrc);
+    // $FlowIgnore
     getCurrentScript.mockReturnValue(mockElement);
     const result = getLocale();
     const receivedLocal = `${result.lang}_${result.country}`;
@@ -330,6 +356,7 @@ describe(`script cases`, () => {
     window.navigator.languages = ["ja"]; // eslint-disable-line compat/compat
 
     const mockElement = makeMockScriptElement(mockScriptSrc);
+    // $FlowIgnore
     getCurrentScript.mockReturnValue(mockElement);
     const result = getLocale();
     const receivedLocal = `${result.lang}_${result.country}`;
@@ -341,6 +368,7 @@ describe(`script cases`, () => {
     window.navigator.languages = ["es"]; // eslint-disable-line compat/compat
 
     const mockElement = makeMockScriptElement(mockScriptSrc);
+    // $FlowIgnore
     getCurrentScript.mockReturnValue(mockElement);
     const result = getLocale();
     const receivedLocal = `${result.lang}_${result.country}`;
@@ -351,6 +379,7 @@ describe(`script cases`, () => {
     const expectedLocale = "en_US";
 
     const mockElement = makeMockScriptElement(mockScriptSrc);
+    // $FlowIgnore
     getCurrentScript.mockReturnValue(mockElement);
     const result = getLocale();
     const receivedLocal = `${result.lang}_${result.country}`;
@@ -363,6 +392,7 @@ describe(`script cases`, () => {
     const expectedLocale = "en_US";
 
     const mockElement = makeMockScriptElement(mockScriptSrc);
+    // $FlowIgnore
     getCurrentScript.mockReturnValue(mockElement);
     const result = getLocale();
     const receivedLocal = `${result.lang}_${result.country}`;
@@ -374,6 +404,7 @@ describe(`script cases`, () => {
     const inputLocale = "zh_HK";
     const sdkUrl = `${mockScriptSrc}&locale=${inputLocale}`;
     const mockElement = makeMockScriptElement(sdkUrl);
+    // $FlowIgnore
     getCurrentScript.mockReturnValue(mockElement);
     const result = getLocale();
     expect(result.lang).toEqual(expectedLang);
@@ -385,6 +416,7 @@ describe(`script cases`, () => {
     const inputLocale = `${expectedLang}_HK`;
     const sdkUrl = `${mockScriptSrc}&locale=${inputLocale}`;
     const mockElement = makeMockScriptElement(sdkUrl);
+    // $FlowIgnore
     getCurrentScript.mockReturnValue(mockElement);
     const result = getLocale();
     expect(result.lang).toEqual(expectedLang);
@@ -392,6 +424,7 @@ describe(`script cases`, () => {
 
   it("getScriptUrl should return the src of the script element", () => {
     const mockElement = makeMockScriptElement(mockScriptSrc);
+    // $FlowIgnore
     getCurrentScript.mockReturnValue(mockElement);
     const result = getScriptUrl();
 
@@ -408,6 +441,7 @@ describe(`script cases`, () => {
       const expectedFunding = "paypal";
       const sdkUrl = `${mockScriptSrc}&enable-funding=${expectedFunding}`;
       const mockElement = makeMockScriptElement(sdkUrl);
+      // $FlowIgnore
       getCurrentScript.mockReturnValue(mockElement);
 
       const result = getEnableFunding();
@@ -425,6 +459,7 @@ describe(`script cases`, () => {
       const disableFunding = "paypal";
       const sdkUrl = `${mockScriptSrc}&disable-funding=${disableFunding}`;
       const mockElement = makeMockScriptElement(sdkUrl);
+      // $FlowIgnore
       getCurrentScript.mockReturnValue(mockElement);
 
       const result = getDisableFunding();
@@ -442,6 +477,7 @@ describe(`script cases`, () => {
       const disableCard = "paypal";
       const sdkUrl = `${mockScriptSrc}&disable-card=${disableCard}`;
       const mockElement = makeMockScriptElement(sdkUrl);
+      // $FlowIgnore
       getCurrentScript.mockReturnValue(mockElement);
       const result = getDisableCard();
       expect(result).toEqual([disableCard]);
@@ -453,6 +489,7 @@ describe(`script cases`, () => {
       const buyerCountry = "US";
       const sdkUrl = `${mockScriptSrc}&buyer-country=${buyerCountry}`;
       const mockElement = makeMockScriptElement(sdkUrl);
+      // $FlowIgnore
       getCurrentScript.mockReturnValue(mockElement);
 
       const result = getBuyerCountry();
@@ -464,7 +501,8 @@ describe(`script cases`, () => {
     it("getAmount should return and error when the amount format is not correct", () => {
       const inputAmount = 10;
       const mockElement = makeMockScriptElement(mockScriptSrc);
-      mockElement.setAttribute("data-amount", inputAmount);
+      mockElement.setAttribute("data-amount", inputAmount.toString());
+      // $FlowIgnore
       getCurrentScript.mockReturnValue(mockElement);
 
       expect(getAmount).toThrow(`Invalid amount: ${inputAmount}`);
@@ -474,6 +512,7 @@ describe(`script cases`, () => {
       const inputAmount = "10.00";
       const mockElement = makeMockScriptElement(mockScriptSrc);
       mockElement.setAttribute("data-amount", inputAmount);
+      // $FlowIgnore
       getCurrentScript.mockReturnValue(mockElement);
 
       const result = getAmount();
@@ -485,6 +524,7 @@ describe(`script cases`, () => {
     const inputToken = "some-token";
     const mockElement = makeMockScriptElement(mockScriptSrc);
     mockElement.setAttribute("data-user-id-token", inputToken);
+    // $FlowIgnore
     getCurrentScript.mockReturnValue(mockElement);
 
     const result = getUserIDToken();
@@ -495,6 +535,7 @@ describe(`script cases`, () => {
     const inputCspNonce = "some-csp-nonce";
     const mockElement = makeMockScriptElement(mockScriptSrc);
     mockElement.setAttribute("data-csp-nonce", inputCspNonce);
+    // $FlowIgnore
     getCurrentScript.mockReturnValue(mockElement);
 
     const result = getCSPNonce();
@@ -504,7 +545,8 @@ describe(`script cases`, () => {
   it('getEnableThreeDomainSecure should return "true"', () => {
     const inputEnable3DS = true;
     const mockElement = makeMockScriptElement(mockScriptSrc);
-    mockElement.setAttribute("data-enable-3ds", inputEnable3DS);
+    mockElement.setAttribute("data-enable-3ds", inputEnable3DS.toString());
+    // $FlowIgnore
     getCurrentScript.mockReturnValue(mockElement);
 
     const result = getEnableThreeDomainSecure();
@@ -515,6 +557,7 @@ describe(`script cases`, () => {
     const inputUserFlow = "flow";
     const mockElement = makeMockScriptElement(mockScriptSrc);
     mockElement.setAttribute("data-user-experience-flow", inputUserFlow);
+    // $FlowIgnore
     getCurrentScript.mockReturnValue(mockElement);
 
     const result = getUserExperienceFlow();

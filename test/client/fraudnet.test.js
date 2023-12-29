@@ -28,7 +28,6 @@ describe("fraudnet.js", () => {
     env: "test",
     clientMetadataID: "test-cmid",
     cspNonce: "test-csp-nonce",
-    timeout: 100,
     appName: "sdk-test",
     // queryStringParams: {},
   };
@@ -39,6 +38,7 @@ describe("fraudnet.js", () => {
       },
     };
     beforeEach(() => {
+      // $FlowIgnore
       actual.addEventListener = vi.fn((event, cb) => {
         if (event === "load") {
           cb();
@@ -48,7 +48,7 @@ describe("fraudnet.js", () => {
 
     it("creates both scripts", async () => {
       loadFraudnet(fraudnetInputs);
-
+      // $FlowIgnore
       expect(document.createElement).toBeCalledTimes(2);
     });
 
@@ -121,6 +121,7 @@ describe("fraudnet.js", () => {
     };
 
     it("sets up the fraudnet script properly", async () => {
+      // $FlowIgnore
       actual.addEventListener = vi.fn((event, cb) => {
         if (event === "load") {
           cb();
@@ -136,6 +137,7 @@ describe("fraudnet.js", () => {
     });
 
     it("rejects if loading errors out", async () => {
+      // $FlowIgnore
       actual.addEventListener = vi.fn((event, cb) => {
         if (event === "error") {
           cb(event);
@@ -148,6 +150,7 @@ describe("fraudnet.js", () => {
     });
 
     it("rejects if loading aborts", async () => {
+      // $FlowIgnore
       actual.addEventListener = vi.fn((event, cb) => {
         if (event === "abort") {
           cb(event);

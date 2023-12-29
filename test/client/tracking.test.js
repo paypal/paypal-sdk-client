@@ -9,7 +9,7 @@ const mockScriptSrc = `https://test.paypal.com/sdk/js?client-id=${clientId}`;
 function makeMockScriptElement(src = mockScriptSrc) {
   const mockElement = document.createElement("script");
   mockElement.setAttribute("src", src);
-  document.body.appendChild(mockElement);
+  document.body?.appendChild(mockElement);
   return mockElement;
 }
 

@@ -10,7 +10,7 @@ const mockScriptSrc = `https://test.paypal.com/sdk/js?client-id=${clientId}`;
 function makeMockScriptElement(src = mockScriptSrc) {
   const mockElement = document.createElement("script");
   mockElement.setAttribute("src", src);
-  document.body.appendChild(mockElement);
+  document.body?.appendChild(mockElement);
   return mockElement;
 }
 
@@ -22,7 +22,6 @@ vi.mock("@krakenjs/belter/src", async () => {
       return makeMockScriptElement();
     }),
   };
-  a;
 });
 
 describe(`meta cases`, () => {
@@ -45,6 +44,7 @@ describe(`meta cases`, () => {
     const sdkUrl = `${mockScriptSrc}&${merchantIdKey}=*`;
     const mockElement = makeMockScriptElement(sdkUrl);
     mockElement.setAttribute(merchantIdKey, expectedMerchantIds);
+    // $FlowIgnore
     getCurrentScript.mockReturnValue(mockElement);
 
     const meta = getSDKMeta();
@@ -59,15 +59,16 @@ describe(`meta cases`, () => {
   it("should construct a valid script url with data-popups-disabled attribute", () => {
     const disablePops = true;
     const popupsDisabledKey = "data-popups-disabled";
-    const sdkUrl = `${mockScriptSrc}&${popupsDisabledKey}=${disablePops}`;
+    const sdkUrl = `${mockScriptSrc}&${popupsDisabledKey}=${disablePops.toString()}`;
     const mockElement = makeMockScriptElement(sdkUrl);
-    mockElement.setAttribute(popupsDisabledKey, disablePops);
+    mockElement.setAttribute(popupsDisabledKey, disablePops.toString());
+    // $FlowIgnore
     getCurrentScript.mockReturnValue(mockElement);
 
     const meta = getSDKMeta();
 
     const resultMeta = JSON.parse(window.atob(meta));
-    expect(resultMeta.attrs[popupsDisabledKey]).toEqual(`${disablePops}`);
+    expect(resultMeta.attrs[popupsDisabledKey]).toEqual(disablePops.toString());
   });
 
   it("should successfully create a meta payload with data-csp-nonce", () => {
@@ -76,6 +77,7 @@ describe(`meta cases`, () => {
     const sdkUrl = `${mockScriptSrc}&${cspNonceKey}=${dataCSPNonce}`;
     const mockElement = makeMockScriptElement(sdkUrl);
     mockElement.setAttribute(cspNonceKey, dataCSPNonce);
+    // $FlowIgnore
     getCurrentScript.mockReturnValue(mockElement);
 
     const meta = getSDKMeta();

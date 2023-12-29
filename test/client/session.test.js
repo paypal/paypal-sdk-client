@@ -15,7 +15,7 @@ const mockScriptSrc = `https://test.paypal.com/sdk/js?client-id=${clientId}`;
 function makeMockScriptElement(src = mockScriptSrc) {
   const mockElement = document.createElement("script");
   mockElement.setAttribute("src", src);
-  document.body.appendChild(mockElement);
+  document.body?.appendChild(mockElement);
   return mockElement;
 }
 
@@ -63,6 +63,7 @@ describe("session cases", () => {
     const mockMerchantIds = "some-client-meta-data-id";
     const mockElement = makeMockScriptElement(mockScriptSrc);
     mockElement.setAttribute("data-client-metadata-id", mockMerchantIds);
+    // $FlowIgnore
     getCurrentScript.mockReturnValue(mockElement);
 
     const result = getClientMetadataID();

@@ -25,6 +25,7 @@ describe("graphql cases", () => {
 
   it("callGraphQL should fail when graphql returns a non-200 status", async () => {
     const expectedStatus = 404;
+    // $FlowIgnore
     request.mockResolvedValue({ body: {}, status: expectedStatus });
     await expect(() =>
       callGraphQL({ query: `non200Status {}` })
@@ -33,6 +34,7 @@ describe("graphql cases", () => {
 
   it("callGraphQL should throw an exception when the response body contains errors", async () => {
     const expectedError = "unexpected error";
+    // $FlowIgnore
     request.mockResolvedValue({ body: { errors: [expectedError] } });
     await expect(() =>
       callGraphQL({ query: `graphqlErrors {}` })
@@ -40,6 +42,7 @@ describe("graphql cases", () => {
   });
 
   it("callGraphQL should return a valid body response", async () => {
+    // $FlowIgnore
     request.mockResolvedValue({
       body: { data: { received: true } },
       status: 200,
@@ -55,6 +58,7 @@ describe("graphql cases", () => {
   it("getGraphQLFundingEligibility should throw an error when fundingEligibility is not in the response", async () => {
     const expectedErrorMessage =
       "GraphQL fundingEligibility returned no fundingEligibility object";
+    // $FlowIgnore
     request.mockResolvedValue({ body: { data: {} }, status: 200 });
 
     await expect(() =>
@@ -63,6 +67,7 @@ describe("graphql cases", () => {
   });
 
   it("getGraphQLFundingEligibility should return the fundingEligibility", async () => {
+    // $FlowIgnore
     request.mockResolvedValue({
       body: {
         data: {
