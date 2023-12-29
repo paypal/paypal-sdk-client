@@ -2,30 +2,17 @@
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference types="vitest" />
 
-// Configure Vitest (https://vitest.dev/config/)
-
-import path from "path";
-
 import { flowPlugin, esbuildFlowPlugin } from "@bunchtogether/vite-plugin-flow";
 import { defineConfig } from "vite";
-// import { sdkClientTestGlobals } from "./test/globals"
 
 const define = {
   __DEBUG__: false,
   __TEST__: true,
   __WEB__: true,
 
-  // __PORT__: 8000,
-  // __STAGE_HOST__: "msmaster.qa.paypal.com",
-  // __HOST__: "test.paypal.com",
-  // __HOSTNAME__: "test.paypal.com",
   __SDK_HOST__: true,
   __PATH__: true,
 
-  // __VERSION__: "1.0.45",
-  // __CORRELATION_ID__: "abc123",
-  // __NAMESPACE__: "paypaltest",
-  // __PAYPAL_DOMAIN__: "mock://www.paypal.com",
   __PAYPAL_DOMAIN__: true,
   __PAYPAL_API_DOMAIN__: true,
 
@@ -40,7 +27,6 @@ const define = {
     _MAJOR_VERSION__: "",
     __MINOR_VERSION__: "",
   }),
-  // ...sdkClientTestGlobals,
 };
 
 // eslint-disable-next-line import/no-default-export
