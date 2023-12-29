@@ -15,6 +15,7 @@ export const sdkClientTestGlobals: TestGlobals = {
   __SDK_HOST__: "test.paypal.com",
   __PATH__: "/sdk/js",
 
+  __ENV__: "test",
   __VERSION__: "1.0.45",
   __CORRELATION_ID__: "abc123",
   __NAMESPACE__: "paypaltest",
