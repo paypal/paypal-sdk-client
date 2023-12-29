@@ -1,6 +1,6 @@
 /* @flow */
 
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, afterAll } from "vitest";
 import { request } from "@krakenjs/belter/src";
 
 import { callGraphQL, getGraphQLFundingEligibility } from "../../src/graphql";
@@ -19,6 +19,10 @@ vi.mock("@krakenjs/belter/src", async () => {
 });
 
 describe("graphql cases", () => {
+  afterAll(() => {
+    vi.clearAllMocks();
+  });
+
   it("callGraphQL should fail when graphql returns a non-200 status", async () => {
     const expectedStatus = 404;
     request.mockResolvedValue({ body: {}, status: expectedStatus });
