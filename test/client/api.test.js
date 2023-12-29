@@ -1,7 +1,7 @@
 /* @flow */
 import { describe, beforeEach, it, expect, vi } from "vitest";
-
 import { getCurrentScript, request, memoize } from "@krakenjs/belter/src";
+
 import { createAccessToken, createOrder } from "../../src/api";
 
 vi.mock("@krakenjs/belter/src", async () => {
@@ -83,18 +83,18 @@ describe("api cases", () => {
   });
 
   describe("createOrder()", () => {
-    it("createOrder should throw an error when clientId is null", async () => {
+    it("createOrder should throw an error when clientId is null", () => {
       // $FlowIgnore
       expect(() => createOrder(null)).toThrowError(/Client ID not passed/);
     });
 
-    it("createOrder should throw an error when order is null", async () => {
+    it("createOrder should throw an error when order is null", () => {
       expect(() => createOrder("testClient", order)).toThrow(
         /Expected order details to be passed/
       );
     });
 
-    it("createOrder should throw an error when order intent does not match with query parameters intent", async () => {
+    it("createOrder should throw an error when order intent does not match with query parameters intent", () => {
       const expectedErrorMessage =
         "Unexpected intent: authorize passed to order.create. Please ensure you are passing /sdk/js?intent=authorize in the paypal script tag.";
 
@@ -105,7 +105,7 @@ describe("api cases", () => {
       );
     });
 
-    it("createOrder should throw an error when order currency does not match with query parameters currency", async () => {
+    it("createOrder should throw an error when order currency does not match with query parameters currency", () => {
       const expectedErrorMessage =
         "Unexpected currency: AUD passed to order.create. Please ensure you are passing /sdk/js?currency=AUD in the paypal script tag.";
       order.purchase_units[0].amount.currency_code = "AUD";

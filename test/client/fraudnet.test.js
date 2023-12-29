@@ -46,13 +46,13 @@ describe("fraudnet.js", () => {
       });
     });
 
-    it("creates both scripts", async () => {
+    it("creates both scripts", () => {
       loadFraudnet(fraudnetInputs);
       // $FlowIgnore
       expect(document.createElement).toBeCalledTimes(2);
     });
 
-    it("should be memoized and thus cache subsequent calls", async () => {
+    it("should be memoized and thus cache subsequent calls", () => {
       loadFraudnet(fraudnetInputs);
       loadFraudnet(fraudnetInputs);
 
@@ -60,7 +60,7 @@ describe("fraudnet.js", () => {
       expect(createElementSpy).toBeCalledTimes(2);
     });
 
-    it("returns collect function", async () => {
+    it("returns collect function", () => {
       const result = loadFraudnet(fraudnetInputs);
       expect(result).toEqual({ collect: expect.any(Function) });
     });

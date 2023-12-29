@@ -10,7 +10,6 @@ import {
   getCurrentScript,
   memoize,
   stringifyError,
-  getScript,
 } from "@krakenjs/belter/src";
 import {
   COUNTRY,
