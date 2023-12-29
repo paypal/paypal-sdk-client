@@ -126,10 +126,8 @@ export const loadFraudnet: Memoized<LoadFraudnet> = memoize(
       collect: async () => {
         try {
           await fraudnetPromise;
-          console.log(`one down`);
           await window.PAYPAL.asyncData.collect();
         } catch (err) {
-          console.log(`getLogger().warn`, getLogger().warn);
           getLogger().warn("ppcp_axo_collect_fraudnet_failed");
         }
       },
