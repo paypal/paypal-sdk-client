@@ -64,7 +64,7 @@ export const createConfigScript = ({
     configScript.setAttribute("fncls", FRAUDNET_FNCLS);
     configScript.text = JSON.stringify(config);
     // eslint-disable-next-line compat/compat
-    document.body.appendChild(configScript);
+    document.body?.appendChild(configScript);
     resolve();
   });
 };
