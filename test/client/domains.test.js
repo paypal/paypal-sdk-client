@@ -63,11 +63,9 @@ describe(`domains test`, () => {
 
   it("should successfully match valid venmo testing domain", () => {
     window.__ENV__ = "local";
-    const validDomains = ["https://localhost.venmo.com"];
+    const domain = "https://localhost.venmo.com";
 
-    for (const domain of validDomains) {
-      expect(domain).toMatch(getVenmoDomainRegex());
-    }
+    expect(domain).toMatch(getVenmoDomainRegex());
   });
 
   it("should not match invalid venmo domains", () => {
