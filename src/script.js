@@ -34,7 +34,6 @@ import {
   PAGE_TYPES,
 } from "@paypal/sdk-constants/src";
 
-import { getSessionState } from "./session"; // eslint-disable-line import/no-cycle
 import { getPath, getDefaultNamespace, getSDKHost } from "./global";
 import { CLIENT_ID_ALIAS } from "./config";
 import { getComputedLocales } from "./utils";
@@ -368,10 +367,4 @@ export function getCountry(): $Values<typeof COUNTRY> {
 // istanbul ignore next
 export function getLang(): $Values<typeof LANG> {
   return getLocale().lang;
-}
-
-export function getShopperInsights(): boolean {
-  return getSessionState(
-    (state) => state.shopperInsights.getRecommendedPaymentMethodsUsed
-  );
 }

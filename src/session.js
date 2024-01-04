@@ -3,7 +3,7 @@
 import { SDK_SETTINGS } from "@paypal/sdk-constants/src";
 import { getStorage, type Storage } from "@krakenjs/belter/src";
 
-import { getNamespace, getSDKAttribute } from "./script"; // eslint-disable-line import/no-cycle
+import { getNamespace, getSDKAttribute } from "./script";
 
 function getSDKStorage(): Storage {
   return getStorage({
@@ -25,6 +25,12 @@ export function getStorageID(): string {
 
 export function getSessionState<T>(handler: (state: Object) => T): T {
   return getSDKStorage().getSessionState(handler);
+}
+
+export function getRecommendedPaymentMethodsUsed(): boolean {
+  return getSessionState(
+    (state) => state.shopperInsights.getRecommendedPaymentMethodsUsed
+  );
 }
 
 export function getClientMetadataID(): ?string {
