@@ -37,7 +37,3 @@ export function getRecommendedPaymentMethodsUsed(): boolean {
     (state) => state.shopperInsights.getRecommendedPaymentMethodsUsed
   );
 }
-
-export function getClientMetadataID(): ?string {
-  return getSDKAttribute(SDK_SETTINGS.CLIENT_METADATA_ID);
-}
