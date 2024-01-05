@@ -11,6 +11,7 @@ function makeMockScriptElement(src = mockScriptSrc): HTMLCanvasElement {
   const mockElement = document.createElement("script");
   mockElement.setAttribute("src", src);
   document.body?.appendChild(mockElement);
+  // $FlowIgnore
   return mockElement;
 }
 

@@ -12,7 +12,6 @@ export function getClientMetadataID(): ?string {
 function getSDKStorage(): Storage {
   return getStorage({
     name: getNamespace(),
-    stickySessionId: getClientMetadataID() || "",
   });
 }
 
