@@ -2,7 +2,7 @@
 import { describe, beforeEach, it, expect, vi } from "vitest";
 import { getCurrentScript, request, memoize } from "@krakenjs/belter/src";
 
-import { createAccessToken, createOrder } from "../../src/api";
+import { createAccessToken, createOrder } from "./api";
 
 vi.mock("@krakenjs/belter/src", async () => {
   const actual = await vi.importActual("@krakenjs/belter/src");

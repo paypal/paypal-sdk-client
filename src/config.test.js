@@ -1,23 +1,19 @@
 /* @flow */
-import { beforeEach, describe, it, expect } from "vitest";
+import { describe, it, expect } from "vitest";
 
-import { sdkClientTestGlobals } from "../globals";
 import {
   getPayPalLoggerDomain,
   buildPayPalUrl,
   buildPayPalAPIUrl,
   getPayPalLoggerUrl,
-} from "../../src";
-
-beforeEach(() => {
-  window.__ENV__ = "test";
-  window.__PAYPAL_DOMAIN__ = sdkClientTestGlobals.__PAYPAL_DOMAIN__;
-});
+} from "./domains";
 
 describe(`config cases`, () => {
   it("should successfully get the global paypal logger domain", () => {
+    const expectedDomain = "mock://www.paypal.com";
+    window.__PAYPAL_DOMAIN__ = expectedDomain;
     const domain = getPayPalLoggerDomain();
-    expect(domain).toEqual(sdkClientTestGlobals.__PAYPAL_DOMAIN__);
+    expect(domain).toEqual(expectedDomain);
   });
 
   it("should successfully build a paypal url", () => {

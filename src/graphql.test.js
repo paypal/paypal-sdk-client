@@ -3,7 +3,7 @@
 import { describe, it, expect, vi, afterAll } from "vitest";
 import { request } from "@krakenjs/belter/src";
 
-import { callGraphQL, getGraphQLFundingEligibility } from "../../src/graphql";
+import { callGraphQL, getGraphQLFundingEligibility } from "./graphql";
 
 vi.mock("@krakenjs/belter/src", async () => {
   const actual = await vi.importActual("@krakenjs/belter/src");

@@ -6,9 +6,9 @@ import {
   loadFraudnet,
   createConfigScript,
   createFraudnetScript,
-} from "../../src/fraudnet";
-import { FRAUDNET_FNCLS, FRAUDNET_URL } from "../../src/constants";
-import * as logger from "../../src/logger";
+} from "./fraudnet";
+import { FRAUDNET_FNCLS, FRAUDNET_URL } from "./constants";
+import * as logger from "./logger";
 
 vi.spyOn(logger, "getLogger");
 

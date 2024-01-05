@@ -7,7 +7,7 @@ import {
   getStorageID,
   getSessionState,
   getClientMetadataID,
-} from "../../src/session";
+} from "./session";
 
 const clientId = "foobar123";
 const mockScriptSrc = `https://test.paypal.com/sdk/js?client-id=${clientId}`;

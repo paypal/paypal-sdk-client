@@ -39,7 +39,7 @@ export default defineConfig({
     setupFiles: ["vitestSetup.js"],
     environment: "jsdom",
     clearMocks: true,
-    include: ["**/test/**/*.test.js"],
+    include: ["**src/**/*.test.js", "**/server/**/*.test.js"],
     coverage: {
       provider: "v8",
       reportsDirectory: "./coverage",

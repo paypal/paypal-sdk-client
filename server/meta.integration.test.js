@@ -3,7 +3,7 @@
 import cheerio from "cheerio";
 
 import { test } from "vitest";
-import { unpackSDKMeta } from "../../server";
+import { unpackSDKMeta } from ".";
 
 /**
  * List with real URL query parameters.

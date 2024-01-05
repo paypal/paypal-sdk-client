@@ -28,8 +28,8 @@ import {
   getEnableThreeDomainSecure,
   getUserExperienceFlow,
   isChildWindow,
-} from "../../src";
-import { CLIENT_ID_ALIAS } from "../../src";
+} from "./script";
+import { CLIENT_ID_ALIAS } from "./config";
 
 const clientId = "foobar123";
 const mockScriptSrc = `https://test.paypal.com/sdk/js?client-id=${clientId}`;

@@ -1,19 +1,14 @@
 /* @flow */
 import { ENV } from "@paypal/sdk-constants/src";
-import { beforeEach, describe, it, expect } from "vitest";
+import { describe, it, expect } from "vitest";
 
-import { sdkClientTestGlobals } from "../globals";
 import {
+  getAuthAPIUrl,
+  getOrderAPIUrl,
   getPayPalDomainRegex,
   getVenmoDomainRegex,
   isPayPalTrustedDomain,
-} from "../../src";
-import { getAuthAPIUrl, getOrderAPIUrl } from "../../src/domains";
-
-beforeEach(() => {
-  window.__ENV__ = "test";
-  window.__PAYPAL_DOMAIN__ = sdkClientTestGlobals.__PAYPAL_DOMAIN__;
-});
+} from "./domains";
 
 describe(`domains test`, () => {
   it("should successfully match valid paypal domain", () => {

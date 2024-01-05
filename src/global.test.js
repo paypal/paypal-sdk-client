@@ -22,7 +22,7 @@ import {
   getCorrelationID,
   getPlatform,
   getExperimentation,
-} from "../../src";
+} from "./global";
 
 describe(`globals cases`, () => {
   afterEach(() => {
