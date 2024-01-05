@@ -11,6 +11,16 @@ import { getPayPalDomain, getPayPalAPIDomain } from "./global";
 import { URI } from "./config";
 
 export function getPayPalLoggerDomain(): string {
+  if (__ENV__ === ENV.LOCAL) {
+    const stageHost = getStageHost();
+
+    if (!stageHost) {
+      throw new Error(`No stage host found`);
+    }
+
+    return `${getProtocol()}://${stageHost}`;
+  }
+
   return getPayPalDomain();
 }
 
