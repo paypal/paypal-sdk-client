@@ -7,7 +7,12 @@ import {
   isCurrentDomain,
 } from "@krakenjs/cross-domain-utils/src";
 
-import { getPayPalDomain, getPayPalAPIDomain } from "./global";
+import {
+  getPayPalDomain,
+  getPayPalAPIDomain,
+  getStageHost,
+  getProtocol,
+} from "./global";
 import { URI } from "./config";
 
 export function getPayPalLoggerDomain(): string {
