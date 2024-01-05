@@ -4,7 +4,7 @@
 import type { WebpackConfig } from "@krakenjs/grumbler-scripts/config/types";
 import { getWebpackConfig } from "@krakenjs/grumbler-scripts/config/webpack.config";
 
-import { sdkClientTestGlobals } from "./test/globals";
+import { sdkClientTestGlobals } from "./vitestSetup.js";
 
 export const WEBPACK_CONFIG_TEST: WebpackConfig = getWebpackConfig({
   test: true,

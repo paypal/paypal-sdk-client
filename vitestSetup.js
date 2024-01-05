@@ -1,12 +1,6 @@
 /* @flow */
 
-type TestGlobals = {|
-  [string]: string | number | boolean | (() => string | (() => number)),
-  __COMPONENTS__: $ReadOnlyArray<string>,
-  __EXPERIMENTATION__: GetExperimentation,
-|};
-
-export const sdkClientTestGlobals: TestGlobals = {
+export const sdkClientTestGlobals = {
   __PORT__: 8000,
   __STAGE_HOST__: "sandbox.paypal.com",
   __HOST__: "test.paypal.com",
