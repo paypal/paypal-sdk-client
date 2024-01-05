@@ -9,7 +9,7 @@ vi.mock("@krakenjs/belter/src", async () => {
   return {
     ...actual,
     getCurrentScript: vi.fn(),
-    request: vi.fn(),
+    request: vi.fn().mockResolvedValue(),
   };
 });
 
@@ -89,14 +89,15 @@ describe("api cases", () => {
     });
 
     it("createOrder should throw an error when order is null", () => {
-      expect(() => createOrder("testClient", order)).toThrow(
+      // $FlowIgnore
+      expect(() => createOrder("testClient", null)).toThrow(
         /Expected order details to be passed/
       );
     });
 
     it("createOrder should throw an error when order intent does not match with query parameters intent", () => {
       const expectedErrorMessage =
-        "Unexpected intent: authorize passed to order.create. Please ensure you are passing /sdk/js?intent=authorize in the paypal script tag.";
+        "Unexpected intent: AUTHORIZE passed to order.create. Please ensure you are passing /sdk/js?intent=authorize in the paypal script tag.";
 
       order.intent = "AUTHORIZE";
 
