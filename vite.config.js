@@ -31,6 +31,7 @@ const define = {
   }),
 };
 
+// $FlowIssue
 export default defineConfig({
   define,
   esbuild: {
@@ -52,5 +53,6 @@ export default defineConfig({
       plugins: [esbuildFlowPlugin()],
     },
   },
+  // $FlowIssue
   plugins: [flowPlugin({ exclude: "" })],
 });
