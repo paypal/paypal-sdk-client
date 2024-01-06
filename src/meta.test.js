@@ -10,6 +10,7 @@ const mockScriptSrc = `https://test.paypal.com/sdk/js?client-id=${clientId}`;
 function makeMockScriptElement(src = mockScriptSrc): HTMLCanvasElement {
   const mockElement = document.createElement("script");
   mockElement.setAttribute("src", src);
+  // eslint-disable-next-line compat/compat
   document.body?.appendChild(mockElement);
   // $FlowIgnore
   return mockElement;

@@ -8,6 +8,7 @@ import {
   createFraudnetScript,
 } from "./fraudnet";
 import { FRAUDNET_FNCLS, FRAUDNET_URL } from "./constants";
+// eslint-disable-next-line import/no-namespace
 import * as logger from "./logger";
 
 vi.spyOn(logger, "getLogger");
@@ -17,6 +18,7 @@ describe("fraudnet.js", () => {
   const createElementSpy = vi
     .spyOn(document, "createElement")
     .mockImplementation(() => actual);
+  // eslint-disable-next-line compat/compat
   const appendChildSpy = vi.spyOn(document.body, "appendChild");
 
   beforeEach(() => {

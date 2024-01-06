@@ -6,9 +6,10 @@ import { getSDKInitTime, setupLogger } from "./tracking";
 const clientId = "foobar123";
 const mockScriptSrc = `https://test.paypal.com/sdk/js?client-id=${clientId}`;
 
-function makeMockScriptElement(src = mockScriptSrc) {
+function makeMockScriptElement(src = mockScriptSrc): HTMLCanvasElement {
   const mockElement = document.createElement("script");
   mockElement.setAttribute("src", src);
+  // eslint-disable-next-line compat/compat
   document.body?.appendChild(mockElement);
   return mockElement;
 }
@@ -24,7 +25,7 @@ vi.mock("@krakenjs/belter/src", async () => {
 });
 
 describe(`tracking cases`, () => {
-  it("should throw an Error", async () => {
+  it("should throw an Error", () => {
     const errorMessage = "SDK not initialized";
     expect(getSDKInitTime).toThrow(errorMessage);
   });

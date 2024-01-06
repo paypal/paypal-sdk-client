@@ -1,8 +1,8 @@
 /* @flow */
 
 import cheerio from "cheerio";
-
 import { test } from "vitest";
+
 import { unpackSDKMeta } from ".";
 
 /**

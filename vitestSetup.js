@@ -23,7 +23,7 @@ export const sdkClientTestGlobals = {
 };
 
 const applyEnvs = () => {
-  Object.keys(sdkClientTestGlobals).forEach((k, v) => {
+  Object.keys(sdkClientTestGlobals).forEach((k) => {
     window[k] = sdkClientTestGlobals[k];
   });
 };

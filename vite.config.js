@@ -1,7 +1,9 @@
+/* eslint-disable eslint-comments/disable-enable-pair */
 /* eslint-disable spaced-comment */
-// eslint-disable-next-line @typescript-eslint/triple-slash-reference
+/* eslint-disable import/no-default-export */
 /// <reference types="vitest" />
 
+/* @flow */
 import { flowPlugin, esbuildFlowPlugin } from "@bunchtogether/vite-plugin-flow";
 import { defineConfig } from "vite";
 
@@ -29,7 +31,6 @@ const define = {
   }),
 };
 
-// eslint-disable-next-line import/no-default-export
 export default defineConfig({
   define,
   esbuild: {
