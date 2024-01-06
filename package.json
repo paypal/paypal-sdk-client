@@ -11,7 +11,7 @@
     "doc": "esdoc",
     "flow": "flow",
     "flow-typed": "rm -rf ./flow-typed && flow-typed install",
-    "lint": "eslint src/ server/ test/ *.js",
+    "lint": "eslint src/ server/ *.js",
     "reinstall": "rimraf flow-typed && rimraf node_modules && npm install && flow-typed install",
     "release": "./publish.sh",
     "release:major": "./publish.sh major",
