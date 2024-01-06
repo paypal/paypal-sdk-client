@@ -3,25 +3,17 @@ import { describe, it, vi, beforeEach, expect } from "vitest";
 import { getCurrentScript, memoize } from "@krakenjs/belter/src";
 
 import { getSDKMeta } from "./meta";
+import { makeMockScriptElement } from "../test/helpers";
 
 const clientId = "foobar123";
 const mockScriptSrc = `https://test.paypal.com/sdk/js?client-id=${clientId}`;
-
-function makeMockScriptElement(src = mockScriptSrc): HTMLScriptElement {
-  const mockElement = document.createElement("script");
-  mockElement.setAttribute("src", src);
-  // eslint-disable-next-line compat/compat
-  document.body?.appendChild(mockElement);
-  // $FlowIgnore
-  return mockElement;
-}
 
 vi.mock("@krakenjs/belter/src", async () => {
   const actual = await vi.importActual("@krakenjs/belter/src");
   return {
     ...actual,
     getCurrentScript: vi.fn(() => {
-      return makeMockScriptElement();
+      return makeMockScriptElement(mockScriptSrc);
     }),
   };
 });

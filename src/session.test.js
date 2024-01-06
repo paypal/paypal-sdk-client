@@ -8,24 +8,17 @@ import {
   getSessionState,
   getClientMetadataID,
 } from "./session";
+import { makeMockScriptElement } from "../test/helpers";
 
 const clientId = "foobar123";
 const mockScriptSrc = `https://test.paypal.com/sdk/js?client-id=${clientId}`;
-
-function makeMockScriptElement(src = mockScriptSrc): HTMLScriptElement {
-  const mockElement = document.createElement("script");
-  mockElement.setAttribute("src", src);
-  // eslint-disable-next-line compat/compat
-  document.body?.appendChild(mockElement);
-  return mockElement;
-}
 
 vi.mock("@krakenjs/belter/src", async () => {
   const actual = await vi.importActual("@krakenjs/belter/src");
   return {
     ...actual,
     getCurrentScript: vi.fn(() => {
-      return makeMockScriptElement();
+      return makeMockScriptElement(mockScriptSrc);
     }),
   };
 });
