@@ -2,13 +2,14 @@
 import { describe, it, afterEach, expect, vi } from "vitest";
 import { getCurrentScript, memoize } from "@krakenjs/belter/src";
 
+import { makeMockScriptElement } from "../test/helpers";
+
 import {
   getStorageState,
   getStorageID,
   getSessionState,
   getClientMetadataID,
 } from "./session";
-import { makeMockScriptElement } from "../test/helpers";
 
 const clientId = "foobar123";
 const mockScriptSrc = `https://test.paypal.com/sdk/js?client-id=${clientId}`;

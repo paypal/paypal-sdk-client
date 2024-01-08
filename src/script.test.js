@@ -3,6 +3,8 @@
 import { describe, it, afterEach, beforeEach, expect, vi } from "vitest";
 import { base64encode, getCurrentScript, memoize } from "@krakenjs/belter/src";
 
+import { makeMockScriptElement } from "../test/helpers";
+
 import {
   getClientID,
   getIntent,
@@ -30,7 +32,6 @@ import {
   isChildWindow,
 } from "./script";
 import { CLIENT_ID_ALIAS } from "./config";
-import { makeMockScriptElement } from "../test/helpers";
 
 const clientId = "foobar123";
 const mockScriptSrc = `https://test.paypal.com/sdk/js?client-id=${clientId}`;

@@ -1,8 +1,9 @@
 /* @flow */
 import { describe, it, vi, expect } from "vitest";
 
-import { getSDKInitTime, setupLogger } from "./tracking";
 import { makeMockScriptElement } from "../test/helpers";
+
+import { getSDKInitTime, setupLogger } from "./tracking";
 
 const clientId = "foobar123";
 const mockScriptSrc = `https://test.paypal.com/sdk/js?client-id=${clientId}`;
