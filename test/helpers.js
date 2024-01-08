@@ -1,8 +1,8 @@
 /* @flow */
 
-export function makeMockScriptElement(src): HTMLScriptElement {
+export function makeMockScriptElement(scrtipSrc: string): HTMLScriptElement {
   const mockElement = document.createElement("script");
-  mockElement.setAttribute("src", src);
+  mockElement.setAttribute("src", scrtipSrc);
   // eslint-disable-next-line compat/compat
   document.body?.appendChild(mockElement);
   // $FlowIgnore
