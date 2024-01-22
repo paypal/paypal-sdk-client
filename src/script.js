@@ -330,29 +330,29 @@ export function getSDKToken(): ?string {
   return getSDKAttribute(SDK_SETTINGS.SDK_TOKEN);
 }
 
-// whether in zoid window
+/* v8 ignore next 3 */
 export function isChildWindow(): boolean {
   return Boolean(window.xprops);
 }
 
-// istanbul ignore next
+/* v8 ignore next 3 */
 export function getUserAccessToken(): ?string {
   // pass
 }
 
-// istanbul ignore next
+/* v8 ignore next 3 */
 export function getUserAuthCode(): ?string {
   // pass
 }
 
 // Remove
-// istanbul ignore next
+/* v8 ignore next 3 */
 export function getCountry(): $Values<typeof COUNTRY> {
   return getLocale().country;
 }
 
 // Remove
-// istanbul ignore next
+/* v8 ignore next 3 */
 export function getLang(): $Values<typeof LANG> {
   return getLocale().lang;
 }
