@@ -22,6 +22,7 @@ vi.mock("@krakenjs/belter/src", async () => {
     getCurrentScript: vi.fn(() => {
       return makeMockScriptElement(mockScriptSrc);
     }),
+    getStorage: vi.fn((args) => actual.getStorage(args)),
   };
 });
 
@@ -67,8 +68,8 @@ describe("session cases", () => {
   });
 
   it("uses getStorage to retrieve the storage", () => {
-    // $FlowIgnore
-    getStorage = vi.fn();
+    // // $FlowIgnore
+    // getStorage = vi.fn();
     getSDKStorage();
 
     expect(getStorage).toBeCalledWith({
