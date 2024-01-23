@@ -45,10 +45,6 @@ export const createConfigScript = ({
   appName,
 }: CreateConfigOptions): ZalgoPromise<void> => {
   return new ZalgoPromise((resolve) => {
-    if (__TEST__) {
-      return resolve();
-    }
-
     const config: FraudnetConfig = {
       f: clientMetadataID,
       s: appName,
@@ -69,6 +65,7 @@ export const createConfigScript = ({
     configScript.text = JSON.stringify(config);
     // eslint-disable-next-line compat/compat
     document.body?.appendChild(configScript);
+    resolve();
   });
 };
 
@@ -91,7 +88,6 @@ export const createFraudnetScript = ({
 
     fraudnetScript.setAttribute("nonce", cspNonce || "");
     fraudnetScript.setAttribute("src", fraudnetUrl);
-    fraudnetScript.addEventListener("error", () => resolve());
 
     window.fnCallback = resolve;
     // eslint-disable-next-line compat/compat

@@ -45,7 +45,6 @@ export function getSDKInitTime(): number {
 
 export function setupLogger() {
   const logger = getLogger();
-
   sdkInitTime = Date.now();
 
   logger.addPayloadBuilder(() => {

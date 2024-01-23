@@ -10,7 +10,6 @@ import {
   getCurrentScript,
   memoize,
   stringifyError,
-  getScript,
 } from "@krakenjs/belter/src";
 import {
   COUNTRY,
@@ -49,18 +48,6 @@ const buildScriptNotFoundError = (host, path, error) => {
 };
 
 export const getSDKScript: GetSDKScript = memoize(() => {
-  if (__TEST__) {
-    const script = getScript({
-      host: getSDKHost(),
-      path: getPath(),
-      reverse: true,
-    });
-    if (!script) {
-      throw buildScriptNotFoundError(getSDKHost(), getPath());
-    }
-    return script;
-  }
-
   try {
     return getCurrentScript();
   } catch (error) {
@@ -73,6 +60,7 @@ type GetSDKAttributes = () => { [string]: string };
 export const getSDKAttributes: GetSDKAttributes = memoize(() => {
   const sdkScript = getSDKScript();
   const result = {};
+
   for (const attr of sdkScript.attributes) {
     if (attr.name.indexOf("data-") === 0) {
       result[attr.name] = attr.value;
@@ -107,7 +95,8 @@ export const getSDKQueryParam: GetSDKQueryParam = <T>(name: string, def: T) => {
 };
 
 export function getScriptUrl(): string {
-  const src = getSDKScript().getAttribute("src");
+  const script = getSDKScript();
+  const src = script.getAttribute("src");
   if (!src) {
     throw new Error(`Can not find src for sdk script`);
   }
@@ -127,7 +116,6 @@ export function getSDKQueryParamBool<T: boolean>(
 
 export function getClientID(): string {
   const clientID = getSDKQueryParam(SDK_QUERY_KEYS.CLIENT_ID);
-
   if (!clientID) {
     throw new Error(
       `Expected ${SDK_QUERY_KEYS.CLIENT_ID} parameter in sdk url`
@@ -342,29 +330,29 @@ export function getSDKToken(): ?string {
   return getSDKAttribute(SDK_SETTINGS.SDK_TOKEN);
 }
 
-// whether in zoid window
+/* v8 ignore next 3 */
 export function isChildWindow(): boolean {
   return Boolean(window.xprops);
 }
 
-// istanbul ignore next
+/* v8 ignore next 3 */
 export function getUserAccessToken(): ?string {
   // pass
 }
 
-// istanbul ignore next
+/* v8 ignore next 3 */
 export function getUserAuthCode(): ?string {
   // pass
 }
 
 // Remove
-// istanbul ignore next
+/* v8 ignore next 3 */
 export function getCountry(): $Values<typeof COUNTRY> {
   return getLocale().country;
 }
 
 // Remove
-// istanbul ignore next
+/* v8 ignore next 3 */
 export function getLang(): $Values<typeof LANG> {
   return getLocale().lang;
 }

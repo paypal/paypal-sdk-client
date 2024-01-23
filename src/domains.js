@@ -8,10 +8,10 @@ import {
 } from "@krakenjs/cross-domain-utils/src";
 
 import {
+  getPayPalAPIDomain,
+  getPayPalDomain,
   getProtocol,
   getStageHost,
-  getPayPalDomain,
-  getPayPalAPIDomain,
 } from "./global";
 import { URI } from "./config";
 

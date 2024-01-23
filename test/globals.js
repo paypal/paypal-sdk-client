@@ -1,13 +1,6 @@
-/* @flow */
-import type { GetExperimentation } from "../src/types";
+/* eslint flowtype/require-valid-file-annotation: off, flowtype/require-return-type: off */
 
-type TestGlobals = {|
-  [string]: string | number | boolean | (() => string | (() => number)),
-  __COMPONENTS__: $ReadOnlyArray<string>,
-  __EXPERIMENTATION__: GetExperimentation,
-|};
-
-export const sdkClientTestGlobals: TestGlobals = {
+export const sdkClientTestGlobals = {
   __PORT__: 8000,
   __STAGE_HOST__: "sandbox.paypal.com",
   __HOST__: "test.paypal.com",
@@ -15,6 +8,7 @@ export const sdkClientTestGlobals: TestGlobals = {
   __SDK_HOST__: "test.paypal.com",
   __PATH__: "/sdk/js",
 
+  __ENV__: "test",
   __VERSION__: "1.0.45",
   __CORRELATION_ID__: "abc123",
   __NAMESPACE__: "paypaltest",

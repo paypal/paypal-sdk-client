@@ -21,6 +21,7 @@ export function getSDKMeta(): string {
   const url = getScriptUrl();
 
   const scriptAttrs = getSDKAttributes();
+
   const attrs = {};
   for (const attr of Object.keys(scriptAttrs)) {
     if (ALLOWED_ATTRS.indexOf(attr) !== -1) {

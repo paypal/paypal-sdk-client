@@ -2,8 +2,9 @@
 /* eslint max-lines: off */
 
 import cheerio from "cheerio";
+import { test, afterEach } from "vitest";
 
-import { unpackSDKMeta } from "../../server";
+import { unpackSDKMeta } from ".";
 
 afterEach(() => {
   // eslint-disable-next-line no-process-env
