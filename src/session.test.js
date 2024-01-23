@@ -68,8 +68,6 @@ describe("session cases", () => {
   });
 
   it("uses getStorage to retrieve the storage", () => {
-    // // $FlowIgnore
-    // getStorage = vi.fn();
     getSDKStorage();
 
     expect(getStorage).toBeCalledWith({
