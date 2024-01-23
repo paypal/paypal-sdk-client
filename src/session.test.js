@@ -1,6 +1,6 @@
 /* @flow */
 import { describe, it, afterEach, expect, vi } from "vitest";
-import { getCurrentScript, memoize } from "@krakenjs/belter/src";
+import { getCurrentScript, memoize, getStorage } from "@krakenjs/belter/src";
 
 import { makeMockScriptElement } from "../test/helpers";
 
@@ -9,6 +9,7 @@ import {
   getStorageID,
   getSessionState,
   getClientMetadataID,
+  getSDKStorage,
 } from "./session";
 
 const clientId = "foobar123";
@@ -63,5 +64,16 @@ describe("session cases", () => {
 
     const result = getClientMetadataID();
     expect(result).toEqual(mockMerchantIds);
+  });
+
+  it("uses getStorage to retrieve the storage", () => {
+    // $FlowIgnore
+    getStorage = vi.fn();
+    getSDKStorage();
+
+    expect(getStorage).toBeCalledWith({
+      name: expect.any(String),
+      stickySessionId: expect.any(String),
+    });
   });
 });

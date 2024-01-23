@@ -9,9 +9,10 @@ export function getClientMetadataID(): ?string {
   return getSDKAttribute(SDK_SETTINGS.CLIENT_METADATA_ID);
 }
 
-function getSDKStorage(): Storage {
+export function getSDKStorage(): Storage {
   return getStorage({
     name: getNamespace(),
+    stickySessionId: getClientMetadataID() || "",
   });
 }
 
