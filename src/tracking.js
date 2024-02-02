@@ -166,20 +166,22 @@ export function setupLogger() {
 
     if (loadTime) {
       logger
-        // $FlowFixMe beaver-logger types need to be updated
-        .metric({
-          metricNamespace: "pp.app.paypal_sdk.init.gauge",
-          metricType: "gauge",
-          metricEventName: "load_performance",
-          metricValue: sdkLoadTime,
-          dimensions: {
-            cacheType,
-            version,
-            components: getComponents().join(","),
-            isPayPalDomain: isLoadedInFrame,
-            token: getTokenType(),
-          },
-        })
+        // We can not send gauge metrics to our logger backend currently
+        // once we have that ability, we should uncomment this gauge metric
+        // .metric({
+        //   metricNamespace: "pp.app.paypal_sdk.init.gauge",
+        //   metricType: "gauge",
+        //   metricEventName: "load_performance",
+        //   metricValue: sdkLoadTime,
+        //   dimensions: {
+        //     cacheType,
+        //     version,
+        //     components: getComponents().join(","),
+        //     isPayPalDomain: isLoadedInFrame,
+        //     token: getTokenType(),
+        //   },
+        // })
+        // $FlowIssue
         .metric({
           metricNamespace: "pp.app.paypal_sdk.init.count",
           metricEventName: "load",
