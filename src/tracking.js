@@ -27,13 +27,52 @@ import {
   getLocale,
   getSDKScript,
   getSDKIntegrationSource,
-  getPageType,
+  getPageType as getSDKPageType,
+  getClientToken,
+  getUserIDToken,
+  getSDKToken,
 } from "./script";
 import { getSessionID } from "./session";
 import { getLogger } from "./logger";
 import { isPayPalDomain } from "./domains";
 
 let sdkInitTime;
+
+const getTokenType = (): string => {
+  if (getClientToken()) {
+    return "client-token";
+  }
+
+  if (getUserIDToken()) {
+    return "user-id-token";
+  }
+
+  if (getSDKToken()) {
+    return "sdk-token";
+  }
+
+  return "none";
+};
+
+const getIntegrationSource = (): string => {
+  const integrationSource = getSDKIntegrationSource();
+
+  if (integrationSource) {
+    return integrationSource;
+  } else {
+    return "none";
+  }
+};
+
+const getPageType = (): string => {
+  const pageType = getSDKPageType();
+
+  if (pageType) {
+    return pageType;
+  } else {
+    return "none";
+  }
+};
 
 export function getSDKInitTime(): number {
   if (typeof sdkInitTime === "undefined") {
@@ -45,6 +84,13 @@ export function getSDKInitTime(): number {
 
 export function setupLogger() {
   const logger = getLogger();
+  const pageType = getPageType();
+  const integrationSource = getIntegrationSource();
+  const version = getVersion();
+  const userAction = getCommit()
+    ? FPTI_USER_ACTION.COMMIT
+    : FPTI_USER_ACTION.CONTINUE;
+
   sdkInitTime = Date.now();
 
   logger.addPayloadBuilder(() => {
@@ -69,15 +115,13 @@ export function setupLogger() {
       [FPTI_KEY.LOCALE]: `${lang}_${country}`,
       [FPTI_KEY.INTEGRATION_IDENTIFIER]: getClientID(),
       [FPTI_KEY.PARTNER_ATTRIBUTION_ID]: getPartnerAttributionID(),
-      [FPTI_KEY.PAGE_TYPE]: getPageType(),
+      [FPTI_KEY.PAGE_TYPE]: pageType,
       [FPTI_KEY.SDK_NAME]: FPTI_SDK_NAME.PAYMENTS_SDK,
-      [FPTI_KEY.SDK_VERSION]: getVersion(),
+      [FPTI_KEY.SDK_VERSION]: version,
       [FPTI_KEY.USER_AGENT]: window.navigator && window.navigator.userAgent,
-      [FPTI_KEY.USER_ACTION]: getCommit()
-        ? FPTI_USER_ACTION.COMMIT
-        : FPTI_USER_ACTION.CONTINUE,
+      [FPTI_KEY.USER_ACTION]: userAction,
       [FPTI_KEY.CONTEXT_CORRID]: getCorrelationID(),
-      [FPTI_KEY.SDK_INTEGRATION_SOURCE]: getSDKIntegrationSource(),
+      [FPTI_KEY.SDK_INTEGRATION_SOURCE]: integrationSource,
     };
   });
 
@@ -98,14 +142,14 @@ export function setupLogger() {
   waitForWindowReady().then(() => {
     const sdkScript = getSDKScript();
     const loadTime = getResourceLoadTime(sdkScript.src);
-    let cache;
+    let cacheType;
 
     if (loadTime === 0) {
-      cache = "sdk_client_cache_hit";
+      cacheType = "sdk_client_cache_hit";
     } else if (typeof loadTime === "number") {
-      cache = "sdk_client_cache_miss";
+      cacheType = "sdk_client_cache_miss";
     } else {
-      cache = "sdk_client_cache_unknown";
+      cacheType = "sdk_client_cache_unknown";
     }
 
     // Exclude apps that use the JS SDK and are hosted directly on www.paypal.com. Ex:
@@ -114,28 +158,49 @@ export function setupLogger() {
     const isLoadedInFrame = isPayPalDomain() && window.xprops;
     const sdkLoadTime = typeof loadTime === "number" ? loadTime : undefined;
 
-    logger
-      .info(`setup_${getEnv()}`)
-      .info(`setup_${getEnv()}_${getVersion().replace(/\./g, "_")}`)
-      .info(
-        `sdk_${isLoadedInFrame ? "paypal" : "non_paypal"}_domain_script_uid_${
-          sdkScript.hasAttribute(ATTRIBUTES.UID) ? "present" : "missing"
-        }`
-      )
-      .info(cache, { sdkLoadTime })
-      // $FlowFixMe beaver-logger types need to be updated
-      .metric({
-        metricNamespace: "pp.app.sdk.paypal_js_v5.sdk_load_time.gauge",
-        metricEventName: "unused",
-        metricValue: sdkLoadTime,
-        dimensions: { cacheType: cache, components: getComponents().join(",") },
-      })
-      .track({
-        [FPTI_KEY.TRANSITION]: "process_js_sdk_init_client",
-        [FPTI_KEY.SDK_LOAD_TIME]: sdkLoadTime,
-        [FPTI_KEY.SDK_CACHE]: cache,
-      })
-      .flush();
+    logger.info(
+      `sdk_${isLoadedInFrame ? "paypal" : "non_paypal"}_domain_script_uid_${
+        sdkScript.hasAttribute(ATTRIBUTES.UID) ? "present" : "missing"
+      }`
+    );
+
+    if (loadTime) {
+      logger
+        // We can not send gauge metrics to our logger backend currently
+        // once we have that ability, we should uncomment this gauge metric
+        // .metric({
+        //   metricNamespace: "pp.app.paypal_sdk.init.gauge",
+        //   metricType: "gauge",
+        //   metricEventName: "load_performance",
+        //   metricValue: sdkLoadTime,
+        //   dimensions: {
+        //     cacheType,
+        //     version,
+        //     components: getComponents().join(","),
+        //     isPayPalDomain: isLoadedInFrame,
+        //     token: getTokenType(),
+        //   },
+        // })
+        // $FlowIssue
+        .metric({
+          metricNamespace: "pp.app.paypal_sdk.init.count",
+          metricEventName: "load",
+          dimensions: {
+            integrationSource,
+            pageType,
+            userAction,
+            version,
+            components: getComponents().join(","),
+            isPayPalDomain: isLoadedInFrame,
+            token: getTokenType(),
+          },
+        })
+        .track({
+          [FPTI_KEY.TRANSITION]: "process_js_sdk_init_client",
+          [FPTI_KEY.SDK_LOAD_TIME]: sdkLoadTime,
+          [FPTI_KEY.SDK_CACHE]: cacheType,
+        });
+    }
 
     if (isIEIntranet()) {
       logger.warn("ie_intranet_mode");
