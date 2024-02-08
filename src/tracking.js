@@ -86,7 +86,7 @@ export function getSDKInitTime(): number {
 export function setupLogger() {
   const logger = getLogger();
   const pageType = getPageType();
-  const integrationSource = getIntegrationSource();
+  const sdkIntegrationSource = getIntegrationSource();
   const version = getVersion();
   const userAction = getCommit()
     ? FPTI_USER_ACTION.COMMIT
@@ -107,22 +107,22 @@ export function setupLogger() {
     const mID = getMerchantID();
 
     return {
-      [FPTI_KEY.FEED]: FPTI_FEED.PAYMENTS_SDK,
-      [FPTI_KEY.DATA_SOURCE]: FPTI_DATA_SOURCE.PAYMENTS_SDK,
       [FPTI_KEY.CLIENT_ID]: getClientID(),
-      [FPTI_KEY.SELLER_ID]: mID && mID.toString(),
-      [FPTI_KEY.SESSION_UID]: getSessionID(),
-      [FPTI_KEY.REFERER]: window.location.host,
-      [FPTI_KEY.LOCALE]: `${lang}_${country}`,
+      [FPTI_KEY.CONTEXT_CORRID]: getCorrelationID(),
+      [FPTI_KEY.DATA_SOURCE]: FPTI_DATA_SOURCE.PAYMENTS_SDK,
+      [FPTI_KEY.FEED]: FPTI_FEED.PAYMENTS_SDK,
       [FPTI_KEY.INTEGRATION_IDENTIFIER]: getClientID(),
-      [FPTI_KEY.PARTNER_ATTRIBUTION_ID]: getPartnerAttributionID(),
+      [FPTI_KEY.LOCALE]: `${lang}_${country}`,
       [FPTI_KEY.PAGE_TYPE]: pageType,
+      [FPTI_KEY.PARTNER_ATTRIBUTION_ID]: getPartnerAttributionID(),
+      [FPTI_KEY.REFERER]: window.location.host,
+      [FPTI_KEY.SDK_INTEGRATION_SOURCE]: sdkIntegrationSource,
       [FPTI_KEY.SDK_NAME]: FPTI_SDK_NAME.PAYMENTS_SDK,
       [FPTI_KEY.SDK_VERSION]: version,
-      [FPTI_KEY.USER_AGENT]: window.navigator && window.navigator.userAgent,
+      [FPTI_KEY.SELLER_ID]: mID && mID.toString(),
+      [FPTI_KEY.SESSION_UID]: getSessionID(),
       [FPTI_KEY.USER_ACTION]: userAction,
-      [FPTI_KEY.CONTEXT_CORRID]: getCorrelationID(),
-      [FPTI_KEY.SDK_INTEGRATION_SOURCE]: integrationSource,
+      [FPTI_KEY.USER_AGENT]: window.navigator && window.navigator.userAgent,
     };
   });
 
@@ -183,6 +183,23 @@ export function setupLogger() {
         //     token: getTokenType(),
         //   },
         // })
+<<<<<<< HEAD
+=======
+        // $FlowIssue
+        .metric({
+          metricNamespace: "pp.app.paypal_sdk.init.count",
+          metricEventName: "load",
+          dimensions: {
+            components: getComponents().join(","),
+            isPayPalDomain: isLoadedInFrame,
+            pageType,
+            sdkIntegrationSource,
+            token: getTokenType(),
+            userAction,
+            version,
+          },
+        })
+>>>>>>> 8425a64 (Add sdkIntegrationSource to tracking builder and metric)
         .track({
           [FPTI_KEY.TRANSITION]: "process_js_sdk_init_client",
           [FPTI_KEY.SDK_LOAD_TIME]: sdkLoadTime,
