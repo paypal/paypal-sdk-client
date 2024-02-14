@@ -86,7 +86,8 @@ export function getSDKInitTime(): number {
 export function setupLogger() {
   const logger = getLogger();
   const pageType = getPageType();
-  const sdkIntegrationSource = getIntegrationSource();
+  const integrationSource = getIntegrationSource();
+  const jsSdkLibrary = getIntegrationSource(); // write new getjsSdkLibrary() function
   const version = getVersion();
   const userAction = getCommit()
     ? FPTI_USER_ACTION.COMMIT
@@ -116,7 +117,7 @@ export function setupLogger() {
       [FPTI_KEY.PAGE_TYPE]: pageType,
       [FPTI_KEY.PARTNER_ATTRIBUTION_ID]: getPartnerAttributionID(),
       [FPTI_KEY.REFERER]: window.location.host,
-      [FPTI_KEY.SDK_INTEGRATION_SOURCE]: sdkIntegrationSource,
+      [FPTI_KEY.SDK_INTEGRATION_SOURCE]: integrationSource,
       [FPTI_KEY.SDK_NAME]: FPTI_SDK_NAME.PAYMENTS_SDK,
       [FPTI_KEY.SDK_VERSION]: version,
       [FPTI_KEY.SELLER_ID]: mID && mID.toString(),
@@ -183,23 +184,6 @@ export function setupLogger() {
         //     token: getTokenType(),
         //   },
         // })
-<<<<<<< HEAD
-=======
-        // $FlowIssue
-        .metric({
-          metricNamespace: "pp.app.paypal_sdk.init.count",
-          metricEventName: "load",
-          dimensions: {
-            components: getComponents().join(","),
-            isPayPalDomain: isLoadedInFrame,
-            pageType,
-            sdkIntegrationSource,
-            token: getTokenType(),
-            userAction,
-            version,
-          },
-        })
->>>>>>> 8425a64 (Add sdkIntegrationSource to tracking builder and metric)
         .track({
           [FPTI_KEY.TRANSITION]: "process_js_sdk_init_client",
           [FPTI_KEY.SDK_LOAD_TIME]: sdkLoadTime,
@@ -215,13 +199,13 @@ export function setupLogger() {
       namespace: "sdk_client.init.count",
       event: "init",
       dimensions: {
+        components: getComponents().join(","),
         integrationSource,
+        isPayPalDomain: isLoadedInFrame,
         pageType,
+        token: getTokenType(),
         userAction,
         version,
-        components: getComponents().join(","),
-        isPayPalDomain: isLoadedInFrame,
-        token: getTokenType(),
       },
     });
   });
