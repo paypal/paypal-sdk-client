@@ -2,6 +2,7 @@
 
 import { Logger, type LoggerType } from "@krakenjs/beaver-logger/src";
 import { memoize } from "@krakenjs/belter/src";
+import { BASE_SDK_METRIC_NAMESPACE } from "@paypal/sdk-constants/src";
 
 import { getDisableSetCookie } from "./global";
 import { getPayPalLoggerUrl } from "./domains";
@@ -17,9 +18,11 @@ export const getLogger: GetLogger = memoize(() => {
 
   return Logger({
     url: loggerUrl,
+    metricNamespacePrefix: BASE_SDK_METRIC_NAMESPACE,
   });
 });
 
+// Deprecated - will remove once we have verified no other clients are importing this function
 export const sendCountMetric = ({
   dimensions,
   event,

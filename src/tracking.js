@@ -16,6 +16,7 @@ import {
   FPTI_DATA_SOURCE,
   FPTI_SDK_NAME,
   FPTI_USER_ACTION,
+  payPalWebV5Dimensions,
 } from "@paypal/sdk-constants/src";
 
 import { getEnv, getVersion, getCorrelationID, getComponents } from "./global";
@@ -125,6 +126,8 @@ export function setupLogger() {
     };
   });
 
+  logger.addMetricDimensionBuilder(() => payPalWebV5Dimensions);
+
   ZalgoPromise.onPossiblyUnhandledException((err) => {
     logger.track({
       [FPTI_KEY.ERROR_CODE]: "payments_sdk_error",
@@ -168,11 +171,10 @@ export function setupLogger() {
       logger
         // We can not send gauge metrics to our logger backend currently
         // once we have that ability, we should uncomment this gauge metric
-        // .metric({
-        //   metricNamespace: "pp.app.paypal_sdk.init.gauge",
-        //   metricType: "gauge",
-        //   metricEventName: "load_performance",
-        //   metricValue: sdkLoadTime,
+        // .metricGauge({
+        //   namespace: "sdk_client.init.gauge",
+        //   event: "load_performance",
+        //   value: sdkLoadTime,
         //   dimensions: {
         //     cacheType,
         //     version,
@@ -181,20 +183,6 @@ export function setupLogger() {
         //     token: getTokenType(),
         //   },
         // })
-        // $FlowIssue
-        .metric({
-          metricNamespace: "pp.app.paypal_sdk.init.count",
-          metricEventName: "load",
-          dimensions: {
-            integrationSource,
-            pageType,
-            userAction,
-            version,
-            components: getComponents().join(","),
-            isPayPalDomain: isLoadedInFrame,
-            token: getTokenType(),
-          },
-        })
         .track({
           [FPTI_KEY.TRANSITION]: "process_js_sdk_init_client",
           [FPTI_KEY.SDK_LOAD_TIME]: sdkLoadTime,
@@ -205,5 +193,19 @@ export function setupLogger() {
     if (isIEIntranet()) {
       logger.warn("ie_intranet_mode");
     }
+
+    logger.metricCounter({
+      namespace: "sdk_client.init.count",
+      event: "init",
+      dimensions: {
+        integrationSource,
+        pageType,
+        userAction,
+        version,
+        components: getComponents().join(","),
+        isPayPalDomain: isLoadedInFrame,
+        token: getTokenType(),
+      },
+    });
   });
 }
