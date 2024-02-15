@@ -6,15 +6,41 @@ type KeyPair = {|
   publicKey: mixed,
 |};
 
+type DPoPParameters = {|
+  accessToken?: string,
+  method: string,
+  nonce?: string,
+  uri: string,
+|};
+
+type JWTParameters = {|
+  ...KeyPair,
+  ...DPoPParameters,
+|};
+
+type DPoPHeaders = {|
+  Authorization?: string,
+  DPoP: string,
+|};
+
 type GenerateKeyPair = () => Promise<KeyPair>;
+
+type CreateJWT = (JWTParameters) => Promise<string>;
+
+type BuildDPoPHeaders = (DPoPParameters) => Promise<DPoPHeaders>;
 
 // https://datatracker.ietf.org/doc/html/rfc7518#section-3.1
 const KEY_OPTIONS = {
+  alg: "ES256",
   create: {
     name: "ECDSA",
     namedCurve: "P-256",
   },
   extractable: false,
+  sign: {
+    name: "ECDSA",
+    hash: { name: "SHA-256" },
+  },
   usages: ["sign", "verify"],
 };
 
@@ -65,6 +91,73 @@ export const jsonWebKeyThumbprint = async (jwk: Object): Promise<string> => {
   // https://datatracker.ietf.org/doc/html/rfc7638#section-3.2
   const { crv, e, kty, n, x, y } = jwk;
   return await sha256(JSON.stringify({ crv, e, kty, n, x, y }));
+};
+
+export const createJWT: CreateJWT = async ({
+  accessToken,
+  method,
+  nonce,
+  publicKey,
+  privateKey,
+  uri,
+}) => {
+  const jwk = await window.crypto.subtle.exportKey("jwk", publicKey);
+
+  const header = {
+    alg: KEY_OPTIONS.alg,
+    typ: "dpop+jwt",
+    jwk,
+  };
+
+  const encodedHeader = base64encodeUrlSafe(JSON.stringify(header));
+
+  const payload = {
+    ath: accessToken ? await sha256(accessToken) : undefined,
+    cnf: {
+      jkt: await jsonWebKeyThumbprint(jwk),
+    },
+    htm: method,
+    htu: uri,
+    iat: Math.floor(new Date() / 1000),
+    jti: window.crypto.randomUUID(),
+    nonce,
+  };
+
+  const encodedPayload = base64encodeUrlSafe(JSON.stringify(payload));
+
+  const signature = await window.crypto.subtle.sign(
+    KEY_OPTIONS.sign,
+    privateKey,
+    stringToBytes(`${encodedHeader}.${encodedPayload}`)
+  );
+
+  const encodedSignature = base64encodeUrlSafe(
+    bytesToString(new Uint8Array(signature))
+  );
+
+  return `${encodedHeader}.${encodedPayload}.${encodedSignature}`;
+};
+
+export const buildDPoPHeaders: BuildDPoPHeaders = async ({
+  accessToken,
+  method,
+  uri,
+  nonce,
+}) => {
+  const { privateKey, publicKey } = await generateKeyPair();
+  const jwt = await createJWT({
+    accessToken,
+    method,
+    uri,
+    nonce,
+    publicKey,
+    privateKey,
+  });
+  // https://datatracker.ietf.org/doc/html/rfc9449#name-dpop-protected-resource-req
+  return {
+    ...(accessToken && { Authorization: `DPoP ${accessToken}` }),
+    DPoP: jwt,
+  };
 };
 
 /* eslint-enable promise/no-native, no-restricted-globals */

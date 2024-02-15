@@ -5,7 +5,9 @@ import { describe, expect, it } from "vitest";
 import {
   base64decodeUrlSafe,
   base64encodeUrlSafe,
+  buildDPoPHeaders,
   bytesToString,
+  createJWT,
   generateKeyPair,
   jsonWebKeyThumbprint,
   sha256,
@@ -70,6 +72,80 @@ describe("DPoP", () => {
       expect(await jsonWebKeyThumbprint(key)).toBe(
         "NzbLsXh8uDCcd-6MNwXF4W_7noWXFZAfHkxZsRGC9Xs"
       );
+    });
+  });
+  describe("createJWT", async () => {
+    const method = "GET";
+    const nonce = window.crypto.randomUUID();
+    const uri = "https://example.com/oauth2/token";
+    const { publicKey, privateKey } = await generateKeyPair();
+    const jwt = await createJWT({
+      accessToken: "Kz~8mXK1EalYznwH-LC-1fBAo.4Ljp~zsPE_NeO.gxU",
+      method,
+      nonce,
+      publicKey,
+      privateKey,
+      uri,
+    });
+    const [encodedHeader, encodedPayload, encodedSignature] = jwt.split(".");
+    it("has a valid header", () => {
+      const header = JSON.parse(base64decodeUrlSafe(encodedHeader));
+      // https://datatracker.ietf.org/doc/html/rfc9449#section-4.2-2.2
+      expect(header.typ).toBe("dpop+jwt");
+      // https://datatracker.ietf.org/doc/html/rfc9449#section-4.2-2.4
+      expect(header.alg).toBe("ES256");
+      // https://datatracker.ietf.org/doc/html/rfc9449#section-4.2-2.6
+      expect(header.jwk.x).toBeTruthy();
+    });
+    it("has a valid payload", () => {
+      const payload = JSON.parse(base64decodeUrlSafe(encodedPayload));
+      // https://datatracker.ietf.org/doc/html/rfc9449#section-4.2-4.4
+      expect(payload.htm).toBe(method);
+      // https://datatracker.ietf.org/doc/html/rfc9449#section-4.2-4.6
+      expect(payload.htu).toBe(uri);
+      // https://datatracker.ietf.org/doc/html/rfc9449#section-4.2-4.8
+      expect(typeof payload.iat).toBe("number");
+      // https://datatracker.ietf.org/doc/html/rfc9449#section-6.1-2.2
+      expect(typeof payload.cnf.jkt).toEqual("string");
+      // https://datatracker.ietf.org/doc/html/rfc9449#section-4.2-6.2
+      expect(payload.ath).toBe("fUHyO2r2Z3DZ53EsNrWBb0xWXoaNy59IiKCAqksmQEo");
+      // https://datatracker.ietf.org/doc/html/rfc9449#section-4.2-7
+      expect(payload.nonce).toBe(nonce);
+    });
+    it("has a valid signature", async () => {
+      const signature = stringToBytes(base64decodeUrlSafe(encodedSignature));
+      const verified = await window.crypto.subtle.verify(
+        {
+          name: "ECDSA",
+          hash: { name: "SHA-256" },
+        },
+        publicKey,
+        signature,
+        `${encodedHeader}.${encodedPayload}`
+      );
+      expect(verified).toBe(true);
+    });
+  });
+  describe("buildDPoPHeaders", () => {
+    it("includes an authorization header if an access token is present", async () => {
+      const accessToken = window.crypto.randomUUID();
+      const options = {
+        method: "POST",
+        uri: "https://example.com/oauth2/token",
+      };
+      const headers = await buildDPoPHeaders(options);
+      expect(headers.Authorization).toBe(undefined);
+      const headers2 = await buildDPoPHeaders({ ...options, accessToken });
+      expect(headers2.Authorization).toBe(`DPoP ${accessToken}`);
+    });
+    it("always includes a DPoP header", async () => {
+      const options = {
+        method: "POST",
+        uri: "https://example.com/oauth2/token",
+      };
+      const headers = await buildDPoPHeaders(options);
+      expect(headers.DPoP).toBeTruthy();
+      expect(typeof headers.DPoP).toBe("string");
     });
   });
 });
