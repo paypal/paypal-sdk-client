@@ -1,4 +1,5 @@
 /* eslint flowtype/require-valid-file-annotation: off, flowtype/require-return-type: off */
+import crypto from "crypto";
 
 export const sdkClientTestGlobals = {
   __PORT__: 8000,
@@ -20,4 +21,5 @@ export const sdkClientTestGlobals = {
     __EXPERIENCE__: "1122",
     __TREATMENT__: "1234",
   },
+  crypto: crypto.webcrypto,
 };
