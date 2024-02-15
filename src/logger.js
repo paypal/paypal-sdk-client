@@ -22,7 +22,9 @@ export const getLogger: GetLogger = memoize(() => {
   });
 });
 
-// Deprecated - will remove once we have verified no other clients are importing this function
+/*
+ * @deprecated - use logger.metricCounter instead
+ */
 export const sendCountMetric = ({
   dimensions,
   event,
