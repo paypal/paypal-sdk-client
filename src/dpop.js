@@ -24,9 +24,10 @@ export const base64decodeUrlSafe = (string: string): string => {
 };
 
 export const sha256 = (string: string): ZalgoPromise<string> => {
-  const data = stringToBytes(string);
-  return window.crypto.subtle.digest("sha-256", data).then((digest) => {
-    const binaryString = String.fromCharCode(...new Uint8Array(digest));
-    return ZalgoPromise.resolve(base64encodeUrlSafe(binaryString));
+  const bytes = stringToBytes(string);
+  return window.crypto.subtle.digest("sha-256", bytes).then((digest) => {
+    const binaryString = bytesToString(new Uint8Array(digest));
+    const encodedBinaryString = base64encodeUrlSafe(binaryString);
+    return ZalgoPromise.resolve(encodedBinaryString);
   });
 };
