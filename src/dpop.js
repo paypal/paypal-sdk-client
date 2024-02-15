@@ -1,6 +1,5 @@
 /* @flow */
-
-import { ZalgoPromise } from "@krakenjs/zalgo-promise/src";
+/* eslint-disable promise/no-native, no-restricted-globals */
 
 export const stringToBytes = (string: string): Uint8Array => {
   // eslint-disable-next-line compat/compat
@@ -23,11 +22,11 @@ export const base64decodeUrlSafe = (string: string): string => {
   return atob(string.replace(/-/g, "+").replace(/_/g, "/"));
 };
 
-export const sha256 = (string: string): ZalgoPromise<string> => {
+export const sha256 = async (string: string): Promise<string> => {
   const bytes = stringToBytes(string);
-  return window.crypto.subtle.digest("sha-256", bytes).then((digest) => {
-    const binaryString = bytesToString(new Uint8Array(digest));
-    const encodedBinaryString = base64encodeUrlSafe(binaryString);
-    return ZalgoPromise.resolve(encodedBinaryString);
-  });
+  const digest = await window.crypto.subtle.digest("sha-256", bytes);
+  const binaryString = bytesToString(new Uint8Array(digest));
+  return base64encodeUrlSafe(binaryString);
 };
+
+/* eslint-enable promise/no-native, no-restricted-globals */
