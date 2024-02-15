@@ -1,6 +1,6 @@
 /* @flow */
 
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import {
   base64decodeUrlSafe,
@@ -11,7 +11,7 @@ import {
 } from "./dpop";
 
 describe("DPoP", () => {
-  describe("base64", () => {
+  describe("base64 encoding and decoding", () => {
     const decoded = "i·?i·>i·";
     const encoded = "abc_abc-abc";
     it("encoding replaces '/', '+', and '='", () => {
