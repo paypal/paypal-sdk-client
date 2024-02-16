@@ -2,8 +2,7 @@
 /* eslint-disable promise/no-native, no-restricted-globals */
 
 export const stringToBytes = (string: string): Uint8Array => {
-  // eslint-disable-next-line compat/compat
-  return new TextEncoder().encode(string);
+  return new Uint8Array([...string].map((c) => c.charCodeAt(0)));
 };
 
 export const bytesToString = (bytes: Uint8Array): string => {

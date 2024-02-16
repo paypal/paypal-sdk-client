@@ -26,6 +26,11 @@ describe("DPoP", () => {
       const string = "abcdefg123456890";
       expect(bytesToString(stringToBytes(string))).toEqual(string);
     });
+    it("converts bytes to binary strings and back again", () => {
+      // >= 128 should not be encoded as utf-8
+      const bytes = new Uint8Array([128]);
+      expect(...stringToBytes(bytesToString(bytes))).toEqual(...bytes);
+    });
   });
   describe("sha256", () => {
     it("base64 encodes the hash", async () => {
