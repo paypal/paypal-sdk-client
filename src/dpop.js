@@ -2,8 +2,8 @@
 /* eslint-disable promise/no-native, no-restricted-globals */
 
 type CryptoKey = {|
-  publicKey: mixed,
   privateKey: mixed,
+  publicKey: mixed,
 |};
 
 type GenerateKeyPair = () => Promise<CryptoKey>;
