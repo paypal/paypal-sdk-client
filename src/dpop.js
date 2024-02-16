@@ -18,9 +18,9 @@ const KEY_OPTIONS = {
   usages: ["sign", "verify"],
 };
 
-let keypair;
+let keyPair;
 export const generateKeyPair: GenerateKeyPair = async () => {
-  if (!keypair) {
+  if (!keyPair) {
     const { create, extractable, usages } = KEY_OPTIONS;
     const { publicKey, privateKey } = await window.crypto.subtle.generateKey(
       create,
@@ -28,10 +28,10 @@ export const generateKeyPair: GenerateKeyPair = async () => {
       usages
     );
 
-    keypair = keypair || { publicKey, privateKey };
+    keyPair = keyPair || { publicKey, privateKey };
   }
 
-  return keypair;
+  return keyPair;
 };
 
 export const stringToBytes = (string: string): Uint8Array => {

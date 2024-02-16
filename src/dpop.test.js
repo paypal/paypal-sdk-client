@@ -46,8 +46,8 @@ describe("DPoP", () => {
       expect.assertions(1);
     });
   });
-  describe("keypair generation", () => {
-    it("memoizes the keypair", async () => {
+  describe("key pair generation", () => {
+    it("memoizes the key pair", async () => {
       const { publicKey: publicKey1 } = await generateKeyPair();
       const jwk1 = await window.crypto.subtle.exportKey("jwk", publicKey1);
       const { publicKey: publicKey2 } = await generateKeyPair();
