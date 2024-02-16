@@ -15,6 +15,7 @@ describe("DPoP", () => {
     const decoded = "i·?i·>i·";
     const encoded = "abc_abc-abc";
     it("encoding replaces '/', '+', and '='", () => {
+      expect(btoa(decoded)).toEqual("abc/abc+abc=");
       expect(base64encodeUrlSafe(decoded)).toEqual(encoded);
     });
     it("decoding adds back the url unsafe characters", () => {
