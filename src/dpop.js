@@ -1,12 +1,12 @@
 /* @flow */
 /* eslint-disable promise/no-native, no-restricted-globals */
 
-type CryptoKey = {|
+type KeyPair = {|
   privateKey: mixed,
   publicKey: mixed,
 |};
 
-type GenerateKeyPair = () => Promise<CryptoKey>;
+type GenerateKeyPair = () => Promise<KeyPair>;
 
 // https://datatracker.ietf.org/doc/html/rfc7518#section-3.1
 const KEY_OPTIONS = {
