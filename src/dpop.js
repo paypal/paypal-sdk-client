@@ -61,7 +61,9 @@ export const generateKeyPair: GenerateKeyPair = async () => {
 };
 
 export const stringToBytes = (string: string): Uint8Array => {
-  return new Uint8Array([...string].map((c) => c.charCodeAt(0)));
+  // webpack transforms [..."string"] to [].concat("string")
+  // eslint-disable-next-line unicorn/prefer-spread
+  return new Uint8Array(string.split("").map((c) => c.charCodeAt(0)));
 };
 
 export const bytesToString = (bytes: Uint8Array): string => {
