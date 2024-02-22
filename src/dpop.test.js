@@ -121,7 +121,7 @@ describe("DPoP", () => {
         },
         publicKey,
         signature,
-        `${encodedHeader}.${encodedPayload}`
+        stringToBytes(`${encodedHeader}.${encodedPayload}`)
       );
       expect(verified).toBe(true);
     });
