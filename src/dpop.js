@@ -29,17 +29,19 @@ type CreateJWT = (JWTParameters) => Promise<string>;
 
 type BuildDPoPHeaders = (DPoPParameters) => Promise<DPoPHeaders>;
 
-// https://datatracker.ietf.org/doc/html/rfc7518#section-3.1
+// https://developer.mozilla.org/en-US/docs/Web/API/RsaHashedKeyGenParams
 const KEY_OPTIONS = {
-  alg: "ES256",
+  alg: "RS256",
   create: {
-    name: "ECDSA",
-    namedCurve: "P-256",
+    hash: "SHA-256",
+    modulusLength: 4096,
+    name: "RSASSA-PKCS1-v1_5",
+    publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
   },
   extractable: false,
   sign: {
-    name: "ECDSA",
-    hash: { name: "SHA-256" },
+    hash: "SHA-256",
+    name: "RSASSA-PKCS1-v1_5",
   },
   usages: ["sign", "verify"],
 };
