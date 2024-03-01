@@ -54,7 +54,7 @@ describe("DPoP", () => {
       const jwk1 = await window.crypto.subtle.exportKey("jwk", publicKey1);
       const { publicKey: publicKey2 } = await generateKeyPair();
       const jwk2 = await window.crypto.subtle.exportKey("jwk", publicKey2);
-      expect(jwk1.x).toBeTruthy();
+      expect(jwk1.n).toBeTruthy();
       expect(jwk1).toStrictEqual(jwk2);
     });
   });
@@ -93,9 +93,9 @@ describe("DPoP", () => {
       // https://datatracker.ietf.org/doc/html/rfc9449#section-4.2-2.2
       expect(header.typ).toBe("dpop+jwt");
       // https://datatracker.ietf.org/doc/html/rfc9449#section-4.2-2.4
-      expect(header.alg).toBe("ES256");
+      expect(header.alg).toBe("RS256");
       // https://datatracker.ietf.org/doc/html/rfc9449#section-4.2-2.6
-      expect(header.jwk.x).toBeTruthy();
+      expect(header.jwk.n).toBeTruthy();
     });
     it("has a valid payload", () => {
       const payload = JSON.parse(base64decodeUrlSafe(encodedPayload));
@@ -115,10 +115,7 @@ describe("DPoP", () => {
     it("has a valid signature", async () => {
       const signature = stringToBytes(base64decodeUrlSafe(encodedSignature));
       const verified = await window.crypto.subtle.verify(
-        {
-          name: "ECDSA",
-          hash: { name: "SHA-256" },
-        },
+        "RSASSA-PKCS1-v1_5",
         publicKey,
         signature,
         stringToBytes(`${encodedHeader}.${encodedPayload}`)
