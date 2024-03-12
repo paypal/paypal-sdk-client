@@ -322,6 +322,10 @@ export function getSDKIntegrationSource(): ?string {
   return getSDKAttribute(SDK_SETTINGS.SDK_INTEGRATION_SOURCE);
 }
 
+export function getJsSdkLibrary(): ?string {
+  return getSDKAttribute(SDK_SETTINGS.JS_SDK_LIBRARY);
+}
+
 export function getUserExperienceFlow(): ?string {
   return getSDKAttribute(SDK_SETTINGS.USER_EXPERIENCE_FLOW);
 }

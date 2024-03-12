@@ -58,7 +58,7 @@
     "@krakenjs/cross-domain-utils": "^3.0.2",
     "@krakenjs/jsx-pragmatic": "^3.0.0",
     "@krakenjs/zalgo-promise": "^2.0.0",
-    "@paypal/sdk-constants": "^1.0.94",
+    "@paypal/sdk-constants": "^1.0.143",
     "bowser": "^2.0.0"
   },
   "devDependencies": {
