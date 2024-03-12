@@ -2,6 +2,7 @@
 /* eslint max-lines: off */
 import { describe, it, afterEach, beforeEach, expect, vi } from "vitest";
 import { base64encode, getCurrentScript, memoize } from "@krakenjs/belter/src";
+import { JS_SDK_LIBRARIES, SDK_SETTINGS } from "@paypal/sdk-constants/src";
 
 import { makeMockScriptElement } from "../test/helpers";
 
@@ -16,6 +17,7 @@ import {
   getMerchantID,
   getClientAccessToken,
   getSDKIntegrationSource,
+  getJsSdkLibrary,
   getPageType,
   getLocale,
   getMerchantRequestedPopupsDisabled,
@@ -251,6 +253,16 @@ describe(`script cases`, () => {
     getCurrentScript.mockReturnValue(mockElement);
 
     expect(getSDKIntegrationSource()).toEqual(SDKIntegrationSource);
+  });
+
+  it("should successfully get js sdk library", () => {
+    const jsSdkLibrary = JS_SDK_LIBRARIES.REACT_PAYPAL_JS;
+    const mockElement = makeMockScriptElement(mockScriptSrc);
+    mockElement.setAttribute(SDK_SETTINGS.JS_SDK_LIBRARY, jsSdkLibrary);
+    // $FlowIgnore
+    getCurrentScript.mockReturnValue(mockElement);
+
+    expect(getJsSdkLibrary()).toEqual(jsSdkLibrary);
   });
 
   it("should successfully get popup disabled attribute as true when set to true", () => {
