@@ -32,6 +32,7 @@ import {
   getClientToken,
   getUserIDToken,
   getSDKToken,
+  getJsSdkLibrary,
 } from "./script";
 import { getSessionID } from "./session";
 import { getLogger } from "./logger";
@@ -87,7 +88,7 @@ export function setupLogger() {
   const logger = getLogger();
   const pageType = getPageType();
   const integrationSource = getIntegrationSource();
-  const jsSdkLibrary = getIntegrationSource(); // write new getjsSdkLibrary() function
+  const jsSdkLibrary = getJsSdkLibrary();
   const version = getVersion();
   const userAction = getCommit()
     ? FPTI_USER_ACTION.COMMIT
@@ -113,6 +114,7 @@ export function setupLogger() {
       [FPTI_KEY.DATA_SOURCE]: FPTI_DATA_SOURCE.PAYMENTS_SDK,
       [FPTI_KEY.FEED]: FPTI_FEED.PAYMENTS_SDK,
       [FPTI_KEY.INTEGRATION_IDENTIFIER]: getClientID(),
+      [FPTI_KEY.JS_SDK_LIBRARY]: jsSdkLibrary,
       [FPTI_KEY.LOCALE]: `${lang}_${country}`,
       [FPTI_KEY.PAGE_TYPE]: pageType,
       [FPTI_KEY.PARTNER_ATTRIBUTION_ID]: getPartnerAttributionID(),
@@ -202,6 +204,7 @@ export function setupLogger() {
         components: getComponents().join(","),
         integrationSource,
         isPayPalDomain: isLoadedInFrame,
+        jsSdkLibrary,
         pageType,
         token: getTokenType(),
         userAction,
