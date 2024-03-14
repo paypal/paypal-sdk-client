@@ -171,26 +171,11 @@ export function setupLogger() {
     );
 
     if (loadTime) {
-      logger
-        // We can not send gauge metrics to our logger backend currently
-        // once we have that ability, we should uncomment this gauge metric
-        // .metricGauge({
-        //   namespace: "sdk_client.init.gauge",
-        //   event: "load_performance",
-        //   value: sdkLoadTime,
-        //   dimensions: {
-        //     cacheType,
-        //     version,
-        //     components: getComponents().join(","),
-        //     isPayPalDomain: isLoadedInFrame,
-        //     token: getTokenType(),
-        //   },
-        // })
-        .track({
-          [FPTI_KEY.TRANSITION]: "process_js_sdk_init_client",
-          [FPTI_KEY.SDK_LOAD_TIME]: sdkLoadTime,
-          [FPTI_KEY.SDK_CACHE]: cacheType,
-        });
+      logger.track({
+        [FPTI_KEY.TRANSITION]: "process_js_sdk_init_client",
+        [FPTI_KEY.SDK_LOAD_TIME]: sdkLoadTime,
+        [FPTI_KEY.SDK_CACHE]: cacheType,
+      });
     }
 
     if (isIEIntranet()) {
@@ -203,7 +188,7 @@ export function setupLogger() {
       dimensions: {
         components: getComponents().join(","),
         integrationSource,
-        isPayPalDomain: isLoadedInFrame,
+        isPayPalDomain: Boolean(isLoadedInFrame).toString(),
         jsSdkLibrary,
         pageType,
         token: getTokenType(),
