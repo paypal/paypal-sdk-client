@@ -6,6 +6,7 @@ import { SDK_SETTINGS } from "@paypal/sdk-constants/src";
 
 import { makeMockScriptElement } from "../test/helpers";
 
+import { getJsLibrary } from "./tracking";
 import {
   getClientID,
   getIntent,
@@ -17,7 +18,6 @@ import {
   getMerchantID,
   getClientAccessToken,
   getSDKIntegrationSource,
-  getJsSdkLibrary,
   getPageType,
   getLocale,
   getMerchantRequestedPopupsDisabled,
@@ -255,6 +255,14 @@ describe(`script cases`, () => {
     expect(getSDKIntegrationSource()).toEqual(SDKIntegrationSource);
   });
 
+  it("should return none when there is no js sdk library", () => {
+    const mockElement = makeMockScriptElement(mockScriptSrc);
+    // $FlowIgnore
+    getCurrentScript.mockReturnValue(mockElement);
+
+    expect(getJsLibrary()).toEqual("none");
+  });
+
   it("should successfully get js sdk library", () => {
     const jsSdkLibrary = "react-paypal-js";
     const mockElement = makeMockScriptElement(mockScriptSrc);
@@ -262,7 +270,7 @@ describe(`script cases`, () => {
     // $FlowIgnore
     getCurrentScript.mockReturnValue(mockElement);
 
-    expect(getJsSdkLibrary()).toEqual(jsSdkLibrary);
+    expect(getJsLibrary()).toEqual(jsSdkLibrary);
   });
 
   it("should successfully get popup disabled attribute as true when set to true", () => {

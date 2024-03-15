@@ -66,6 +66,16 @@ const getIntegrationSource = (): string => {
   }
 };
 
+export const getJsLibrary = (): string => {
+  const jsSdkLibrary = getJsSdkLibrary();
+
+  if (jsSdkLibrary) {
+    return jsSdkLibrary;
+  } else {
+    return "none";
+  }
+};
+
 const getPageType = (): string => {
   const pageType = getSDKPageType();
 
@@ -88,7 +98,7 @@ export function setupLogger() {
   const logger = getLogger();
   const pageType = getPageType();
   const integrationSource = getIntegrationSource();
-  const jsSdkLibrary = getJsSdkLibrary();
+  const jsSdkLibrary = getJsLibrary();
   const version = getVersion();
   const userAction = getCommit()
     ? FPTI_USER_ACTION.COMMIT
