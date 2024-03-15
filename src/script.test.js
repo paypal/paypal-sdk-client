@@ -2,7 +2,7 @@
 /* eslint max-lines: off */
 import { describe, it, afterEach, beforeEach, expect, vi } from "vitest";
 import { base64encode, getCurrentScript, memoize } from "@krakenjs/belter/src";
-import { JS_SDK_LIBRARIES, SDK_SETTINGS } from "@paypal/sdk-constants/src";
+import { SDK_SETTINGS } from "@paypal/sdk-constants/src";
 
 import { makeMockScriptElement } from "../test/helpers";
 
@@ -256,7 +256,7 @@ describe(`script cases`, () => {
   });
 
   it("should successfully get js sdk library", () => {
-    const jsSdkLibrary = JS_SDK_LIBRARIES.REACT_PAYPAL_JS;
+    const jsSdkLibrary = "react-paypal-js";
     const mockElement = makeMockScriptElement(mockScriptSrc);
     mockElement.setAttribute(SDK_SETTINGS.JS_SDK_LIBRARY, jsSdkLibrary);
     // $FlowIgnore
