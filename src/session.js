@@ -31,3 +31,9 @@ export function getStorageID(): string {
 export function getSessionState<T>(handler: (state: Object) => T): T {
   return getSDKStorage().getSessionState(handler);
 }
+
+export function getRecommendedPaymentMethodsUsed(): boolean {
+  return getSessionState(
+    (state) => state.shopperInsights.getRecommendedPaymentMethodsUsed
+  );
+}

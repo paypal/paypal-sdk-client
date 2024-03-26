@@ -28,6 +28,5 @@ export function getSDKMeta(): string {
       attrs[attr] = scriptAttrs[attr];
     }
   }
-
   return base64encode(JSON.stringify({ url, attrs })).replace(/\=+$/, ""); // eslint-disable-line no-useless-escape
 }
