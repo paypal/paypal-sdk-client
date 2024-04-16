@@ -235,10 +235,6 @@ export function getAmount(): ?string {
   return amount;
 }
 
-export function getUserIDToken(): ?string {
-  return getSDKAttribute(SDK_SETTINGS.USER_ID_TOKEN);
-}
-
 export function getClientAccessToken(): ?string {
   const clientToken = getClientToken();
 
@@ -330,8 +326,41 @@ export function getUserExperienceFlow(): ?string {
   return getSDKAttribute(SDK_SETTINGS.USER_EXPERIENCE_FLOW);
 }
 
+export function getUserIDToken(): ?string {
+  if (
+    getSDKAttribute(SDK_SETTINGS.SDK_TOKEN) &&
+    !getSDKAttribute(SDK_SETTINGS.USER_ID_TOKEN)
+  ) {
+    return getSDKAttribute(SDK_SETTINGS.SDK_TOKEN);
+  }
+
+  return getSDKAttribute(SDK_SETTINGS.USER_ID_TOKEN);
+}
+
 export function getSDKToken(): ?string {
+  if (
+    getSDKAttribute(SDK_SETTINGS.SDK_TOKEN) &&
+    getSDKAttribute(SDK_SETTINGS.USER_ID_TOKEN)
+  ) {
+    throw new Error("Do not pass SDK token and ID token");
+  }
+
   return getSDKAttribute(SDK_SETTINGS.SDK_TOKEN);
+}
+
+export function getCustomerId(): string {
+  const sdkToken = getSDKAttribute(SDK_SETTINGS.SDK_TOKEN);
+
+  if (sdkToken && typeof atob === "function") {
+    try {
+      const { options = {} } = JSON.parse(window.atob(sdkToken.split(".")[1]));
+      return options.customer_id || "";
+    } catch {
+      throw new Error("Error decoding SDK token");
+    }
+  }
+
+  return "";
 }
 
 /* v8 ignore next 3 */
