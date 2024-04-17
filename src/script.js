@@ -371,6 +371,10 @@ export function getCustomerId(): string {
   return decodeCustomerIdFromToken(sdkToken);
 }
 
+export function getShopperSessionId(): string {
+  return getSDKAttribute(SDK_DATA_ATTRIBUTES.SHOPPER_SESSION_ID) || "";
+}
+
 /* v8 ignore next 3 */
 export function isChildWindow(): boolean {
   return Boolean(window.xprops);
