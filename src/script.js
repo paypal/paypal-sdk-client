@@ -13,7 +13,7 @@ import {
 } from "@krakenjs/belter/src";
 import {
   COUNTRY,
-  SDK_SETTINGS,
+  SDK_DATA_ATTRIBUTES,
   SDK_QUERY_KEYS,
   INTENT,
   COMMIT,
@@ -71,7 +71,7 @@ export const getSDKAttributes: GetSDKAttributes = memoize(() => {
 });
 
 export function getSDKAttribute<T: string | void>(
-  name: $Values<typeof SDK_SETTINGS>,
+  name: $Values<typeof SDK_DATA_ATTRIBUTES>,
   def: T
 ): T {
   // $FlowFixMe
@@ -134,11 +134,13 @@ export function getMerchantID(): $ReadOnlyArray<string> {
 
   if (merchantIDString === "*") {
     // get multiple merchant ids or emails from data-merchant-id
-    const merchantIDAttribute = getSDKAttribute(SDK_SETTINGS.MERCHANT_ID);
+    const merchantIDAttribute = getSDKAttribute(
+      SDK_DATA_ATTRIBUTES.MERCHANT_ID
+    );
 
     if (!merchantIDAttribute) {
       throw new Error(
-        `Must pass ${SDK_SETTINGS.MERCHANT_ID} when ${SDK_QUERY_KEYS.MERCHANT_ID}=* passed in url`
+        `Must pass ${SDK_DATA_ATTRIBUTES.MERCHANT_ID} when ${SDK_QUERY_KEYS.MERCHANT_ID}=* passed in url`
       );
     }
 
@@ -146,7 +148,7 @@ export function getMerchantID(): $ReadOnlyArray<string> {
 
     if (merchantID.length <= 1) {
       throw new Error(
-        `Must pass multiple merchant ids to ${SDK_SETTINGS.MERCHANT_ID}. If passing a single id, pass ${SDK_QUERY_KEYS.MERCHANT_ID}=XYZ in url`
+        `Must pass multiple merchant ids to ${SDK_DATA_ATTRIBUTES.MERCHANT_ID}. If passing a single id, pass ${SDK_QUERY_KEYS.MERCHANT_ID}=XYZ in url`
       );
     }
 
@@ -157,7 +159,7 @@ export function getMerchantID(): $ReadOnlyArray<string> {
 
     if (hasDuplicate) {
       throw new Error(
-        `Duplicates ${SDK_SETTINGS.MERCHANT_ID}. Must pass unique merchant ids to ${SDK_SETTINGS.MERCHANT_ID}.`
+        `Duplicates ${SDK_DATA_ATTRIBUTES.MERCHANT_ID}. Must pass unique merchant ids to ${SDK_DATA_ATTRIBUTES.MERCHANT_ID}.`
       );
     }
     return merchantID;
@@ -220,15 +222,17 @@ export function getBuyerCountry(): ?$Values<typeof COUNTRY> {
 }
 
 export function getNamespace(): string {
-  return getSDKAttribute(SDK_SETTINGS.NAMESPACE) || getDefaultNamespace();
+  return (
+    getSDKAttribute(SDK_DATA_ATTRIBUTES.NAMESPACE) || getDefaultNamespace()
+  );
 }
 
 export function getClientToken(): ?string {
-  return getSDKAttribute(SDK_SETTINGS.CLIENT_TOKEN);
+  return getSDKAttribute(SDK_DATA_ATTRIBUTES.CLIENT_TOKEN);
 }
 
 export function getAmount(): ?string {
-  const amount = getSDKAttribute(SDK_SETTINGS.AMOUNT);
+  const amount = getSDKAttribute(SDK_DATA_ATTRIBUTES.AMOUNT);
   if (amount && !amount.match(/^\d+\.\d\d$/)) {
     throw new Error(`Invalid amount: ${amount}`);
   }
@@ -244,15 +248,15 @@ export function getClientAccessToken(): ?string {
 }
 
 export function getPartnerAttributionID(): ?string {
-  return getSDKAttribute(SDK_SETTINGS.PARTNER_ATTRIBUTION_ID);
+  return getSDKAttribute(SDK_DATA_ATTRIBUTES.PARTNER_ATTRIBUTION_ID);
 }
 
 export function getMerchantRequestedPopupsDisabled(): boolean {
-  return getSDKAttribute(SDK_SETTINGS.POPUPS_DISABLED) === "true";
+  return getSDKAttribute(SDK_DATA_ATTRIBUTES.POPUPS_DISABLED) === "true";
 }
 
 export function getPageType(): ?string {
-  const pageType = getSDKAttribute(SDK_SETTINGS.PAGE_TYPE, "");
+  const pageType = getSDKAttribute(SDK_DATA_ATTRIBUTES.PAGE_TYPE, "");
   const validPageType =
     values(PAGE_TYPES).indexOf(pageType.toLowerCase()) !== -1;
 
@@ -307,45 +311,45 @@ export function getLocale(): LocaleType {
 }
 
 export function getCSPNonce(): string {
-  return getSDKAttribute(SDK_SETTINGS.CSP_NONCE) || "";
+  return getSDKAttribute(SDK_DATA_ATTRIBUTES.CSP_NONCE) || "";
 }
 
 export function getEnableThreeDomainSecure(): boolean {
-  return getSDKAttributes().hasOwnProperty(SDK_SETTINGS.ENABLE_3DS);
+  return getSDKAttributes().hasOwnProperty(SDK_DATA_ATTRIBUTES.ENABLE_3DS);
 }
 
 export function getSDKIntegrationSource(): ?string {
-  return getSDKAttribute(SDK_SETTINGS.SDK_INTEGRATION_SOURCE);
+  return getSDKAttribute(SDK_DATA_ATTRIBUTES.SDK_INTEGRATION_SOURCE);
 }
 
 export function getJsSdkLibrary(): ?string {
-  return getSDKAttribute(SDK_SETTINGS.JS_SDK_LIBRARY);
+  return getSDKAttribute(SDK_DATA_ATTRIBUTES.JS_SDK_LIBRARY);
 }
 
 export function getUserExperienceFlow(): ?string {
-  return getSDKAttribute(SDK_SETTINGS.USER_EXPERIENCE_FLOW);
+  return getSDKAttribute(SDK_DATA_ATTRIBUTES.USER_EXPERIENCE_FLOW);
 }
 
 export function getUserIDToken(): ?string {
   if (
-    getSDKAttribute(SDK_SETTINGS.SDK_TOKEN) &&
-    !getSDKAttribute(SDK_SETTINGS.USER_ID_TOKEN)
+    getSDKAttribute(SDK_DATA_ATTRIBUTES.SDK_TOKEN) &&
+    !getSDKAttribute(SDK_DATA_ATTRIBUTES.USER_ID_TOKEN)
   ) {
-    return getSDKAttribute(SDK_SETTINGS.SDK_TOKEN);
+    return getSDKAttribute(SDK_DATA_ATTRIBUTES.SDK_TOKEN);
   }
 
-  return getSDKAttribute(SDK_SETTINGS.USER_ID_TOKEN);
+  return getSDKAttribute(SDK_DATA_ATTRIBUTES.USER_ID_TOKEN);
 }
 
 export function getSDKToken(): ?string {
   if (
-    getSDKAttribute(SDK_SETTINGS.SDK_TOKEN) &&
-    getSDKAttribute(SDK_SETTINGS.USER_ID_TOKEN)
+    getSDKAttribute(SDK_DATA_ATTRIBUTES.SDK_TOKEN) &&
+    getSDKAttribute(SDK_DATA_ATTRIBUTES.USER_ID_TOKEN)
   ) {
     throw new Error("Do not pass SDK token and ID token");
   }
 
-  return getSDKAttribute(SDK_SETTINGS.SDK_TOKEN);
+  return getSDKAttribute(SDK_DATA_ATTRIBUTES.SDK_TOKEN);
 }
 
 type decodedCustomerId = (string) => string;
@@ -363,7 +367,7 @@ export const decodeCustomerIdFromToken: decodedCustomerId = memoize((token) => {
 });
 
 export function getCustomerId(): string {
-  const sdkToken = getSDKAttribute(SDK_SETTINGS.SDK_TOKEN) || "";
+  const sdkToken = getSDKAttribute(SDK_DATA_ATTRIBUTES.SDK_TOKEN) || "";
   return decodeCustomerIdFromToken(sdkToken);
 }
 
