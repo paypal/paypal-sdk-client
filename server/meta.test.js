@@ -1221,3 +1221,51 @@ test("should error when invalid characters are found in the subdomain - we allow
     throw new Error(`Expected error to be thrown`);
   }
 });
+
+test("should construct a valid web-sdk bridge url", () => {
+  const sdkUrl = "https://www.paypal.com/web-sdk/v6/bridge";
+
+  const { getSDKLoader } = unpackSDKMeta(
+    Buffer.from(
+      JSON.stringify({
+        url: sdkUrl,
+      })
+    ).toString("base64")
+  );
+
+  const $ = cheerio.load(getSDKLoader());
+  const src = $("script").attr("src");
+
+  if (src !== sdkUrl) {
+    throw new Error(`Expected script url to be ${sdkUrl} - got ${src}`);
+  }
+});
+
+test("should prevent query string parameters and hashs on the web-sdk bridge url", () => {
+  const sdkUrl =
+    "https://www.paypal.com/web-sdk/v6/bridge?name=value#hashvalue";
+
+  const { getSDKLoader } = unpackSDKMeta(
+    Buffer.from(
+      JSON.stringify({
+        url: sdkUrl,
+      })
+    ).toString("base64")
+  );
+
+  const $ = cheerio.load(getSDKLoader());
+  const script = $("script");
+  const src = script.attr("src");
+
+  // eslint-disable-next-line compat/compat
+  const urlObject = new URL(sdkUrl);
+  // we expect the query string params to be stripped out
+  urlObject.search = "";
+  // we expect the hash to be stripped out
+  urlObject.hash = "";
+  const expectedUrl = urlObject.toString();
+
+  if (src !== expectedUrl) {
+    throw new Error(`Expected script url to be ${expectedUrl} - got ${src}`);
+  }
+});
