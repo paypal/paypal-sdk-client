@@ -9,6 +9,7 @@ import {
   SDK_PATH,
   SDK_QUERY_KEYS,
   SDK_SETTINGS,
+  WEB_SDK_BRIDGE_PATH,
 } from "@paypal/sdk-constants";
 import { node, html } from "@krakenjs/jsx-pragmatic";
 import { ATTRIBUTES } from "@krakenjs/belter";
@@ -82,6 +83,14 @@ function validateLegacySDKUrl({ pathname }) {
   }
 }
 
+function validateWebSDKUrl({ pathname }) {
+  if (pathname !== WEB_SDK_BRIDGE_PATH) {
+    throw new Error(
+      `Invalid path for web-sdk bridge url: ${pathname || "undefined"}`
+    );
+  }
+}
+
 function isLegacySDKUrl(hostname: string, pathname: string): boolean {
   const legacyHostnames = [HOST.PAYPALOBJECTS, HOST.PAYPALOBJECTS_CHINA];
 
@@ -108,6 +117,14 @@ function isLegacySDKUrl(hostname: string, pathname: string): boolean {
 
 function isSDKUrl(hostname: string): boolean {
   if (hostname.endsWith(HOST.PAYPAL) || hostname.endsWith(HOST.PAYPAL_CHINA)) {
+    return true;
+  }
+
+  return false;
+}
+
+function isWebSDKUrl(hostname: string, pathname: string): boolean {
+  if (isSDKUrl(hostname) && pathname === WEB_SDK_BRIDGE_PATH) {
     return true;
   }
 
@@ -168,6 +185,8 @@ function validateSDKUrl(sdkUrl: string) {
 
   if (isLegacySDKUrl(hostname, pathname)) {
     validateLegacySDKUrl({ pathname });
+  } else if (isWebSDKUrl(hostname, pathname)) {
+    validateWebSDKUrl({ hostname, pathname });
   } else if (isSDKUrl(hostname)) {
     if (hostname !== HOST.LOCALHOST && protocol !== PROTOCOL.HTTPS) {
       throw new Error(
@@ -248,8 +267,11 @@ function sanitizeSDKUrl(sdkUrl: string): string {
   // eslint-disable-next-line compat/compat
   const url = new URL(sdkUrl);
 
-  // remove query string params for checkout.js
-  if (isLegacySDKUrl(url.hostname, url.pathname)) {
+  // remove query string params for checkout.js and web-sdk
+  if (
+    isLegacySDKUrl(url.hostname, url.pathname) ||
+    isWebSDKUrl(url.hostname, url.pathname)
+  ) {
     url.search = "";
     url.hash = "";
 
