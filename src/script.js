@@ -348,19 +348,23 @@ export function getSDKToken(): ?string {
   return getSDKAttribute(SDK_SETTINGS.SDK_TOKEN);
 }
 
-export function getCustomerId(): string {
-  const sdkToken = getSDKAttribute(SDK_SETTINGS.SDK_TOKEN);
-
-  if (sdkToken && typeof atob === "function") {
-    try {
-      const { options = {} } = JSON.parse(window.atob(sdkToken.split(".")[1]));
+type decodedCustomerId = (string) => string;
+export const decodeCustomerIdFromToken: decodedCustomerId = memoize((token) => {
+  try {
+    if (token && typeof atob === "function") {
+      const { options = {} } = JSON.parse(window.atob(token.split(".")[1]));
       return options.customer_id || "";
-    } catch {
-      throw new Error("Error decoding SDK token");
     }
-  }
 
-  return "";
+    return "";
+  } catch {
+    throw new Error("Error decoding SDK token");
+  }
+});
+
+export function getCustomerId(): string {
+  const sdkToken = getSDKAttribute(SDK_SETTINGS.SDK_TOKEN) || "";
+  return decodeCustomerIdFromToken(sdkToken);
 }
 
 /* v8 ignore next 3 */
