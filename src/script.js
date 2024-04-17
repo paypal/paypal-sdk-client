@@ -235,10 +235,6 @@ export function getAmount(): ?string {
   return amount;
 }
 
-export function getUserIDToken(): ?string {
-  return getSDKAttribute(SDK_SETTINGS.USER_ID_TOKEN);
-}
-
 export function getClientAccessToken(): ?string {
   const clientToken = getClientToken();
 
@@ -330,8 +326,45 @@ export function getUserExperienceFlow(): ?string {
   return getSDKAttribute(SDK_SETTINGS.USER_EXPERIENCE_FLOW);
 }
 
+export function getUserIDToken(): ?string {
+  if (
+    getSDKAttribute(SDK_SETTINGS.SDK_TOKEN) &&
+    !getSDKAttribute(SDK_SETTINGS.USER_ID_TOKEN)
+  ) {
+    return getSDKAttribute(SDK_SETTINGS.SDK_TOKEN);
+  }
+
+  return getSDKAttribute(SDK_SETTINGS.USER_ID_TOKEN);
+}
+
 export function getSDKToken(): ?string {
+  if (
+    getSDKAttribute(SDK_SETTINGS.SDK_TOKEN) &&
+    getSDKAttribute(SDK_SETTINGS.USER_ID_TOKEN)
+  ) {
+    throw new Error("Do not pass SDK token and ID token");
+  }
+
   return getSDKAttribute(SDK_SETTINGS.SDK_TOKEN);
+}
+
+type decodedCustomerId = (string) => string;
+export const decodeCustomerIdFromToken: decodedCustomerId = memoize((token) => {
+  try {
+    if (token && typeof atob === "function") {
+      const { options = {} } = JSON.parse(window.atob(token.split(".")[1]));
+      return options.customer_id || "";
+    }
+
+    return "";
+  } catch {
+    throw new Error("Error decoding SDK token");
+  }
+});
+
+export function getCustomerId(): string {
+  const sdkToken = getSDKAttribute(SDK_SETTINGS.SDK_TOKEN) || "";
+  return decodeCustomerIdFromToken(sdkToken);
 }
 
 /* v8 ignore next 3 */

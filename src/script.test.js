@@ -1,6 +1,7 @@
 /* @flow */
 /* eslint max-lines: off */
 import { describe, it, afterEach, beforeEach, expect, vi } from "vitest";
+import jwt from "jsonwebtoken";
 import { base64encode, getCurrentScript, memoize } from "@krakenjs/belter/src";
 import { SDK_SETTINGS } from "@paypal/sdk-constants/src";
 
@@ -28,6 +29,8 @@ import {
   getBuyerCountry,
   getAmount,
   getUserIDToken,
+  getSDKToken,
+  getCustomerId,
   getCSPNonce,
   getEnableThreeDomainSecure,
   getUserExperienceFlow,
@@ -535,7 +538,7 @@ describe(`script cases`, () => {
     });
   });
 
-  it("getUserIDToken return a token string", () => {
+  it("getUserIDToken returns a token string", () => {
     const inputToken = "some-token";
     const mockElement = makeMockScriptElement(mockScriptSrc);
     mockElement.setAttribute("data-user-id-token", inputToken);
@@ -544,6 +547,89 @@ describe(`script cases`, () => {
 
     const result = getUserIDToken();
     expect(result).toEqual(inputToken);
+  });
+
+  it("getUserIDToken is set as SDK token if SDK token is passed only", () => {
+    const sdkToken = "some-token";
+    const mockElement = makeMockScriptElement(mockScriptSrc);
+    mockElement.setAttribute("data-sdk-client-token", sdkToken);
+    // $FlowIgnore
+    getCurrentScript.mockReturnValue(mockElement);
+
+    const result = getUserIDToken();
+    expect(result).toEqual(sdkToken);
+  });
+
+  it("getSDKToken returns a token string", () => {
+    const inputToken = "some-token";
+    const mockElement = makeMockScriptElement(mockScriptSrc);
+    mockElement.setAttribute("data-sdk-client-token", inputToken);
+    // $FlowIgnore
+    getCurrentScript.mockReturnValue(mockElement);
+
+    const result = getSDKToken();
+    expect(result).toEqual(inputToken);
+  });
+
+  it("getSDKToken errors if ID token is also passed", () => {
+    const inputToken = "some-token";
+    const mockElement = makeMockScriptElement(mockScriptSrc);
+    mockElement.setAttribute("data-sdk-client-token", inputToken);
+    mockElement.setAttribute("data-user-id-token", inputToken);
+    // $FlowIgnore
+    getCurrentScript.mockReturnValue(mockElement);
+
+    expect(getSDKToken).toThrow("Do not pass SDK token and ID token");
+  });
+
+  it("getCustomerId returns a string of the decoded customer_id from the SDK token", () => {
+    const encodedCustomerId = "test123";
+    const mockToken = jwt.sign(
+      {
+        options: {
+          customer_id: encodedCustomerId,
+        },
+      },
+      "test"
+    );
+    const mockElement = makeMockScriptElement(mockScriptSrc);
+    mockElement.setAttribute("data-sdk-client-token", mockToken);
+    // $FlowIgnore
+    getCurrentScript.mockReturnValue(mockElement);
+
+    const result = getCustomerId();
+    expect(result).toEqual(encodedCustomerId);
+  });
+
+  it("getCustomerId returns an empty string there is no encoded customer ID", () => {
+    const mockToken = jwt.sign(
+      {
+        options: {},
+      },
+      "test"
+    );
+    const mockElement = makeMockScriptElement(mockScriptSrc);
+    mockElement.setAttribute("data-sdk-client-token", mockToken);
+    // $FlowIgnore
+    getCurrentScript.mockReturnValue(mockElement);
+
+    const result = getCustomerId();
+    expect(result).toEqual("");
+  });
+
+  it("getCustomerId returns an empty string there is no token passed", () => {
+    const result = getCustomerId();
+    expect(result).toEqual("");
+  });
+
+  it("getCustomerId throws an error if there is a bad token passed", () => {
+    const inputToken = "-123";
+    const mockElement = makeMockScriptElement(mockScriptSrc);
+    mockElement.setAttribute("data-sdk-client-token", inputToken);
+    // $FlowIgnore
+    getCurrentScript.mockReturnValue(mockElement);
+
+    expect(getCustomerId).toThrow("Error decoding SDK token");
   });
 
   it("getCSPNonce should return a data-csp-nonce string", () => {
