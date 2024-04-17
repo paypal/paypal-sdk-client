@@ -1,6 +1,7 @@
 /* @flow */
 /* eslint max-lines: off */
 import { describe, it, afterEach, beforeEach, expect, vi } from "vitest";
+import jwt from "jsonwebtoken";
 import { base64encode, getCurrentScript, memoize } from "@krakenjs/belter/src";
 import { SDK_SETTINGS } from "@paypal/sdk-constants/src";
 
@@ -582,16 +583,53 @@ describe(`script cases`, () => {
   });
 
   it("getCustomerId returns a string of the decoded customer_id from the SDK token", () => {
-    const encodedPayload =
-      ".eyJvcHRpb25zIjp7ImN1c3RvbWVyX2lkIjoidGVzdDEyMyJ9fQ==";
     const encodedCustomerId = "test123";
+    const mockToken = jwt.sign(
+      {
+        options: {
+          customer_id: encodedCustomerId,
+        },
+      },
+      "test"
+    );
     const mockElement = makeMockScriptElement(mockScriptSrc);
-    mockElement.setAttribute("data-sdk-client-token", encodedPayload);
+    mockElement.setAttribute("data-sdk-client-token", mockToken);
     // $FlowIgnore
     getCurrentScript.mockReturnValue(mockElement);
 
     const result = getCustomerId();
     expect(result).toEqual(encodedCustomerId);
+  });
+
+  it("getCustomerId returns an empty string there is no encoded customer ID", () => {
+    const mockToken = jwt.sign(
+      {
+        options: {},
+      },
+      "test"
+    );
+    const mockElement = makeMockScriptElement(mockScriptSrc);
+    mockElement.setAttribute("data-sdk-client-token", mockToken);
+    // $FlowIgnore
+    getCurrentScript.mockReturnValue(mockElement);
+
+    const result = getCustomerId();
+    expect(result).toEqual("");
+  });
+
+  it("getCustomerId returns an empty string there is no token passed", () => {
+    const result = getCustomerId();
+    expect(result).toEqual("");
+  });
+
+  it("getCustomerId throws an error if there is a bad token passed", () => {
+    const inputToken = "-123";
+    const mockElement = makeMockScriptElement(mockScriptSrc);
+    mockElement.setAttribute("data-sdk-client-token", inputToken);
+    // $FlowIgnore
+    getCurrentScript.mockReturnValue(mockElement);
+
+    expect(getCustomerId).toThrow("Error decoding SDK token");
   });
 
   it("getCSPNonce should return a data-csp-nonce string", () => {
