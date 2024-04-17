@@ -28,6 +28,8 @@ import {
   getBuyerCountry,
   getAmount,
   getUserIDToken,
+  getSDKToken,
+  getCustomerId,
   getCSPNonce,
   getEnableThreeDomainSecure,
   getUserExperienceFlow,
@@ -535,7 +537,7 @@ describe(`script cases`, () => {
     });
   });
 
-  it("getUserIDToken return a token string", () => {
+  it("getUserIDToken returns a token string", () => {
     const inputToken = "some-token";
     const mockElement = makeMockScriptElement(mockScriptSrc);
     mockElement.setAttribute("data-user-id-token", inputToken);
@@ -544,6 +546,52 @@ describe(`script cases`, () => {
 
     const result = getUserIDToken();
     expect(result).toEqual(inputToken);
+  });
+
+  it("getUserIDToken is set as SDK token if SDK token is passed only", () => {
+    const sdkToken = "some-token";
+    const mockElement = makeMockScriptElement(mockScriptSrc);
+    mockElement.setAttribute("data-sdk-client-token", sdkToken);
+    // $FlowIgnore
+    getCurrentScript.mockReturnValue(mockElement);
+
+    const result = getUserIDToken();
+    expect(result).toEqual(sdkToken);
+  });
+
+  it("getSDKToken returns a token string", () => {
+    const inputToken = "some-token";
+    const mockElement = makeMockScriptElement(mockScriptSrc);
+    mockElement.setAttribute("data-sdk-client-token", inputToken);
+    // $FlowIgnore
+    getCurrentScript.mockReturnValue(mockElement);
+
+    const result = getSDKToken();
+    expect(result).toEqual(inputToken);
+  });
+
+  it("getSDKToken errors if ID token is also passed", () => {
+    const inputToken = "some-token";
+    const mockElement = makeMockScriptElement(mockScriptSrc);
+    mockElement.setAttribute("data-sdk-client-token", inputToken);
+    mockElement.setAttribute("data-user-id-token", inputToken);
+    // $FlowIgnore
+    getCurrentScript.mockReturnValue(mockElement);
+
+    expect(getSDKToken).toThrow("Do not pass SDK token and ID token");
+  });
+
+  it("getCustomerId returns a string of the decoded customer_id from the SDK token", () => {
+    const encodedPayload =
+      ".eyJvcHRpb25zIjp7ImN1c3RvbWVyX2lkIjoidGVzdDEyMyJ9fQ==";
+    const encodedCustomerId = "test123";
+    const mockElement = makeMockScriptElement(mockScriptSrc);
+    mockElement.setAttribute("data-sdk-client-token", encodedPayload);
+    // $FlowIgnore
+    getCurrentScript.mockReturnValue(mockElement);
+
+    const result = getCustomerId();
+    expect(result).toEqual(encodedCustomerId);
   });
 
   it("getCSPNonce should return a data-csp-nonce string", () => {
