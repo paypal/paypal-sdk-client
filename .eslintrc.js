@@ -24,6 +24,6 @@ module.exports = {
 
     // Experiment Variable
     __DISABLE_SET_COOKIE__: true,
-    __EXPERIMENTATION__: true,
+    __FIRST_RENDER_EXPERIMENTS__: true,
   },
 };

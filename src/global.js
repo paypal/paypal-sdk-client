@@ -9,7 +9,7 @@ import {
 } from "@paypal/sdk-constants/src";
 import { isDevice } from "@krakenjs/belter/src";
 
-import type { Experimentation } from "./types";
+import type { FirstRenderExperiments } from "./types";
 
 export function getSDKHost(): string {
   return __SDK_HOST__;
@@ -122,19 +122,9 @@ export function getDisableSetCookie(): boolean {
   return false;
 }
 
-export function getExperimentation(): Experimentation | null {
-  if (typeof __EXPERIMENTATION__ !== "undefined") {
-    if (__EXPERIMENTATION__) {
-      const experimation: Experimentation = {};
-      if (__EXPERIMENTATION__.__EXPERIENCE__) {
-        experimation.experience = __EXPERIMENTATION__.__EXPERIENCE__;
-      }
-      if (__EXPERIMENTATION__.__TREATMENT__) {
-        experimation.treatment = __EXPERIMENTATION__.__TREATMENT__;
-      }
-      return experimation;
-    }
+export function getFirstRenderExperiments(): FirstRenderExperiments | null {
+  if (typeof __FIRST_RENDER_EXPERIMENTS__ !== "undefined") {
+    return __FIRST_RENDER_EXPERIMENTS__;
   }
-
   return null;
 }

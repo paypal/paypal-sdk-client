@@ -21,3 +21,7 @@ export type GetExperimentation = {
   // eslint-disable-next-line flowtype/no-weak-types
   [any]: empty,
 };
+
+export type FirstRenderExperiments = {
+  [key: string]: boolean,
+};

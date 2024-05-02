@@ -17,9 +17,8 @@ export const sdkClientTestGlobals = {
   __PAYPAL_API_DOMAIN__: "mock://sandbox.paypal.com",
   __COMPONENTS__: ["buttons"],
   __DISABLE_SET_COOKIE__: true,
-  __EXPERIMENTATION__: {
-    __EXPERIENCE__: "1122",
-    __TREATMENT__: "1234",
+  __FIRST_RENDER_EXPERIMENTS__: {
+    firstRenderExperiment: true,
   },
   crypto: crypto.webcrypto,
 };

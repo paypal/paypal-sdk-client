@@ -21,7 +21,7 @@ import {
   getVersion,
   getCorrelationID,
   getPlatform,
-  getExperimentation,
+  getFirstRenderExperiments,
 } from "./global";
 
 describe(`globals cases`, () => {
@@ -174,29 +174,27 @@ describe(`globals cases`, () => {
   });
 
   it("should successfully get experimation value", () => {
-    window.__EXPERIMENTATION__ = {
-      __EXPERIENCE__: "1234, 4321",
-      __TREATMENT__: "8765,7890",
+    window.__FIRST_RENDER_EXPERIMENTS__ = {
+      firstRenderExperiment: true,
     };
     const expectedResult = {
-      experience: "1234, 4321",
-      treatment: "8765,7890",
+      firstRenderExperiment: true,
     };
-    const result = getExperimentation();
+    const result = getFirstRenderExperiments();
     expect(result).toEqual(expectedResult);
   });
 
   it("should get experimation null value", () => {
-    window.__EXPERIMENTATION__ = null;
+    window.__FIRST_RENDER_EXPERIMENTS__ = null;
     const expectedResult = null;
-    const result = getExperimentation();
+    const result = getFirstRenderExperiments();
     expect(result).toEqual(expectedResult);
   });
 
   it("should get experimation empty value", () => {
-    window.__EXPERIMENTATION__ = {};
+    window.__FIRST_RENDER_EXPERIMENTS__ = {};
     const expectedResult = {};
-    const result = getExperimentation();
+    const result = getFirstRenderExperiments();
     expect(result).toEqual(expectedResult);
   });
 });
