@@ -65,9 +65,16 @@ describe(`domains test`, () => {
 
   it("should not match invalid venmo domains", () => {
     const invalidDomains = [
-      "www.venmo.com.example.com",
-      "www.venmo.cn.example.com",
-      "www.venmo.com",
+      "https://www.venmo.com.example.com",
+      "https://www.venmo.cn.example.com",
+      "http://www.venmo.com.example.com",
+      "http://www.venmo.cn.example.com",
+      "http://www.example.com",
+      "https://www.example.com",
+      "https://venmo.com.example.com",
+      "https://venmo.cn.example.com",
+      "http://venmo.com.example.com",
+      "http://venmo.cn.example.com",
     ];
 
     for (const domain of invalidDomains) {
