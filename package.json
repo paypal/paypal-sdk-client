@@ -20,7 +20,7 @@
     "setup": "npm install && npm run flow-typed",
     "format": "prettier --write --ignore-unknown .",
     "format:check": "prettier --check .",
-    "test": "npm run format:check && npm run lint && npm run flow-typed && npm run flow && npm run test:unit",
+    "test": "npm run format:check && npm run lint && npm run flow && npm run test:unit",
     "webpack": "babel-node --plugins=transform-es2015-modules-commonjs ./node_modules/.bin/webpack --progress",
     "test:unit:watch": "vitest --coverage",
     "test:unit": "vitest run --coverage",
