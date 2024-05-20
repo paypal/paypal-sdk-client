@@ -29,6 +29,7 @@ type SDKMeta = {|
 |};
 
 const emailRegex = /^.+@.+$/;
+const semverRegex = /^[0-9.A-Za-z-+]+$/;
 
 function validatePaymentsSDKUrl({ pathname, query, hash }) {
   if (pathname !== SDK_PATH) {
@@ -83,10 +84,38 @@ function validateLegacySDKUrl({ pathname }) {
   }
 }
 
-function validateWebSDKUrl({ pathname }) {
+function validateWebSDKUrl({ pathname, query }) {
   if (pathname !== WEB_SDK_BRIDGE_PATH) {
     throw new Error(
       `Invalid path for web-sdk bridge url: ${pathname || "undefined"}`
+    );
+  }
+  // check for extraneous parameters
+  Object.keys(query).forEach((param) => {
+    if (param !== "version" && param !== "origin") {
+      throw new Error(`Invalid parameter on web-sdk bridge url: ${param}`);
+    }
+  });
+  // validate the version parameter
+  if (query.version === undefined || !semverRegex.test(query.version)) {
+    throw new Error(
+      `Invalid version parameter on web-sdk bridge url: ${query.version}`
+    );
+  }
+  // validate the origin parameter
+  let url = null;
+  try {
+    // eslint-disable-next-line compat/compat
+    url = new URL(query.origin);
+  } catch (error) {
+    throw new Error(
+      `Invalid origin parameter on web-sdk bridge url: ${query.origin}`
+    );
+  }
+  // check that the origin URL only includes the origin
+  if (query.origin !== `${url.protocol}//${url.host}`) {
+    throw new Error(
+      `Invalid origin parameter on web-sdk bridge url: ${query.origin}`
     );
   }
 }
@@ -186,7 +215,7 @@ function validateSDKUrl(sdkUrl: string) {
   if (isLegacySDKUrl(hostname, pathname)) {
     validateLegacySDKUrl({ pathname });
   } else if (isWebSDKUrl(hostname, pathname)) {
-    validateWebSDKUrl({ hostname, pathname });
+    validateWebSDKUrl({ pathname, query });
   } else if (isSDKUrl(hostname)) {
     if (hostname !== HOST.LOCALHOST && protocol !== PROTOCOL.HTTPS) {
       throw new Error(
@@ -267,11 +296,8 @@ function sanitizeSDKUrl(sdkUrl: string): string {
   // eslint-disable-next-line compat/compat
   const url = new URL(sdkUrl);
 
-  // remove query string params for checkout.js and web-sdk
-  if (
-    isLegacySDKUrl(url.hostname, url.pathname) ||
-    isWebSDKUrl(url.hostname, url.pathname)
-  ) {
+  // remove query string params for checkout.js
+  if (isLegacySDKUrl(url.hostname, url.pathname)) {
     url.search = "";
     url.hash = "";
 

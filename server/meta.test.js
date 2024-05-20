@@ -1223,32 +1223,17 @@ test("should error when invalid characters are found in the subdomain - we allow
 });
 
 test("should construct a valid web-sdk bridge url", () => {
-  const sdkUrl = "https://www.paypal.com/web-sdk/v6/bridge";
-
-  const { getSDKLoader } = unpackSDKMeta(
-    Buffer.from(
-      JSON.stringify({
-        url: sdkUrl,
-      })
-    ).toString("base64")
-  );
-
-  const $ = cheerio.load(getSDKLoader());
-  const src = $("script").attr("src");
-
-  if (src !== sdkUrl) {
-    throw new Error(`Expected script url to be ${sdkUrl} - got ${src}`);
-  }
-});
-
-test("should prevent query string parameters and hashs on the web-sdk bridge url", () => {
   const sdkUrl =
-    "https://www.paypal.com/web-sdk/v6/bridge?name=value#hashvalue";
+    "https://www.paypal.com/web-sdk/v6/bridge?version=1.2.3&origin=https%3A%2F%2Fwww.example.com%3A8000";
+  const sdkUID = "abc123";
 
   const { getSDKLoader } = unpackSDKMeta(
     Buffer.from(
       JSON.stringify({
         url: sdkUrl,
+        attrs: {
+          "data-uid": sdkUID,
+        },
       })
     ).toString("base64")
   );
@@ -1256,16 +1241,161 @@ test("should prevent query string parameters and hashs on the web-sdk bridge url
   const $ = cheerio.load(getSDKLoader());
   const script = $("script");
   const src = script.attr("src");
+  const uid = script.attr("data-uid");
 
-  // eslint-disable-next-line compat/compat
-  const urlObject = new URL(sdkUrl);
-  // we expect the query string params to be stripped out
-  urlObject.search = "";
-  // we expect the hash to be stripped out
-  urlObject.hash = "";
-  const expectedUrl = urlObject.toString();
+  if (src !== sdkUrl) {
+    throw new Error(`Expected script url to be ${sdkUrl} - got ${src}`);
+  }
+  if (uid !== sdkUID) {
+    throw new Error(`Expected data UID be ${sdkUID} - got ${uid}`);
+  }
+});
 
-  if (src !== expectedUrl) {
-    throw new Error(`Expected script url to be ${expectedUrl} - got ${src}`);
+test("should error when extra parameters are present", () => {
+  const sdkUrl =
+    "https://www.paypal.com/web-sdk/v6/bridge?version=1.2.3&origin=https%3A%2F%2Fwww.example.com%3A8000&name=value";
+
+  let error = null;
+  try {
+    unpackSDKMeta(
+      Buffer.from(
+        JSON.stringify({
+          url: sdkUrl,
+          attrs: {
+            "data-uid": "abc123",
+          },
+        })
+      ).toString("base64")
+    );
+  } catch (err) {
+    error = err;
+  }
+
+  if (!error) {
+    throw new Error("Expected error to be thrown");
+  }
+});
+
+test("should error when the version parameter is missing", () => {
+  const sdkUrl =
+    "https://www.paypal.com/web-sdk/v6/bridge?origin=https%3A%2F%2Fwww.example.com%3A8000";
+
+  let error = null;
+  try {
+    unpackSDKMeta(
+      Buffer.from(
+        JSON.stringify({
+          url: sdkUrl,
+          attrs: {
+            "data-uid": "abc123",
+          },
+        })
+      ).toString("base64")
+    );
+  } catch (err) {
+    error = err;
+  }
+
+  if (!error) {
+    throw new Error("Expected error to be thrown");
+  }
+});
+
+test("should error when the version parameter is invalid", () => {
+  const sdkUrl =
+    "https://www.paypal.com/web-sdk/v6/bridge?version=^1.2.3&origin=https%3A%2F%2Fwww.example.com%3A8000";
+
+  let error = null;
+  try {
+    unpackSDKMeta(
+      Buffer.from(
+        JSON.stringify({
+          url: sdkUrl,
+          attrs: {
+            "data-uid": "abc123",
+          },
+        })
+      ).toString("base64")
+    );
+  } catch (err) {
+    error = err;
+  }
+
+  if (!error) {
+    throw new Error("Expected error to be thrown");
+  }
+});
+
+test("should error when the origin parameter is missing", () => {
+  const sdkUrl = "https://www.paypal.com/web-sdk/v6/bridge?version=1.2.3";
+
+  let error = null;
+  try {
+    unpackSDKMeta(
+      Buffer.from(
+        JSON.stringify({
+          url: sdkUrl,
+          attrs: {
+            "data-uid": "abc123",
+          },
+        })
+      ).toString("base64")
+    );
+  } catch (err) {
+    error = err;
+  }
+
+  if (!error) {
+    throw new Error("Expected error to be thrown");
+  }
+});
+
+test("should error when the origin parameter is invalid", () => {
+  const sdkUrl =
+    "https://www.paypal.com/web-sdk/v6/bridge?version=1.2.3&origin=example";
+
+  let error = null;
+  try {
+    unpackSDKMeta(
+      Buffer.from(
+        JSON.stringify({
+          url: sdkUrl,
+          attrs: {
+            "data-uid": "abc123",
+          },
+        })
+      ).toString("base64")
+    );
+  } catch (err) {
+    error = err;
+  }
+
+  if (!error) {
+    throw new Error("Expected error to be thrown");
+  }
+});
+
+test("should error when the origin parameter is not just the origin", () => {
+  const sdkUrl =
+    "https://www.paypal.com/web-sdk/v6/bridge?version=1.2.3&origin=https%3A%2F%2Fwww.example.com%3A8000%2Fpath";
+
+  let error = null;
+  try {
+    unpackSDKMeta(
+      Buffer.from(
+        JSON.stringify({
+          url: sdkUrl,
+          attrs: {
+            "data-uid": "abc123",
+          },
+        })
+      ).toString("base64")
+    );
+  } catch (err) {
+    error = err;
+  }
+
+  if (!error) {
+    throw new Error("Expected error to be thrown");
   }
 });
