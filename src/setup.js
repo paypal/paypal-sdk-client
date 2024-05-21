@@ -4,6 +4,7 @@ import { destroyElement } from "@krakenjs/belter/src";
 
 import { getVersion } from "./global";
 import { getSDKScript, getNamespace } from "./script";
+import { getLogger } from "./logger";
 
 export type SetupComponent<T> = {|
   name: string,
@@ -21,7 +22,13 @@ export function setupSDK(components: $ReadOnlyArray<SetupComponent<mixed>>) {
   const existingVersion = existingNamespace && existingNamespace.version;
 
   if (existingNamespace) {
-    if (existingNamespace[INTERNAL_DESTROY_KEY]) {
+    if (existingVersion.startsWith("6.")) {
+      getLogger().info("setup_sdk_v6_integration_found", {
+        v5Version: version,
+        v6Version: existingVersion,
+      });
+      delete window[namespace];
+    } else if (existingNamespace[INTERNAL_DESTROY_KEY]) {
       existingNamespace[INTERNAL_DESTROY_KEY](
         new Error(
           `New SDK instance loaded, existing instance destroyed (${namespace} / ${version})`
@@ -41,6 +48,10 @@ export function setupSDK(components: $ReadOnlyArray<SetupComponent<mixed>>) {
 
   window[namespace] = window[namespace] || {};
   window[namespace].version = version;
+
+  if (namespace === "paypal" && window.__paypal_sdk__?.v6) {
+    window.paypal.v6 = window.__paypal_sdk__.v6;
+  }
 
   const destroyers = [];
 
