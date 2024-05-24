@@ -1,5 +1,5 @@
 /* @flow */
-import { describe, it, afterEach, expect, vi } from "vitest";
+import { describe, it, afterEach, expect, vi, beforeAll } from "vitest";
 import { getCurrentScript, memoize, getStorage } from "@krakenjs/belter/src";
 
 import { makeMockScriptElement } from "../test/helpers";
@@ -10,6 +10,7 @@ import {
   getSessionState,
   getClientMetadataID,
   getSDKStorage,
+  wasShopperInsightsUsed,
 } from "./session";
 
 const clientId = "foobar123";
@@ -74,5 +75,9 @@ describe("session cases", () => {
       name: expect.any(String),
       stickySessionId: expect.any(String),
     });
+  });
+
+  it("wasShopperInsightsUsed should return false if shopperInsights doesn't exist in the state", () => {
+    expect(wasShopperInsightsUsed()).toEqual(false);
   });
 });
