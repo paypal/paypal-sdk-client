@@ -36,7 +36,7 @@ export function wasShopperInsightsUsed(): boolean {
   let shopperInsightsUsed = false;
 
   getSessionState((state) => {
-    const shopperInsightsState = state["shopperInsights"];
+    const shopperInsightsState = state.shopperInsights;
 
     // Set shopperInsightsUsed to true if it finds either one of these values in the state
     shopperInsightsUsed = Boolean(
