@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "babel": "babel ./server --ignore=node_modules --out-dir ./server",
-    "build": "npm run test && npm run doc",
+    "build": "npm run test && npm run doc & npm run babel",
     "clean": "rimraf dist coverage",
     "debug": "cross-env NODE_ENV=debug",
     "doc": "esdoc",
