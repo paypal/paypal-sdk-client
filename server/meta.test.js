@@ -255,7 +255,7 @@ test("should construct a valid versioned script url with paypalobjects", () => {
 });
 
 test("should construct a valid versioned minified script url with paypalobjects", () => {
-  const sdkUrl = "https://www.paypalobjects.com/api/checkout.min.js";
+  const sdkUrl = "https://www.paypalobjects.com/api/checkout.4.0.125.min.js";
 
   const { getSDKLoader } = unpackSDKMeta(
     Buffer.from(
