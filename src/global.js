@@ -122,6 +122,23 @@ export function getDisableSetCookie(): boolean {
   return false;
 }
 
+export function getExperimentation(): Experimentation | null {
+  if (typeof __EXPERIMENTATION__ !== "undefined") {
+    if (__EXPERIMENTATION__) {
+      const experimentation: Experimentation = {};
+      if (__EXPERIMENTATION__.__EXPERIENCE__) {
+        experimentation.experience = __EXPERIMENTATION__.__EXPERIENCE__;
+      }
+      if (__EXPERIMENTATION__.__TREATMENT__) {
+        experimentation.treatment = __EXPERIMENTATION__.__TREATMENT__;
+      }
+      return experimentation;
+    }
+  }
+
+  return null;
+}
+
 export function getFirstRenderExperiments(): FirstRenderExperiments | null {
   if (typeof __FIRST_RENDER_EXPERIMENTS__ !== "undefined") {
     return __FIRST_RENDER_EXPERIMENTS__;
