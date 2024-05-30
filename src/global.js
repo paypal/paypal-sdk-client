@@ -122,6 +122,7 @@ export function getDisableSetCookie(): boolean {
   return false;
 }
 
+// TODO first-render-experiment-cleanup any thing using this function should use getFirstRenderExperiments
 export function getExperimentation(): Experimentation | null {
   if (typeof __EXPERIMENTATION__ !== "undefined") {
     if (__EXPERIMENTATION__) {
