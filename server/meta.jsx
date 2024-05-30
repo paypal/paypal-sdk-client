@@ -356,7 +356,7 @@ export function unpackSDKMeta(sdkMeta?: string): SDKMeta {
                                 return;
                             }
 
-                            if (version === '4' || version === 'latest') {
+                            if (version === 'latest' || version.charAt(0) === '4') {
                                 version = '';
                             }
 
