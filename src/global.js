@@ -9,7 +9,7 @@ import {
 } from "@paypal/sdk-constants/src";
 import { isDevice } from "@krakenjs/belter/src";
 
-import type { FirstRenderExperiments } from "./types";
+import type { Experimentation, FirstRenderExperiments } from "./types";
 
 export function getSDKHost(): string {
   return __SDK_HOST__;

@@ -34,5 +34,11 @@ declare var __FUNDING_ELIGIBILITY__: FundingEligibilityType;
 // Experiment Variable
 declare var __DISABLE_SET_COOKIE__: boolean;
 
+// TODO first-render-experiment-cleanup
+declare var __EXPERIMENTATION__: {|
+  __EXPERIENCE__?: string,
+  __TREATMENT__?: string,
+|};
+
 // $FlowIgnore[value-as-type]
 declare var __FIRST_RENDER_EXPERIMENTS__: FirstRenderExperiments;
