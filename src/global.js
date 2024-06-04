@@ -144,5 +144,5 @@ export function getFirstRenderExperiments(): FirstRenderExperiments | null {
   if (typeof __FIRST_RENDER_EXPERIMENTS__ !== "undefined") {
     return __FIRST_RENDER_EXPERIMENTS__;
   }
-  return null;
+  return {};
 }
