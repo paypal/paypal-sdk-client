@@ -4,7 +4,7 @@
 import { ENV, COMPONENTS, PROTOCOL } from "@paypal/sdk-constants/src";
 
 // $FlowFixMe[toplevel-library-import]
-import type { FundingEligibilityType } from "./types";
+import type { FundingEligibilityType, FirstRenderExperiments } from "./types";
 
 declare var __PROTOCOL__: $Values<typeof PROTOCOL>;
 declare var __HOST__: string;
@@ -33,7 +33,12 @@ declare var __FUNDING_ELIGIBILITY__: FundingEligibilityType;
 
 // Experiment Variable
 declare var __DISABLE_SET_COOKIE__: boolean;
+
+// TODO first-render-experiment-cleanup
 declare var __EXPERIMENTATION__: {|
   __EXPERIENCE__?: string,
   __TREATMENT__?: string,
 |};
+
+// $FlowIgnore[value-as-type]
+declare var __FIRST_RENDER_EXPERIMENTS__: FirstRenderExperiments;

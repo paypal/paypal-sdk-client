@@ -22,6 +22,7 @@ import {
   getCorrelationID,
   getPlatform,
   getExperimentation,
+  getFirstRenderExperiments,
 } from "./global";
 
 describe(`globals cases`, () => {
@@ -173,7 +174,8 @@ describe(`globals cases`, () => {
     expect(result).toEqual(window.__FUNDING_ELIGIBILITY__);
   });
 
-  it("should successfully get experimation value", () => {
+  // TODO first-render-experiment-cleanup
+  it("should successfully get experimentation value", () => {
     window.__EXPERIMENTATION__ = {
       __EXPERIENCE__: "1234, 4321",
       __TREATMENT__: "8765,7890",
@@ -186,17 +188,44 @@ describe(`globals cases`, () => {
     expect(result).toEqual(expectedResult);
   });
 
-  it("should get experimation null value", () => {
+  // TODO first-render-experiment-cleanup
+  it("should get experimentation null value", () => {
     window.__EXPERIMENTATION__ = null;
     const expectedResult = null;
     const result = getExperimentation();
     expect(result).toEqual(expectedResult);
   });
 
-  it("should get experimation empty value", () => {
+  // TODO first-render-experiment-cleanup
+  it("should get experimentation empty value", () => {
     window.__EXPERIMENTATION__ = {};
     const expectedResult = {};
     const result = getExperimentation();
+    expect(result).toEqual(expectedResult);
+  });
+
+  it("should successfully get first render experiment value", () => {
+    window.__FIRST_RENDER_EXPERIMENTS__ = {
+      firstRenderExperiment: true,
+    };
+    const expectedResult = {
+      firstRenderExperiment: true,
+    };
+    const result = getFirstRenderExperiments();
+    expect(result).toEqual(expectedResult);
+  });
+
+  it("should get first render experiment null value", () => {
+    window.__FIRST_RENDER_EXPERIMENTS__ = null;
+    const expectedResult = null;
+    const result = getFirstRenderExperiments();
+    expect(result).toEqual(expectedResult);
+  });
+
+  it("should get first render experiment empty value", () => {
+    window.__FIRST_RENDER_EXPERIMENTS__ = {};
+    const expectedResult = {};
+    const result = getFirstRenderExperiments();
     expect(result).toEqual(expectedResult);
   });
 });
