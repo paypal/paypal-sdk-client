@@ -140,9 +140,10 @@ export function getExperimentation(): Experimentation | null {
   return null;
 }
 
-export function getFirstRenderExperiments(): FirstRenderExperiments | null {
+export function getFirstRenderExperiments(): FirstRenderExperiments | Object {
   if (typeof __FIRST_RENDER_EXPERIMENTS__ !== "undefined") {
     return __FIRST_RENDER_EXPERIMENTS__;
   }
+
   return {};
 }

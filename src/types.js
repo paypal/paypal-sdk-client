@@ -24,6 +24,6 @@ export type GetExperimentation = {
   [any]: empty,
 };
 
-export type FirstRenderExperiments = {
-  [key: string]: boolean,
-};
+export type FirstRenderExperiments = {|
+  venmoVaultWithoutPurchase?: boolean,
+|};
