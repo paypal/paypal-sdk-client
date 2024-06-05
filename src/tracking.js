@@ -8,6 +8,7 @@ import {
   getResourceLoadTime,
   waitForWindowReady,
   ATTRIBUTES,
+  isLocalStorageEnabled,
 } from "@krakenjs/belter/src";
 import { ZalgoPromise } from "@krakenjs/zalgo-promise/src";
 import {
@@ -103,41 +104,42 @@ export function setupLogger() {
   const userAction = getCommit()
     ? FPTI_USER_ACTION.COMMIT
     : FPTI_USER_ACTION.CONTINUE;
+  const { lang, country } = getLocale();
+  const mID = getMerchantID();
 
   sdkInitTime = Date.now();
 
-  logger.addPayloadBuilder(() => {
-    return {
-      referer: window.location.host,
-      uid: getSessionID(),
-      env: getEnv(),
-    };
-  });
+  logger.addPayloadBuilder(() => ({
+    uid: getSessionID(),
+    env: getEnv(),
+    clientId: getClientID(),
+    csnwCorrelationId: getCorrelationID(),
+    referrer: window.location.host,
+    version,
+    merchantId: mID,
+    sessionId: getSessionID(),
+    userAction,
+  }));
 
-  logger.addTrackingBuilder(() => {
-    const { lang, country } = getLocale();
-    const mID = getMerchantID();
-
-    return {
-      [FPTI_KEY.CLIENT_ID]: getClientID(),
-      [FPTI_KEY.CONTEXT_CORRID]: getCorrelationID(),
-      [FPTI_KEY.DATA_SOURCE]: FPTI_DATA_SOURCE.PAYMENTS_SDK,
-      [FPTI_KEY.FEED]: FPTI_FEED.PAYMENTS_SDK,
-      [FPTI_KEY.INTEGRATION_IDENTIFIER]: getClientID(),
-      [FPTI_KEY.JS_SDK_LIBRARY]: jsSdkLibrary,
-      [FPTI_KEY.LOCALE]: `${lang}_${country}`,
-      [FPTI_KEY.PAGE_TYPE]: pageType,
-      [FPTI_KEY.PARTNER_ATTRIBUTION_ID]: getPartnerAttributionID(),
-      [FPTI_KEY.REFERER]: window.location.host,
-      [FPTI_KEY.SDK_INTEGRATION_SOURCE]: integrationSource,
-      [FPTI_KEY.SDK_NAME]: FPTI_SDK_NAME.PAYMENTS_SDK,
-      [FPTI_KEY.SDK_VERSION]: version,
-      [FPTI_KEY.SELLER_ID]: mID && mID.toString(),
-      [FPTI_KEY.SESSION_UID]: getSessionID(),
-      [FPTI_KEY.USER_ACTION]: userAction,
-      [FPTI_KEY.USER_AGENT]: window.navigator && window.navigator.userAgent,
-    };
-  });
+  logger.addTrackingBuilder(() => ({
+    [FPTI_KEY.CLIENT_ID]: getClientID(),
+    [FPTI_KEY.CONTEXT_CORRID]: getCorrelationID(),
+    [FPTI_KEY.DATA_SOURCE]: FPTI_DATA_SOURCE.PAYMENTS_SDK,
+    [FPTI_KEY.FEED]: FPTI_FEED.PAYMENTS_SDK,
+    [FPTI_KEY.INTEGRATION_IDENTIFIER]: getClientID(),
+    [FPTI_KEY.JS_SDK_LIBRARY]: jsSdkLibrary,
+    [FPTI_KEY.LOCALE]: `${lang}_${country}`,
+    [FPTI_KEY.PAGE_TYPE]: pageType,
+    [FPTI_KEY.PARTNER_ATTRIBUTION_ID]: getPartnerAttributionID(),
+    [FPTI_KEY.REFERER]: window.location.host,
+    [FPTI_KEY.SDK_INTEGRATION_SOURCE]: integrationSource,
+    [FPTI_KEY.SDK_NAME]: FPTI_SDK_NAME.PAYMENTS_SDK,
+    [FPTI_KEY.SDK_VERSION]: version,
+    [FPTI_KEY.SELLER_ID]: mID && mID.toString(),
+    [FPTI_KEY.SESSION_UID]: getSessionID(),
+    [FPTI_KEY.USER_ACTION]: userAction,
+    [FPTI_KEY.USER_AGENT]: window.navigator && window.navigator.userAgent,
+  }));
 
   logger.addMetricDimensionBuilder(() => payPalWebV5Dimensions);
 
@@ -147,7 +149,7 @@ export function setupLogger() {
       [FPTI_KEY.ERROR_DESC]: stringifyErrorMessage(err),
     });
 
-    logger.error("unhandled_error", {
+    logger.error("paypal_js_sdk_v5_unhandled_exception", {
       err: stringifyError(err),
     });
 
@@ -158,8 +160,22 @@ export function setupLogger() {
   waitForWindowReady().then(() => {
     const sdkScript = getSDKScript();
     const loadTime = getResourceLoadTime(sdkScript.src);
-    let cacheType;
+    const localStorageEnabled = isLocalStorageEnabled();
 
+    // Exclude apps that use the JS SDK and are hosted directly on www.paypal.com. Ex:
+    // https://www.paypal.com/buttons/smart
+    // https://www.paypal.com/us/gifts/
+    const loadedInFrame =
+      isPayPalDomain() && window.xprops ? "paypal" : "non_paypal";
+
+    logger
+      .addPayloadBuilder(() => ({ loadedInFrame }))
+      .addTrackingBuilder(() => ({ loaded_in_frame: loadedInFrame }))
+      .addMetricDimensionBuilder(() => ({
+        isPayPalDomain: Boolean(loadedInFrame).toString(),
+      }));
+
+    let cacheType;
     if (loadTime === 0) {
       cacheType = "sdk_client_cache_hit";
     } else if (typeof loadTime === "number") {
@@ -168,43 +184,40 @@ export function setupLogger() {
       cacheType = "sdk_client_cache_unknown";
     }
 
-    // Exclude apps that use the JS SDK and are hosted directly on www.paypal.com. Ex:
-    // https://www.paypal.com/buttons/smart
-    // https://www.paypal.com/us/gifts/
-    const isLoadedInFrame = isPayPalDomain() && window.xprops;
     const sdkLoadTime = typeof loadTime === "number" ? loadTime : undefined;
 
-    logger.info(
-      `sdk_${isLoadedInFrame ? "paypal" : "non_paypal"}_domain_script_uid_${
-        sdkScript.hasAttribute(ATTRIBUTES.UID) ? "present" : "missing"
-      }`
-    );
-
-    if (loadTime) {
-      logger.track({
+    logger
+      .info("paypal_js_sdk_v5_init", {
+        ...(isIEIntranet() ? { ie_intranet_mode: true } : {}),
+        uidAttribute: sdkScript.hasAttribute(ATTRIBUTES.UID)
+          ? "present"
+          : "missing",
+        loadTime: sdkLoadTime,
+        cacheType,
+        jsSdkLibrary,
+        locale: `${lang}_${country}`,
+        integrationSource,
+        localStorageEnabled,
+      })
+      .track({
         [FPTI_KEY.TRANSITION]: "process_js_sdk_init_client",
         [FPTI_KEY.SDK_LOAD_TIME]: sdkLoadTime,
         [FPTI_KEY.SDK_CACHE]: cacheType,
+        local_storage_enabled: localStorageEnabled,
+      })
+      .metricCounter({
+        namespace: "sdk_client.init.count",
+        event: "init",
+        dimensions: {
+          components: getComponents().join(","),
+          integrationSource,
+          jsSdkLibrary,
+          localStorageEnabled,
+          pageType,
+          token: getTokenType(),
+          userAction,
+          version,
+        },
       });
-    }
-
-    if (isIEIntranet()) {
-      logger.warn("ie_intranet_mode");
-    }
-
-    logger.metricCounter({
-      namespace: "sdk_client.init.count",
-      event: "init",
-      dimensions: {
-        components: getComponents().join(","),
-        integrationSource,
-        isPayPalDomain: Boolean(isLoadedInFrame).toString(),
-        jsSdkLibrary,
-        pageType,
-        token: getTokenType(),
-        userAction,
-        version,
-      },
-    });
   });
 }
