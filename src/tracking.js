@@ -218,6 +218,7 @@ export function setupLogger() {
           userAction,
           version,
         },
-      });
+      })
+      .flush();
   });
 }
