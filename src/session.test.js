@@ -77,7 +77,7 @@ describe("session cases", () => {
     });
   });
 
-  describe.only("wasShopperInsightsUsed", () => {
+  describe("wasShopperInsightsUsed", () => {
     let mockState;
 
     const mockGetSessionState = (handler: (state: Object) => void) => {
