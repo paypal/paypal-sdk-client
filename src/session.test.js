@@ -10,6 +10,7 @@ import {
   getSessionState,
   getClientMetadataID,
   getSDKStorage,
+  wasShopperInsightsUsed,
 } from "./session";
 
 const clientId = "foobar123";
@@ -73,6 +74,61 @@ describe("session cases", () => {
     expect(getStorage).toBeCalledWith({
       name: expect.any(String),
       stickySessionId: expect.any(String),
+    });
+  });
+
+  describe("wasShopperInsightsUsed", () => {
+    let mockState;
+
+    const mockGetSessionState = (handler: (state: Object) => void) => {
+      handler(mockState);
+    };
+
+    it("should return false if shopperInsights doesn't exist in the state", () => {
+      expect(wasShopperInsightsUsed()).toEqual(false);
+    });
+
+    it("should return false if shopperInsightsState exists but does not include shopperInsightsIsMemberUsed or getRecommendedPaymentMethodsUsed", () => {
+      mockState = {
+        shopperInsights: {},
+      };
+
+      // $FlowIssue
+      getStorage.mockImplementationOnce(() => ({
+        getSessionState: mockGetSessionState,
+      }));
+
+      expect(wasShopperInsightsUsed()).toEqual(false);
+    });
+
+    it("should return true if shopperInsightsState includes shopperInsightsIsMemberUsed", () => {
+      mockState = {
+        shopperInsights: {
+          shopperInsightsIsMemberUsed: true,
+        },
+      };
+
+      // $FlowIssue
+      getStorage.mockImplementationOnce(() => ({
+        getSessionState: mockGetSessionState,
+      }));
+
+      expect(wasShopperInsightsUsed()).toEqual(true);
+    });
+
+    it("should return true if shopperInsightsState includes getRecommendedPaymentMethodsUsed", () => {
+      mockState = {
+        shopperInsights: {
+          getRecommendedPaymentMethodsUsed: true,
+        },
+      };
+
+      // $FlowIssue
+      getStorage.mockImplementationOnce(() => ({
+        getSessionState: mockGetSessionState,
+      }));
+
+      expect(wasShopperInsightsUsed()).toEqual(true);
     });
   });
 });

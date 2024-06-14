@@ -31,3 +31,19 @@ export function getStorageID(): string {
 export function getSessionState<T>(handler: (state: Object) => T): T {
   return getSDKStorage().getSessionState(handler);
 }
+
+export function wasShopperInsightsUsed(): boolean {
+  let shopperInsightsUsed = false;
+
+  getSessionState((state) => {
+    const shopperInsightsState = state.shopperInsights;
+
+    // Set shopperInsightsUsed to true if it finds either one of these values in the state
+    shopperInsightsUsed = Boolean(
+      shopperInsightsState?.shopperInsightsIsMemberUsed ||
+        shopperInsightsState?.getRecommendedPaymentMethodsUsed
+    );
+  });
+
+  return shopperInsightsUsed;
+}
