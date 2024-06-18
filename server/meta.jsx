@@ -369,7 +369,7 @@ export function unpackSDKMeta(sdkMeta?: string): SDKMeta {
                               var patchString = version?.split('.')?.pop()
 
                               if (!patchString) {
-                                version = 'latest'
+                                version = ''
                               } else if (parseInt(patchString, 10) < 132) {
                                 version = '4.0.132' 
                               }
