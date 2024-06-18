@@ -5,7 +5,6 @@
 import urlLib from "url";
 
 import {
-  ENV,
   SDK_PATH,
   SDK_QUERY_KEYS,
   SDK_SETTINGS,
@@ -167,8 +166,8 @@ function isLocalUrl(host: string): boolean {
     HOST.LOCALTUNNEL,
   ];
 
-  // eslint-disable-next-line no-process-env
   return (
+    // eslint-disable-next-line no-process-env
     process.env.NODE_ENV === "development" &&
     localUrls.some((url) => host.includes(url))
   );
@@ -177,7 +176,7 @@ function isLocalUrl(host: string): boolean {
 function validateHostAndPath(
   hostname: string | null,
   pathname: string | null
-): { hostname: string, pathname: string } {
+): {| hostname: string, pathname: string |} {
   if (!pathname || !hostname) {
     throw new Error(`Expected host and pathname to be passed for sdk url`);
   }
@@ -206,6 +205,7 @@ function validateSDKUrl(sdkUrl: string) {
     );
   }
 
+  // eslint-disable-next-line no-useless-escape
   const hostnameMatchResults = hostname.match(/[a-z0-9\.\-]+/);
 
   if (!hostnameMatchResults || hostnameMatchResults[0] !== hostname) {
@@ -358,6 +358,21 @@ export function unpackSDKMeta(sdkMeta?: string): SDKMeta {
 
                             if (version === '4' || version === 'latest') {
                                 version = '';
+                            }
+
+                            // if patch version is less than 132, we want to 
+                            // set the version to 132. If for some reason we can't
+                            // parse out a patch version, set version as latest
+                            // if neither cases are true, leave version alone because
+                            // it can be more than a semver version number ("min" for example)
+                            if (/4\\.0\\.\\d{1,3}/.test(version)) {
+                              var patchString = version?.split('.')?.pop()
+
+                              if (!patchString) {
+                                version = 'latest'
+                              } else if (parseInt(patchString, 10) < 132) {
+                                version = '4.0.132' 
+                              }
                             }
 
                             var url = '${baseURL}checkout' + (version ? ('.' + version) : '') + '.js';
