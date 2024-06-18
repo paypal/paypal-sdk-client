@@ -365,7 +365,13 @@ export function unpackSDKMeta(sdkMeta?: string): SDKMeta {
                             // parse out a patch version, set version as latest
                             // if neither cases are true, leave version alone because
                             // it can be more than a semver version number ("min" for example)
-                            if (/4\\.0\\.\\d{1,3}/.test(version)) {
+                            //
+                            // NOTE ABOUT REGEX
+                            // The . in the regex technically need to be escaped but that breaks the 
+                            // regex in real browsers. Because we are writing JavaScript in a string, we
+                            // need a double escape (\\.) which breaks the browser but works when using eval()
+                            // a single escape works in the browser but breaks in the tests with eval()
+                            if (/4.0.\\d{1,3}/.test(version)) {
                               var patchString = version?.split('.')?.pop()
 
                               if (!patchString) {
