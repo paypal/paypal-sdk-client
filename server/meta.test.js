@@ -2,7 +2,7 @@
 /* eslint max-lines: off */
 
 import cheerio from "cheerio";
-import { test, afterEach } from "vitest";
+import { describe, expect, test, afterEach } from "vitest";
 
 import { unpackSDKMeta } from ".";
 
@@ -1398,4 +1398,68 @@ test("should error when the origin parameter is not just the origin", () => {
   if (!error) {
     throw new Error("Expected error to be thrown");
   }
+});
+
+describe("Utilities", () => {
+  test("getSDKScriptUrl() matches sdkScript src", () => {
+    const sdkUrl = "https://www.paypal.com/sdk/js?client-id=foo";
+
+    const { getSDKLoader, getSDKScriptUrl } = unpackSDKMeta(
+      Buffer.from(
+        JSON.stringify({
+          url: sdkUrl,
+        })
+      ).toString("base64")
+    );
+
+    const $ = cheerio.load(getSDKLoader());
+    const src = $("script").attr("src");
+
+    const sdkScriptUrl = getSDKScriptUrl();
+
+    expect(sdkScriptUrl).toBe(sdkUrl);
+    expect(sdkScriptUrl).toBe(src);
+  });
+
+  test("getSDKScriptAttributes() matches sdkScript data-attributes", () => {
+    const sdkUrl = "https://www.paypal.com/sdk/js?client-id=foo";
+
+    const attrs = {
+      "data-uid": "uid",
+      "data-popups-disabled": "true",
+      "data-dummy-id": "begone",
+    };
+
+    const { getSDKLoader, getSDKScriptAttributes } = unpackSDKMeta(
+      Buffer.from(
+        JSON.stringify({
+          url: sdkUrl,
+          attrs,
+        })
+      ).toString("base64")
+    );
+
+    const $ = cheerio.load(getSDKLoader());
+    const scriptTag = $("script");
+
+    const result = getSDKScriptAttributes();
+
+    expect(result).toBeDefined();
+    expect(result).not.toHaveProperty("data-dummy-id");
+    expect(attrs).toMatchObject(result);
+
+    for (const [name, value] of Object.entries(result || {})) {
+      expect(scriptTag.attr(name)).toBe(value);
+    }
+  });
+
+  test("getSDKInlineScript() matches loader inline script", () => {
+    const { getSDKLoader, getSDKInlineScript } = unpackSDKMeta();
+
+    const $ = cheerio.load(getSDKLoader());
+    const script = $("script").html();
+
+    const result = getSDKInlineScript();
+    expect(script).toContain(result);
+  });
 });
