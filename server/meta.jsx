@@ -24,8 +24,15 @@ import {
 } from "./constants";
 import { constHas, entries } from "./util";
 
+type SDKAttributes = {|
+  [string]: string | boolean,
+|};
+
 type SDKMeta = {|
   getSDKLoader: (options?: {| baseURL?: string, nonce?: string |}) => string,
+  getSDKScriptAttributes: () => SDKAttributes | void,
+  getSDKScriptUrl: () => string | void,
+  getSDKInlineScript: (baseURL?: string) => string | void,
 |};
 
 const emailRegex = /^.+@.+$/;
@@ -239,10 +246,6 @@ function validateSDKUrl(sdkUrl: string) {
   }
 }
 
-type SDKAttributes = {|
-  [string]: string | boolean,
-|};
-
 const getDefaultSDKAttributes = (): SDKAttributes => {
   // $FlowFixMe
   return {};
@@ -307,38 +310,8 @@ function sanitizeSDKUrl(sdkUrl: string): string {
   return sdkUrl;
 }
 
-export function unpackSDKMeta(sdkMeta?: string): SDKMeta {
-  const { url, attrs } = sdkMeta
-    ? JSON.parse(
-        Buffer.from(decodeURIComponent(sdkMeta), "base64").toString("utf8")
-      )
-    : DEFAULT_SDK_META;
-
-  if (url) {
-    validateSDKUrl(url);
-  }
-
-  const getSDKLoader = ({
-    baseURL = DEFAULT_LEGACY_SDK_BASE_URL,
-    nonce = "",
-  } = {}) => {
-    if (url) {
-      const validAttrs = getSDKScriptAttributes(url, attrs);
-
-      // $FlowFixMe
-      const allAttrs = {
-        nonce,
-        src: sanitizeSDKUrl(url),
-        ...validAttrs,
-      };
-
-      return (<script {...allAttrs} />).render(html());
-    }
-
-    return (
-      <script
-        nonce={nonce}
-        innerHTML={`
+function getSDKInlineScript(baseURL: string): string {
+  return `
                     (function() {
                         function loadScript(url, attributes) {
                             var scriptTag = '<scr' + 'ipt src="' + url + '" ' + (attributes || '') + '></scr' + 'ipt>';
@@ -395,12 +368,54 @@ export function unpackSDKMeta(sdkMeta?: string): SDKMeta {
                             return;
                         }
                     })();
-                `}
-      />
+                `;
+}
+
+export function unpackSDKMeta(sdkMeta?: string): SDKMeta {
+  const { url, attrs } = sdkMeta
+    ? JSON.parse(
+        Buffer.from(decodeURIComponent(sdkMeta), "base64").toString("utf8")
+      )
+    : DEFAULT_SDK_META;
+
+  if (url) {
+    validateSDKUrl(url);
+  }
+
+  const getSDKLoader = ({
+    baseURL = DEFAULT_LEGACY_SDK_BASE_URL,
+    nonce = "",
+  } = {}) => {
+    if (url) {
+      const validAttrs = getSDKScriptAttributes(url, attrs);
+
+      // $FlowFixMe
+      const allAttrs = {
+        nonce,
+        src: sanitizeSDKUrl(url),
+        ...validAttrs,
+      };
+
+      return (<script {...allAttrs} />).render(html());
+    }
+
+    return (
+      <script nonce={nonce} innerHTML={getSDKInlineScript(baseURL)} />
     ).render(html());
   };
 
+  const hasInlineScript = !url;
+
   return {
     getSDKLoader,
+    getSDKScriptAttributes: () => {
+      return hasInlineScript ? undefined : getSDKScriptAttributes(url, attrs);
+    },
+    getSDKScriptUrl: () => {
+      return hasInlineScript ? undefined : sanitizeSDKUrl(url);
+    },
+    getSDKInlineScript: (baseURL = DEFAULT_LEGACY_SDK_BASE_URL) => {
+      return hasInlineScript ? getSDKInlineScript(baseURL) : undefined;
+    },
   };
 }
