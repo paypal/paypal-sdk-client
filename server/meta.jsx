@@ -91,17 +91,31 @@ function validateWebSDKUrl({ pathname, query }) {
     );
   }
   // check for extraneous parameters
-  Object.keys(query).forEach((param) => {
-    if (param !== "version" && param !== "origin") {
+  const validWebSDKBridgeParams = ["origin", "version", "payment-flow"];
+  for (const param of Object.keys(query)) {
+    if (!validWebSDKBridgeParams.includes(param)) {
       throw new Error(`Invalid parameter on web-sdk bridge url: ${param}`);
     }
-  });
+  }
+
   // validate the version parameter
   if (query.version === undefined || !semverRegex.test(query.version)) {
     throw new Error(
       `Invalid version parameter on web-sdk bridge url: ${query.version}`
     );
   }
+
+  // validate the payment-flow parameter
+  const validPaymentFlows = ["popup", "modal", "payment-handler"];
+  if (
+    query["payment-flow"] === undefined ||
+    !validPaymentFlows.includes(query["payment-flow"])
+  ) {
+    throw new Error(
+      `Invalid payment-flow parameter on web-sdk bridge url: ${query["payment-flow"]}`
+    );
+  }
+
   // validate the origin parameter
   let url = null;
   try {

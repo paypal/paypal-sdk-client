@@ -1224,7 +1224,7 @@ test("should error when invalid characters are found in the subdomain - we allow
 
 test("should construct a valid web-sdk bridge url", () => {
   const sdkUrl =
-    "https://www.paypal.com/web-sdk/v6/bridge?version=1.2.3&origin=https%3A%2F%2Fwww.example.com%3A8000";
+    "https://www.paypal.com/web-sdk/v6/bridge?version=1.2.3&origin=https%3A%2F%2Fwww.example.com%3A8000&payment-flow=payment-handler";
   const sdkUID = "abc123";
 
   const { getSDKLoader } = unpackSDKMeta(
@@ -1253,7 +1253,7 @@ test("should construct a valid web-sdk bridge url", () => {
 
 test("should error when extra parameters are present", () => {
   const sdkUrl =
-    "https://www.paypal.com/web-sdk/v6/bridge?version=1.2.3&origin=https%3A%2F%2Fwww.example.com%3A8000&name=value";
+    "https://www.paypal.com/web-sdk/v6/bridge?version=1.2.3&origin=https%3A%2F%2Fwww.example.com%3A8000&payment-flow=payment-handler&name=value";
 
   let error = null;
   try {
@@ -1278,7 +1278,7 @@ test("should error when extra parameters are present", () => {
 
 test("should error when the version parameter is missing", () => {
   const sdkUrl =
-    "https://www.paypal.com/web-sdk/v6/bridge?origin=https%3A%2F%2Fwww.example.com%3A8000";
+    "https://www.paypal.com/web-sdk/v6/bridge?origin=https%3A%2F%2Fwww.example.com%3A8000&payment-flow=payment-handler";
 
   let error = null;
   try {
@@ -1303,7 +1303,7 @@ test("should error when the version parameter is missing", () => {
 
 test("should error when the version parameter is invalid", () => {
   const sdkUrl =
-    "https://www.paypal.com/web-sdk/v6/bridge?version=^1.2.3&origin=https%3A%2F%2Fwww.example.com%3A8000";
+    "https://www.paypal.com/web-sdk/v6/bridge?version=^1.2.3&origin=https%3A%2F%2Fwww.example.com%3A8000&payment-flow=payment-handler";
 
   let error = null;
   try {
@@ -1327,7 +1327,8 @@ test("should error when the version parameter is invalid", () => {
 });
 
 test("should error when the origin parameter is missing", () => {
-  const sdkUrl = "https://www.paypal.com/web-sdk/v6/bridge?version=1.2.3";
+  const sdkUrl =
+    "https://www.paypal.com/web-sdk/v6/bridge?version=1.2.3&payment-flow=payment-handler";
 
   let error = null;
   try {
@@ -1352,7 +1353,7 @@ test("should error when the origin parameter is missing", () => {
 
 test("should error when the origin parameter is invalid", () => {
   const sdkUrl =
-    "https://www.paypal.com/web-sdk/v6/bridge?version=1.2.3&origin=example";
+    "https://www.paypal.com/web-sdk/v6/bridge?version=1.2.3&origin=example&payment-flow=payment-handler";
 
   let error = null;
   try {
@@ -1377,7 +1378,32 @@ test("should error when the origin parameter is invalid", () => {
 
 test("should error when the origin parameter is not just the origin", () => {
   const sdkUrl =
-    "https://www.paypal.com/web-sdk/v6/bridge?version=1.2.3&origin=https%3A%2F%2Fwww.example.com%3A8000%2Fpath";
+    "https://www.paypal.com/web-sdk/v6/bridge?version=1.2.3&origin=https%3A%2F%2Fwww.example.com%3A8000%2Fpath&payment-flow=payment-handler";
+
+  let error = null;
+  try {
+    unpackSDKMeta(
+      Buffer.from(
+        JSON.stringify({
+          url: sdkUrl,
+          attrs: {
+            "data-uid": "abc123",
+          },
+        })
+      ).toString("base64")
+    );
+  } catch (err) {
+    error = err;
+  }
+
+  if (!error) {
+    throw new Error("Expected error to be thrown");
+  }
+});
+
+test("should error when the payment-flow parameter is invalid", () => {
+  const sdkUrl =
+    "https://www.paypal.com/web-sdk/v6/bridge?version=1.2.3&origin=https%3A%2F%2Fwww.example.com%3A8000&payment-flow=invalid-payment-flow-value";
 
   let error = null;
   try {
