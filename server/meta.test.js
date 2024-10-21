@@ -1251,28 +1251,33 @@ test("should construct a valid web-sdk bridge url", () => {
   }
 });
 
-test("should error when extra parameters are present", () => {
+test("should allow extra parameters to be present", () => {
   const sdkUrl =
     "https://www.paypal.com/web-sdk/v6/bridge?version=1.2.3&origin=https%3A%2F%2Fwww.example.com%3A8000&payment-flow=payment-handler&name=value";
 
-  let error = null;
-  try {
-    unpackSDKMeta(
-      Buffer.from(
-        JSON.stringify({
-          url: sdkUrl,
-          attrs: {
-            "data-uid": "abc123",
-          },
-        })
-      ).toString("base64")
-    );
-  } catch (err) {
-    error = err;
-  }
+  const sdkUID = "abc123";
 
-  if (!error) {
-    throw new Error("Expected error to be thrown");
+  const { getSDKLoader } = unpackSDKMeta(
+    Buffer.from(
+      JSON.stringify({
+        url: sdkUrl,
+        attrs: {
+          "data-uid": sdkUID,
+        },
+      })
+    ).toString("base64")
+  );
+
+  const $ = cheerio.load(getSDKLoader());
+  const script = $("script");
+  const src = script.attr("src");
+  const uid = script.attr("data-uid");
+
+  if (src !== sdkUrl) {
+    throw new Error(`Expected script url to be ${sdkUrl} - got ${src}`);
+  }
+  if (uid !== sdkUID) {
+    throw new Error(`Expected data UID be ${sdkUID} - got ${uid}`);
   }
 });
 

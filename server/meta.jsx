@@ -90,58 +90,44 @@ function validateWebSDKUrl({ pathname, query }) {
       `Invalid path for web-sdk bridge url: ${pathname || "undefined"}`
     );
   }
-  // check for extraneous parameters
-  const validWebSDKBridgeParams = [
-    "origin",
-    "version",
-    "payment-flow",
-    "debug",
-  ];
-  for (const param of Object.keys(query)) {
-    if (!validWebSDKBridgeParams.includes(param)) {
-      throw new Error(`Invalid parameter on web-sdk bridge url: ${param}`);
-    }
-  }
+
+  // supported query string parameters
+  const { origin, version, ["payment-flow"]: paymentflow, debug } = query;
 
   // validate the version parameter
-  if (query.version === undefined || !semverRegex.test(query.version)) {
+  if (version === undefined || !semverRegex.test(version)) {
     throw new Error(
-      `Invalid version parameter on web-sdk bridge url: ${query.version}`
+      `Invalid version parameter on web-sdk bridge url: ${version}`
     );
   }
 
   // validate the payment-flow parameter
   const validPaymentFlows = ["popup", "modal", "payment-handler"];
-  if (
-    query["payment-flow"] === undefined ||
-    !validPaymentFlows.includes(query["payment-flow"])
-  ) {
+  if (paymentflow === undefined || !validPaymentFlows.includes(paymentflow)) {
     throw new Error(
-      `Invalid payment-flow parameter on web-sdk bridge url: ${query["payment-flow"]}`
+      `Invalid payment-flow parameter on web-sdk bridge url: ${paymentflow}`
     );
   }
 
   // validate the optional debug parameter
-  if (query.debug && !["true", "false"].includes(query.debug)) {
-    throw new Error(
-      `Invalid debug parameter on web-sdk bridge url: ${query["debug"]}`
-    );
+  if (debug && !["true", "false"].includes(debug)) {
+    throw new Error(`Invalid debug parameter on web-sdk bridge url: ${debug}`);
   }
 
   // validate the origin parameter
   let url = null;
   try {
     // eslint-disable-next-line compat/compat
-    url = new URL(query.origin);
+    url = new URL(origin);
   } catch (error) {
     throw new Error(
-      `Invalid origin parameter on web-sdk bridge url: ${query.origin}`
+      `Invalid origin parameter on web-sdk bridge url: ${origin}`
     );
   }
   // check that the origin URL only includes the origin
-  if (query.origin !== `${url.protocol}//${url.host}`) {
+  if (origin !== `${url.protocol}//${url.host}`) {
     throw new Error(
-      `Invalid origin parameter on web-sdk bridge url: ${query.origin}`
+      `Invalid origin parameter on web-sdk bridge url: ${origin}`
     );
   }
 }
