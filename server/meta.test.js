@@ -1224,7 +1224,7 @@ test("should error when invalid characters are found in the subdomain - we allow
 
 test("should construct a valid web-sdk bridge url", () => {
   const sdkUrl =
-    "https://www.paypal.com/web-sdk/v6/bridge?version=1.2.3&origin=https%3A%2F%2Fwww.example.com%3A8000&payment-flow=payment-handler";
+    "https://www.paypal.com/web-sdk/v6/bridge?version=1.2.3&origin=https%3A%2F%2Fwww.example.com%3A8000&payment-flow=payment-handler&debug=true";
   const sdkUID = "abc123";
 
   const { getSDKLoader } = unpackSDKMeta(
@@ -1273,6 +1273,35 @@ test("should error when extra parameters are present", () => {
 
   if (!error) {
     throw new Error("Expected error to be thrown");
+  }
+});
+
+test("should not error when the optional debug parameter is missing", () => {
+  const sdkUrl =
+    "https://www.paypal.com/web-sdk/v6/bridge?version=1.2.3&origin=https%3A%2F%2Fwww.example.com%3A8000&payment-flow=payment-handler";
+  const sdkUID = "abc123";
+
+  const { getSDKLoader } = unpackSDKMeta(
+    Buffer.from(
+      JSON.stringify({
+        url: sdkUrl,
+        attrs: {
+          "data-uid": sdkUID,
+        },
+      })
+    ).toString("base64")
+  );
+
+  const $ = cheerio.load(getSDKLoader());
+  const script = $("script");
+  const src = script.attr("src");
+  const uid = script.attr("data-uid");
+
+  if (src !== sdkUrl) {
+    throw new Error(`Expected script url to be ${sdkUrl} - got ${src}`);
+  }
+  if (uid !== sdkUID) {
+    throw new Error(`Expected data UID be ${sdkUID} - got ${uid}`);
   }
 });
 
@@ -1404,6 +1433,31 @@ test("should error when the origin parameter is not just the origin", () => {
 test("should error when the payment-flow parameter is invalid", () => {
   const sdkUrl =
     "https://www.paypal.com/web-sdk/v6/bridge?version=1.2.3&origin=https%3A%2F%2Fwww.example.com%3A8000&payment-flow=invalid-payment-flow-value";
+
+  let error = null;
+  try {
+    unpackSDKMeta(
+      Buffer.from(
+        JSON.stringify({
+          url: sdkUrl,
+          attrs: {
+            "data-uid": "abc123",
+          },
+        })
+      ).toString("base64")
+    );
+  } catch (err) {
+    error = err;
+  }
+
+  if (!error) {
+    throw new Error("Expected error to be thrown");
+  }
+});
+
+test("should error when the debug parameter is invalid", () => {
+  const sdkUrl =
+    "https://www.paypal.com/web-sdk/v6/bridge?version=1.2.3&origin=https%3A%2F%2Fwww.example.com%3A8000&payment-flow=popup&debug=invalid-value";
 
   let error = null;
   try {
