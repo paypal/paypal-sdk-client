@@ -91,7 +91,12 @@ function validateWebSDKUrl({ pathname, query }) {
     );
   }
   // check for extraneous parameters
-  const validWebSDKBridgeParams = ["origin", "version", "payment-flow"];
+  const validWebSDKBridgeParams = [
+    "origin",
+    "version",
+    "payment-flow",
+    "debug",
+  ];
   for (const param of Object.keys(query)) {
     if (!validWebSDKBridgeParams.includes(param)) {
       throw new Error(`Invalid parameter on web-sdk bridge url: ${param}`);
@@ -113,6 +118,13 @@ function validateWebSDKUrl({ pathname, query }) {
   ) {
     throw new Error(
       `Invalid payment-flow parameter on web-sdk bridge url: ${query["payment-flow"]}`
+    );
+  }
+
+  // validate the optional debug parameter
+  if (query.debug && !["true", "false"].includes(query.debug)) {
+    throw new Error(
+      `Invalid debug parameter on web-sdk bridge url: ${query["debug"]}`
     );
   }
 
