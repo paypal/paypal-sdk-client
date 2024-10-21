@@ -1273,6 +1273,8 @@ test("should allow extra parameters to be present", () => {
   const src = script.attr("src");
   const uid = script.attr("data-uid");
 
+  console.log(sdkUrl);
+
   if (src !== sdkUrl) {
     throw new Error(`Expected script url to be ${sdkUrl} - got ${src}`);
   }
