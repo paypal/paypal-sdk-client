@@ -1305,6 +1305,35 @@ test("should not error when the optional debug parameter is missing", () => {
   }
 });
 
+test("should not error when the optional payment-flow parameter is missing", () => {
+  const sdkUrl =
+    "https://www.paypal.com/web-sdk/v6/bridge?version=1.2.3&origin=https%3A%2F%2Fwww.example.com%3A8000&debug=false";
+  const sdkUID = "abc123";
+
+  const { getSDKLoader } = unpackSDKMeta(
+    Buffer.from(
+      JSON.stringify({
+        url: sdkUrl,
+        attrs: {
+          "data-uid": sdkUID,
+        },
+      })
+    ).toString("base64")
+  );
+
+  const $ = cheerio.load(getSDKLoader());
+  const script = $("script");
+  const src = script.attr("src");
+  const uid = script.attr("data-uid");
+
+  if (src !== sdkUrl) {
+    throw new Error(`Expected script url to be ${sdkUrl} - got ${src}`);
+  }
+  if (uid !== sdkUID) {
+    throw new Error(`Expected data UID be ${sdkUID} - got ${uid}`);
+  }
+});
+
 test("should error when the version parameter is missing", () => {
   const sdkUrl =
     "https://www.paypal.com/web-sdk/v6/bridge?origin=https%3A%2F%2Fwww.example.com%3A8000&payment-flow=payment-handler";

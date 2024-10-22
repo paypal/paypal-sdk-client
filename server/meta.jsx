@@ -110,10 +110,10 @@ function validateWebSDKUrl({ pathname, query }) {
     );
   }
 
-  // validate the payment-flow parameter
+  // validate the optional payment-flow parameter
   const validPaymentFlows = ["popup", "modal", "payment-handler"];
   if (
-    query["payment-flow"] === undefined ||
+    query["payment-flow"] &&
     !validPaymentFlows.includes(query["payment-flow"])
   ) {
     throw new Error(
