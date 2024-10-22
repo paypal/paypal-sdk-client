@@ -73,6 +73,7 @@
     "esdoc-flow-type-plugin": "1.1.0",
     "esdoc-standard-plugin": "1.0.0",
     "flow-bin": "0.155.0",
+    "flow-remove-types": "2.232.0",
     "flow-typed": "^3.8.0",
     "husky": "^8.0.1",
     "jsdom": "^20.0.3",
