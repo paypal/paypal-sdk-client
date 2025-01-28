@@ -80,3 +80,17 @@ export function isPayPalTrustedDomain(): boolean {
     Boolean(getDomain().match(getVenmoDomainRegex()))
   );
 }
+
+export function isPayPalTrustedUrl(href: string): boolean {
+  try {
+    // eslint-disable-next-line compat/compat
+    const url = new URL(href);
+    const domain = url.origin;
+    return (
+      Boolean(domain.match(getPayPalDomainRegex())) ||
+      Boolean(domain.match(getVenmoDomainRegex()))
+    );
+  } catch (err) {
+    return false;
+  }
+}
