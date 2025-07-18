@@ -201,6 +201,7 @@ export function setupLogger() {
       })
       .track({
         [FPTI_KEY.TRANSITION]: "process_js_sdk_init_client",
+        [FPTI_KEY.EVENT_NAME]: "process_js_sdk_init_client",
         [FPTI_KEY.SDK_LOAD_TIME]: sdkLoadTime,
         [FPTI_KEY.SDK_CACHE]: cacheType,
         local_storage_enabled: localStorageEnabled,
