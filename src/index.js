@@ -17,4 +17,5 @@ export * from "./graphql";
 export * from "./domains";
 export * from "./tracking";
 export * from "./utils";
+export * from "./globalSession";
 export { buildDPoPHeaders } from "./dpop";
