@@ -1,14 +1,16 @@
+/* @flow */
 import { describe, it, afterEach, expect, vi } from "vitest";
+
 import {
   getGlobalSessionName,
   getGlobalSessionID,
   setGlobalSessionID,
 } from "./globalSession";
-import { getVersion } from "./global";
+
+let storageState = {};
 
 vi.mock("@krakenjs/belter/src", async () => {
   const actual = await vi.importActual("@krakenjs/belter/src");
-  let storageState = {};
   return {
     ...actual,
     getStorage: vi.fn(() => ({
@@ -38,18 +40,18 @@ describe("globalSession", () => {
   });
 
   it("should return undefined if globalSessionID is not set", () => {
-    const sessionID = getGlobalSessionID();
+    const globalSessionID = getGlobalSessionID();
 
-    expect(sessionID).toBeUndefined();
+    expect(globalSessionID).toBeUndefined();
   });
 
   it("should set and get the globalSessionID", () => {
     const testID = "uid_123456";
     setGlobalSessionID(testID);
 
-    const sessionID = getGlobalSessionID();
+    const globalSessionID = getGlobalSessionID();
 
-    expect(sessionID).toBe(testID);
+    expect(globalSessionID).toBe(testID);
   });
 
   it("should overwrite the globalSessionID if set multiple times", () => {
@@ -58,17 +60,54 @@ describe("globalSession", () => {
 
     setGlobalSessionID(firstID);
     setGlobalSessionID(secondID);
-    const sessionID = getGlobalSessionID();
+    const globalSessionID = getGlobalSessionID();
 
-    expect(sessionID).toBe(secondID);
+    expect(globalSessionID).toBe(secondID);
   });
 
   it("should handle setting globalSessionID to an empty string", () => {
     const emptyID = "";
 
     setGlobalSessionID(emptyID);
-    const sessionID = getGlobalSessionID();
+    const globalSessionID = getGlobalSessionID();
 
-    expect(sessionID).toBe(emptyID);
+    expect(globalSessionID).toBe(emptyID);
+  });
+
+  it("should return undefined if state is not an object", () => {
+    storageState = null;
+    const globalSessionID = getGlobalSessionID();
+    expect(globalSessionID).toBeUndefined();
+  });
+
+  it("should warn if state is not an object when setting globalSessionID", async () => {
+    const logger = await import("./logger");
+    storageState = null;
+    const warnSpy = vi.spyOn(logger, "getLogger").mockReturnValue({
+      warn: vi.fn(),
+    });
+
+    setGlobalSessionID("uid_error");
+
+    expect(warnSpy().warn).toHaveBeenCalledWith(
+      "global_session_no_storage_state_found"
+    );
+  });
+
+  it("should warn if version is not defined", async () => {
+    const logger = await import("./logger");
+    const { getVersion } = await import("./global");
+    // $FlowFixMe
+    getVersion.mockImplementation(() => undefined);
+
+    const warnSpy = vi.spyOn(logger, "getLogger").mockReturnValue({
+      warn: vi.fn(),
+    });
+
+    getGlobalSessionName();
+
+    expect(warnSpy().warn).toHaveBeenCalledWith(
+      "global_session_no_sdk_version"
+    );
   });
 });
