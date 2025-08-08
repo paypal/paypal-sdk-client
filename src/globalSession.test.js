@@ -15,16 +15,17 @@ vi.mock("@krakenjs/belter/src", async () => {
     ...actual,
     getStorage: vi.fn(() => ({
       getState: (handler) => handler(storageState),
-      setState: (newState) => {
-        storageState = { ...storageState, ...newState };
-      },
     })),
   };
 });
 
-vi.mock("./global", () => ({
-  getVersion: vi.fn(() => "5.0.500"),
-}));
+vi.mock("./global", async () => {
+  const actual = await vi.importActual("./global");
+  return {
+    ...actual,
+    getVersion: vi.fn(() => "5.0.500"),
+  };
+});
 
 describe("globalSession", () => {
   afterEach(() => {
@@ -95,12 +96,11 @@ describe("globalSession", () => {
   });
 
   it("should warn if version is not defined", async () => {
-    const logger = await import("./logger");
+    const { getLogger } = await import("./logger");
     const { getVersion } = await import("./global");
-    // $FlowFixMe
-    getVersion.mockImplementation(() => undefined);
 
-    const warnSpy = vi.spyOn(logger, "getLogger").mockReturnValue({
+    getVersion.mockImplementation(() => undefined);
+    const warnSpy = getLogger.mockReturnValue({
       warn: vi.fn(),
     });
 
@@ -109,5 +109,17 @@ describe("globalSession", () => {
     expect(warnSpy().warn).toHaveBeenCalledWith(
       "global_session_no_sdk_version"
     );
+  });
+
+  it("should warn if global session is not found", async () => {
+    const { getLogger } = await import("./logger");
+    const warnSpy = getLogger.mockReturnValue({
+      warn: vi.fn(),
+    });
+
+    storageState = null;
+    getGlobalSessionID();
+
+    expect(warnSpy().warn).toHaveBeenCalledWith("global_session_not_found");
   });
 });
