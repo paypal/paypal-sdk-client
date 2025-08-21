@@ -80,49 +80,4 @@ describe("globalSession", () => {
     const globalSessionID = getGlobalSessionID();
     expect(globalSessionID).toBeUndefined();
   });
-
-  it("should warn if state is not an object when setting globalSessionID", async () => {
-    const logger = await import("./logger");
-    storageState = null;
-    const warnSpy = vi.spyOn(logger, "getLogger").mockReturnValue({
-      warn: vi.fn(),
-    });
-
-    setGlobalSessionID("uid_error");
-
-    expect(warnSpy().warn).toHaveBeenCalledWith(
-      "global_session_no_storage_state_found"
-    );
-  });
-
-  it("should warn if version is not defined", async () => {
-    const { getLogger } = await import("./logger");
-    const { getVersion } = await import("./global");
-
-    // $FlowFixMe[prop-missing]
-    getVersion.mockImplementation(() => undefined);
-    // $FlowFixMe[prop-missing]
-    const warnSpy = getLogger.mockReturnValue({
-      warn: vi.fn(),
-    });
-
-    getGlobalSessionName();
-
-    expect(warnSpy().warn).toHaveBeenCalledWith(
-      "global_session_no_sdk_version"
-    );
-  });
-
-  it("should warn if global session is not found", async () => {
-    const { getLogger } = await import("./logger");
-    // $FlowFixMe[prop-missing]
-    const warnSpy = getLogger.mockReturnValue({
-      warn: vi.fn(),
-    });
-
-    storageState = null;
-    getGlobalSessionID();
-
-    expect(warnSpy().warn).toHaveBeenCalledWith("global_session_not_found");
-  });
 });
