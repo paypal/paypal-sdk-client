@@ -3,7 +3,10 @@ import { sdkClientTestGlobals } from "./test/globals";
 
 const applyEnvs = () => {
   Object.keys(sdkClientTestGlobals).forEach((k) => {
-    window[k] = sdkClientTestGlobals[k];
+    // Skip crypto property as it cannot be directly assigned
+    if (k !== "crypto") {
+      window[k] = sdkClientTestGlobals[k];
+    }
   });
 };
 
