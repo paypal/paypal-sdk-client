@@ -8,6 +8,15 @@ import {
 } from "./globalSession";
 
 let storageState = {};
+let storageExistsMock = vi.fn(() => true);
+
+vi.mock("./global", async () => {
+  const actual = await vi.importActual("./global");
+  return {
+    ...actual,
+    getVersion: vi.fn(() => "5.0.500"),
+  };
+});
 
 vi.mock("@krakenjs/belter/src", async () => {
   const actual = await vi.importActual("@krakenjs/belter/src");
@@ -15,15 +24,8 @@ vi.mock("@krakenjs/belter/src", async () => {
     ...actual,
     getStorage: vi.fn(() => ({
       getState: (handler) => handler(storageState),
+      checkIfStorageExists: () => storageExistsMock,
     })),
-  };
-});
-
-vi.mock("./global", async () => {
-  const actual = await vi.importActual("./global");
-  return {
-    ...actual,
-    getVersion: vi.fn(() => "5.0.500"),
   };
 });
 
@@ -79,5 +81,28 @@ describe("globalSession", () => {
     storageState = null;
     const globalSessionID = getGlobalSessionID();
     expect(globalSessionID).toBeUndefined();
+  });
+
+  it("should return undefined if storage does not exist", () => {
+    storageExistsMock = vi.fn(() => false);
+    const globalSessionID = getGlobalSessionID();
+    expect(globalSessionID).toBeUndefined();
+    storageExistsMock = vi.fn(() => true);
+  });
+
+  it("should return undefined if storage is undefined", async () => {
+    const { getStorage } = await import("@krakenjs/belter/src");
+    // $FlowFixMe
+    getStorage.mockImplementation(({ name }) => undefined);
+    const globalSessionID = getGlobalSessionID();
+    expect(globalSessionID).toBeUndefined();
+  });
+
+  it("should return unknown version if getVersion returns null", async () => {
+    const { getVersion } = await import("./global");
+    // $FlowFixMe
+    getVersion.mockImplementation(() => undefined);
+    const name = getGlobalSessionName();
+    expect(name).toBe("paypal_global_unknown");
   });
 });
