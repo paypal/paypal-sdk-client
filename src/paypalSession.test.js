@@ -18,7 +18,7 @@ describe("payaplSession cases", () => {
     const result = getPayPalSessionStorage();
 
     if (typeof result.getID() !== "string") {
-      throw new TypeError(`should get storage state object, but got ${result}`);
+      throw new TypeError(`should get storage state object instance`);
     }
   });
 
