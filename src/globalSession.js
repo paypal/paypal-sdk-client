@@ -21,12 +21,17 @@ function getGlobalSessionStorage(): Storage {
   return getStorage({ name: getGlobalSessionName() });
 }
 
-function getGlobalStorageState<T>(handler: (storage: Object) => T): T {
-  return getGlobalSessionStorage().getState(handler);
-}
-
 export function getGlobalSessionID(): string | void {
-  const globalSessionID = getGlobalStorageState((state) => {
+  const storage = getGlobalSessionStorage();
+
+  if (
+    !storage ||
+    (storage.checkIfStorageExists && !storage.checkIfStorageExists())
+  ) {
+    return undefined;
+  }
+
+  const globalSessionID = storage.getState((state) => {
     if (
       !state ||
       typeof state !== "object" ||
