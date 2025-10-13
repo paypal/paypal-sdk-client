@@ -1,5 +1,6 @@
 /* @flow */
 
+// These methods should be cleaned up in favor of paypalSession
 import { getStorage, type Storage } from "@krakenjs/belter/src";
 import { ZalgoPromise } from "@krakenjs/zalgo-promise/src";
 

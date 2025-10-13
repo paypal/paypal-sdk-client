@@ -18,4 +18,5 @@ export * from "./domains";
 export * from "./tracking";
 export * from "./utils";
 export * from "./globalSession";
+export * from "./paypalSession";
 export { buildDPoPHeaders } from "./dpop";
