@@ -34,6 +34,11 @@ import {
   getUserIDToken,
   getSDKToken,
   getJsSdkLibrary,
+  getScriptUrl,
+  getVault,
+  getEnableFunding,
+  getDisableFunding,
+  getNamespace,
 } from "./script";
 import { getSessionID } from "./session";
 import { getLogger } from "./logger";
@@ -205,6 +210,13 @@ export function setupLogger() {
         [FPTI_KEY.SDK_LOAD_TIME]: sdkLoadTime,
         [FPTI_KEY.SDK_CACHE]: cacheType,
         local_storage_enabled: localStorageEnabled,
+        sdk_components: getComponents().join(","), 
+        access_token_type: getTokenType(),
+        jsurl: getScriptUrl(),
+        is_vault: getVault(),
+        allowed_funding_list: getEnableFunding(),
+        disallowed_funding_list: getDisableFunding(),
+        currentscript: getNamespace(),
       })
       .metricCounter({
         namespace: "sdk_client.init.count",
