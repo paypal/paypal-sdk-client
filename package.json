@@ -1,4 +1,6 @@
 {
+  {
+    SECURITY.md
   "name": "@paypal/sdk-client",
   "version": "4.0.202",
   "description": "Shared config between PayPal/Braintree.",
@@ -89,3 +91,5 @@
     "**/*": "prettier --write --ignore-unknown"
   }
 }
+};
+};
