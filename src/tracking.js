@@ -206,8 +206,8 @@ export function setupLogger() {
         local_storage_enabled: localStorageEnabled,
       })
       .metricCounter({
-        namespace: "sdk_client.init.count",
-        event: "init",
+        namespace: "scripts.count",
+        event: "process_js_sdk_init_client",
         dimensions: {
           components: getComponents().join(","),
           integrationSource,
