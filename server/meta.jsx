@@ -4,14 +4,8 @@
 // eslint-disable-next-line import/no-nodejs-modules
 import urlLib from "url";
 
-import {
-  ENV,
-  SDK_PATH,
-  SDK_QUERY_KEYS,
-  SDK_SETTINGS,
-} from "@paypal/sdk-constants";
+import { SDK_PATH, SDK_QUERY_KEYS } from "@paypal/sdk-constants";
 import { node, html } from "@krakenjs/jsx-pragmatic";
-import { ATTRIBUTES } from "@krakenjs/belter";
 
 import {
   HOST,
@@ -30,6 +24,7 @@ type SDKMeta = {|
 
 const emailRegex = /^.+@.+$/;
 const semverRegex = /^[0-9.A-Za-z-+]+$/;
+const dataAttributeNameRegex = /^data-[0-9A-Za-z-]+$/;
 // eslint-disable-next-line security/detect-unsafe-regex
 const webSDKPathRegex = /^\/web-sdk\/v([^/]+)\/bridge(\/[0-9A-Za-z-]+)*$/;
 
@@ -228,19 +223,6 @@ const getDefaultSDKAttributes = (): SDKAttributes => {
   return {};
 };
 
-const ALLOWED_ATTRS = [
-  SDK_SETTINGS.AMOUNT,
-  SDK_SETTINGS.CLIENT_TOKEN,
-  SDK_SETTINGS.MERCHANT_ID,
-  SDK_SETTINGS.PARTNER_ATTRIBUTION_ID,
-  SDK_SETTINGS.POPUPS_DISABLED,
-  SDK_SETTINGS.ENABLE_3DS,
-  SDK_SETTINGS.SDK_INTEGRATION_SOURCE,
-  SDK_SETTINGS.CLIENT_METADATA_ID,
-  ATTRIBUTES.UID,
-  SDK_SETTINGS.CSP_NONCE,
-];
-
 function getSDKScriptAttributes(
   sdkUrl: ?string,
   allAttrs: ?{ [string]: string }
@@ -263,9 +245,9 @@ function getSDKScriptAttributes(
     }
   }
 
-  for (const key in allAttrs) {
-    if (ALLOWED_ATTRS.includes(key)) {
-      attrs[key] = allAttrs[key];
+  for (const name in allAttrs) {
+    if (dataAttributeNameRegex.test(name)) {
+      attrs[name] = allAttrs[name];
     }
   }
 

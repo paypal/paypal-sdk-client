@@ -468,7 +468,8 @@ test("should construct a valid script url without invalid attributes", () => {
       JSON.stringify({
         url: sdkUrl,
         attrs: {
-          "data-dummy-id": "abcd",
+          "data-uid": "abc123",
+          onload: "alert('xss')",
         },
       })
     ).toString("base64")
@@ -476,15 +477,144 @@ test("should construct a valid script url without invalid attributes", () => {
 
   const $ = cheerio.load(getSDKLoader());
   const src = $("script").attr("src");
-  const result = $("script").attr("data-dummy-id");
+  const uid = $("script").attr("data-uid");
+  const onload = $("script").attr("onload");
 
   if (src !== sdkUrl) {
     throw new Error(`Expected script url to be ${sdkUrl} - got ${src}`);
   }
 
-  if (result !== undefined) {
+  if (uid !== "abc123") {
+    throw new Error(`Expected data-uid to be "abc123" - got ${uid}`);
+  }
+
+  if (onload !== undefined) {
     throw new Error(
-      `Expected invalid attribute to be undefined - got ${result}`
+      `Expected invalid attribute to be undefined - got ${onload}`
+    );
+  }
+});
+
+const previouslyAllowedAttrs = [
+  "data-amount",
+  "data-client-token",
+  "data-merchant-id",
+  "data-partner-attribution-id",
+  "data-popups-disabled",
+  "data-enable-3ds",
+  "data-sdk-integration-source",
+  "data-client-metadata-id",
+  "data-uid",
+  "data-csp-nonce",
+];
+
+test.each(previouslyAllowedAttrs)(
+  "should allow previously allowed attribute %s",
+  (attr) => {
+    const sdkUrl = "https://www.paypal.com/sdk/js?client-id=foo";
+
+    const { getSDKLoader } = unpackSDKMeta(
+      Buffer.from(
+        JSON.stringify({
+          url: sdkUrl,
+          attrs: {
+            [attr]: "test-value",
+          },
+        })
+      ).toString("base64")
+    );
+
+    const $ = cheerio.load(getSDKLoader());
+    const result = $("script").attr(attr);
+
+    if (result !== "test-value") {
+      throw new Error(`Expected ${attr} to be "test-value" - got ${result}`);
+    }
+  }
+);
+
+test("should encode unsafe characters in data attribute values", () => {
+  const sdkUrl = "https://www.paypal.com/sdk/js?client-id=foo";
+
+  const { getSDKLoader } = unpackSDKMeta(
+    Buffer.from(
+      JSON.stringify({
+        url: sdkUrl,
+        attrs: {
+          "data-uid": "\" onload=\"alert('xss')",
+        },
+      })
+    ).toString("base64")
+  );
+
+  const html = getSDKLoader();
+
+  if (
+    html ===
+    '<script nonce src="https://www.paypal.com/sdk/js?client-id=foo" data-uid="" onload="alert(\'xss\')"></script>'
+  ) {
+    throw new Error("Expected unsafe characters to be encoded");
+  }
+
+  if (
+    html !==
+    '<script nonce src="https:&#x2F;&#x2F;www.paypal.com&#x2F;sdk&#x2F;js?client-id=foo" data-uid="&quot; onload=&quot;alert(&#39;xss&#39;)"></script>'
+  ) {
+    throw new Error(`Expected encoded output to match, got: ${html}`);
+  }
+});
+
+test("should encode script tag injection in data attribute values", () => {
+  const sdkUrl = "https://www.paypal.com/sdk/js?client-id=foo";
+
+  const { getSDKLoader } = unpackSDKMeta(
+    Buffer.from(
+      JSON.stringify({
+        url: sdkUrl,
+        attrs: {
+          "data-uid": "\"></script><script>alert('xss')</script><script src=\"",
+        },
+      })
+    ).toString("base64")
+  );
+
+  const html = getSDKLoader();
+
+  if (
+    html ===
+    '<script nonce src="https://www.paypal.com/sdk/js?client-id=foo" data-uid=""></script><script>alert(\'xss\')</script><script src=""></script>'
+  ) {
+    throw new Error("Expected unsafe characters to be encoded");
+  }
+
+  if (
+    html !==
+    '<script nonce src="https:&#x2F;&#x2F;www.paypal.com&#x2F;sdk&#x2F;js?client-id=foo" data-uid="&quot;&gt;&lt;&#x2F;script&gt;&lt;script&gt;alert(&#39;xss&#39;)&lt;&#x2F;script&gt;&lt;script src=&quot;"></script>'
+  ) {
+    throw new Error(`Expected encoded output to match, got: ${html}`);
+  }
+});
+
+test("should not allow attribute injection via spaces in data attribute name", () => {
+  const sdkUrl = "https://www.paypal.com/sdk/js?client-id=foo";
+
+  const { getSDKLoader } = unpackSDKMeta(
+    Buffer.from(
+      JSON.stringify({
+        url: sdkUrl,
+        attrs: {
+          "data-x onload": "alert('xss')",
+        },
+      })
+    ).toString("base64")
+  );
+
+  const $ = cheerio.load(getSDKLoader());
+  const onload = $("script").attr("onload");
+
+  if (onload !== undefined) {
+    throw new Error(
+      `Expected onload attribute to be undefined - got ${onload}`
     );
   }
 });
@@ -1412,5 +1542,126 @@ test("should encode script tag injection in web-sdk bridge url", () => {
     '<script nonce src="https:&#x2F;&#x2F;www.paypal.com&#x2F;web-sdk&#x2F;v6&#x2F;bridge?foo=bar&quot;&gt;&lt;&#x2F;script&gt;&lt;script&gt;alert(&#39;xss&#39;)&lt;&#x2F;script&gt;&lt;script src=&quot;"></script>'
   ) {
     throw new Error(`Expected encoded output to match, got: ${html}`);
+  }
+});
+
+test("should construct a valid web-sdk bridge url without invalid attributes", () => {
+  const sdkUrl = "https://www.paypal.com/web-sdk/v6/bridge";
+
+  const { getSDKLoader } = unpackSDKMeta(
+    Buffer.from(
+      JSON.stringify({
+        url: sdkUrl,
+        attrs: {
+          "data-uid": "abc123",
+          onload: "alert('xss')",
+        },
+      })
+    ).toString("base64")
+  );
+
+  const $ = cheerio.load(getSDKLoader());
+  const src = $("script").attr("src");
+  const uid = $("script").attr("data-uid");
+  const onload = $("script").attr("onload");
+
+  if (src !== sdkUrl) {
+    throw new Error(`Expected script url to be ${sdkUrl} - got ${src}`);
+  }
+
+  if (uid !== "abc123") {
+    throw new Error(`Expected data-uid to be "abc123" - got ${uid}`);
+  }
+
+  if (onload !== undefined) {
+    throw new Error(
+      `Expected invalid attribute to be undefined - got ${onload}`
+    );
+  }
+});
+
+test("should encode unsafe characters in web-sdk bridge data attribute values", () => {
+  const sdkUrl = "https://www.paypal.com/web-sdk/v6/bridge";
+
+  const { getSDKLoader } = unpackSDKMeta(
+    Buffer.from(
+      JSON.stringify({
+        url: sdkUrl,
+        attrs: {
+          "data-uid": "\" onload=\"alert('xss')",
+        },
+      })
+    ).toString("base64")
+  );
+
+  const html = getSDKLoader();
+
+  if (
+    html ===
+    '<script nonce src="https://www.paypal.com/web-sdk/v6/bridge" data-uid="" onload="alert(\'xss\')"></script>'
+  ) {
+    throw new Error("Expected unsafe characters to be encoded");
+  }
+
+  if (
+    html !==
+    '<script nonce src="https:&#x2F;&#x2F;www.paypal.com&#x2F;web-sdk&#x2F;v6&#x2F;bridge" data-uid="&quot; onload=&quot;alert(&#39;xss&#39;)"></script>'
+  ) {
+    throw new Error(`Expected encoded output to match, got: ${html}`);
+  }
+});
+
+test("should encode script tag injection in web-sdk bridge data attribute values", () => {
+  const sdkUrl = "https://www.paypal.com/web-sdk/v6/bridge";
+
+  const { getSDKLoader } = unpackSDKMeta(
+    Buffer.from(
+      JSON.stringify({
+        url: sdkUrl,
+        attrs: {
+          "data-uid": "\"></script><script>alert('xss')</script><script src=\"",
+        },
+      })
+    ).toString("base64")
+  );
+
+  const html = getSDKLoader();
+
+  if (
+    html ===
+    '<script nonce src="https://www.paypal.com/web-sdk/v6/bridge" data-uid=""></script><script>alert(\'xss\')</script><script src=""></script>'
+  ) {
+    throw new Error("Expected unsafe characters to be encoded");
+  }
+
+  if (
+    html !==
+    '<script nonce src="https:&#x2F;&#x2F;www.paypal.com&#x2F;web-sdk&#x2F;v6&#x2F;bridge" data-uid="&quot;&gt;&lt;&#x2F;script&gt;&lt;script&gt;alert(&#39;xss&#39;)&lt;&#x2F;script&gt;&lt;script src=&quot;"></script>'
+  ) {
+    throw new Error(`Expected encoded output to match, got: ${html}`);
+  }
+});
+
+test("should not allow attribute injection via spaces in web-sdk bridge data attribute name", () => {
+  const sdkUrl = "https://www.paypal.com/web-sdk/v6/bridge";
+
+  const { getSDKLoader } = unpackSDKMeta(
+    Buffer.from(
+      JSON.stringify({
+        url: sdkUrl,
+        attrs: {
+          "data-x onload": "alert('xss')",
+        },
+      })
+    ).toString("base64")
+  );
+
+  const $ = cheerio.load(getSDKLoader());
+  const onload = $("script").attr("onload");
+
+  if (onload !== undefined) {
+    throw new Error(
+      `Expected onload attribute to be undefined - got ${onload}`
+    );
   }
 });
