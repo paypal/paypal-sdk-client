@@ -9,7 +9,6 @@ import {
   SDK_PATH,
   SDK_QUERY_KEYS,
   SDK_SETTINGS,
-  WEB_SDK_BRIDGE_PATH,
 } from "@paypal/sdk-constants";
 import { node, html } from "@krakenjs/jsx-pragmatic";
 import { ATTRIBUTES } from "@krakenjs/belter";
@@ -21,6 +20,7 @@ import {
   DEFAULT_SDK_META,
   DEFAULT_LEGACY_SDK_BASE_URL,
   DATA_ATTRIBUTES,
+  WEB_SDK_PATH,
 } from "./constants";
 import { constHas, entries } from "./util";
 
@@ -30,6 +30,8 @@ type SDKMeta = {|
 
 const emailRegex = /^.+@.+$/;
 const semverRegex = /^[0-9.A-Za-z-+]+$/;
+// eslint-disable-next-line security/detect-unsafe-regex
+const webSDKPathRegex = /^\/web-sdk\/v([^/]+)\/bridge(\/[0-9A-Za-z-]+)*$/;
 
 function validatePaymentsSDKUrl({ pathname, query, hash }) {
   if (pathname !== SDK_PATH) {
@@ -84,65 +86,17 @@ function validateLegacySDKUrl({ pathname }) {
   }
 }
 
-function validateWebSDKUrl({ pathname, query }) {
-  if (pathname !== WEB_SDK_BRIDGE_PATH) {
+function validateWebSDKUrl({ pathname }) {
+  const match = pathname.match(webSDKPathRegex);
+  if (!match) {
     throw new Error(
       `Invalid path for web-sdk bridge url: ${pathname || "undefined"}`
     );
   }
-  // check for extraneous parameters
-  const validWebSDKBridgeParams = [
-    "origin",
-    "version",
-    "payment-flow",
-    "debug",
-  ];
-  for (const param of Object.keys(query)) {
-    if (!validWebSDKBridgeParams.includes(param)) {
-      throw new Error(`Invalid parameter on web-sdk bridge url: ${param}`);
-    }
-  }
 
-  // validate the version parameter
-  if (query.version === undefined || !semverRegex.test(query.version)) {
-    throw new Error(
-      `Invalid version parameter on web-sdk bridge url: ${query.version}`
-    );
-  }
-
-  // validate the optional payment-flow parameter
-  const validPaymentFlows = ["popup", "modal", "payment-handler"];
-  if (
-    query["payment-flow"] &&
-    !validPaymentFlows.includes(query["payment-flow"])
-  ) {
-    throw new Error(
-      `Invalid payment-flow parameter on web-sdk bridge url: ${query["payment-flow"]}`
-    );
-  }
-
-  // validate the optional debug parameter
-  if (query.debug && !["true", "false"].includes(query.debug)) {
-    throw new Error(
-      `Invalid debug parameter on web-sdk bridge url: ${query["debug"]}`
-    );
-  }
-
-  // validate the origin parameter
-  let url = null;
-  try {
-    // eslint-disable-next-line compat/compat
-    url = new URL(query.origin);
-  } catch (error) {
-    throw new Error(
-      `Invalid origin parameter on web-sdk bridge url: ${query.origin}`
-    );
-  }
-  // check that the origin URL only includes the origin
-  if (query.origin !== `${url.protocol}//${url.host}`) {
-    throw new Error(
-      `Invalid origin parameter on web-sdk bridge url: ${query.origin}`
-    );
+  const version = match[1]; // version is the first capture group in the regex
+  if (!semverRegex.test(version)) {
+    throw new Error(`Invalid version for web-sdk bridge url: ${version}`);
   }
 }
 
@@ -179,7 +133,7 @@ function isSDKUrl(hostname: string): boolean {
 }
 
 function isWebSDKUrl(hostname: string, pathname: string): boolean {
-  if (isSDKUrl(hostname) && pathname === WEB_SDK_BRIDGE_PATH) {
+  if (isSDKUrl(hostname) && pathname.startsWith(WEB_SDK_PATH)) {
     return true;
   }
 
@@ -241,7 +195,7 @@ function validateSDKUrl(sdkUrl: string) {
   if (isLegacySDKUrl(hostname, pathname)) {
     validateLegacySDKUrl({ pathname });
   } else if (isWebSDKUrl(hostname, pathname)) {
-    validateWebSDKUrl({ pathname, query });
+    validateWebSDKUrl({ pathname });
   } else if (isSDKUrl(hostname)) {
     if (hostname !== HOST.LOCALHOST && protocol !== PROTOCOL.HTTPS) {
       throw new Error(

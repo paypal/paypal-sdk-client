@@ -21,6 +21,8 @@ export const LEGACY_SDK_PATH: RegExp =
   // eslint-disable-next-line security/detect-unsafe-regex
   /^(\/[a-zA-Z0-9_-]+)*\/checkout(\.4\.0\.\d{1,3})?(\.min)?\.js$/;
 
+export const WEB_SDK_PATH: string = "/web-sdk/";
+
 export const DEFAULT_SDK_META = {
   url: "",
   attrs: {
