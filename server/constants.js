@@ -1,5 +1,9 @@
 /* @flow */
 
+import { version } from "../package.json";
+
+export const VERSION = version;
+
 export const HOST = {
   LOCALHOST: "localhost.paypal.com",
   PAYPAL: ".paypal.com",
@@ -36,4 +40,5 @@ export const DEFAULT_LEGACY_SDK_BASE_URL = "https://www.paypalobjects.com/api/";
 export const DATA_ATTRIBUTES = {
   PAYPAL_CHECKOUT: "data-paypal-checkout",
   NO_BRIDGE: "data-no-bridge",
+  SDK_CLIENT_VERSION: "data-sdk-client-version",
 };

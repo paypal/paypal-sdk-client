@@ -15,6 +15,7 @@ import {
   DEFAULT_LEGACY_SDK_BASE_URL,
   DATA_ATTRIBUTES,
   WEB_SDK_PATH,
+  VERSION,
 } from "./constants";
 import { constHas, entries } from "./util";
 
@@ -242,6 +243,10 @@ function getSDKScriptAttributes(
     if (isLegacySDKUrl(hostname, pathname)) {
       attrs[DATA_ATTRIBUTES.PAYPAL_CHECKOUT] = true;
       attrs[DATA_ATTRIBUTES.NO_BRIDGE] = true;
+    }
+
+    if (isWebSDKUrl(hostname, pathname)) {
+      attrs[DATA_ATTRIBUTES.SDK_CLIENT_VERSION] = VERSION;
     }
   }
 

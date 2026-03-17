@@ -4,6 +4,8 @@
 import cheerio from "cheerio";
 import { test, afterEach } from "vitest";
 
+import { VERSION } from "./constants";
+
 import { unpackSDKMeta } from ".";
 
 afterEach(() => {
@@ -533,6 +535,7 @@ test.each(previouslyAllowedAttrs)(
   }
 );
 
+// Guards against: <script ... data-uid="" onload="alert('xss')"></script>
 test("should encode unsafe characters in data attribute values", () => {
   const sdkUrl = "https://www.paypal.com/sdk/js?client-id=foo";
 
@@ -547,23 +550,14 @@ test("should encode unsafe characters in data attribute values", () => {
     ).toString("base64")
   );
 
-  const html = getSDKLoader();
+  const $ = cheerio.load(getSDKLoader());
 
-  if (
-    html ===
-    '<script nonce src="https://www.paypal.com/sdk/js?client-id=foo" data-uid="" onload="alert(\'xss\')"></script>'
-  ) {
-    throw new Error("Expected unsafe characters to be encoded");
-  }
-
-  if (
-    html !==
-    '<script nonce src="https:&#x2F;&#x2F;www.paypal.com&#x2F;sdk&#x2F;js?client-id=foo" data-uid="&quot; onload=&quot;alert(&#39;xss&#39;)"></script>'
-  ) {
-    throw new Error(`Expected encoded output to match, got: ${html}`);
+  if ($("script").attr("onload") !== undefined) {
+    throw new Error("Expected onload attribute to not be present");
   }
 });
 
+// Guards against: <script ... data-uid=""></script><script>alert('xss')</script><script src=""></script>
 test("should encode script tag injection in data attribute values", () => {
   const sdkUrl = "https://www.paypal.com/sdk/js?client-id=foo";
 
@@ -578,23 +572,16 @@ test("should encode script tag injection in data attribute values", () => {
     ).toString("base64")
   );
 
-  const html = getSDKLoader();
+  const $ = cheerio.load(getSDKLoader());
 
-  if (
-    html ===
-    '<script nonce src="https://www.paypal.com/sdk/js?client-id=foo" data-uid=""></script><script>alert(\'xss\')</script><script src=""></script>'
-  ) {
-    throw new Error("Expected unsafe characters to be encoded");
-  }
-
-  if (
-    html !==
-    '<script nonce src="https:&#x2F;&#x2F;www.paypal.com&#x2F;sdk&#x2F;js?client-id=foo" data-uid="&quot;&gt;&lt;&#x2F;script&gt;&lt;script&gt;alert(&#39;xss&#39;)&lt;&#x2F;script&gt;&lt;script src=&quot;"></script>'
-  ) {
-    throw new Error(`Expected encoded output to match, got: ${html}`);
+  if ($("script").length !== 1) {
+    throw new Error(
+      `Expected exactly 1 script element, got ${$("script").length}`
+    );
   }
 });
 
+// Guards against: <script ... data-x onload="alert('xss')"></script>
 test("should not allow attribute injection via spaces in data attribute name", () => {
   const sdkUrl = "https://www.paypal.com/sdk/js?client-id=foo";
 
@@ -610,12 +597,9 @@ test("should not allow attribute injection via spaces in data attribute name", (
   );
 
   const $ = cheerio.load(getSDKLoader());
-  const onload = $("script").attr("onload");
 
-  if (onload !== undefined) {
-    throw new Error(
-      `Expected onload attribute to be undefined - got ${onload}`
-    );
+  if ($("script").attr("onload") !== undefined) {
+    throw new Error("Expected onload attribute to not be present");
   }
 });
 
@@ -1481,6 +1465,7 @@ test.each(invalidWebSDKBridgeUrls)(
   }
 );
 
+// Guards against: <script src="https://www.paypal.com/web-sdk/v6/bridge?foo=bar" onload="alert('xss')"></script>
 test("should encode unsafe characters in web-sdk bridge url", () => {
   const sdkUrl =
     "https://www.paypal.com/web-sdk/v6/bridge?foo=bar\" onload=\"alert('xss')";
@@ -1494,25 +1479,14 @@ test("should encode unsafe characters in web-sdk bridge url", () => {
     ).toString("base64")
   );
 
-  const html = getSDKLoader();
+  const $ = cheerio.load(getSDKLoader());
 
-  if (
-    html ===
-    '<script nonce src="https://www.paypal.com/web-sdk/v6/bridge?foo=bar" onload="alert(\'xss\')"></script>'
-  ) {
-    throw new Error(
-      "Expected unsafe characters to be encoded, got unencoded output"
-    );
-  }
-
-  if (
-    html !==
-    '<script nonce src="https:&#x2F;&#x2F;www.paypal.com&#x2F;web-sdk&#x2F;v6&#x2F;bridge?foo=bar&quot; onload=&quot;alert(&#39;xss&#39;)"></script>'
-  ) {
-    throw new Error(`Expected encoded output to match, got: ${html}`);
+  if ($("script").attr("onload") !== undefined) {
+    throw new Error("Expected onload attribute to not be present");
   }
 });
 
+// Guards against: <script src="https://www.paypal.com/web-sdk/v6/bridge?foo=bar"></script><script>alert('xss')</script><script src=""></script>
 test("should encode script tag injection in web-sdk bridge url", () => {
   const sdkUrl =
     "https://www.paypal.com/web-sdk/v6/bridge?foo=bar\"></script><script>alert('xss')</script><script src=\"";
@@ -1526,22 +1500,12 @@ test("should encode script tag injection in web-sdk bridge url", () => {
     ).toString("base64")
   );
 
-  const html = getSDKLoader();
+  const $ = cheerio.load(getSDKLoader());
 
-  if (
-    html ===
-    '<script nonce src="https://www.paypal.com/web-sdk/v6/bridge?foo=bar"></script><script>alert(\'xss\')</script><script src=""></script>'
-  ) {
+  if ($("script").length !== 1) {
     throw new Error(
-      "Expected unsafe characters to be encoded, got unencoded output"
+      `Expected exactly 1 script element, got ${$("script").length}`
     );
-  }
-
-  if (
-    html !==
-    '<script nonce src="https:&#x2F;&#x2F;www.paypal.com&#x2F;web-sdk&#x2F;v6&#x2F;bridge?foo=bar&quot;&gt;&lt;&#x2F;script&gt;&lt;script&gt;alert(&#39;xss&#39;)&lt;&#x2F;script&gt;&lt;script src=&quot;"></script>'
-  ) {
-    throw new Error(`Expected encoded output to match, got: ${html}`);
   }
 });
 
@@ -1580,6 +1544,7 @@ test("should construct a valid web-sdk bridge url without invalid attributes", (
   }
 });
 
+// Guards against: <script ... data-uid="" onload="alert('xss')"></script>
 test("should encode unsafe characters in web-sdk bridge data attribute values", () => {
   const sdkUrl = "https://www.paypal.com/web-sdk/v6/bridge";
 
@@ -1594,23 +1559,14 @@ test("should encode unsafe characters in web-sdk bridge data attribute values", 
     ).toString("base64")
   );
 
-  const html = getSDKLoader();
+  const $ = cheerio.load(getSDKLoader());
 
-  if (
-    html ===
-    '<script nonce src="https://www.paypal.com/web-sdk/v6/bridge" data-uid="" onload="alert(\'xss\')"></script>'
-  ) {
-    throw new Error("Expected unsafe characters to be encoded");
-  }
-
-  if (
-    html !==
-    '<script nonce src="https:&#x2F;&#x2F;www.paypal.com&#x2F;web-sdk&#x2F;v6&#x2F;bridge" data-uid="&quot; onload=&quot;alert(&#39;xss&#39;)"></script>'
-  ) {
-    throw new Error(`Expected encoded output to match, got: ${html}`);
+  if ($("script").attr("onload") !== undefined) {
+    throw new Error("Expected onload attribute to not be present");
   }
 });
 
+// Guards against: <script ... data-uid=""></script><script>alert('xss')</script><script src=""></script>
 test("should encode script tag injection in web-sdk bridge data attribute values", () => {
   const sdkUrl = "https://www.paypal.com/web-sdk/v6/bridge";
 
@@ -1625,23 +1581,16 @@ test("should encode script tag injection in web-sdk bridge data attribute values
     ).toString("base64")
   );
 
-  const html = getSDKLoader();
+  const $ = cheerio.load(getSDKLoader());
 
-  if (
-    html ===
-    '<script nonce src="https://www.paypal.com/web-sdk/v6/bridge" data-uid=""></script><script>alert(\'xss\')</script><script src=""></script>'
-  ) {
-    throw new Error("Expected unsafe characters to be encoded");
-  }
-
-  if (
-    html !==
-    '<script nonce src="https:&#x2F;&#x2F;www.paypal.com&#x2F;web-sdk&#x2F;v6&#x2F;bridge" data-uid="&quot;&gt;&lt;&#x2F;script&gt;&lt;script&gt;alert(&#39;xss&#39;)&lt;&#x2F;script&gt;&lt;script src=&quot;"></script>'
-  ) {
-    throw new Error(`Expected encoded output to match, got: ${html}`);
+  if ($("script").length !== 1) {
+    throw new Error(
+      `Expected exactly 1 script element, got ${$("script").length}`
+    );
   }
 });
 
+// Guards against: <script ... data-x onload="alert('xss')"></script>
 test("should not allow attribute injection via spaces in web-sdk bridge data attribute name", () => {
   const sdkUrl = "https://www.paypal.com/web-sdk/v6/bridge";
 
@@ -1657,11 +1606,37 @@ test("should not allow attribute injection via spaces in web-sdk bridge data att
   );
 
   const $ = cheerio.load(getSDKLoader());
-  const onload = $("script").attr("onload");
 
-  if (onload !== undefined) {
+  if ($("script").attr("onload") !== undefined) {
+    throw new Error("Expected onload attribute to not be present");
+  }
+});
+
+test("should include sdk-client version as a data attribute for web-sdk bridge urls", () => {
+  const sdkUrl = "https://www.paypal.com/web-sdk/v6/bridge";
+  const semverRegex = /^[0-9.A-Za-z-+]+$/;
+
+  const { getSDKLoader } = unpackSDKMeta(
+    Buffer.from(
+      JSON.stringify({
+        url: sdkUrl,
+        attrs: {},
+      })
+    ).toString("base64")
+  );
+
+  const $ = cheerio.load(getSDKLoader());
+  const version = $("script").attr("data-sdk-client-version");
+
+  if (!semverRegex.test(version)) {
     throw new Error(
-      `Expected onload attribute to be undefined - got ${onload}`
+      `Expected data-sdk-client-version to be a valid version - got "${version}"`
+    );
+  }
+
+  if (version !== VERSION) {
+    throw new Error(
+      `Expected data-sdk-client-version to be "${VERSION}" - got "${version}"`
     );
   }
 });
