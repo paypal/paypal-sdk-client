@@ -1626,17 +1626,17 @@ test("should include sdk-client version as a data attribute for web-sdk bridge u
   );
 
   const $ = cheerio.load(getSDKLoader());
-  const version = $("script").attr("data-sdk-client-version");
+  const version = $("script").attr("data-sdk-meta-contract-version");
 
   if (!semverRegex.test(version)) {
     throw new Error(
-      `Expected data-sdk-client-version to be a valid version - got "${version}"`
+      `Expected data-sdk-meta-contract-version to be a valid version - got "${version}"`
     );
   }
 
   if (version !== VERSION) {
     throw new Error(
-      `Expected data-sdk-client-version to be "${VERSION}" - got "${version}"`
+      `Expected data-sdk-meta-contract-version to be "${VERSION}" - got "${version}"`
     );
   }
 });
