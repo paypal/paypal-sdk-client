@@ -246,7 +246,7 @@ function getSDKScriptAttributes(
     }
 
     if (isWebSDKUrl(hostname, pathname)) {
-      attrs[DATA_ATTRIBUTES.SDK_CLIENT_VERSION] = VERSION;
+      attrs[DATA_ATTRIBUTES.SDK_META_CONTRACT_VERSION] = VERSION;
     }
   }
 

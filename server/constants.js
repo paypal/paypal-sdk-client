@@ -40,5 +40,5 @@ export const DEFAULT_LEGACY_SDK_BASE_URL = "https://www.paypalobjects.com/api/";
 export const DATA_ATTRIBUTES = {
   PAYPAL_CHECKOUT: "data-paypal-checkout",
   NO_BRIDGE: "data-no-bridge",
-  SDK_CLIENT_VERSION: "data-sdk-client-version",
+  SDK_META_CONTRACT_VERSION: "data-sdk-meta-contract-version",
 };
