@@ -4,6 +4,8 @@
 import cheerio from "cheerio";
 import { test, afterEach } from "vitest";
 
+import { VERSION } from "./constants";
+
 import { unpackSDKMeta } from ".";
 
 afterEach(() => {
@@ -468,7 +470,8 @@ test("should construct a valid script url without invalid attributes", () => {
       JSON.stringify({
         url: sdkUrl,
         attrs: {
-          "data-dummy-id": "abcd",
+          "data-uid": "abc123",
+          onload: "alert('xss')",
         },
       })
     ).toString("base64")
@@ -476,16 +479,127 @@ test("should construct a valid script url without invalid attributes", () => {
 
   const $ = cheerio.load(getSDKLoader());
   const src = $("script").attr("src");
-  const result = $("script").attr("data-dummy-id");
+  const uid = $("script").attr("data-uid");
+  const onload = $("script").attr("onload");
 
   if (src !== sdkUrl) {
     throw new Error(`Expected script url to be ${sdkUrl} - got ${src}`);
   }
 
-  if (result !== undefined) {
+  if (uid !== "abc123") {
+    throw new Error(`Expected data-uid to be "abc123" - got ${uid}`);
+  }
+
+  if (onload !== undefined) {
     throw new Error(
-      `Expected invalid attribute to be undefined - got ${result}`
+      `Expected invalid attribute to be undefined - got ${onload}`
     );
+  }
+});
+
+const previouslyAllowedAttrs = [
+  "data-amount",
+  "data-client-token",
+  "data-merchant-id",
+  "data-partner-attribution-id",
+  "data-popups-disabled",
+  "data-enable-3ds",
+  "data-sdk-integration-source",
+  "data-client-metadata-id",
+  "data-uid",
+  "data-csp-nonce",
+];
+
+test.each(previouslyAllowedAttrs)(
+  "should allow previously allowed attribute %s",
+  (attr) => {
+    const sdkUrl = "https://www.paypal.com/sdk/js?client-id=foo";
+
+    const { getSDKLoader } = unpackSDKMeta(
+      Buffer.from(
+        JSON.stringify({
+          url: sdkUrl,
+          attrs: {
+            [attr]: "test-value",
+          },
+        })
+      ).toString("base64")
+    );
+
+    const $ = cheerio.load(getSDKLoader());
+    const result = $("script").attr(attr);
+
+    if (result !== "test-value") {
+      throw new Error(`Expected ${attr} to be "test-value" - got ${result}`);
+    }
+  }
+);
+
+// Guards against: <script ... data-uid="" onload="alert('xss')"></script>
+test("should encode unsafe characters in data attribute values", () => {
+  const sdkUrl = "https://www.paypal.com/sdk/js?client-id=foo";
+
+  const { getSDKLoader } = unpackSDKMeta(
+    Buffer.from(
+      JSON.stringify({
+        url: sdkUrl,
+        attrs: {
+          "data-uid": "\" onload=\"alert('xss')",
+        },
+      })
+    ).toString("base64")
+  );
+
+  const $ = cheerio.load(getSDKLoader());
+
+  if ($("script").attr("onload") !== undefined) {
+    throw new Error("Expected onload attribute to not be present");
+  }
+});
+
+// Guards against: <script ... data-uid=""></script><script>alert('xss')</script><script src=""></script>
+test("should encode script tag injection in data attribute values", () => {
+  const sdkUrl = "https://www.paypal.com/sdk/js?client-id=foo";
+
+  const { getSDKLoader } = unpackSDKMeta(
+    Buffer.from(
+      JSON.stringify({
+        url: sdkUrl,
+        attrs: {
+          "data-uid": "\"></script><script>alert('xss')</script><script src=\"",
+        },
+      })
+    ).toString("base64")
+  );
+
+  const $ = cheerio.load(getSDKLoader());
+
+  if ($("script").length !== 1) {
+    throw new Error(
+      `Expected exactly 1 script element, got ${$("script").length}`
+    );
+  }
+});
+
+// Guards against: <script ... data-x onload="alert('xss')"></script>
+test("should not allow attribute injection via spaces in data attribute name", () => {
+  const sdkUrl = "https://www.paypal.com/sdk/js?client-id=foo";
+
+  const { getSDKLoader } = unpackSDKMeta(
+    Buffer.from(
+      JSON.stringify({
+        url: sdkUrl,
+        attrs: {
+          "data-x onload": "alert('xss')",
+        },
+      })
+    ).toString("base64")
+  );
+
+  const $ = cheerio.load(getSDKLoader());
+
+  if ($("script").attr("onload") !== undefined) {
+    throw new Error("Expected onload attribute to not be present");
   }
 });
 
@@ -1251,260 +1365,278 @@ test("should construct a valid web-sdk bridge url", () => {
   }
 });
 
-test("should error when extra parameters are present", () => {
-  const sdkUrl =
-    "https://www.paypal.com/web-sdk/v6/bridge?version=1.2.3&origin=https%3A%2F%2Fwww.example.com%3A8000&payment-flow=payment-handler&name=value";
+const validWebSDKBridgeUrls = [
+  // evergreen version
+  "https://www.paypal.com/web-sdk/v6/bridge",
+  // evergreen version with sub-path
+  "https://www.paypal.com/web-sdk/v6/bridge/popup-bridge",
+  // evergreen version with multiple sub-path segments
+  "https://www.paypal.com/web-sdk/v6/bridge/popup/handler",
+  // evergreen version with arbitrary query parameters
+  "https://www.paypal.com/web-sdk/v6/bridge?version=1.2.3&origin=https%3A%2F%2Fwww.example.com%3A8000&payment-flow=payment-handler&debug=true&foo=bar",
+  // evergreen version with arbitrary query parameters
+  "https://www.paypal.com/web-sdk/v6/bridge?version=1.2.3&origin=https%3A%2F%2Fwww.example.com%3A8000&presentation-mode=payment-handler&foo=bar",
+  // pinned version in path
+  "https://www.paypal.com/web-sdk/v6.48.1/bridge",
+  // pinned version with arbitrary query parameters
+  "https://www.paypal.com/web-sdk/v6.48.1/bridge?origin=https%3A%2F%2Fwww.example.com%3A8000&payment-flow=payment-handler&foo=bar",
+  // pinned version with arbitrary query parameters
+  "https://www.paypal.com/web-sdk/v6.48.1/bridge?origin=https%3A%2F%2Fwww.example.com%3A8000&presentation-mode=payment-handler&foo=bar",
+  // pinned version with sub-path
+  "https://www.paypal.com/web-sdk/v6.48.1/bridge/popup-bridge",
+  // pinned version with pre-release tag in path
+  "https://www.paypal.com/web-sdk/v6.48.1-beta.1/bridge",
+];
 
-  let error = null;
-  try {
-    unpackSDKMeta(
+test.each(validWebSDKBridgeUrls)(
+  "should construct a valid web-sdk bridge script tag for %s",
+  (sdkUrl) => {
+    const { getSDKLoader } = unpackSDKMeta(
       Buffer.from(
         JSON.stringify({
           url: sdkUrl,
-          attrs: {
-            "data-uid": "abc123",
-          },
+          attrs: {},
         })
       ).toString("base64")
     );
-  } catch (err) {
-    error = err;
-  }
 
-  if (!error) {
-    throw new Error("Expected error to be thrown");
+    const $ = cheerio.load(getSDKLoader());
+    const script = $("script");
+    const src = script.attr("src");
+
+    if (src !== sdkUrl) {
+      throw new Error(`Expected script url to be ${sdkUrl} - got ${src}`);
+    }
+  }
+);
+
+const invalidWebSDKBridgeUrls = [
+  // empty version
+  "https://www.paypal.com/web-sdk/v/bridge",
+  // invalid version
+  "https://www.paypal.com/web-sdk/v^1.2.3/bridge",
+  // missing bridge segment
+  "https://www.paypal.com/web-sdk/v6/not-bridge",
+  // path traversal
+  "https://www.paypal.com/web-sdk/v6/bridge/../../../any-path-on-paypal",
+  // encoded slash
+  "https://www.paypal.com/web-sdk/v6/bridge%2F..%2F..%2Fany-path-on-paypal",
+  // null byte injection
+  "https://www.paypal.com/web-sdk/v6%00/bridge",
+  // uppercase bridge
+  "https://www.paypal.com/web-sdk/v6/BRIDGE",
+  // missing version prefix
+  "https://www.paypal.com/web-sdk/6/bridge",
+  // missing bridge
+  "https://www.paypal.com/web-sdk/v6",
+  // arbitrary path under /web-sdk/
+  "https://www.paypal.com/web-sdk/js",
+  // arbitrary path under /web-sdk/v6/
+  "https://www.paypal.com/web-sdk/v6/js",
+];
+
+test.each(invalidWebSDKBridgeUrls)(
+  "should error for invalid web-sdk bridge url: %s",
+  (sdkUrl) => {
+    let error = null;
+    try {
+      unpackSDKMeta(
+        Buffer.from(
+          JSON.stringify({
+            url: sdkUrl,
+            attrs: {},
+          })
+        ).toString("base64")
+      );
+    } catch (err) {
+      error = err;
+    }
+
+    if (!error) {
+      throw new Error("Expected error to be thrown");
+    }
+
+    // make sure right validation is being used
+    if (!error.message.includes("web-sdk bridge url")) {
+      throw new Error(
+        `Expected error message to mention "web-sdk bridge url", got: ${error.message}`
+      );
+    }
+  }
+);
+
+// Guards against: <script src="https://www.paypal.com/web-sdk/v6/bridge?foo=bar" onload="alert('xss')"></script>
+test("should encode unsafe characters in web-sdk bridge url", () => {
+  const sdkUrl =
+    "https://www.paypal.com/web-sdk/v6/bridge?foo=bar\" onload=\"alert('xss')";
+
+  const { getSDKLoader } = unpackSDKMeta(
+    Buffer.from(
+      JSON.stringify({
+        url: sdkUrl,
+        attrs: {},
+      })
+    ).toString("base64")
+  );
+
+  const $ = cheerio.load(getSDKLoader());
+
+  if ($("script").attr("onload") !== undefined) {
+    throw new Error("Expected onload attribute to not be present");
   }
 });
 
-test("should not error when the optional debug parameter is missing", () => {
+// Guards against: <script src="https://www.paypal.com/web-sdk/v6/bridge?foo=bar"></script><script>alert('xss')</script><script src=""></script>
+test("should encode script tag injection in web-sdk bridge url", () => {
   const sdkUrl =
-    "https://www.paypal.com/web-sdk/v6/bridge?version=1.2.3&origin=https%3A%2F%2Fwww.example.com%3A8000&payment-flow=payment-handler";
-  const sdkUID = "abc123";
+    "https://www.paypal.com/web-sdk/v6/bridge?foo=bar\"></script><script>alert('xss')</script><script src=\"";
+
+  const { getSDKLoader } = unpackSDKMeta(
+    Buffer.from(
+      JSON.stringify({
+        url: sdkUrl,
+        attrs: {},
+      })
+    ).toString("base64")
+  );
+
+  const $ = cheerio.load(getSDKLoader());
+
+  if ($("script").length !== 1) {
+    throw new Error(
+      `Expected exactly 1 script element, got ${$("script").length}`
+    );
+  }
+});
+
+test("should construct a valid web-sdk bridge url without invalid attributes", () => {
+  const sdkUrl = "https://www.paypal.com/web-sdk/v6/bridge";
 
   const { getSDKLoader } = unpackSDKMeta(
     Buffer.from(
       JSON.stringify({
         url: sdkUrl,
         attrs: {
-          "data-uid": sdkUID,
+          "data-uid": "abc123",
+          onload: "alert('xss')",
         },
       })
     ).toString("base64")
   );
 
   const $ = cheerio.load(getSDKLoader());
-  const script = $("script");
-  const src = script.attr("src");
-  const uid = script.attr("data-uid");
+  const src = $("script").attr("src");
+  const uid = $("script").attr("data-uid");
+  const onload = $("script").attr("onload");
 
   if (src !== sdkUrl) {
     throw new Error(`Expected script url to be ${sdkUrl} - got ${src}`);
   }
-  if (uid !== sdkUID) {
-    throw new Error(`Expected data UID be ${sdkUID} - got ${uid}`);
+
+  if (uid !== "abc123") {
+    throw new Error(`Expected data-uid to be "abc123" - got ${uid}`);
+  }
+
+  if (onload !== undefined) {
+    throw new Error(
+      `Expected invalid attribute to be undefined - got ${onload}`
+    );
   }
 });
 
-test("should not error when the optional payment-flow parameter is missing", () => {
-  const sdkUrl =
-    "https://www.paypal.com/web-sdk/v6/bridge?version=1.2.3&origin=https%3A%2F%2Fwww.example.com%3A8000&debug=false";
-  const sdkUID = "abc123";
+// Guards against: <script ... data-uid="" onload="alert('xss')"></script>
+test("should encode unsafe characters in web-sdk bridge data attribute values", () => {
+  const sdkUrl = "https://www.paypal.com/web-sdk/v6/bridge";
 
   const { getSDKLoader } = unpackSDKMeta(
     Buffer.from(
       JSON.stringify({
         url: sdkUrl,
         attrs: {
-          "data-uid": sdkUID,
+          "data-uid": "\" onload=\"alert('xss')",
         },
       })
     ).toString("base64")
   );
 
   const $ = cheerio.load(getSDKLoader());
-  const script = $("script");
-  const src = script.attr("src");
-  const uid = script.attr("data-uid");
 
-  if (src !== sdkUrl) {
-    throw new Error(`Expected script url to be ${sdkUrl} - got ${src}`);
-  }
-  if (uid !== sdkUID) {
-    throw new Error(`Expected data UID be ${sdkUID} - got ${uid}`);
+  if ($("script").attr("onload") !== undefined) {
+    throw new Error("Expected onload attribute to not be present");
   }
 });
 
-test("should error when the version parameter is missing", () => {
-  const sdkUrl =
-    "https://www.paypal.com/web-sdk/v6/bridge?origin=https%3A%2F%2Fwww.example.com%3A8000&payment-flow=payment-handler";
+// Guards against: <script ... data-uid=""></script><script>alert('xss')</script><script src=""></script>
+test("should encode script tag injection in web-sdk bridge data attribute values", () => {
+  const sdkUrl = "https://www.paypal.com/web-sdk/v6/bridge";
 
-  let error = null;
-  try {
-    unpackSDKMeta(
-      Buffer.from(
-        JSON.stringify({
-          url: sdkUrl,
-          attrs: {
-            "data-uid": "abc123",
-          },
-        })
-      ).toString("base64")
+  const { getSDKLoader } = unpackSDKMeta(
+    Buffer.from(
+      JSON.stringify({
+        url: sdkUrl,
+        attrs: {
+          "data-uid": "\"></script><script>alert('xss')</script><script src=\"",
+        },
+      })
+    ).toString("base64")
+  );
+
+  const $ = cheerio.load(getSDKLoader());
+
+  if ($("script").length !== 1) {
+    throw new Error(
+      `Expected exactly 1 script element, got ${$("script").length}`
     );
-  } catch (err) {
-    error = err;
-  }
-
-  if (!error) {
-    throw new Error("Expected error to be thrown");
   }
 });
 
-test("should error when the version parameter is invalid", () => {
-  const sdkUrl =
-    "https://www.paypal.com/web-sdk/v6/bridge?version=^1.2.3&origin=https%3A%2F%2Fwww.example.com%3A8000&payment-flow=payment-handler";
+// Guards against: <script ... data-x onload="alert('xss')"></script>
+test("should not allow attribute injection via spaces in web-sdk bridge data attribute name", () => {
+  const sdkUrl = "https://www.paypal.com/web-sdk/v6/bridge";
 
-  let error = null;
-  try {
-    unpackSDKMeta(
-      Buffer.from(
-        JSON.stringify({
-          url: sdkUrl,
-          attrs: {
-            "data-uid": "abc123",
-          },
-        })
-      ).toString("base64")
-    );
-  } catch (err) {
-    error = err;
-  }
+  const { getSDKLoader } = unpackSDKMeta(
+    Buffer.from(
+      JSON.stringify({
+        url: sdkUrl,
+        attrs: {
+          "data-x onload": "alert('xss')",
+        },
+      })
+    ).toString("base64")
+  );
 
-  if (!error) {
-    throw new Error("Expected error to be thrown");
+  const $ = cheerio.load(getSDKLoader());
+
+  if ($("script").attr("onload") !== undefined) {
+    throw new Error("Expected onload attribute to not be present");
   }
 });
 
-test("should error when the origin parameter is missing", () => {
-  const sdkUrl =
-    "https://www.paypal.com/web-sdk/v6/bridge?version=1.2.3&payment-flow=payment-handler";
+test("should include sdk-client version as a data attribute for web-sdk bridge urls", () => {
+  const sdkUrl = "https://www.paypal.com/web-sdk/v6/bridge";
+  const semverRegex = /^[0-9.A-Za-z-+]+$/;
 
-  let error = null;
-  try {
-    unpackSDKMeta(
-      Buffer.from(
-        JSON.stringify({
-          url: sdkUrl,
-          attrs: {
-            "data-uid": "abc123",
-          },
-        })
-      ).toString("base64")
+  const { getSDKLoader } = unpackSDKMeta(
+    Buffer.from(
+      JSON.stringify({
+        url: sdkUrl,
+        attrs: {},
+      })
+    ).toString("base64")
+  );
+
+  const $ = cheerio.load(getSDKLoader());
+  const version = $("script").attr("data-sdk-meta-contract-version");
+
+  if (!semverRegex.test(version)) {
+    throw new Error(
+      `Expected data-sdk-meta-contract-version to be a valid version - got "${version}"`
     );
-  } catch (err) {
-    error = err;
   }
 
-  if (!error) {
-    throw new Error("Expected error to be thrown");
-  }
-});
-
-test("should error when the origin parameter is invalid", () => {
-  const sdkUrl =
-    "https://www.paypal.com/web-sdk/v6/bridge?version=1.2.3&origin=example&payment-flow=payment-handler";
-
-  let error = null;
-  try {
-    unpackSDKMeta(
-      Buffer.from(
-        JSON.stringify({
-          url: sdkUrl,
-          attrs: {
-            "data-uid": "abc123",
-          },
-        })
-      ).toString("base64")
+  if (version !== VERSION) {
+    throw new Error(
+      `Expected data-sdk-meta-contract-version to be "${VERSION}" - got "${version}"`
     );
-  } catch (err) {
-    error = err;
-  }
-
-  if (!error) {
-    throw new Error("Expected error to be thrown");
-  }
-});
-
-test("should error when the origin parameter is not just the origin", () => {
-  const sdkUrl =
-    "https://www.paypal.com/web-sdk/v6/bridge?version=1.2.3&origin=https%3A%2F%2Fwww.example.com%3A8000%2Fpath&payment-flow=payment-handler";
-
-  let error = null;
-  try {
-    unpackSDKMeta(
-      Buffer.from(
-        JSON.stringify({
-          url: sdkUrl,
-          attrs: {
-            "data-uid": "abc123",
-          },
-        })
-      ).toString("base64")
-    );
-  } catch (err) {
-    error = err;
-  }
-
-  if (!error) {
-    throw new Error("Expected error to be thrown");
-  }
-});
-
-test("should error when the payment-flow parameter is invalid", () => {
-  const sdkUrl =
-    "https://www.paypal.com/web-sdk/v6/bridge?version=1.2.3&origin=https%3A%2F%2Fwww.example.com%3A8000&payment-flow=invalid-payment-flow-value";
-
-  let error = null;
-  try {
-    unpackSDKMeta(
-      Buffer.from(
-        JSON.stringify({
-          url: sdkUrl,
-          attrs: {
-            "data-uid": "abc123",
-          },
-        })
-      ).toString("base64")
-    );
-  } catch (err) {
-    error = err;
-  }
-
-  if (!error) {
-    throw new Error("Expected error to be thrown");
-  }
-});
-
-test("should error when the debug parameter is invalid", () => {
-  const sdkUrl =
-    "https://www.paypal.com/web-sdk/v6/bridge?version=1.2.3&origin=https%3A%2F%2Fwww.example.com%3A8000&payment-flow=popup&debug=invalid-value";
-
-  let error = null;
-  try {
-    unpackSDKMeta(
-      Buffer.from(
-        JSON.stringify({
-          url: sdkUrl,
-          attrs: {
-            "data-uid": "abc123",
-          },
-        })
-      ).toString("base64")
-    );
-  } catch (err) {
-    error = err;
-  }
-
-  if (!error) {
-    throw new Error("Expected error to be thrown");
   }
 });
