@@ -28,6 +28,9 @@ jobs:
         with:
           useLockFile: false
 
+      - name: 🔎 Run tests
+        run: npm run test
+
       - name: ▶️ Run build script
         run: npm run build
 

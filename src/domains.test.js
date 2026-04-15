@@ -1,6 +1,14 @@
 /* @flow */
 import { ENV } from "@paypal/sdk-constants/src";
-import { describe, it, expect } from "vitest";
+import {
+  describe,
+  it,
+  expect,
+  beforeEach,
+  afterEach,
+  beforeAll,
+  afterAll,
+} from "vitest";
 
 import {
   getAuthAPIUrl,
@@ -8,9 +16,18 @@ import {
   getPayPalDomainRegex,
   getVenmoDomainRegex,
   isPayPalTrustedDomain,
+  isPayPalTrustedUrl,
 } from "./domains";
 
 describe(`domains test`, () => {
+  let env;
+  beforeEach(() => {
+    env = window.__ENV__;
+  });
+  afterEach(() => {
+    window.__ENV__ = env;
+  });
+
   it("should successfully match valid paypal domain", () => {
     const validDomains = [
       "master.qa.paypal.com",
@@ -102,5 +119,59 @@ describe(`domains test`, () => {
     const baseUrl = `${url.protocol}//${url.hostname}`;
     expect(baseUrl).toEqual("http://localhost");
     expect(url.pathname).toEqual("/v2/checkout/orders");
+  });
+});
+
+describe(`isPayPalTrustedUrl test`, () => {
+  let env;
+  beforeAll(() => {
+    env = window.__ENV__;
+    window.__ENV__ = "production";
+  });
+  afterAll(() => {
+    window.__ENV__ = env;
+  });
+
+  const validUrls = [
+    "https://master.qa.paypal.com/abc/abc",
+    "https://master.qa.paypal.com",
+    "https://test-env.qa.paypal.com:3000/abc",
+    "https://geo.qa.paypal.com/abc",
+    "https://www.paypal.com:3080/abc",
+    "https://www.paypal.cn/abc",
+    "https://www.paypal.cn:3000/abc",
+    "https://www.mschina.qa.paypal.cn/abc",
+    "https://www.paypal.com/abc",
+    "https://www.paypal.com",
+    "https://venmo.com/abc",
+    "http://www.venmo.com",
+    "http://www.venmo.com/abc",
+    "https://id.venmo.com",
+    "http://www.venmo.com:8000",
+    "https://account.qa.venmo.com",
+    "http://www.account.qa.venmo.com",
+    "https://account.qa.venmo.com",
+    "https://account.venmo.com",
+  ];
+
+  validUrls.forEach((url) => {
+    it(`isPayPalTrustedUrl(${url}) should be true`, () => {
+      const result = isPayPalTrustedUrl(url);
+      expect(result).toBe(true);
+    });
+  });
+
+  const unknownUrls = [
+    "https://www.paypal.com.example.com",
+    "https://www.paypal.cn.example.com",
+    "",
+    "---",
+  ];
+
+  unknownUrls.forEach((url) => {
+    it(`isPayPalTrustedUrl(${url}) should be false`, () => {
+      const result = isPayPalTrustedUrl(url);
+      expect(result).toBe(false);
+    });
   });
 });

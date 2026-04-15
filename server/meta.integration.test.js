@@ -118,6 +118,17 @@ const sdkMetaList = [
       },
     },
   ],
+  [
+    {
+      url: "https://www.paypal.com/web-sdk/v6/bridge?",
+      origin: "https://www.whiterabbitvintagemarket.com",
+      version: "6.4.1",
+      "payment-flow": "popup",
+      debug: "false",
+    },
+    // no attributes
+    {},
+  ],
 ];
 
 // $FlowIgnore[prop-missing] missing each property for test
