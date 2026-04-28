@@ -80,6 +80,7 @@ export function getSDKAttribute<T: string | void>(
 
 export function getSDKQueryParams(): { [string]: string } {
   const script = getSDKScript();
+  // eslint-disable-next-line no-console
   console.log("getSDKQueryParams script", script, script.src);
   return parseQuery(script.src.split("?")[1] || "");
 }
@@ -91,6 +92,7 @@ type GetSDKQueryParam =
     (<T: string>($Values<typeof SDK_QUERY_KEYS>, T) => T);
 
 export const getSDKQueryParam: GetSDKQueryParam = <T>(name: string, def: T) => {
+  // eslint-disable-next-line no-console
   console.log("getSDKQueryParam name", name, def);
   // $FlowFixMe
   return getSDKQueryParams()[name] || def;
@@ -132,6 +134,7 @@ export function getClientID(): string {
 }
 
 export function getHostedButtonID(): string {
+  // eslint-disable-next-line no-console
   console.log(
     "SDK_QUERY_KEYS.HOSTED_BUTTON_ID",
     SDK_QUERY_KEYS.HOSTED_BUTTON_ID
