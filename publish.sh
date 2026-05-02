@@ -25,6 +25,7 @@ if [ "$current_branch" != "$default_branch" ]; then
   tag='alpha'
   npm --no-git-tag-version version $bump --preid=$tag
   git push
+  ./node_modules/.bin/babel ./src --ignore=node_modules --out-dir ./server
   npm publish --tag $tag
 else
   npm test;
@@ -33,5 +34,6 @@ else
 
   git push;
   git push --tags;
+  ./node_modules/.bin/babel ./src --ignore=node_modules --out-dir ./server
   npm publish;
 fi
