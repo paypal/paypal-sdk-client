@@ -2,7 +2,7 @@
 /* @flow */
 
 import { ZalgoPromise } from "@krakenjs/zalgo-promise/src";
-import { ENV } from "@paypal/sdk-constants/src";
+import { ENV } from "@paypal/sdk-constants";
 import { memoize, type Memoized } from "@krakenjs/belter/src";
 
 import { FRAUDNET_FNCLS, FRAUDNET_URL } from "./constants";

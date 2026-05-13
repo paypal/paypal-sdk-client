@@ -1,5 +1,5 @@
 /* @flow */
-import { ENV } from "@paypal/sdk-constants/src";
+import { ENV } from "@paypal/sdk-constants";
 import {
   describe,
   it,
