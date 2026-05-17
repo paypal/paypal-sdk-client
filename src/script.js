@@ -129,6 +129,17 @@ export function getClientID(): string {
   return clientID;
 }
 
+export function getHostedButtonID(): string {
+  const hostedButtonID = getSDKQueryParam(SDK_QUERY_KEYS.HOSTED_BUTTON_ID);
+  if (!hostedButtonID) {
+    throw new Error(
+      `Expected ${SDK_QUERY_KEYS.HOSTED_BUTTON_ID} parameter in sdk url`
+    );
+  }
+
+  return hostedButtonID;
+}
+
 export function getMerchantID(): $ReadOnlyArray<string> {
   const merchantIDString = getSDKQueryParam(SDK_QUERY_KEYS.MERCHANT_ID);
 

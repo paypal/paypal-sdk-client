@@ -1,6 +1,6 @@
 {
   "name": "@paypal/sdk-client",
-  "version": "4.0.204",
+  "version": "4.0.204-alpha.12",
   "description": "Shared config between PayPal/Braintree.",
   "main": "index.js",
   "scripts": {
@@ -58,7 +58,7 @@
     "@krakenjs/cross-domain-utils": "^3.0.2",
     "@krakenjs/jsx-pragmatic": "^3.0.0",
     "@krakenjs/zalgo-promise": "^2.0.0",
-    "@paypal/sdk-constants": "^1.0.148",
+    "@paypal/sdk-constants": "^1.0.158-alpha.1",
     "bowser": "^2.0.0"
   },
   "devDependencies": {
@@ -66,6 +66,8 @@
     "@krakenjs/babel-config-grumbler": "^8.1.1",
     "@krakenjs/eslint-config-grumbler": "^8.1.1",
     "@krakenjs/grumbler-scripts": "^8.0.4",
+    "@vitest/coverage-v8": "^1.0.0",
+    "@vitest/ui": "^1.0.0",
     "babel-core": "7.0.0-bridge.0",
     "cheerio": "1.0.0-rc.9",
     "cross-env": "^7.0.3",
@@ -80,12 +82,13 @@
     "jsonwebtoken": "^9.0.2",
     "lint-staged": "^13.0.3",
     "prettier": "2.8.8",
-    "@vitest/coverage-v8": "^1.0.0",
-    "@vitest/ui": "^1.0.0",
     "vite": "^4.0.1",
     "vitest": "^1.0.0"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
+  },
+  "alias": {
+    "@paypal/sdk-constants": "./node_modules/@paypal/sdk-constants"
   }
 }
