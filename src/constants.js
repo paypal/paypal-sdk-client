@@ -1,5 +1,5 @@
 /* @flow */
-import { ENV } from "@paypal/sdk-constants";
+import { ENV } from "@paypal/sdk-constants/src";
 
 export const FPTI_CONTEXT_TYPE = {
   ORDER_ID: ("EC-Token": "EC-Token"),

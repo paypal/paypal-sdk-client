@@ -1,6 +1,6 @@
 /* @flow */
 
-import { ENV } from "@paypal/sdk-constants";
+import { ENV } from "@paypal/sdk-constants/src";
 import {
   getDomain,
   getActualDomain,
