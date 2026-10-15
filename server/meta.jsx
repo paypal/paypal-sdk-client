@@ -49,7 +49,7 @@ function validatePaymentsSDKUrl({ pathname, query, hash }) {
       throw new TypeError(`Unexpected non-string key for sdk url: ${key}`);
     }
 
-    if (!val.match(/^[a-zA-Z0-9+_,-@.]+$/) && !val.match(/^\*$/)) {
+    if (!val.match(/^[a-zA-Z0-9+_,@.-]+$/) && !val.match(/^\*$/)) {
       throw new Error(
         `Unexpected characters in query key for sdk url: ${key}=${val}`
       );
@@ -160,6 +160,26 @@ function validateHostAndPath(
   return { hostname, pathname };
 }
 
+function validateCanonicalUrl(sdkUrl: string, legacyHostname: string) {
+  let parsed;
+  try {
+    // eslint-disable-next-line compat/compat
+    parsed = new URL(sdkUrl);
+  } catch (err) {
+    throw new Error(`Expected sdk url to be a valid URL: ${err.message}`);
+  }
+
+  if (parsed.username || parsed.password) {
+    throw new Error(`Expected sdk url to not contain userinfo`);
+  }
+
+  if (parsed.hostname !== legacyHostname) {
+    throw new Error(
+      `Expected sdk url host to be consistent across parsers: ${legacyHostname} vs ${parsed.hostname}`
+    );
+  }
+}
+
 function validateSDKUrl(sdkUrl: string) {
   const {
     protocol,
@@ -187,6 +207,8 @@ function validateSDKUrl(sdkUrl: string) {
   if (!hostnameMatchResults || hostnameMatchResults[0] !== hostname) {
     throw new Error(`Expected a valid host: ${hostname}`);
   }
+
+  validateCanonicalUrl(sdkUrl, hostname);
 
   if (isLegacySDKUrl(hostname, pathname)) {
     validateLegacySDKUrl({ pathname });
@@ -271,7 +293,7 @@ function sanitizeSDKUrl(sdkUrl: string): string {
     return url.toString();
   }
 
-  return sdkUrl;
+  return url.href;
 }
 
 export function unpackSDKMeta(sdkMeta?: string): SDKMeta {
@@ -307,8 +329,17 @@ export function unpackSDKMeta(sdkMeta?: string): SDKMeta {
         nonce={nonce}
         innerHTML={`
                     (function() {
+                        function escapeAttr(value) {
+                            return String(value)
+                                .replace(/&/g, '&amp;')
+                                .replace(/"/g, '&quot;')
+                                .replace(/'/g, '&#39;')
+                                .replace(/</g, '&lt;')
+                                .replace(/>/g, '&gt;');
+                        }
+
                         function loadScript(url, attributes) {
-                            var scriptTag = '<scr' + 'ipt src="' + url + '" ' + (attributes || '') + '></scr' + 'ipt>';
+                            var scriptTag = '<scr' + 'ipt src="' + escapeAttr(url) + '" ' + (attributes || '') + '></scr' + 'ipt>';
                             document.write(scriptTag);
                         }
 
@@ -348,7 +379,13 @@ export function unpackSDKMeta(sdkMeta?: string): SDKMeta {
                                 return;
                             }
 
-                            loadScript(v5script.src);
+                            var safeSrc = new URL(v5script.src).href;
+
+                            if (/["<>]/.test(safeSrc)) {
+                                return;
+                            }
+
+                            loadScript(safeSrc);
                         }
 
                         try {
