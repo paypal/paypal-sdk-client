@@ -1313,6 +1313,153 @@ test('should error when the script url does not start with "https://" or "http:/
   }
 });
 
+const packSDKMeta = (sdkUrl: string): string =>
+  Buffer.from(JSON.stringify({ url: sdkUrl })).toString("base64");
+
+const expectUnpackToThrow = (sdkUrl: string) => {
+  let error;
+
+  try {
+    unpackSDKMeta(packSDKMeta(sdkUrl));
+  } catch (err) {
+    error = err;
+  }
+
+  if (!error) {
+    throw new Error(`Expected error to be thrown for ${sdkUrl}`);
+  }
+};
+
+// Runs the generated loader against a fake opener window whose sdk script has
+// the given src. Returns whatever was passed to document.write, or undefined
+// if the loader never wrote anything.
+const runLoaderWithOpenerSrc = (openerSrc: string): ?string => {
+  const { getSDKLoader } = unpackSDKMeta();
+
+  const $ = cheerio.load(getSDKLoader());
+  const script = $("script").html();
+
+  let written: ?string;
+
+  // eslint-disable-next-line no-unused-vars
+  const window = {
+    opener: {
+      document: {
+        querySelector: () => ({ src: openerSrc }),
+      },
+    },
+  };
+
+  // eslint-disable-next-line no-unused-vars
+  const document = {
+    write: (html) => {
+      written = html;
+    },
+  };
+
+  // eslint-disable-next-line no-eval, security/detect-eval-with-expression
+  eval(script);
+
+  return written;
+};
+
+test("should error when the sdk url contains quotes or angle brackets", () => {
+  const badUrls = [
+    'https://www.paypal.com/sdk/js?client-id=foo"bar"',
+    "https://www.paypal.com/sdk/js?client-id=foo<bar>",
+    "https://www.paypal.com/sdk/js?client-id=foo'bar",
+    "https://www.paypal.com/sdk/js?client-id=foo`bar",
+    "https://www.paypal.com/sdk/js?client-id=foo bar",
+  ];
+
+  for (const sdkUrl of badUrls) {
+    expectUnpackToThrow(sdkUrl);
+  }
+});
+
+test("should error when the sdk url contains userinfo", () => {
+  expectUnpackToThrow("https://user:pass@www.paypal.com/sdk/js?client-id=foo");
+});
+
+test("should error for an invalid sdk url host", () => {
+  expectUnpackToThrow("https://xn--zz.www.paypal.com/sdk/js?client-id=foo");
+});
+
+test("should not load an opener script src that is not a valid url", () => {
+  const written = runLoaderWithOpenerSrc(
+    "https://user@xn--zz.www.paypal.com/sdk/js"
+  );
+
+  if (written !== undefined) {
+    throw new Error(
+      `Expected document.write not to be called - got ${String(written)}`
+    );
+  }
+});
+
+test("should not load an opener script src containing invalid characters", () => {
+  const written = runLoaderWithOpenerSrc('https://a"b.paypal.com/sdk/js');
+
+  if (written !== undefined) {
+    throw new Error(
+      `Expected document.write not to be called - got ${String(written)}`
+    );
+  }
+});
+
+test("should html-escape the opener script src before writing it to the document", () => {
+  const sdkUrl =
+    "https://www.paypal.com/sdk/js?client-id=foo&components=buttons";
+
+  const scriptTag = runLoaderWithOpenerSrc(sdkUrl);
+
+  if (
+    !scriptTag ||
+    !scriptTag.includes("client-id=foo&amp;components=buttons")
+  ) {
+    throw new Error(
+      `Expected escaped ampersand in script tag - got ${String(scriptTag)}`
+    );
+  }
+
+  const src = cheerio.load(scriptTag)("script").attr("src");
+
+  if (src !== sdkUrl) {
+    throw new Error(`Expected script url to round-trip - got ${src}`);
+  }
+});
+
+test("should emit the canonical url in the loader", () => {
+  const sdkUrl =
+    "https://www.paypal.com/sdk/js?client-id=foo&components=buttons";
+
+  const { getSDKLoader } = unpackSDKMeta(packSDKMeta(sdkUrl));
+
+  const $ = cheerio.load(getSDKLoader());
+  const src = $("script").attr("src");
+
+  if (src !== new URL(sdkUrl).href) {
+    throw new Error(`Expected canonical script url - got ${src}`);
+  }
+});
+
+test("should normalize the sdk url without double-encoding already-encoded values", () => {
+  const sdkUrl =
+    "https://WWW.PAYPAL.COM/sdk/js?client-id=foo%2Bbar&components=buttons";
+
+  const { getSDKLoader } = unpackSDKMeta(packSDKMeta(sdkUrl));
+
+  const $ = cheerio.load(getSDKLoader());
+  const src = $("script").attr("src");
+
+  const expected =
+    "https://www.paypal.com/sdk/js?client-id=foo%2Bbar&components=buttons";
+
+  if (src !== expected) {
+    throw new Error(`Expected normalized script url ${expected} - got ${src}`);
+  }
+});
+
 test("should error when invalid characters are found in the subdomain - we allow letters, numbers, . and -", () => {
   const sdkUrl =
     "https://\uff3cU0022\uff3cU003E\uff3cU003C\uff3cU002Fscript\uff3cU003E\uff3cU003Ciframe\uff3cU0020srcdoc\uff3cU003D\uff3cU0027.www.paypal.com/sdk/js?client-id=foo";
